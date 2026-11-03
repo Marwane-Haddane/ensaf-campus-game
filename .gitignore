@@ -1,0 +1,12 @@
+# Local Godot and assistant state
+/.godot/
+/.agents/
+**/__pycache__/
+*.pyc
+*.log
+
+# Generated test captures and original source pack
+/tools/**/*.png
+/tools/**/*.png.import
+/tools/**/captures/
+/Zombie Apocalypse Kit - March 2024/

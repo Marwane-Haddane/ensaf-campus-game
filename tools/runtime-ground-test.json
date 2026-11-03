@@ -1,0 +1,41 @@
+{
+  "ground": {
+    "d_entrance": {
+      "height": 1.81200003623962,
+      "hit": true,
+      "source": "D9 uppermost broad stair continuous stone finish"
+    },
+    "e_foyer": {
+      "height": 0.921999990940094,
+      "hit": true,
+      "source": "E6 reception large format stone floor"
+    },
+    "e_rear_aisle": {
+      "height": 0.924000024795532,
+      "hit": true,
+      "source": "E9 rear aisle red carpet"
+    },
+    "plaza": {
+      "height": 0.276000142097473,
+      "hit": true,
+      "source": "D7 paved entrance approach overlay"
+    }
+  },
+  "passed": true,
+  "runtime": {
+    "batched_instances": 1361,
+    "build_seconds": 3.107,
+    "chair_boxes": 198,
+    "collision_bodies": 2174,
+    "collision_cache_hits": 293,
+    "furniture_bodies": 232,
+    "merged_static_instances": 3865,
+    "mesh_nodes": 5965,
+    "multimesh_batches": 27,
+    "passable_door_meshes": 109,
+    "ready": true,
+    "static_surface_batches": 90,
+    "unique_collision_shapes": 1687
+  },
+  "seat_blocked": true
+}

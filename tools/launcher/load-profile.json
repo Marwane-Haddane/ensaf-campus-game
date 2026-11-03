@@ -1,0 +1,94 @@
+{
+  "cleanup_metrics": {
+    "boot_first_frame_ms": 86.275,
+    "max_frame_gap_ms": 454.428,
+    "menu_interactive_ms": 689.556,
+    "stages": {
+      "INITIALIZING/": 60.011,
+      "LOADING_GAME/batches": 141.315,
+      "LOADING_GAME/collision": 136.09,
+      "LOADING_GAME/entrances": 27.67,
+      "LOADING_GAME/first_frame": 65.763,
+      "LOADING_GAME/game_services": 62.687,
+      "LOADING_GAME/incident_ui": 279.982,
+      "LOADING_GAME/instantiate": 268.027,
+      "LOADING_GAME/merges": 38.386,
+      "LOADING_GAME/navigation_ui": 65.633,
+      "LOADING_GAME/occlusion": 24.114,
+      "LOADING_GAME/polish": 16.517,
+      "LOADING_GAME/readiness": 185.387,
+      "LOADING_GAME/request": 22.364,
+      "LOADING_GAME/resource": 285.049,
+      "LOADING_GAME/stations": 222.238,
+      "MAIN_MENU/": 441.171,
+      "MAIN_MENU/first_frame": 454.428,
+      "PLAYING/first_frame": 19.335,
+      "READY/first_frame": 14.804
+    }
+  },
+  "first_playable_frames_ms": 85.06,
+  "gameplay_metrics": {
+    "boot_first_frame_ms": 86.275,
+    "max_frame_gap_ms": 441.171,
+    "menu_interactive_ms": 689.556,
+    "stages": {
+      "INITIALIZING/": 60.011,
+      "LOADING_GAME/batches": 141.315,
+      "LOADING_GAME/collision": 136.09,
+      "LOADING_GAME/entrances": 27.67,
+      "LOADING_GAME/first_frame": 65.763,
+      "LOADING_GAME/game_services": 62.687,
+      "LOADING_GAME/incident_ui": 279.982,
+      "LOADING_GAME/instantiate": 268.027,
+      "LOADING_GAME/merges": 38.386,
+      "LOADING_GAME/navigation_ui": 65.633,
+      "LOADING_GAME/occlusion": 24.114,
+      "LOADING_GAME/polish": 16.517,
+      "LOADING_GAME/readiness": 185.387,
+      "LOADING_GAME/request": 22.364,
+      "LOADING_GAME/resource": 285.049,
+      "LOADING_GAME/stations": 222.238,
+      "MAIN_MENU/": 441.171,
+      "PLAYING/first_frame": 19.335,
+      "READY/first_frame": 14.804
+    }
+  },
+  "metrics": {
+    "boot_first_frame_ms": 86.275,
+    "max_frame_gap_ms": 441.171,
+    "menu_interactive_ms": 689.556,
+    "stages": {
+      "INITIALIZING/": 60.011,
+      "LOADING_GAME/batches": 141.315,
+      "LOADING_GAME/collision": 136.09,
+      "LOADING_GAME/entrances": 27.67,
+      "LOADING_GAME/first_frame": 65.763,
+      "LOADING_GAME/game_services": 62.687,
+      "LOADING_GAME/incident_ui": 279.982,
+      "LOADING_GAME/instantiate": 268.027,
+      "LOADING_GAME/merges": 38.386,
+      "LOADING_GAME/navigation_ui": 65.633,
+      "LOADING_GAME/occlusion": 24.114,
+      "LOADING_GAME/polish": 16.517,
+      "LOADING_GAME/readiness": 185.387,
+      "LOADING_GAME/request": 22.364,
+      "LOADING_GAME/resource": 285.049,
+      "LOADING_GAME/stations": 222.238,
+      "MAIN_MENU/": 441.171,
+      "READY/first_frame": 14.804
+    }
+  },
+  "passed": true,
+  "stage_data": {
+    "instantiate_ms": 5886.455,
+    "largest_mesh_ms": 132.383,
+    "largest_mesh_name": "R2 recessed window glass.003",
+    "largest_mesh_parts_ms": {
+      "canopy": 0.141,
+      "collision": 132.174,
+      "materials": 0.072,
+      "precomputed_shape": true
+    },
+    "largest_section_ms": 9.096
+  }
+}

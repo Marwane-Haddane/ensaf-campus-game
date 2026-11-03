@@ -1,0 +1,46 @@
+{
+  "id": "zombie_rpg",
+  "title": "Zombie RPG",
+  "subtitle": "Survival · Exploration · RPG",
+  "availability": "available",
+  "scene_path": "res://scenes/antigravity/zombie/zombie_game.tscn",
+  "adapter_version": 1,
+  "adapter_path": "res://scripts/antigravity/zombie/zombie_mode_adapter.gd",
+  "mission_ids": ["ZB-2026-001"],
+  "save_namespace": "zombie_rpg",
+  "settings_namespace": "zombie_rpg",
+  "artwork_path": "res://assets/antigravity/launcher/mode_zombie.png",
+  "description": "After Hours: Restore campus power, rescue survivor Shaun, defeat the courtyard brute and reach extraction.",
+  "missions": [
+    {
+      "id": "ZB-2026-001",
+      "title": "After Hours",
+      "objective": "Restore power and reach extraction",
+      "briefing": "An infection has broken out on the ENSA campus after hours. The emergency grid has tripped, locking the perimeter gates. Search Reception and the Glazed Entrance for power components, restore the substation grid, link up with survivor Shaun, and eliminate the brute blocking extraction.",
+      "controls": [
+        { "action": "Move", "binding": "WASD / ZQSD" },
+        { "action": "Look", "binding": "Mouse" },
+        { "action": "Sprint", "binding": "Shift" },
+        { "action": "Jump", "binding": "Space" },
+        { "action": "Switch Weapon", "binding": "1 / 2 / 3" },
+        { "action": "Quick Melee", "binding": "V" },
+        { "action": "Equip Melee Bat", "binding": "4 / 0" },
+        { "action": "Shoot", "binding": "LMB" },
+        { "action": "Aim", "binding": "RMB" },
+        { "action": "Reload", "binding": "R" },
+        { "action": "Interact", "binding": "E" },
+        { "action": "Inventory", "binding": "I" },
+        { "action": "Mission Journal", "binding": "Tab" },
+        { "action": "Pause", "binding": "Esc" }
+      ],
+      "checkpoints": [
+        { "id": "cp_start", "label": "Campus Plaza Arrival" },
+        { "id": "cp_fuse", "label": "Main Breaker Fuse Recovered" },
+        { "id": "cp_relay", "label": "Control Bus Relay Recovered" },
+        { "id": "cp_power", "label": "Campus Power Restored" },
+        { "id": "cp_survivor", "label": "Survivor Shaun Contacted" },
+        { "id": "cp_boss", "label": "Brute Eliminated" }
+      ]
+    }
+  ]
+}

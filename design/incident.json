@@ -1,0 +1,366 @@
+{
+  "schema_version": "1.0.0",
+  "mission_id": "campus_ir_01",
+  "title": "The borrowed session",
+  "estimated_minutes": 10,
+  "max_points": 100,
+  "simulation_only": true,
+  "disclaimer": "Fictional training scenario. These events, people, systems, and accounts do not describe ENSA Fes or any real campus incident.",
+  "runtime_rules": {
+    "execution": "Display authored fixtures only. Never execute commands, processes, network requests, or hostname resolution.",
+    "dependency_rule": "Every boolean flag named in a step's requires array must be true.",
+    "completion_rule": "Apply effects and points only after a successful interaction; completed steps are idempotent.",
+    "locked_action_rule": "Show blocked_feedback. Do not mutate state or deduct points.",
+    "replay_rule": "Reset to initial_state; clear local points, journal, and report answers.",
+    "storage": "Local game state only. Do not send the learner's report to any service."
+  },
+  "briefing": {
+    "role": "Student incident-response trainee",
+    "objective": "Investigate the demo workstation, preserve evidence, contain the host and reused session, verify a clean recovery, and submit a factual report.",
+    "starting_condition": "A paused evidence snapshot is available. No active spread is occurring in this scenario. The training console remains available when the workstation is isolated.",
+    "priority_note": "This exercise allows a short evidence capture before isolation. In a spreading incident, immediate containment may take priority.",
+    "first_objective": "Reach the marked training console and inspect case IR-2026-001."
+  },
+  "entities": {
+    "case_id": "IR-2026-001",
+    "workstation": {"id": "lab-ws-07", "hostname": "lab-ws-07.campus.example", "ip": "192.0.2.34"},
+    "identity_service": {"hostname": "id.campus.example", "ip": "203.0.113.10"},
+    "demo_account": "student.demo",
+    "operator": "trainee.demo",
+    "session_id": "sess-demo-482",
+    "expected_client_ip": "192.0.2.80",
+    "unexpected_client_ip": "198.51.100.17",
+    "approved_image": "CLEAN-LAB-2026.10",
+    "address_note": "All IPs use documentation-only TEST-NET ranges. All hostnames use the reserved .example namespace."
+  },
+  "locations": [
+    {
+      "id": "response_console",
+      "label": "Training response console",
+      "placement_hint": "Place in an accessible lab near the player spawn, with a visible objective marker.",
+      "interaction_prompt": "Open training case",
+      "persistent_label": "SIMULATION — no live systems"
+    }
+  ],
+  "initial_state": {
+    "triage_complete": false,
+    "evidence_preserved": false,
+    "isolation_complete": false,
+    "host_isolated": false,
+    "session_revoked": false,
+    "restore_complete": false,
+    "recovery_verified": false,
+    "host_reconnected": false,
+    "report_submitted": false,
+    "mission_complete": false
+  },
+  "evidence": [
+    {
+      "id": "EV-01",
+      "title": "Authentication timeline",
+      "source": "Simulated identity log",
+      "unlock_when": "triage_complete",
+      "lines": [
+        "2026-10-31T08:58:00Z AUTH login_success account=student.demo session=sess-demo-482 client=192.0.2.80",
+        "2026-10-31T09:10:00Z UI sign_out_requested account=student.demo client=192.0.2.80 note=browser_closed_without_server_revocation",
+        "2026-10-31T09:12:00Z AUTH session_refresh account=student.demo session=sess-demo-482 client=198.51.100.17 result=accepted",
+        "2026-10-31T09:14:00Z ALERT session_source_changed session=sess-demo-482 previous=192.0.2.80 current=198.51.100.17"
+      ],
+      "interpretation": "The same session remained usable from a second source after the student's local sign-out request. The source address alone does not identify a person."
+    },
+    {
+      "id": "EV-02",
+      "title": "Endpoint observation",
+      "source": "Simulated workstation log",
+      "unlock_when": "triage_complete",
+      "lines": [
+        "2026-10-31T09:09:00Z ENDPOINT app_started host=lab-ws-07.campus.example app=campus_update.exe signature=unrecognized account=student.demo",
+        "2026-10-31T09:11:00Z ENDPOINT alert host=lab-ws-07.campus.example category=unrecognized_application severity=medium",
+        "2026-10-31T09:15:00Z SNAPSHOT host=lab-ws-07.campus.example active_spread=none_observed evidence_state=paused"
+      ],
+      "interpretation": "An unrecognized app preceded the suspicious session use. This supports investigation, but does not establish the mechanism of session theft."
+    },
+    {
+      "id": "EV-03",
+      "title": "Demo resource audit",
+      "source": "Simulated service audit log",
+      "unlock_when": "triage_complete",
+      "lines": [
+        "2026-10-31T09:13:00Z AUDIT read account=student.demo session=sess-demo-482 client=198.51.100.17 resource=/training/meeting-notes.txt result=allowed"
+      ],
+      "interpretation": "The reused session accessed one fictional training file. The available evidence cannot establish access beyond this recorded event."
+    },
+    {
+      "id": "EV-ARCHIVE",
+      "title": "Preserved evidence bundle",
+      "source": "Simulated training evidence store",
+      "unlock_when": "evidence_preserved",
+      "lines": [
+        "Bundle: IR-2026-001-evidence-v1",
+        "Contents: EV-01 authentication log; EV-02 endpoint snapshot; EV-03 resource audit; session metadata; UTC timeline",
+        "Captured by: trainee.demo at 2026-10-31T09:16:00Z",
+        "Integrity fingerprint: SIM-IR001-EVIDENCE-V1-7C42 (simulation token; not a cryptographic digest)",
+        "Store status: read-only; available after isolation and restore"
+      ],
+      "interpretation": "The case journal preserves these fixtures separately from the workstation before recovery changes its state."
+    },
+    {
+      "id": "EV-VERIFY",
+      "title": "Recovery verification record",
+      "source": "Simulated verification runner",
+      "unlock_when": "recovery_verified",
+      "lines": [
+        "Approved image comparison: CLEAN-LAB-2026.10 — PASS",
+        "Local health and unrecognized-app check, while isolated: PASS",
+        "Old session sess-demo-482, simulated identity test: REJECTED",
+        "Controlled reconnection: completed after all preflight checks passed",
+        "Demo portal access with a fresh training session: PASS",
+        "Post-reconnect observation window: no repeated alerts in the simulated sample"
+      ],
+      "interpretation": "These authored checks justify recovery within this exercise. A quiet sample is not a guarantee that every possible threat is absent."
+    }
+  ],
+  "steps": [
+    {
+      "id": "inspect",
+      "title": "Inspect the case",
+      "action_label": "Inspect workstation and timeline",
+      "requires": [],
+      "completion_flag": "triage_complete",
+      "interaction": {"type": "action", "target_id": "response_console"},
+      "terminal": {
+        "command": "sim inspect lab-ws-07",
+        "output_lines": [
+          "CASE IR-2026-001 | host lab-ws-07.campus.example | account student.demo",
+          "Evidence opened: EV-01 authentication; EV-02 endpoint; EV-03 resource audit.",
+          "Unrecognized app at 09:09Z; session accepted from a second source at 09:12Z.",
+          "Observed access: one fictional training file. Mechanism and wider scope remain unconfirmed.",
+          "Snapshot paused. No active spread observed. Next: preserve the snapshot."
+        ]
+      },
+      "on_success": {"set_state": {"triage_complete": true}, "points": 10},
+      "journal_entry": "Inspected EV-01, EV-02, and EV-03. Suspected session reuse affects lab-ws-07 and student.demo; the theft mechanism is unknown.",
+      "feedback": "Start with observations. The app alert and session timeline guide the response; they do not prove every part of the incident.",
+      "blocked_feedback": "Open the training console to inspect the case."
+    },
+    {
+      "id": "preserve",
+      "title": "Preserve the evidence",
+      "action_label": "Save the evidence bundle",
+      "requires": ["triage_complete"],
+      "completion_flag": "evidence_preserved",
+      "interaction": {"type": "action", "target_id": "response_console"},
+      "terminal": {
+        "command": "sim preserve IR-2026-001",
+        "output_lines": [
+          "Saved IR-2026-001-evidence-v1 to the simulated read-only evidence store.",
+          "Included: authentication log, endpoint snapshot, resource audit, session metadata, UTC timeline.",
+          "Collector: trainee.demo | captured 2026-10-31T09:16:00Z",
+          "Fingerprint: SIM-IR001-EVIDENCE-V1-7C42 — simulation token only.",
+          "EV-ARCHIVE added to journal. Next: isolate the workstation."
+        ]
+      },
+      "on_success": {"set_state": {"evidence_preserved": true}, "points": 20},
+      "journal_entry": "Preserved the paused snapshot as EV-ARCHIVE, with source labels, UTC timestamps, collector, and a simulated integrity fingerprint.",
+      "feedback": "Restore operations can replace local evidence. This paused snapshot can be collected safely before isolation; a spreading incident may require containment first.",
+      "blocked_feedback": "Inspect the case first so you know which host, session, and records to preserve."
+    },
+    {
+      "id": "isolate",
+      "title": "Isolate the workstation",
+      "action_label": "Isolate lab-ws-07",
+      "requires": ["evidence_preserved"],
+      "completion_flag": "isolation_complete",
+      "interaction": {"type": "action", "target_id": "response_console"},
+      "terminal": {
+        "command": "sim isolate lab-ws-07",
+        "output_lines": [
+          "lab-ws-07: simulated network access blocked.",
+          "Training console and preserved evidence remain available.",
+          "Identity status: sess-demo-482 is still valid on the simulated identity service.",
+          "Next: revoke that session."
+        ]
+      },
+      "on_success": {"set_state": {"isolation_complete": true, "host_isolated": true}, "points": 15},
+      "journal_entry": "Isolated the affected workstation. Evidence remains available in the separate case journal.",
+      "feedback": "Isolation limits this machine's activity. A session already copied elsewhere can remain usable until it is explicitly revoked.",
+      "blocked_feedback": "Preserve this scenario's paused evidence snapshot before isolating the workstation."
+    },
+    {
+      "id": "revoke",
+      "title": "Revoke the reused session",
+      "action_label": "Revoke sess-demo-482",
+      "requires": ["host_isolated"],
+      "completion_flag": "session_revoked",
+      "interaction": {"type": "action", "target_id": "response_console"},
+      "terminal": {
+        "command": "sim revoke-session sess-demo-482",
+        "output_lines": [
+          "Identity service: id.campus.example (simulated).",
+          "Session sess-demo-482 invalidated for student.demo across the demo service.",
+          "Further use of that session will be rejected, including from 198.51.100.17.",
+          "Workstation remains isolated. Next: restore the approved lab image."
+        ]
+      },
+      "on_success": {"set_state": {"session_revoked": true}, "points": 15},
+      "journal_entry": "Revoked sess-demo-482 across the simulated identity service after isolating the workstation.",
+      "feedback": "Endpoint containment and identity containment solve different parts of this case. Revocation removes the copied session's access.",
+      "blocked_feedback": "Isolate the workstation first to contain its activity while you revoke the reused session."
+    },
+    {
+      "id": "restore",
+      "title": "Restore the approved baseline",
+      "action_label": "Restore CLEAN-LAB-2026.10",
+      "requires": ["evidence_preserved", "host_isolated", "session_revoked"],
+      "completion_flag": "restore_complete",
+      "interaction": {"type": "action", "target_id": "response_console"},
+      "terminal": {
+        "command": "sim restore lab-ws-07 CLEAN-LAB-2026.10",
+        "output_lines": [
+          "Approved training image selected: CLEAN-LAB-2026.10.",
+          "Simulated image restore complete. Workstation remains isolated.",
+          "Evidence bundle IR-2026-001-evidence-v1 remains preserved.",
+          "Recovery status: NOT YET VERIFIED. Next: run recovery checks."
+        ]
+      },
+      "on_success": {"set_state": {"restore_complete": true}, "points": 15},
+      "journal_entry": "Restored the approved lab baseline while isolated. Preserved evidence and session revocation remain in effect.",
+      "feedback": "A known baseline supports recovery. A successful restore message alone does not show that the host and account are ready for normal use.",
+      "blocked_feedback": "Preserve evidence, isolate the workstation, and revoke the reused session before restoring the baseline."
+    },
+    {
+      "id": "verify",
+      "title": "Verify recovery and reconnect",
+      "action_label": "Run recovery checks",
+      "requires": ["restore_complete", "host_isolated", "session_revoked"],
+      "completion_flag": "recovery_verified",
+      "interaction": {"type": "action", "target_id": "response_console"},
+      "terminal": {
+        "command": "sim verify-and-reconnect lab-ws-07",
+        "output_lines": [
+          "PRECHECK, while isolated: approved-image comparison PASS.",
+          "PRECHECK, while isolated: local health and unrecognized-app check PASS.",
+          "PRECHECK, simulated identity test: sess-demo-482 REJECTED.",
+          "All preflight checks passed. Controlled simulated reconnection completed.",
+          "POSTCHECK: fresh training session and demo portal access PASS.",
+          "POSTCHECK: no repeated alerts in the simulated observation window.",
+          "EV-VERIFY saved. Recovery verified for this exercise. Next: write the report."
+        ]
+      },
+      "on_success": {"set_state": {"recovery_verified": true, "host_isolated": false, "host_reconnected": true}, "points": 15},
+      "journal_entry": "Verified the baseline and local health while isolated, confirmed rejection of the old session, then reconnected under observation and confirmed demo service. Saved EV-VERIFY.",
+      "feedback": "Check the baseline and old session before reconnecting. Then verify expected service under observation. A quiet sample supports this recovery decision without proving every possible threat is absent.",
+      "blocked_feedback": "Finish the approved-image restore while the workstation is isolated and the reused session is revoked."
+    },
+    {
+      "id": "report",
+      "title": "Write the incident report",
+      "action_label": "Write and submit report",
+      "requires": ["evidence_preserved", "session_revoked", "recovery_verified", "host_reconnected"],
+      "completion_flag": "report_submitted",
+      "interaction": {"type": "form", "target_id": "response_console", "form_id": "incident_report"},
+      "terminal": {
+        "command": "sim submit-report IR-2026-001",
+        "output_lines": [
+          "Report saved to the local training journal.",
+          "Included: learner summary, evidence references, actions, verification, limits, and follow-up.",
+          "Case IR-2026-001 complete. Review the debrief or replay the mission."
+        ]
+      },
+      "on_success": {"set_state": {"report_submitted": true, "mission_complete": true}, "points": 10},
+      "journal_entry": "Submitted the learner's factual incident report with evidence references and recovery verification.",
+      "feedback": "A clear handover records what happened, what you preserved, what you changed, how you checked recovery, and what still needs review.",
+      "blocked_feedback": "Complete recovery verification and controlled reconnection before submitting the final report."
+    }
+  ],
+  "report_form": {
+    "id": "incident_report",
+    "title": "Incident handover",
+    "preview_before_submit": true,
+    "prefill": {
+      "case": "IR-2026-001",
+      "affected_asset": "lab-ws-07.campus.example / 192.0.2.34",
+      "affected_account": "student.demo",
+      "preserved_bundle": "IR-2026-001-evidence-v1",
+      "integrity_note": "SIM-IR001-EVIDENCE-V1-7C42 is a simulated fingerprint, not a cryptographic digest.",
+      "actions": "Preserved the snapshot; isolated lab-ws-07; revoked sess-demo-482; restored CLEAN-LAB-2026.10; passed preflight checks; reconnected under observation.",
+      "verification": "EV-VERIFY: approved baseline and local health passed; old session rejected; fresh demo service passed; no repeated alerts in the sample.",
+      "limits": "The mechanism of session theft and any access beyond the recorded training-file event remain unconfirmed."
+    },
+    "fields": [
+      {
+        "id": "summary",
+        "type": "textarea",
+        "label": "Write a short factual summary",
+        "placeholder": "Describe the affected host, suspicious session use, and response in your own words.",
+        "validation": {"required": true, "trim": true, "min_length": 20, "max_length": 400},
+        "invalid_feedback": "Add a short summary of what you observed and how you responded (20–400 characters).",
+        "hint": "The demo workstation ran an unrecognized app, then its session appeared from a second source. I preserved evidence, contained the host and session, and verified the approved restore."
+      },
+      {
+        "id": "finding",
+        "type": "select",
+        "label": "What does the evidence support?",
+        "options": [
+          {"id": "session_reuse", "label": "Suspicious reuse of the demo session; theft mechanism unconfirmed"},
+          {"id": "identified_person", "label": "The source address proves who took the session"},
+          {"id": "entire_campus", "label": "The logs prove every campus system was compromised"}
+        ],
+        "validation": {"required": true, "equals": "session_reuse"},
+        "invalid_feedback": "The logs show suspicious session reuse. They do not identify a person or establish campus-wide impact."
+      },
+      {
+        "id": "evidence_ids",
+        "type": "multiselect",
+        "label": "Attach the preservation and recovery records",
+        "options": [
+          {"id": "EV-ARCHIVE", "label": "EV-ARCHIVE — preserved source evidence"},
+          {"id": "EV-VERIFY", "label": "EV-VERIFY — recovery verification"},
+          {"id": "UNCONFIRMED", "label": "An unsupported guess about the person responsible"}
+        ],
+        "validation": {"required": true, "exact_set": ["EV-ARCHIVE", "EV-VERIFY"]},
+        "invalid_feedback": "Attach the preserved source bundle and the verification record; exclude unsupported attribution."
+      },
+      {
+        "id": "follow_up",
+        "type": "select",
+        "label": "Choose a useful follow-up",
+        "options": [
+          {"id": "monitor_review", "label": "Monitor for recurrence and review how the demo session was exposed"},
+          {"id": "delete_evidence", "label": "Delete the evidence bundle immediately"},
+          {"id": "guarantee", "label": "Guarantee that no future incident is possible"}
+        ],
+        "validation": {"required": true, "equals": "monitor_review"},
+        "invalid_feedback": "Preserve the handover evidence and plan a review of the exposure and any recurring signals."
+      }
+    ],
+    "submission_rule": "All field validations must pass before the report step can apply its success effects. Evaluate exact_set without regard to ordering. Whitespace-only summaries are invalid."
+  },
+  "debrief": {
+    "title": "Recovery is complete; explain your decisions",
+    "unlock_when": "mission_complete",
+    "takeaways": [
+      "Preserve evidence that recovery may replace, when the incident's urgency allows it.",
+      "Isolating a device and revoking a session address different sources of continued access.",
+      "Restore from an approved baseline and verify before normal service resumes.",
+      "Record facts, evidence, actions, verification, uncertainty, and follow-up in the handover.",
+      "This scenario's paused snapshot allows capture first. A spreading incident can require immediate containment."
+    ],
+    "reflection_questions": [
+      {
+        "question": "Why was isolating lab-ws-07 insufficient on its own?",
+        "options": ["A copied session could still be used elsewhere.", "Isolation automatically deletes all service sessions."],
+        "correct_option_index": 0,
+        "explanation": "Device isolation limits that endpoint. The separate identity service needed an explicit session revocation."
+      },
+      {
+        "question": "Would collecting evidence always come before isolation?",
+        "options": ["Yes; evidence collection always takes priority.", "No; active spread can require immediate containment."],
+        "correct_option_index": 1,
+        "explanation": "The order here relies on a paused snapshot and no active spread. Response priorities depend on the observed urgency and available collection methods."
+      }
+    ],
+    "score_note": "100 points for completing the response and report. Reflection and retries are unscored.",
+    "replay_label": "Replay the fictional training case"
+  }
+}

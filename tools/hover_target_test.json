@@ -1,0 +1,47 @@
+{
+	"checks": 135,
+	"failures": [],
+	"passed": true,
+	"stations": [
+		{
+			"adjacent_dot": 0.889899730682373,
+			"adjacent_rejected": true,
+			"look_away_rejected": true,
+			"modal_visibility_passed": true,
+			"name": "Reception response PC",
+			"occlusion_rejected": true,
+			"opposite_side_rejected": true,
+			"position": "(-36.2, 1.832, -104.1)",
+			"range_rejected": true,
+			"screen": "(-36.2, 1.976399, -105.5824)",
+			"screen_selected": true
+		},
+		{
+			"adjacent_dot": 0.905697882175446,
+			"adjacent_rejected": true,
+			"look_away_rejected": true,
+			"modal_visibility_passed": true,
+			"name": "Campus security PC",
+			"occlusion_rejected": true,
+			"opposite_side_rejected": true,
+			"position": "(0.9, 2.71, -110.5)",
+			"range_rejected": true,
+			"screen": "(0, 2.791399, -112.0624)",
+			"screen_selected": true
+		},
+		{
+			"adjacent_dot": 0.73604828119278,
+			"adjacent_rejected": true,
+			"look_away_rejected": true,
+			"modal_visibility_passed": true,
+			"name": "Auditorium teaching PC",
+			"occlusion_rejected": true,
+			"opposite_side_rejected": true,
+			"position": "(-43, 1, -121.4)",
+			"range_rejected": true,
+			"screen": "(-43, 1.081399, -122.0624)",
+			"screen_selected": true
+		}
+	],
+	"training_unchanged": true
+}

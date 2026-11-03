@@ -1,0 +1,32 @@
+[
+  {
+    "source": "gamer_setup_pack.glb",
+    "imported": "gamer_setup_pack.glb",
+    "sha256": "D90A4653B50A5FB76120BBFC6DE6AF738412F3A2611E1471CFF3B7B5E65AB6D1",
+    "original_matches_import": true
+  },
+  {
+    "source": "office_chair.glb",
+    "imported": "office_chair.glb",
+    "sha256": "4CE6D139CE3C91F3CD7595391790F3BE6370551626E3E6D08A3CE2E608163AAB",
+    "original_matches_import": true
+  },
+  {
+    "source": "office_desk_140x60.glb",
+    "imported": "office_desk_140x60.glb",
+    "sha256": "469D5BD0493F7F6EDB8DFF31B03F05490ED24F24C2552A87923A22388CDAA214",
+    "original_matches_import": true
+  },
+  {
+    "source": "server_rack.glb",
+    "imported": "server_rack.glb",
+    "sha256": "9A51530DD19E742454313B8771B2CECEF03C429F3CD998AA24294B9BC2AE7BCE",
+    "original_matches_import": true
+  },
+  {
+    "source": "server_rack (1).glb",
+    "imported": "server_rack_1.glb",
+    "sha256": "56BF9E380BB63FA159681B9591AE8C0E26B76E67BBD7244586119C5D88FFBA34",
+    "original_matches_import": true
+  }
+]

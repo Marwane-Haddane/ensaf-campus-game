@@ -1,0 +1,33 @@
+; ENSA Incident Response: local educational prototype
+config_version=5
+
+[application]
+config/name="ENSA Games"
+run/main_scene="res://scenes/launcher/boot.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+config/description="Choose a campus experience. Investigate the borrowed session in ENSA Incident Response."
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/default_filters/use_nearest_mipmap_filter=false
+anti_aliasing/quality/msaa_3d=1
+textures/default_filters/anisotropic_filtering_level=3
+lights_and_shadows/directional_shadow/size=2048
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=1
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=1
+occlusion_culling/use_occlusion_culling=true
+environment/defaults/default_clear_color=Color(0.25, 0.4, 0.53, 1)
+
+[physics]
+common/physics_ticks_per_second=60
+
+[audio]
+driver/enable_input=false

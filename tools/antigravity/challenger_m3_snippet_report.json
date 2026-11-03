@@ -1,0 +1,238 @@
+{
+	"failed_assertions": 0,
+	"failures": [],
+	"passed": true,
+	"passed_assertions": 45,
+	"suites": {
+		"SETUP": {
+			"checks": [
+				{
+					"check": "Load res://main.tscn",
+					"status": "PASS"
+				},
+				{
+					"check": "Game reached ready_to_play",
+					"status": "PASS"
+				},
+				{
+					"check": "DirectionalLight3D sun node active",
+					"status": "PASS"
+				},
+				{
+					"check": "WorldEnvironment node active",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 4
+		},
+		"SUITE_1": {
+			"checks": [
+				{
+					"check": "Polish node initially absent",
+					"status": "PASS"
+				},
+				{
+					"check": "Meta initially absent",
+					"status": "PASS"
+				},
+				{
+					"check": "Snippet condition met and executed",
+					"status": "PASS"
+				},
+				{
+					"check": "Snippet returned installed == true",
+					"status": "PASS"
+				},
+				{
+					"check": "First install is not redundant",
+					"status": "PASS"
+				},
+				{
+					"check": "AntigravityEnvironmentPolish node exists in scene tree",
+					"status": "PASS"
+				},
+				{
+					"check": "Polish node is Node3D",
+					"status": "PASS"
+				},
+				{
+					"check": "polish.is_installed() is true",
+					"status": "PASS"
+				},
+				{
+					"check": "Game meta flag set",
+					"status": "PASS"
+				},
+				{
+					"check": "Canopy downlight injected as SpotLight3D",
+					"status": "PASS"
+				},
+				{
+					"check": "Cream entrance signage injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Sun normal bias tuned to 0.80",
+					"status": "PASS"
+				},
+				{
+					"check": "Materials duplicated > 0",
+					"status": "PASS"
+				},
+				{
+					"check": "Lights tuned >= 1",
+					"status": "PASS"
+				},
+				{
+					"check": "Environments tuned >= 1",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 15
+		},
+		"SUITE_2": {
+			"checks": [
+				{
+					"check": "Redundant install returns installed == true",
+					"status": "PASS"
+				},
+				{
+					"check": "Redundant install flags already_installed == true",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 2
+		},
+		"SUITE_3": {
+			"checks": [
+				{
+					"check": "Uninstallation snippet found node and called uninstall()",
+					"status": "PASS"
+				},
+				{
+					"check": "AntigravityEnvironmentPolish freed from scene tree",
+					"status": "PASS"
+				},
+				{
+					"check": "Canopy downlight removed",
+					"status": "PASS"
+				},
+				{
+					"check": "Cream entrance signage removed",
+					"status": "PASS"
+				},
+				{
+					"check": "Meta flag removed from game",
+					"status": "PASS"
+				},
+				{
+					"check": "Sun normal bias restored to baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Environment ambient energy restored to baseline",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 7
+		},
+		"SUITE_4": {
+			"checks": [
+				{
+					"check": "Secondary uninstallation safely skipped without error when node is absent",
+					"status": "PASS"
+				},
+				{
+					"check": "polish2 was correctly null",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 2
+		},
+		"SUITE_5": {
+			"checks": [
+				{
+					"check": "Re-installation returned installed == true",
+					"status": "PASS"
+				},
+				{
+					"check": "Re-installation treated as fresh install",
+					"status": "PASS"
+				},
+				{
+					"check": "Re-installed node present",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 3
+		},
+		"SUITE_6": {
+			"checks": [
+				{
+					"check": "ResourceLoader.exists returns false for non-existent path",
+					"status": "PASS"
+				},
+				{
+					"check": "Snippet guarded by ResourceLoader.exists does not execute when path is missing",
+					"status": "PASS"
+				},
+				{
+					"check": "Game tree remains clean after simulated missing script",
+					"status": "PASS"
+				},
+				{
+					"check": "Can access res://scripts/antigravity",
+					"status": "PASS"
+				},
+				{
+					"check": "Temporarily renamed environment_polish.gd to test disk absence",
+					"status": "PASS"
+				},
+				{
+					"check": "FileAccess confirms environment_polish.gd is absent from disk",
+					"status": "PASS"
+				},
+				{
+					"check": "Snippet safely skipped when file is missing from disk",
+					"status": "PASS"
+				},
+				{
+					"check": "No node added when script missing",
+					"status": "PASS"
+				},
+				{
+					"check": "environment_polish.gd restored to original location",
+					"status": "PASS"
+				},
+				{
+					"check": "Restored file verified on disk",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 10
+		},
+		"SUITE_7": {
+			"checks": [
+				{
+					"check": "install() on unready game rejected cleanly",
+					"status": "PASS"
+				},
+				{
+					"check": "install() returns error message on unready target",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 2
+		}
+	},
+	"timestamp": "2026-11-02T01:04:58",
+	"total_assertions": 45
+}

@@ -1,0 +1,13 @@
+{
+  "captures": [
+    "res://tools/door-reception-closed.png",
+    "res://tools/door-reception-open.png",
+    "res://tools/door-main-front-closed.png",
+    "res://tools/door-main-front-open.png",
+    "res://tools/door-main-exterior-45.png",
+    "res://tools/door-main-inside-open.png"
+  ],
+  "checks": 23,
+  "failures": [],
+  "passed": true
+}

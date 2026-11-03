@@ -1,0 +1,23 @@
+{
+  "provenance": "Derived from the existing campus_materials.gd deterministic surface generator; no external assets.",
+  "textures": [
+    "res://assets/runtime_surfaces/asphalt_albedo.png",
+    "res://assets/runtime_surfaces/bark_albedo.png",
+    "res://assets/runtime_surfaces/bark_normal.png",
+    "res://assets/runtime_surfaces/carpet_albedo.png",
+    "res://assets/runtime_surfaces/fabric_albedo.png",
+    "res://assets/runtime_surfaces/floor_stone_albedo.png",
+    "res://assets/runtime_surfaces/foliage_albedo.png",
+    "res://assets/runtime_surfaces/lawn_albedo.png",
+    "res://assets/runtime_surfaces/limestone_albedo.png",
+    "res://assets/runtime_surfaces/mineral_albedo.png",
+    "res://assets/runtime_surfaces/paving_albedo.png",
+    "res://assets/runtime_surfaces/paving_normal.png",
+    "res://assets/runtime_surfaces/slate_albedo.png",
+    "res://assets/runtime_surfaces/soil_albedo.png",
+    "res://assets/runtime_surfaces/soil_normal.png",
+    "res://assets/runtime_surfaces/terrazzo_albedo.png",
+    "res://assets/runtime_surfaces/wood_albedo.png",
+    "res://assets/runtime_surfaces/wood_horizontal_albedo.png"
+  ]
+}

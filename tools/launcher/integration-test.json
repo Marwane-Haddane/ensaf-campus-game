@@ -1,0 +1,31 @@
+{
+  "captures": [],
+  "checks": 72,
+  "failures": [],
+  "metrics": {
+    "boot_first_frame_ms": 34.402,
+    "max_frame_gap_ms": 1585.992,
+    "menu_interactive_ms": 2452.987,
+    "stages": {
+      "INITIALIZING/": 19.214,
+      "LOADING_GAME/batches": 152.601,
+      "LOADING_GAME/collision": 54.216,
+      "LOADING_GAME/entrances": 17.003,
+      "LOADING_GAME/game_services": 19.166,
+      "LOADING_GAME/incident_ui": 292.797,
+      "LOADING_GAME/instantiate": 435.204,
+      "LOADING_GAME/merges": 24.62,
+      "LOADING_GAME/navigation_ui": 116.303,
+      "LOADING_GAME/occlusion": 16.544,
+      "LOADING_GAME/polish": 16.983,
+      "LOADING_GAME/readiness": 296.616,
+      "LOADING_GAME/request": 857.952,
+      "LOADING_GAME/resource": 353.34,
+      "LOADING_GAME/stations": 224.17,
+      "LOADING_GAME/waiting": 68,
+      "MAIN_MENU/": 1585.992,
+      "MAIN_MENU/readiness": 118.641
+    }
+  },
+  "passed": true
+}

@@ -1,0 +1,62 @@
+{
+  "checks": 28,
+  "failures": [],
+  "frames": [
+    {
+      "detail": "Read the objective, identify supplies and choose your route. Native first-person view with the revised HUD.",
+      "id": "01-arrival",
+      "image": "captures/01-arrival.png",
+      "title": "01 / Campus after hours"
+    },
+    {
+      "detail": "A walker closes in. Create distance, then fire. The selected enemy runs its normal AI and takes damage from real weapon traces.",
+      "id": "02-combat",
+      "image": "captures/02-combat.png",
+      "title": "02 / First contact"
+    },
+    {
+      "detail": "Reception is the first power-component stop. Chapter positioning is scripted; collection uses the actual pickup interaction.",
+      "id": "03-reception",
+      "image": "captures/03-reception.png",
+      "title": "03 / Recover the fuse"
+    },
+    {
+      "detail": "Spend recovered scrap on a real upgrade. Objective and kill XP improve rank and medkit effectiveness; rewards are saved once.",
+      "id": "04-upgrade",
+      "image": "captures/04-upgrade.png",
+      "title": "04 / Build your survivor"
+    },
+    {
+      "detail": "The breaker consumes the fuse and relay. The objective and rank rewards advance from the interaction, not a fabricated timer.",
+      "id": "05-power",
+      "image": "captures/05-power.png",
+      "title": "05 / Bring the grid online"
+    },
+    {
+      "detail": "Speak with the survivor after restoring power. Dialogue owns input and pauses threats; the journal explains the final route.",
+      "id": "06-survivor",
+      "image": "captures/06-survivor.png",
+      "title": "06 / Shaun's escape plan"
+    },
+    {
+      "detail": "The brute uses a distinct health bar, slower committed attacks and a readable windup. Move out of its contact range during the attack.",
+      "id": "07-brute",
+      "image": "captures/07-brute.png",
+      "title": "07 / Clear the courtyard"
+    },
+    {
+      "detail": "The episode ends after the component, power, survivor and brute prerequisites. The debrief uses actual mission statistics.",
+      "id": "08-extraction",
+      "image": "captures/08-extraction.png",
+      "title": "08 / Extraction and debrief"
+    }
+  ],
+  "method": "Script-assisted native gameplay: physical movement/combat and real interaction callbacks; safe repositioning between distant chapters; other enemies temporarily held for reproducibility.",
+  "movement_frame_ms": {
+    "median": 64.32,
+    "note": "Short native movement sample; excludes captures/loading and is not a sustained FPS guarantee.",
+    "p95": 639.267,
+    "sample_count": 55
+  },
+  "passed": true
+}

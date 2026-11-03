@@ -1,0 +1,12 @@
+{
+	"checks": 11,
+	"failures": [],
+	"mission": {
+		"checks": 8,
+		"failures": [],
+		"passed": true,
+		"points": 100,
+		"steps": 7
+	},
+	"passed": true
+}

@@ -1,0 +1,45 @@
+{
+	"captures_list": [],
+	"captures_recorded": 0,
+	"contract_version": 1,
+	"elapsed_ms": 11948,
+	"failures": 0,
+	"fixtures_tested": 13,
+	"geometry_verifications": {
+		"keyboard_scrolling_follow_focus": true,
+		"loading_panel_bottom_left": true,
+		"multi_resolutions_verified": [
+			"1280x720",
+			"1920x1080",
+			"960x540",
+			"1600x900"
+		],
+		"rapid_interrupted_transitions_settled": true,
+		"ready_panel_centered": true,
+		"scrim_mouse_and_focus_containment": true,
+		"settings_all_4_tabs_expanded": true,
+		"settings_panel_height_720p": 408
+	},
+	"status": "PASS",
+	"test_suites_passed": [
+		"01_settled_fixtures_rendering",
+		"02_settings_4_tabs_geometry_and_reachability",
+		"03_loading_bottom_left_and_ready_centering",
+		"04_rapid_interrupted_page_transitions",
+		"05_multi_resolution_scaling_and_compact",
+		"06_standard_intents_contract",
+		"07_settings_model_sync_no_signals",
+		"08_key_rebinding_lifecycle",
+		"09_keyboard_traversal_and_scrolling",
+		"10_capabilities_and_honest_copy",
+		"11_modals_scrim_focus_containment",
+		"12_display_confirmation_scrim_and_centering",
+		"13_loading_cancel_focus_stability",
+		"14_continue_and_mode_availability",
+		"15_indeterminate_vs_measured_progress",
+		"16_reduced_motion_accessibility",
+		"17_codex_adapter_coexistence"
+	],
+	"timestamp": "2026-11-02T22:54:01",
+	"vram_mb": 0
+}

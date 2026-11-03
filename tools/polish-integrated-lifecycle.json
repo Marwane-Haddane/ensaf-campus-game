@@ -1,0 +1,14 @@
+{
+	"benchmarks_baseline": [],
+	"benchmarks_polished": [],
+	"captures": [],
+	"failures": [],
+	"finished_at": "2026-11-02T02:17:09",
+	"install_stats": {
+
+	},
+	"msaa": "2x",
+	"passed": true,
+	"started_at": "2026-11-02T02:17:03",
+	"viewport": "1280x720"
+}

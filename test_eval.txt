@@ -1,0 +1,3 @@
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+ENSA_LAUNCHER_READY {"boot_first_frame_ms":10.832,"max_frame_gap_ms":17.616,"menu_interactive_ms":495.356,"stages":{"INITIALIZING/":17.616}} campus_requested=false

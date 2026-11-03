@@ -1,0 +1,567 @@
+{
+	"modes": {
+		"incident_response": {
+			"primary_palette": [
+				"#00e5ff",
+				"#0a192f",
+				"#48cae4",
+				"#caf0f8"
+			],
+			"slides": [
+				{
+					"category": "forensics",
+					"emergency_red_intensity": 0,
+					"enemy_type": "",
+					"id": "cyber_workstation",
+					"is_implemented": true,
+					"prompt": "Cinematic cybersecurity loading art: High-tech incident response workstation with multiple glowing monitors showing terminal command lines, network packet graphs, and forensic memory dumps. Clean cyan and blue aesthetic. NO UI, NO text.",
+					"source_candidates": [
+						"res://assets/launcher/case-workstation.png"
+					],
+					"subtitle": "Digital Evidence Preservation",
+					"target_webp": "res://assets/loading/cyber/cyber_workstation.webp",
+					"tint": "(0.85, 1.05, 1.25, 1)",
+					"tip": "Verify system logs and hash signatures before modifying running processes.",
+					"title": "Forensic Workstation Analysis"
+				},
+				{
+					"category": "network",
+					"emergency_red_intensity": 0,
+					"enemy_type": "",
+					"id": "cyber_server_room",
+					"is_implemented": true,
+					"prompt": "Cinematic server room corridor with tall black rack cabinets, pulsing blue and teal LED activity lights, raised floor tiles, and cool mist air conditioning. NO UI, NO text.",
+					"source_candidates": [
+						"res://assets/user_models/server_rack_0.jpg",
+						"res://assets/launcher/case-workstation.png"
+					],
+					"subtitle": "Core Switch & Blade Enclosures",
+					"target_webp": "res://assets/loading/cyber/cyber_server_room.webp",
+					"tint": "(0.82, 1.02, 1.3, 1)",
+					"tip": "Check network switches and patch panels for unauthorized physical taps.",
+					"title": "Campus Datacenter Infrastructure"
+				},
+				{
+					"category": "response",
+					"emergency_red_intensity": 0,
+					"enemy_type": "",
+					"id": "cyber_incident_triage",
+					"is_implemented": true,
+					"prompt": "Cinematic security operations center dashboard showing campus network topology map, active intrusion alarms highlighted in amber, and response workflows. NO UI, NO text.",
+					"source_candidates": [
+						"res://assets/antigravity/launcher/mode_cyber.png",
+						"res://assets/launcher/case-workstation.png"
+					],
+					"subtitle": "Containment & Quarantine Protocol",
+					"target_webp": "res://assets/loading/cyber/cyber_incident_triage.webp",
+					"tint": "(0.88, 1, 1.22, 1)",
+					"tip": "Isolate compromised hosts from the subnet immediately to prevent lateral movement.",
+					"title": "Incident Response Triage"
+				},
+				{
+					"category": "monitoring",
+					"emergency_red_intensity": 0,
+					"enemy_type": "",
+					"id": "cyber_network_monitoring",
+					"is_implemented": true,
+					"prompt": "Cinematic exterior view of ENSA Fès illuminated by glowing blue data streams and network signal lines connecting the engineering buildings. NO UI, NO text.",
+					"source_candidates": [
+						"res://assets/antigravity/launcher/bg_campus.png"
+					],
+					"subtitle": "Intrusion Detection System",
+					"target_webp": "res://assets/loading/cyber/cyber_network_monitoring.webp",
+					"tint": "(0.85, 0.98, 1.25, 1)",
+					"tip": "Look for anomalous outbound beaconing intervals in border gateway traffic.",
+					"title": "Campus Network Gateway"
+				},
+				{
+					"category": "evidence",
+					"emergency_red_intensity": 0,
+					"enemy_type": "",
+					"id": "cyber_evidence_collection",
+					"is_implemented": true,
+					"prompt": "Cinematic close-up of forensic USB drive, tamper-evident evidence bag, and terminal displaying verified SHA-256 integrity hashes. NO UI, NO text.",
+					"source_candidates": [
+						"res://assets/launcher/case-workstation.png"
+					],
+					"subtitle": "Incident Documentation Protocol",
+					"target_webp": "res://assets/loading/cyber/cyber_evidence_collection.webp",
+					"tint": "(0.9, 1.05, 1.2, 1)",
+					"tip": "Document forensic timestamps and memory dumps in strict compliance with protocol.",
+					"title": "Chain of Custody"
+				}
+			],
+			"title": "ENSA Incident Response — Cybersecurity",
+			"total_slides": 5
+		},
+		"zombie_rpg": {
+			"primary_palette": [
+				"#00f0ff",
+				"#101826",
+				"#e02020",
+				"#b0c4de"
+			],
+			"slides": [
+				{
+					"category": "enemy",
+					"emergency_red_intensity": 0.4,
+					"enemy_type": "walker",
+					"id": "enemy_wanderer",
+					"is_implemented": true,
+					"prompt": "AAA cinematic concept art of The Wanderer zombie archetype: A slow infected male university student wandering in a dim ENSA Fès modern university corridor at night. Dark blue shadows, blood splatters, wet reflective floor, red emergency lighting at the end of the hall. Clean image, NO UI, NO text.",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/enemy_01_wanderer_1793640400710.jpg",
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/atrium_after_dark_1793640362919.jpg"
+					],
+					"subtitle": "Basic Infected Student",
+					"target_webp": "res://assets/loading/zombie/enemy_wanderer.webp",
+					"tint": "(0.95, 0.98, 1.05, 1)",
+					"tip": "Keep your distance and avoid becoming surrounded.",
+					"title": "The Wanderer"
+				},
+				{
+					"category": "enemy",
+					"emergency_red_intensity": 0.45,
+					"enemy_type": "runner",
+					"id": "enemy_runner",
+					"is_implemented": false,
+					"prompt": "Cinematic AAA survival horror concept art of The Runner: A terrifying, hyper-fast infected sprinter charging violently across the rain-swept exterior courtyard of ENSA Fès university campus at night. NO UI, NO text.",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/enemy_02_runner_1793640420961.jpg",
+						"res://assets/launcher/campus-dusk-reference.png"
+					],
+					"subtitle": "Agile Incursion Threat",
+					"target_webp": "res://assets/loading/zombie/enemy_runner.webp",
+					"tint": "(0.92, 0.95, 1.08, 1)",
+					"tip": "Runners close distances quickly. Stay alert and keep your weapon drawn.",
+					"title": "The Runner"
+				},
+				{
+					"category": "enemy",
+					"emergency_red_intensity": 0.85,
+					"enemy_type": "screamer",
+					"id": "enemy_screamer",
+					"is_implemented": false,
+					"overlay_model": "res://tools/antigravity/zombie/photos/zombie_ribcage_screamer.png",
+					"overlay_pos": "(0.68, 0.52)",
+					"overlay_scale": 0.52,
+					"prompt": "Cinematic AAA survival horror concept art of The Screamer: An infected figure screeching violently beneath a pulsing red emergency alarm beacon in an ENSA Fès corridor. Blood splatters, fog, deep navy blue shadows. NO UI, NO text.",
+					"rim_color": "(1, 0.18, 0.18, 0.85)",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/atrium_after_dark_1793640362919.jpg"
+					],
+					"subtitle": "Acoustic Threat Alert",
+					"target_webp": "res://assets/loading/zombie/enemy_screamer.webp",
+					"tint": "(1.05, 0.88, 0.95, 1)",
+					"tip": "Some enemies can draw attention to your position. Eliminate screamers first.",
+					"title": "The Screamer"
+				},
+				{
+					"category": "enemy",
+					"emergency_red_intensity": 0.5,
+					"enemy_type": "brute",
+					"id": "enemy_brute",
+					"is_implemented": true,
+					"overlay_model": "res://tools/antigravity/zombie/photos/zombie_brute_chubby.png",
+					"overlay_pos": "(0.64, 0.5)",
+					"overlay_scale": 0.72,
+					"prompt": "Cinematic AAA survival horror concept art of The Brute: A heavily built infected campus security worker towering in a damaged ENSA Fès entrance lobby. Shattered glass, emergency lights, heavy muscle mass and armor. NO UI, NO text.",
+					"rim_color": "(0.92, 0.25, 0.25, 0.75)",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/atrium_after_dark_1793640362919.jpg",
+						"res://assets/antigravity/launcher/bg_campus.png"
+					],
+					"subtitle": "Armored Heavy Infected",
+					"target_webp": "res://assets/loading/zombie/enemy_brute.webp",
+					"tint": "(0.88, 0.92, 1.05, 1)",
+					"tip": "Observe heavily armored enemies before engaging. Aim for unarmored weak points.",
+					"title": "The Brute"
+				},
+				{
+					"category": "enemy",
+					"emergency_red_intensity": 0.25,
+					"enemy_type": "stalker",
+					"id": "enemy_stalker",
+					"is_implemented": false,
+					"overlay_model": "res://tools/antigravity/zombie/photos/zombie_arm_stalker.png",
+					"overlay_pos": "(0.72, 0.48)",
+					"overlay_scale": 0.54,
+					"prompt": "Cinematic AAA survival horror concept art of The Stalker: An infected agile silhouette hiding behind overturned computer lab furniture in a dark university lab with glowing computer monitors. NO UI, NO text.",
+					"rim_color": "(0, 0.85, 0.95, 0.6)",
+					"source_candidates": [
+						"res://assets/launcher/case-workstation.png"
+					],
+					"subtitle": "Concealed Laboratory Hunter",
+					"target_webp": "res://assets/loading/zombie/enemy_stalker.webp",
+					"tint": "(0.7, 0.82, 1.15, 1)",
+					"tip": "Check corners and dark rooms before entering. Stalkers strike from blind spots.",
+					"title": "The Stalker"
+				},
+				{
+					"category": "enemy",
+					"emergency_red_intensity": 0.35,
+					"enemy_type": "crawler",
+					"id": "enemy_crawler",
+					"is_implemented": true,
+					"overlay_model": "res://tools/antigravity/zombie/photos/zombie_crawler.png",
+					"overlay_pos": "(0.56, 0.72)",
+					"overlay_scale": 0.42,
+					"prompt": "Cinematic AAA survival horror concept art of The Crawling Infected: A mutated infected crawling stealthily beneath classroom lecture desks on a wet reflective floor. Low camera angle, ominous dark atmosphere. NO UI, NO text.",
+					"rim_color": "(0.3, 0.6, 0.9, 0.6)",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/atrium_after_dark_1793640362919.jpg"
+					],
+					"subtitle": "Low-Profile Ambush Threat",
+					"target_webp": "res://assets/loading/zombie/enemy_crawler.webp",
+					"tint": "(0.88, 0.92, 1.05, 1)",
+					"tip": "Threats may be closer to the floor than expected. Scan low angles.",
+					"title": "The Crawling Infected"
+				},
+				{
+					"category": "enemy",
+					"emergency_red_intensity": 0.6,
+					"enemy_type": "guard",
+					"id": "enemy_guard",
+					"is_implemented": false,
+					"overlay_model": "res://tools/antigravity/zombie/photos/survivor_matt_guard.png",
+					"overlay_pos": "(0.66, 0.48)",
+					"overlay_scale": 0.58,
+					"prompt": "Cinematic AAA survival horror concept art of The Guard: An infected campus security guard standing menacingly at the glass entrance turnstiles of ENSA Fès. Tactical vest, radio, red emergency flash. NO UI, NO text.",
+					"rim_color": "(0.95, 0.3, 0.3, 0.7)",
+					"source_candidates": [
+						"res://assets/antigravity/launcher/bg_campus.png",
+						"res://assets/launcher/campus-dusk-reference.png"
+					],
+					"subtitle": "Infected Campus Checkpoint Officer",
+					"target_webp": "res://assets/loading/zombie/enemy_guard.webp",
+					"tint": "(0.65, 0.75, 1.1, 1)",
+					"tip": "Not every enemy is equally vulnerable. Armored security officers require tactical spacing.",
+					"title": "The Guard"
+				},
+				{
+					"category": "enemy",
+					"emergency_red_intensity": 0.25,
+					"enemy_type": "lurker",
+					"id": "enemy_lurker",
+					"is_implemented": false,
+					"overlay_model": "res://tools/antigravity/zombie/photos/zombie_walker_basic.png",
+					"overlay_pos": "(0.24, 0.42)",
+					"overlay_scale": 0.38,
+					"prompt": "Cinematic AAA survival horror concept art of The Lurker: An eerie infected silhouette barely visible through the misted glass windows of a dark ENSA Fès corridor at night. Raindrops on glass, moonlight. NO UI, NO text.",
+					"rim_color": "(0.4, 0.7, 1, 0.7)",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/atrium_after_dark_1793640362919.jpg"
+					],
+					"subtitle": "Glass Partition Silhouette",
+					"target_webp": "res://assets/loading/zombie/enemy_lurker.webp",
+					"tint": "(0.8, 0.88, 1.18, 1)",
+					"tip": "Pay attention to silhouettes and movement through glass partitions.",
+					"title": "The Lurker"
+				},
+				{
+					"category": "enemy",
+					"emergency_red_intensity": 0.7,
+					"enemy_type": "swarm",
+					"id": "enemy_swarm",
+					"is_implemented": false,
+					"overlays": [
+						{
+							"path": "res://tools/antigravity/zombie/photos/zombie_walker_basic.png",
+							"pos": "(0.55, 0.52)",
+							"rim": "(0.9, 0.3, 0.3, 0.6)",
+							"scale": 0.38,
+							"tint": "(0.12, 0.15, 0.22, 1)"
+						},
+						{
+							"path": "res://tools/antigravity/zombie/photos/zombie_brute_chubby.png",
+							"pos": "(0.68, 0.5)",
+							"rim": "(0.9, 0.2, 0.2, 0.6)",
+							"scale": 0.48,
+							"tint": "(0.12, 0.15, 0.22, 1)"
+						},
+						{
+							"path": "res://tools/antigravity/zombie/photos/zombie_crawler.png",
+							"pos": "(0.46, 0.64)",
+							"rim": "(0.9, 0.3, 0.3, 0.5)",
+							"scale": 0.3,
+							"tint": "(0.12, 0.15, 0.22, 1)"
+						}
+					],
+					"prompt": "Cinematic AAA survival horror concept art of The Swarm: A massive gathering of infected students pouring into the main amphitheater lecture hall of ENSA Fès under flickering emergency house lights. NO UI, NO text.",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/atrium_after_dark_1793640362919.jpg"
+					],
+					"subtitle": "Lecture Hall Convergence",
+					"target_webp": "res://assets/loading/zombie/enemy_swarm.webp",
+					"tint": "(0.92, 0.85, 0.95, 1)",
+					"tip": "Avoid attracting large groups of infected in open lecture halls.",
+					"title": "The Swarm"
+				},
+				{
+					"category": "enemy",
+					"emergency_red_intensity": 0.3,
+					"enemy_type": "lab_infected",
+					"id": "enemy_lab_infected",
+					"is_implemented": false,
+					"overlay_model": "res://tools/antigravity/zombie/photos/zombie_walker_basic.png",
+					"overlay_pos": "(0.66, 0.46)",
+					"overlay_scale": 0.52,
+					"prompt": "Cinematic AAA survival horror concept art of The Lab Infected: A former chemistry researcher in a torn yellow hazmat suit and shattered respirator stalking through a dark university laboratory. Chemical spills glowing faintly. NO UI, NO text.",
+					"rim_color": "(0.2, 0.9, 0.6, 0.6)",
+					"source_candidates": [
+						"res://assets/launcher/case-workstation.png"
+					],
+					"subtitle": "Contaminated Researcher",
+					"target_webp": "res://assets/loading/zombie/enemy_lab_infected.webp",
+					"tint": "(0.75, 0.95, 1.1, 1)",
+					"tip": "Investigate unfamiliar threats carefully. Hazmat gear protects infected from blunt trauma.",
+					"title": "The Lab Infected"
+				},
+				{
+					"category": "enemy",
+					"emergency_red_intensity": 0.2,
+					"enemy_type": "night_hunter",
+					"id": "enemy_night_hunter",
+					"is_implemented": false,
+					"overlay_model": "res://tools/antigravity/zombie/photos/zombie_arm_stalker.png",
+					"overlay_pos": "(0.7, 0.32)",
+					"overlay_scale": 0.36,
+					"prompt": "Cinematic AAA survival horror concept art of The Night Hunter: An ominous, agile infected predator crouched atop a concrete architectural canopy outside ENSA Fès under full moonlight and heavy storm clouds. NO UI, NO text.",
+					"rim_color": "(0.5, 0.8, 1, 0.8)",
+					"source_candidates": [
+						"res://assets/launcher/campus-dusk-reference.png"
+					],
+					"subtitle": "Predatory Nocturnal Stalker",
+					"target_webp": "res://assets/loading/zombie/enemy_night_hunter.webp",
+					"tint": "(0.62, 0.72, 1.15, 1)",
+					"tip": "Visibility can be your greatest disadvantage outdoors after dusk.",
+					"title": "The Night Hunter"
+				},
+				{
+					"category": "enemy",
+					"emergency_red_intensity": 0.9,
+					"enemy_type": "apex",
+					"id": "enemy_apex",
+					"is_implemented": false,
+					"overlay_model": "res://tools/antigravity/zombie/photos/zombie_brute_chubby.png",
+					"overlay_pos": "(0.65, 0.45)",
+					"overlay_scale": 0.85,
+					"prompt": "Cinematic AAA survival horror concept art of The Apex Infected: A colossal, horrifying mutated boss enemy revealed dramatically inside the two-story glass atrium of ENSA Fès. Crimson emergency flares illuminating devastation. NO UI, NO text.",
+					"rim_color": "(1, 0.15, 0.15, 0.95)",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/atrium_after_dark_1793640362919.jpg"
+					],
+					"subtitle": "Catastrophic Mutation Threat",
+					"target_webp": "res://assets/loading/zombie/enemy_apex.webp",
+					"tint": "(0.95, 0.82, 0.9, 1)",
+					"tip": "Some encounters require preparation, traps, and supplies rather than direct confrontation.",
+					"title": "The Apex Infected"
+				},
+				{
+					"category": "environment",
+					"emergency_red_intensity": 0.45,
+					"enemy_type": "",
+					"id": "atrium_after_dark",
+					"is_implemented": true,
+					"prompt": "AAA cinematic concept art of ENSA Fès modern university campus dark atrium after dark. Full-height glass windows overlooking dark rainy night, red emergency light glowing, survival gear in foreground, distant zombies. NO UI, NO text.",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/atrium_after_dark_1793640362919.jpg"
+					],
+					"subtitle": "Main Reception & Central Concourse",
+					"target_webp": "res://assets/loading/zombie/atrium_after_dark.webp",
+					"tint": "(0.95, 0.98, 1.05, 1)",
+					"tip": "Emergency lights highlight survival supply caches left behind during evacuation.",
+					"title": "Atrium After Dark"
+				},
+				{
+					"category": "environment",
+					"emergency_red_intensity": 0.25,
+					"enemy_type": "",
+					"id": "env_computer_lab",
+					"is_implemented": true,
+					"prompt": "Cinematic AAA concept art of an abandoned computer laboratory at ENSA Fès. Overturned chairs, glowing terminal monitors, cables hanging from ceiling, blue and green ambient screen light in pitch black room. NO UI, NO text.",
+					"source_candidates": [
+						"res://assets/launcher/case-workstation.png"
+					],
+					"subtitle": "Department of Computer Engineering",
+					"target_webp": "res://assets/loading/zombie/env_computer_lab.webp",
+					"tint": "(0.65, 0.8, 1.2, 1)",
+					"tip": "Emergency power keeps certain workstations online. Check them for campus maps and security logs.",
+					"title": "Abandoned Computer Laboratory"
+				},
+				{
+					"category": "environment",
+					"emergency_red_intensity": 0.2,
+					"enemy_type": "",
+					"id": "env_library",
+					"is_implemented": true,
+					"norm_crop": "[P: (0.25, 0.05), S: (0.65, 0.6)]",
+					"prompt": "Cinematic AAA concept art of ENSA Fès university library at night. Towering academic bookshelves, moonlit skylights, dust motes floating in cold beams, ominous infected silhouette in distance. NO UI, NO text.",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/atrium_after_dark_1793640362919.jpg"
+					],
+					"subtitle": "Central Reading Room & Archives",
+					"target_webp": "res://assets/loading/zombie/env_library.webp",
+					"tint": "(0.75, 0.85, 1.15, 1)",
+					"tip": "Keep quiet in the library stacks. Shamblers react immediately to dropped objects.",
+					"title": "The Library"
+				},
+				{
+					"category": "environment",
+					"emergency_red_intensity": 0.35,
+					"enemy_type": "",
+					"id": "env_rooftop",
+					"is_implemented": true,
+					"prompt": "Cinematic AAA concept art: Rooftop view across ENSA Fès modern campus at night. Distant city lights of Fès, storm clouds, concrete parapet, rain puddles, solitary survivor with backpack looking out. NO UI, NO text.",
+					"source_candidates": [
+						"res://assets/antigravity/launcher/bg_campus.png"
+					],
+					"subtitle": "Science & Tech Wing Observational Deck",
+					"target_webp": "res://assets/loading/zombie/env_rooftop.webp",
+					"tint": "(0.6, 0.7, 1.05, 1)",
+					"tip": "Rooftop perches offer safe observation points and line-of-sight for signaling flares.",
+					"title": "The Rooftop"
+				},
+				{
+					"category": "environment",
+					"emergency_red_intensity": 0.55,
+					"enemy_type": "",
+					"id": "env_underground",
+					"is_implemented": true,
+					"prompt": "Cinematic AAA concept art of underground service tunnels at ENSA Fès. Concrete utility corridors, overhead steam pipes, flickering industrial yellow cage lights, wet maintenance floor. NO UI, NO text.",
+					"source_candidates": [
+						"res://assets/user_models/server_rack_0.jpg",
+						"res://assets/launcher/case-workstation.png"
+					],
+					"subtitle": "Sub-Level HVAC & Utility Tunnels",
+					"target_webp": "res://assets/loading/zombie/env_underground.webp",
+					"tint": "(0.75, 0.85, 1.05, 1)",
+					"tip": "Flashlights reveal hidden service doors, but beware of reflected light drawing stalkers.",
+					"title": "Underground Service Area"
+				},
+				{
+					"category": "environment",
+					"emergency_red_intensity": 0.45,
+					"enemy_type": "",
+					"id": "campus_courtyard",
+					"is_implemented": true,
+					"prompt": "Cinematic AAA survival horror artwork of the main exterior courtyard of ENSA Fès at dusk in heavy rain. Barricades, abandoned backpacks, glowing red emergency flares, wet stone reflections. NO UI, NO text.",
+					"source_candidates": [
+						"res://assets/launcher/campus-dusk-reference.png"
+					],
+					"subtitle": "Central Plaza & Main Esplanade",
+					"target_webp": "res://assets/loading/zombie/campus_courtyard.webp",
+					"tint": "(0.68, 0.78, 1.15, 1)",
+					"tip": "Open plazas leave you exposed from all angles. Stick close to concrete planters for cover.",
+					"title": "The Campus Courtyard"
+				},
+				{
+					"category": "survival",
+					"emergency_red_intensity": 0.2,
+					"enemy_type": "",
+					"id": "survival_stealth",
+					"is_implemented": true,
+					"overlay_model": "res://tools/antigravity/zombie/photos/zombie_walker_basic.png",
+					"overlay_pos": "(0.74, 0.46)",
+					"overlay_scale": 0.45,
+					"prompt": "Cinematic AAA survival mechanics art: A survivor crouching quietly behind campus lockers in dark shadow while an infected walker shambles past just feet away under dim emergency light. NO UI, NO text.",
+					"source_candidates": [
+						"res://assets/launcher/case-workstation.png"
+					],
+					"subtitle": "Low-Profile Campus Traversal",
+					"target_webp": "res://assets/loading/zombie/survival_stealth.webp",
+					"tint": "(0.6, 0.72, 1.05, 1)",
+					"tip": "Crouching reduces footstep audio. Move behind furniture to break enemy line of sight.",
+					"title": "Stealth & Evasion"
+				},
+				{
+					"category": "survival",
+					"emergency_red_intensity": 0.4,
+					"enemy_type": "",
+					"id": "survival_scavenging",
+					"is_implemented": true,
+					"norm_crop": "[P: (0.48, 0.35), S: (0.5, 0.6)]",
+					"prompt": "Cinematic AAA survival art: An abandoned campus emergency triage station on a desk with medical supplies, bandages, food rations, an open backpack, and a lit tactical flashlight. NO UI, NO text.",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/atrium_after_dark_1793640362919.jpg"
+					],
+					"subtitle": "Field Ration & Ammo Logistics",
+					"target_webp": "res://assets/loading/zombie/survival_scavenging.webp",
+					"tint": "(0.95, 0.95, 1.05, 1)",
+					"tip": "Check supply crates and lockers for medical items, ammo, and barricade components.",
+					"title": "Supply Scavenging"
+				},
+				{
+					"category": "survival",
+					"emergency_red_intensity": 0.5,
+					"enemy_type": "",
+					"id": "survival_barricade",
+					"is_implemented": true,
+					"norm_crop": "[P: (0.12, 0.35), S: (0.5, 0.6)]",
+					"prompt": "Cinematic AAA survival art: A survivor urgently reinforcing a wooden barricade across a glass classroom door, tactical flashlight beam illuminating incoming shadows in the corridor. NO UI, NO text.",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/atrium_after_dark_1793640362919.jpg"
+					],
+					"subtitle": "Tactical Fortification",
+					"target_webp": "res://assets/loading/zombie/survival_barricade.webp",
+					"tint": "(0.9, 0.92, 1.05, 1)",
+					"tip": "Barricade classroom doors with pallets and furniture to buy time against incoming hordes.",
+					"title": "Defensive Preparation"
+				},
+				{
+					"category": "survival",
+					"emergency_red_intensity": 0.65,
+					"enemy_type": "",
+					"id": "survival_escape",
+					"is_implemented": true,
+					"prompt": "Cinematic AAA gameplay climax scene: A survivor racing towards an illuminated green emergency exit door at ENSA Fès while shadows of zombies pursue in the background corridor. Dynamic motion blur. NO UI, NO text.",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/enemy_02_runner_1793640420961.jpg"
+					],
+					"subtitle": "Extraction Zone Defense",
+					"target_webp": "res://assets/loading/zombie/survival_escape.webp",
+					"tint": "(0.85, 0.95, 1.05, 1)",
+					"tip": "Keep an extraction route planned before initiating combat inside unfamiliar corridors.",
+					"title": "Emergency Escape"
+				},
+				{
+					"category": "story",
+					"emergency_red_intensity": 0.85,
+					"enemy_type": "",
+					"id": "story_first_night",
+					"is_implemented": true,
+					"prompt": "Cinematic AAA storytelling scene: The main entrance lobby of ENSA Fès on the night of the outbreak. Emergency vehicles flashing blue and red through the rainy glass windows, abandoned cellphones ringing on the floor. NO UI, NO text.",
+					"source_candidates": [
+						"C:/Users/marwa/.gemini/antigravity/brain/3b9989ed-3161-44c2-a44a-a5884afd44e0/atrium_after_dark_1793640362919.jpg"
+					],
+					"subtitle": "Incident Chronology: 21:14 Lockdown",
+					"target_webp": "res://assets/loading/zombie/story_first_night.webp",
+					"tint": "(0.88, 0.88, 1.05, 1)",
+					"tip": "When campus communications failed at 21:00, security protocol Alpha triggered full building isolation.",
+					"title": "The First Night"
+				},
+				{
+					"category": "story",
+					"emergency_red_intensity": 0.3,
+					"enemy_type": "",
+					"id": "story_unknown_signal",
+					"is_implemented": true,
+					"prompt": "Cinematic AAA narrative art: A lonely glowing monitor in an isolated darkened campus office displaying an oscillating soundwave radio transmission, an amber emergency beacon slowly rotating on the wall. NO UI, NO text.",
+					"source_candidates": [
+						"res://assets/launcher/case-workstation.png"
+					],
+					"subtitle": "Automated SOS Frequency",
+					"target_webp": "res://assets/loading/zombie/story_unknown_signal.webp",
+					"tint": "(0.7, 0.9, 1.3, 1)",
+					"tip": "A looped radio transmission from the engineering block repeats coordinates every 15 minutes.",
+					"title": "The Unknown Signal"
+				}
+			],
+			"title": "Zombie RPG Survival",
+			"total_slides": 24
+		}
+	},
+	"reference_art_direction": "Design 2: Dark ENSA Fès atrium with floor-to-ceiling windows, nighttime blue lighting, red emergency lights, atmospheric fog, survival equipment, distant zombies",
+	"system": "ENSA GAMES AAA Cinematic Loading Screen System",
+	"version": 1
+}
