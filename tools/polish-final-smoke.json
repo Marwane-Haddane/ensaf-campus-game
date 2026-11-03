@@ -1,0 +1,124 @@
+{
+  "aisle_walked": true,
+  "campus": {
+    "batched_instances": 1355,
+    "build_seconds": 5.019,
+    "chair_boxes": 198,
+    "collision_bodies": 2173,
+    "collision_cache_hits": 293,
+    "furniture_bodies": 232,
+    "materials": {
+      "families": {
+        "asphalt": 1,
+        "bark": 8,
+        "carpet": 1,
+        "fabric": 8,
+        "floor_stone": 3,
+        "foliage": 14,
+        "glass": 9,
+        "grout": 4,
+        "lawn": 4,
+        "limestone": 10,
+        "metal": 7,
+        "metal_painted": 8,
+        "mineral": 13,
+        "paving": 2,
+        "simple": 23,
+        "slate": 6,
+        "soil": 1,
+        "terrazzo": 4,
+        "wood_horizontal": 2,
+        "wood_transverse": 1,
+        "wood_vertical": 5
+      },
+      "generation_msec": 1772,
+      "materials": 134,
+      "normal_texture_sets": 3,
+      "preserved_mapped": 0,
+      "roughness_texture_sets": 0,
+      "texture_bytes": 2752493,
+      "texture_sets": 15
+    },
+    "merged_static_instances": 3829,
+    "mesh_nodes": 5965,
+    "multimesh_batches": 29,
+    "occlusion": {
+      "accepted": 112,
+      "enabled": true,
+      "install_msec": 63,
+      "occluder_instances": 1,
+      "rejected": {
+        "door_or_door_frame": 79,
+        "non_architectural_role": 4260,
+        "not_a_proven_closed_box": 95,
+        "small_or_thin": 1419
+      },
+      "triangles": 1344,
+      "vertices": 896
+    },
+    "passable_door_meshes": 109,
+    "ready": true,
+    "static_surface_batches": 92,
+    "transparent_meshes_without_shadows": 315,
+    "unique_collision_shapes": 1686
+  },
+  "destinations": {
+    "Auditorium rear aisle": {
+      "height": 1.81413674354553,
+      "on_floor": true
+    },
+    "Auditorium teaching desk": {
+      "height": 0.980136752128601,
+      "on_floor": true
+    },
+    "Campus plaza": {
+      "height": 1.16650390625,
+      "on_floor": true
+    },
+    "Glazed building entrance": {
+      "height": 2.70332026481628,
+      "on_floor": true
+    },
+    "Reception / response desk": {
+      "height": 1.8133202791214,
+      "on_floor": true
+    },
+    "Security training area": {
+      "height": 2.69013667106628,
+      "on_floor": true
+    }
+  },
+  "ground": {
+    "d_entrance": {
+      "height": 1.81200003623962,
+      "hit": true,
+      "source": "D9 uppermost broad stair continuous stone finish"
+    },
+    "e_foyer": {
+      "height": 0.921999990940094,
+      "hit": true,
+      "source": "E6 reception large format stone floor"
+    },
+    "e_rear_aisle": {
+      "height": 0.924000024795532,
+      "hit": true,
+      "source": "E9 rear aisle red carpet"
+    },
+    "plaza": {
+      "height": 0.276000142097473,
+      "hit": true,
+      "source": "D7 paved entrance approach overlay"
+    }
+  },
+  "passed": true,
+  "player_settled": true,
+  "player_walked": true,
+  "station_count": 5,
+  "training": {
+    "checks": 8,
+    "failures": [],
+    "passed": true,
+    "points": 100,
+    "steps": 7
+  }
+}

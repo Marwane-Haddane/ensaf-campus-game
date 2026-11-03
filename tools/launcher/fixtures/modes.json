@@ -1,0 +1,16 @@
+[
+  {
+    "id":"zombie_rpg", "title":"Survival lifecycle fixture", "availability":"available",
+    "scene_path":"res://tools/launcher/fixtures/session.tscn",
+    "adapter_path":"res://tools/launcher/fixtures/mode_adapter.gd",
+    "save_namespace":"zombie_rpg", "mission_ids":["ZB-FIXTURE-001"],
+    "missions":[{"id":"ZB-FIXTURE-001","title":"Independent survival fixture","objective":"Exercise the shared lifecycle","controls":[{"action":"Fixture action","binding":"F"}]}]
+  },
+  {
+    "id":"fixture_other", "title":"Second independent fixture", "availability":"available",
+    "scene_path":"res://tools/launcher/fixtures/session.tscn",
+    "adapter_path":"res://tools/launcher/fixtures/other_adapter.gd",
+    "save_namespace":"fixture_other", "mission_ids":["OTHER-001"],
+    "missions":[{"id":"OTHER-001","title":"Independent second fixture","objective":"Keep its checkpoint separate","controls":"Legacy prose must not crash the native control grid"}]
+  }
+]

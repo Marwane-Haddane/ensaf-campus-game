@@ -1,0 +1,118 @@
+{
+  "api": "FurnitureProps.place(parent: Node3D, kind: String, position: Vector3, yaw: float = 0.0) -> Node3D",
+  "placement": "parent-local floor centre; yaw in radians; front +Z at yaw 0",
+  "models": {
+    "chair": {
+      "path": "res://assets/user_models/office_chair.glb",
+      "source_sha256": "4ce6d139ce3c91f3cd7595391790f3be6370551626e3e6d08a3ce2e608163aab",
+      "original_unchanged": true,
+      "credit": {
+        "author": "Tomaso (https://sketchfab.com/Tomasoo)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/office-chair-69208f9465c346308a2bf423c7e5b8f6",
+        "title": "Office Chair"
+      },
+      "measurements": {
+        "collision_check": "front collision matches visible AABB",
+        "floor_min": 0,
+        "materials": 1,
+        "meshes": 1,
+        "size": [
+          0.73936939239502,
+          1.09999990463257,
+          0.800726592540741
+        ],
+        "textures": 3
+      },
+      "front_correction_degrees": 0,
+      "previews": [
+        "tools/furniture_chair_front.png",
+        "tools/furniture_chair_rear.png"
+      ]
+    },
+    "desk": {
+      "path": "res://assets/user_models/office_desk_140x60.glb",
+      "source_sha256": "469d5bd0493f7f6edb8dff31b03f05490ed24f24c2552a87923a22388cdaa214",
+      "original_unchanged": true,
+      "credit": {
+        "author": "AleixoAlonso (https://sketchfab.com/AleixoAlonso)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/office-desk-140x60-9262f311271c4c4390341e526d3fe103",
+        "title": "Office Desk 140x60"
+      },
+      "measurements": {
+        "collision_check": "tabletop at 0.75m; knee space clear",
+        "floor_min": 0,
+        "materials": 1,
+        "meshes": 3,
+        "size": [
+          1.39999997615814,
+          0.75,
+          0.599999964237213
+        ],
+        "textures": 3
+      },
+      "front_correction_degrees": 0,
+      "previews": [
+        "tools/furniture_desk_front.png",
+        "tools/furniture_desk_rear.png"
+      ]
+    },
+    "server_rack": {
+      "path": "res://assets/user_models/server_rack.glb",
+      "source_sha256": "9a51530dd19e742454313b8771b2cecef03c429f3cd998aa24294b9bc2ae7bce",
+      "original_unchanged": true,
+      "credit": {
+        "author": "Spellkaze (https://sketchfab.com/Spellkaze)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/server-rack-62f6779cb7e448b19aaf58544c3c7218",
+        "title": "Server Rack"
+      },
+      "measurements": {
+        "collision_check": "front collision matches visible AABB",
+        "floor_min": -1.414195e-08,
+        "materials": 1,
+        "meshes": 1,
+        "size": [
+          0.647058069705963,
+          2,
+          0.647060096263886
+        ],
+        "textures": 4
+      },
+      "front_correction_degrees": 180,
+      "previews": [
+        "tools/furniture_server_rack_front.png",
+        "tools/furniture_server_rack_rear.png"
+      ]
+    },
+    "server_rack_1": {
+      "path": "res://assets/user_models/server_rack_1.glb",
+      "source_sha256": "56bf9e380bb63fa159681b9591ae8c0e26b76e67bbd7244586119c5d88ffba34",
+      "original_unchanged": true,
+      "credit": {
+        "author": "Shalmon (https://sketchfab.com/nashalanandas)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/server-rack-c144d837358d446998c7b63cd1bdf825",
+        "title": "Server Rack"
+      },
+      "measurements": {
+        "collision_check": "front collision matches visible AABB",
+        "floor_min": 0,
+        "materials": 9,
+        "meshes": 12,
+        "size": [
+          0.786509871482849,
+          1.99999976158142,
+          0.763679683208466
+        ],
+        "textures": 0
+      },
+      "front_correction_degrees": 0,
+      "previews": [
+        "tools/furniture_server_rack_1_front.png",
+        "tools/furniture_server_rack_1_rear.png"
+      ]
+    }
+  }
+}

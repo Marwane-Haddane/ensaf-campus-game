@@ -1,0 +1,19 @@
+{
+  "checks": 2360,
+  "failures": [],
+  "passed": true,
+  "production": {
+    "batches_checked": 29,
+    "colliders_checked": 2247,
+    "resource_counts": {
+      "environments_tuned": 0,
+      "injected_nodes": 2,
+      "lights_tuned": 0,
+      "materials_duplicated": 82,
+      "mesh_overrides_applied": 842,
+      "multimesh_batches_overridden": 20,
+      "static_surface_batches_overridden": 59
+    },
+    "screens_checked": 10
+  }
+}

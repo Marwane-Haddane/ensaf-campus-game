@@ -1,0 +1,629 @@
+{
+  "mission_id": "ZB-2026-001",
+  "title": "After Hours",
+  "subtitle": "A campus survival story",
+  "main_objective": "Restore power and reach extraction",
+  "estimated_duration_minutes": "6\u201310",
+  "player_spawn": {
+    "position": [
+      -27.0,
+      1.25,
+      -85.0
+    ],
+    "yaw_degrees": 0.0
+  },
+  "extraction_point": {
+    "position": [
+      -20.0,
+      1.25,
+      -68.0
+    ],
+    "radius": 4.0,
+    "label": "Extraction Vehicle"
+  },
+  "survivor": {
+    "name": "Shaun",
+    "position": [
+      -37.0,
+      1.92,
+      -107.95
+    ],
+    "yaw_degrees": 180.0,
+    "dialogue": [
+      "Keep your voice down. I am Shaun; I have people sheltering by the Auditorium.",
+      "The emergency circuit failed and the main gate has no power. We cannot leave through it yet.",
+      "Reception has a Main Breaker Fuse. The Control Bus Relay is by the glazed entrance. Bring both to the Security Substation.",
+      "There is a field workbench near Reception. Scrap can buy protection or a larger magazine. Pick what helps you survive the route.",
+      "Come back after the circuit is live. We need to know the exit is safe before anyone moves."
+    ],
+    "dialogue_after_power": [
+      "The emergency line is live. I have the last group sheltered inside.",
+      "The brute is blocking the route to the truck. Clear it before you approach the gate.",
+      "Give its attack room to miss, then fire during recovery. Save a magazine for the final approach.",
+      "Once the route is clear, reach the extraction truck. We will use the path you secured."
+    ]
+  },
+  "power_station": {
+    "position": [
+      0.9,
+      2.8,
+      -110.5
+    ],
+    "label": "Security Substation Breaker Panel",
+    "required_items": [
+      "item_power_fuse",
+      "item_power_relay"
+    ]
+  },
+  "upgrade_station": {
+    "position": [
+      -35.0,
+      1.91,
+      -105.0
+    ],
+    "label": "Field Workbench",
+    "cost": 25,
+    "upgrades": [
+      {
+        "id": "upgrade_armor",
+        "title": "Kevlar Reinforcement",
+        "description": "+50 maximum health and 50 immediate healing. Safer close encounters.",
+        "cost": 25
+      },
+      {
+        "id": "upgrade_extended_mag",
+        "title": "Extended Magazine",
+        "description": "Pistol 12 to 18 rounds; Scorpion 20 to 30. Less time exposed while reloading.",
+        "cost": 25
+      }
+    ]
+  },
+  "objectives": [
+    {
+      "id": "obj_explore",
+      "text": "Find a supply cache. The campus gate has lost power.",
+      "trigger": "start"
+    },
+    {
+      "id": "obj_fuse",
+      "text": "Recover the Main Breaker Fuse from Reception.",
+      "trigger": "pickup_fuse"
+    },
+    {
+      "id": "obj_relay",
+      "text": "Recover the Control Bus Relay at the glazed entrance.",
+      "trigger": "pickup_relay"
+    },
+    {
+      "id": "obj_power",
+      "text": "Install both components at the Security Substation.",
+      "trigger": "restore_power"
+    },
+    {
+      "id": "obj_survivor",
+      "text": "Check in with Shaun by the Auditorium.",
+      "trigger": "talk_survivor"
+    },
+    {
+      "id": "obj_boss",
+      "text": "Clear the brute blocking the evacuation route.",
+      "trigger": "kill_boss"
+    },
+    {
+      "id": "obj_extract",
+      "text": "Reach the extraction truck at the campus gate.",
+      "trigger": "reach_extraction"
+    }
+  ],
+  "pickups": [
+    {
+      "id": "item_power_fuse",
+      "type": "quest",
+      "name": "Main Breaker Fuse",
+      "position": [
+        -36.2,
+        1.862,
+        -105.43
+      ],
+      "respawn": false
+    },
+    {
+      "id": "item_power_relay",
+      "type": "quest",
+      "name": "Control Bus Relay",
+      "position": [
+        -5.8,
+        2.95,
+        -102.9
+      ],
+      "respawn": false
+    },
+    {
+      "id": "ammo_plaza_1",
+      "type": "ammo",
+      "amount": 12,
+      "position": [
+        -29.5,
+        1.35,
+        -88.0
+      ]
+    },
+    {
+      "id": "medkit_plaza_1",
+      "type": "medkit",
+      "amount": 1,
+      "position": [
+        -25.0,
+        1.35,
+        -92.0
+      ]
+    },
+    {
+      "id": "scrap_plaza_1",
+      "type": "scrap",
+      "amount": 15,
+      "position": [
+        -31.0,
+        1.35,
+        -90.0
+      ]
+    },
+    {
+      "id": "ammo_reception_1",
+      "type": "ammo",
+      "amount": 12,
+      "position": [
+        -37.5,
+        2.05,
+        -103.5
+      ]
+    },
+    {
+      "id": "scrap_reception_1",
+      "type": "scrap",
+      "amount": 15,
+      "position": [
+        -34.5,
+        2.05,
+        -106.0
+      ]
+    },
+    {
+      "id": "ammo_glazed_1",
+      "type": "ammo",
+      "amount": 12,
+      "position": [
+        -7.5,
+        2.95,
+        -104.0
+      ]
+    },
+    {
+      "id": "medkit_security_1",
+      "type": "medkit",
+      "amount": 1,
+      "position": [
+        2.5,
+        2.95,
+        -112.0
+      ]
+    },
+    {
+      "id": "scrap_auditorium_1",
+      "type": "scrap",
+      "amount": 15,
+      "position": [
+        -39.0,
+        2.05,
+        -109.0
+      ]
+    }
+  ],
+  "enemy_spawns": [
+    {
+      "id": "walker_plaza_1",
+      "type": "walker",
+      "position": [
+        -24.0,
+        1.25,
+        -95.0
+      ],
+      "patrol_points": [
+        [
+          -24.0,
+          1.25,
+          -95.0
+        ],
+        [
+          -28.0,
+          1.25,
+          -98.0
+        ]
+      ]
+    },
+    {
+      "id": "walker_plaza_2",
+      "type": "walker",
+      "position": [
+        -32.0,
+        1.25,
+        -94.0
+      ],
+      "patrol_points": [
+        [
+          -32.0,
+          1.25,
+          -94.0
+        ],
+        [
+          -26.0,
+          1.25,
+          -90.0
+        ]
+      ]
+    },
+    {
+      "id": "walker_reception_1",
+      "type": "walker",
+      "position": [
+        -35.0,
+        1.92,
+        -101.5
+      ],
+      "patrol_points": [
+        [
+          -35.0,
+          1.92,
+          -101.5
+        ],
+        [
+          -37.5,
+          1.92,
+          -105.0
+        ]
+      ]
+    },
+    {
+      "id": "walker_hallway_1",
+      "type": "walker",
+      "position": [
+        -18.0,
+        2.0,
+        -103.0
+      ],
+      "patrol_points": [
+        [
+          -18.0,
+          2.0,
+          -103.0
+        ],
+        [
+          -12.0,
+          2.5,
+          -103.0
+        ]
+      ]
+    },
+    {
+      "id": "walker_glazed_1",
+      "type": "walker",
+      "position": [
+        -4.5,
+        2.8,
+        -105.0
+      ],
+      "patrol_points": [
+        [
+          -4.5,
+          2.8,
+          -105.0
+        ],
+        [
+          -7.0,
+          2.8,
+          -101.0
+        ]
+      ]
+    },
+    {
+      "id": "walker_security_1",
+      "type": "walker",
+      "position": [
+        -1.0,
+        2.8,
+        -111.0
+      ],
+      "patrol_points": [
+        [
+          -1.0,
+          2.8,
+          -111.0
+        ],
+        [
+          2.0,
+          2.8,
+          -109.0
+        ]
+      ]
+    },
+    {
+      "id": "walker_auditorium_1",
+      "type": "walker",
+      "position": [
+        -41.0,
+        1.5,
+        -114.0
+      ],
+      "patrol_points": [
+        [
+          -41.0,
+          1.5,
+          -114.0
+        ],
+        [
+          -38.0,
+          1.92,
+          -108.0
+        ]
+      ]
+    },
+    {
+      "id": "crawler_garden_1",
+      "type": "crawler",
+      "position": [
+        -14.0,
+        2.1,
+        -100.0
+      ],
+      "patrol_points": [
+        [
+          -14.0,
+          2.1,
+          -100.0
+        ],
+        [
+          -10.0,
+          2.4,
+          -102.0
+        ]
+      ]
+    },
+    {
+      "id": "crawler_glazed_1",
+      "type": "crawler",
+      "position": [
+        -6.0,
+        2.8,
+        -107.0
+      ],
+      "patrol_points": [
+        [
+          -6.0,
+          2.8,
+          -107.0
+        ],
+        [
+          -2.0,
+          2.8,
+          -109.0
+        ]
+      ]
+    },
+    {
+      "id": "screamer_auditorium_1",
+      "type": "screamer",
+      "position": [
+        -43.0,
+        1.5,
+        -116.0
+      ],
+      "patrol_points": [
+        [
+          -43.0,
+          1.5,
+          -116.0
+        ],
+        [
+          -40.0,
+          1.5,
+          -112.0
+        ]
+      ]
+    },
+    {
+      "id": "stalker_colonnade_1",
+      "type": "stalker",
+      "position": [
+        -16.0,
+        2.1,
+        -99.0
+      ],
+      "patrol_points": [
+        [
+          -16.0,
+          2.1,
+          -99.0
+        ],
+        [
+          -11.0,
+          2.4,
+          -101.0
+        ]
+      ]
+    },
+    {
+      "id": "brute_boss",
+      "type": "brute",
+      "is_boss": true,
+      "position": [
+        -28.0,
+        1.25,
+        -78.0
+      ],
+      "patrol_points": [
+        [
+          -28.0,
+          1.25,
+          -78.0
+        ],
+        [
+          -22.0,
+          1.25,
+          -75.0
+        ]
+      ]
+    }
+  ],
+  "props": [
+    {
+      "scene": "res://assets/antigravity/zombie/props/TrafficBarrier_1.tscn",
+      "position": [
+        -22.0,
+        1.25,
+        -73.0
+      ],
+      "rotation_y": 15.0,
+      "scale": [
+        1.2,
+        1.2,
+        1.2
+      ]
+    },
+    {
+      "scene": "res://assets/antigravity/zombie/props/TrafficBarrier_1.tscn",
+      "position": [
+        -18.0,
+        1.25,
+        -73.0
+      ],
+      "rotation_y": -10.0,
+      "scale": [
+        1.2,
+        1.2,
+        1.2
+      ]
+    },
+    {
+      "scene": "res://assets/antigravity/zombie/props/Pallet.tscn",
+      "position": [
+        -30.0,
+        1.25,
+        -87.5
+      ],
+      "rotation_y": 45.0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "scene": "res://assets/antigravity/zombie/props/Barrel.tscn",
+      "position": [
+        -29.5,
+        1.25,
+        -86.8
+      ],
+      "rotation_y": 0.0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "scene": "res://assets/antigravity/zombie/props/Container_Red.tscn",
+      "position": [
+        -15.0,
+        1.25,
+        -80.0
+      ],
+      "rotation_y": 30.0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "scene": "res://assets/antigravity/zombie/props/Vehicle_Pickup_Armored.tscn",
+      "position": [
+        -20.0,
+        1.25,
+        -67.0
+      ],
+      "rotation_y": 180.0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "briefing": "The emergency grid has failed after hours. Reception holds the fuse, the glazed entrance holds the relay, and Shaun is sheltering people by the Auditorium. Restore power, check in with him, clear the brute from the gate route and reach the extraction truck. Supplies and workbench upgrades can make the route safer; eliminating every infected is optional.",
+  "story_beats": [
+    {
+      "id": "arrival",
+      "title": "01 / Stranded",
+      "location": "Campus plaza",
+      "purpose": "Find supplies and learn that the gate is offline."
+    },
+    {
+      "id": "fuse",
+      "title": "02 / The broken grid",
+      "location": "Reception",
+      "purpose": "Recover the fuse and choose an early workbench specialization."
+    },
+    {
+      "id": "relay",
+      "title": "03 / Crossing campus",
+      "location": "Glazed entrance",
+      "purpose": "Cross exposed space, isolate threats and recover the relay."
+    },
+    {
+      "id": "power",
+      "title": "04 / Power returns",
+      "location": "Security substation",
+      "purpose": "Install both components and restore the evacuation circuit."
+    },
+    {
+      "id": "shaun",
+      "title": "05 / Nobody left behind",
+      "location": "Auditorium",
+      "purpose": "Check in after power returns and confirm Shaun has a sheltered group."
+    },
+    {
+      "id": "brute",
+      "title": "06 / Hold the courtyard",
+      "location": "Gate approach",
+      "purpose": "Read the brute windup, dodge its committed swing and use recovery windows."
+    },
+    {
+      "id": "extraction",
+      "title": "07 / After Hours",
+      "location": "Extraction truck",
+      "purpose": "Leave by the secured route; review real playtime, combat and progression."
+    }
+  ],
+  "progression": {
+    "rank_thresholds": [
+      0,
+      60,
+      150,
+      300
+    ],
+    "rank_titles": [
+      "New arrival",
+      "Field responder",
+      "Campus defender",
+      "Survivor"
+    ],
+    "medkit_healing_by_rank": [
+      40,
+      50,
+      60,
+      60
+    ],
+    "note": "Objectives, unique kills and caches grant one-time experience. Rank improves field medicine; scrap pays for permanent equipment upgrades."
+  }
+}

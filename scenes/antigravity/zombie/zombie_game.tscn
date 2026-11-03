@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3x8k2v0y1q2p"]
+
+[ext_resource type="Script" path="res://scripts/antigravity/zombie/zombie_game.gd" id="1_zgame"]
+
+[node name="ZombieGame" type="Node3D"]
+script = ExtResource("1_zgame")

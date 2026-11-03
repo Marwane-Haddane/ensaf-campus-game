@@ -1,0 +1,50 @@
+{
+	"chair": {
+		"collision_check": "front collision matches visible AABB",
+		"floor_min": 0,
+		"materials": 1,
+		"meshes": 1,
+		"size": [
+			0.73936939239502,
+			1.09999990463257,
+			0.800726592540741
+		],
+		"textures": 3
+	},
+	"desk": {
+		"collision_check": "tabletop at 0.75m; knee space clear",
+		"floor_min": 0,
+		"materials": 1,
+		"meshes": 3,
+		"size": [
+			1.39999997615814,
+			0.75,
+			0.599999964237213
+		],
+		"textures": 3
+	},
+	"server_rack": {
+		"collision_check": "front collision matches visible AABB",
+		"floor_min": -0.00000001414195,
+		"materials": 1,
+		"meshes": 1,
+		"size": [
+			0.647058069705963,
+			2,
+			0.647060096263886
+		],
+		"textures": 4
+	},
+	"server_rack_1": {
+		"collision_check": "front collision matches visible AABB",
+		"floor_min": 0,
+		"materials": 9,
+		"meshes": 12,
+		"size": [
+			0.786509871482849,
+			1.99999976158142,
+			0.763679683208466
+		],
+		"textures": 0
+	}
+}

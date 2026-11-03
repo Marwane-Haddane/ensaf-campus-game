@@ -1,0 +1,442 @@
+{
+	"failed_assertions": 0,
+	"failures": [],
+	"passed": true,
+	"passed_assertions": 96,
+	"suites": {
+		"INIT": {
+			"checks": [
+				{
+					"check": "Load Polish Script",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 1
+		},
+		"SUITE_1": {
+			"checks": [
+				{
+					"check": "1.1 Install with missing CampusRuntime succeeds",
+					"status": "PASS"
+				},
+				{
+					"check": "1.1 Zero mesh overrides applied when no CampusRuntime",
+					"status": "PASS"
+				},
+				{
+					"check": "1.1 Uninstall with missing CampusRuntime clean",
+					"status": "PASS"
+				},
+				{
+					"check": "1.2 Install with missing CampusRenderBatches succeeds",
+					"status": "PASS"
+				},
+				{
+					"check": "1.2 Fallback multimesh batch count 29 used when node absent",
+					"status": "PASS"
+				},
+				{
+					"check": "1.2 Fallback static surface batch count 92 used when node absent",
+					"status": "PASS"
+				},
+				{
+					"check": "1.2 Uninstall with missing batches clean",
+					"status": "PASS"
+				},
+				{
+					"check": "1.3 Install with 0 batches children succeeds",
+					"status": "PASS"
+				},
+				{
+					"check": "1.3 Batch count correctly reports 0 multimesh",
+					"status": "PASS"
+				},
+				{
+					"check": "1.3 Batch count correctly reports 0 static surfaces",
+					"status": "PASS"
+				},
+				{
+					"check": "1.3 Uninstall with 0 batches clean",
+					"status": "PASS"
+				},
+				{
+					"check": "1.4 Non-mesh nodes in CampusRenderBatches safely ignored",
+					"status": "PASS"
+				},
+				{
+					"check": "1.4 Uninstall with non-mesh nodes clean",
+					"status": "PASS"
+				},
+				{
+					"check": "1.5 Malformed imported_props handled safely without crash",
+					"status": "PASS"
+				},
+				{
+					"check": "1.5 Uninstall with malformed imported_props clean",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 15
+		},
+		"SUITE_2": {
+			"checks": [
+				{
+					"check": "2.1 Install succeeds when ceiling backing is absent from mesh_nodes",
+					"status": "PASS"
+				},
+				{
+					"check": "2.1 _ceiling_backing_node remains null when absent",
+					"status": "PASS"
+				},
+				{
+					"check": "2.1 Uninstall succeeds cleanly without ceiling backing node",
+					"status": "PASS"
+				},
+				{
+					"check": "2.2 mesh_nodes with non-MeshInstance3D items safely filtered",
+					"status": "PASS"
+				},
+				{
+					"check": "2.2 Uninstall clean with non-mesh items in mesh_nodes",
+					"status": "PASS"
+				},
+				{
+					"check": "2.3 Non-mesh ceiling backing node safely ignored",
+					"status": "PASS"
+				},
+				{
+					"check": "2.3 _ceiling_backing_node remains null for non-MeshInstance3D",
+					"status": "PASS"
+				},
+				{
+					"check": "2.3 Uninstall clean",
+					"status": "PASS"
+				},
+				{
+					"check": "2.4 Install with real ceiling backing node succeeds",
+					"status": "PASS"
+				},
+				{
+					"check": "2.4 Ceiling backing unhidden after install",
+					"status": "PASS"
+				},
+				{
+					"check": "2.4 Ceiling backing offset by -2mm",
+					"status": "PASS"
+				},
+				{
+					"check": "2.4 Softened reveal material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "2.4 Uninstall succeeds",
+					"status": "PASS"
+				},
+				{
+					"check": "2.4 Original hidden visibility restored",
+					"status": "PASS"
+				},
+				{
+					"check": "2.4 Original global_position.y restored",
+					"status": "PASS"
+				},
+				{
+					"check": "2.4 Original null material_override restored",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 16
+		},
+		"SUITE_3": {
+			"checks": [
+				{
+					"check": "3.1 Install succeeds with 0 DirectionalLight3D",
+					"status": "PASS"
+				},
+				{
+					"check": "3.1 Zero lights reported tuned",
+					"status": "PASS"
+				},
+				{
+					"check": "3.1 Uninstall clean with 0 DirectionalLight3D",
+					"status": "PASS"
+				},
+				{
+					"check": "3.2 Install succeeds with multiple DirectionalLight3Ds",
+					"status": "PASS"
+				},
+				{
+					"check": "3.2 Primary sun tuned to normal bias 0.80",
+					"status": "PASS"
+				},
+				{
+					"check": "3.2 Secondary sun untouched",
+					"status": "PASS"
+				},
+				{
+					"check": "3.2 Uninstall succeeds",
+					"status": "PASS"
+				},
+				{
+					"check": "3.2 Primary sun restored to 2.0",
+					"status": "PASS"
+				},
+				{
+					"check": "3.3 Install succeeds with missing WorldEnvironment",
+					"status": "PASS"
+				},
+				{
+					"check": "3.3 Zero environments reported tuned",
+					"status": "PASS"
+				},
+				{
+					"check": "3.3 Uninstall clean with missing WorldEnvironment",
+					"status": "PASS"
+				},
+				{
+					"check": "3.4 Install succeeds when WorldEnvironment.environment is null",
+					"status": "PASS"
+				},
+				{
+					"check": "3.4 Zero environments reported tuned when null resource",
+					"status": "PASS"
+				},
+				{
+					"check": "3.4 Uninstall clean when WorldEnvironment.environment is null",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 14
+		},
+		"SUITE_4": {
+			"checks": [
+				{
+					"check": "4.0 Install succeeds with all edge case mesh configurations",
+					"status": "PASS"
+				},
+				{
+					"check": "4.0 Zero overrides applied to null/empty meshes",
+					"status": "PASS"
+				},
+				{
+					"check": "4.0 Zero multimesh overrides on null material multimesh",
+					"status": "PASS"
+				},
+				{
+					"check": "4.0 Zero static surface overrides on null material surface",
+					"status": "PASS"
+				},
+				{
+					"check": "4.0 Uninstall clean across all edge case meshes",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 5
+		},
+		"SUITE_5": {
+			"checks": [
+				{
+					"check": "5.0 Install succeeds with guardrail test suite",
+					"status": "PASS"
+				},
+				{
+					"check": "5.1 ShaderMaterial completely preserved without override",
+					"status": "PASS"
+				},
+				{
+					"check": "5.2 Unshaded material untouched (Guardrail 1)",
+					"status": "PASS"
+				},
+				{
+					"check": "5.3 Display keyword material untouched (Guardrail 2)",
+					"status": "PASS"
+				},
+				{
+					"check": "5.4 Authored texture prop untouched (Guardrail 3)",
+					"status": "PASS"
+				},
+				{
+					"check": "5.5 Frame/mullion never has transparency (Guardrail 4)",
+					"status": "PASS"
+				},
+				{
+					"check": "5.6 Unmatched material untouched",
+					"status": "PASS"
+				},
+				{
+					"check": "5.0 Uninstall clean after guardrail verification",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 8
+		},
+		"SUITE_6": {
+			"checks": [
+				{
+					"check": "6.1 Install succeeds before mutation",
+					"status": "PASS"
+				},
+				{
+					"check": "6.1 Terrazzo mesh was tuned",
+					"status": "PASS"
+				},
+				{
+					"check": "6.1 Uninstall survives freed target nodes without crashing",
+					"status": "PASS"
+				},
+				{
+					"check": "6.1 Errors reported cleanly for freed mesh and light nodes",
+					"status": "PASS"
+				},
+				{
+					"check": "6.2 Uninstall survives freed injected nodes without crash",
+					"status": "PASS"
+				},
+				{
+					"check": "6.3 First install returns installed: true",
+					"status": "PASS"
+				},
+				{
+					"check": "6.3 Second install returns already_installed: true",
+					"status": "PASS"
+				},
+				{
+					"check": "6.4 Detects existing metadata and rejects duplicate install",
+					"status": "PASS"
+				},
+				{
+					"check": "6.5 First uninstall returns uninstalled: true",
+					"status": "PASS"
+				},
+				{
+					"check": "6.5 Second uninstall returns not_installed",
+					"status": "PASS"
+				},
+				{
+					"check": "6.6 Install rejected when ready_to_play is false",
+					"status": "PASS"
+				},
+				{
+					"check": "6.6 Error message provided for unready game",
+					"status": "PASS"
+				},
+				{
+					"check": "6.7 Install rejected when game is null",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 13
+		},
+		"SUITE_7": {
+			"checks": [
+				{
+					"check": "7.1 Live game reaches ready_to_play",
+					"status": "PASS"
+				},
+				{
+					"check": "7.2 CampusRuntime found in live scene",
+					"status": "PASS"
+				},
+				{
+					"check": "7.3 CampusRenderBatches found in live scene",
+					"status": "PASS"
+				},
+				{
+					"check": "7.4 Baseline MultiMesh count is 28",
+					"status": "PASS"
+				},
+				{
+					"check": "7.5 Baseline StaticSurface count is 92",
+					"status": "PASS"
+				},
+				{
+					"check": "7.8 Live install succeeds cleanly",
+					"status": "PASS"
+				},
+				{
+					"check": "7.9 Zero install errors reported",
+					"status": "PASS"
+				},
+				{
+					"check": "7.10 Zero install warnings reported",
+					"status": "PASS"
+				},
+				{
+					"check": "7.11 All 7 campus areas listed in affected_areas",
+					"status": "PASS"
+				},
+				{
+					"check": "7.12 Zero active positional shadows incurred",
+					"status": "PASS"
+				},
+				{
+					"check": "7.13 Zero additional draw calls incurred",
+					"status": "PASS"
+				},
+				{
+					"check": "7.14 MultiMesh batches 100% preserved (28)",
+					"status": "PASS"
+				},
+				{
+					"check": "7.15 StaticSurface batches 100% preserved (92)",
+					"status": "PASS"
+				},
+				{
+					"check": "7.16 Sun normal bias tuned to 0.80",
+					"status": "PASS"
+				},
+				{
+					"check": "7.17 Environment ambient tuned to 0.28",
+					"status": "PASS"
+				},
+				{
+					"check": "7.18 Live uninstall succeeds",
+					"status": "PASS"
+				},
+				{
+					"check": "7.19 Uninstall status is clean",
+					"status": "PASS"
+				},
+				{
+					"check": "7.20 Zero uninstall errors on live scene",
+					"status": "PASS"
+				},
+				{
+					"check": "7.21 Post-uninstall MultiMesh count intact (28)",
+					"status": "PASS"
+				},
+				{
+					"check": "7.22 Post-uninstall StaticSurface count intact (92)",
+					"status": "PASS"
+				},
+				{
+					"check": "7.23 Sun normal bias restored to baseline (2.0)",
+					"status": "PASS"
+				},
+				{
+					"check": "7.24 Environment ambient restored to baseline (0.32)",
+					"status": "PASS"
+				},
+				{
+					"check": "7.25 Canopy downlight removed on uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "7.26 Entrance signage removed on uninstall",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 24
+		}
+	},
+	"timestamp": "2026-11-02T01:05:22",
+	"total_assertions": 96
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "destination": "Security training area",
+    "draw_calls": 1211,
+    "forced_draw_ms": 70.6152,
+    "fps": 12.0289995120236,
+    "mode": "4x",
+    "primitives": 1784807
+  },
+  {
+    "destination": "Security training area",
+    "draw_calls": 1211,
+    "forced_draw_ms": 48.7118,
+    "fps": 17.0033519274433,
+    "mode": "2x",
+    "primitives": 1784807
+  },
+  {
+    "destination": "Security training area",
+    "draw_calls": 1156,
+    "forced_draw_ms": 46.5582,
+    "fps": 17.9464800073222,
+    "mode": "2x_sun_only",
+    "primitives": 1784807
+  },
+  {
+    "destination": "Reception / response desk",
+    "draw_calls": 1370,
+    "forced_draw_ms": 77.3117333333333,
+    "fps": 11.1587714638969,
+    "mode": "4x",
+    "primitives": 3187421
+  },
+  {
+    "destination": "Reception / response desk",
+    "draw_calls": 1396,
+    "forced_draw_ms": 68.9814333333333,
+    "fps": 12.4669936343531,
+    "mode": "2x",
+    "primitives": 3269330
+  },
+  {
+    "destination": "Reception / response desk",
+    "draw_calls": 1367,
+    "forced_draw_ms": 89.2465666666667,
+    "fps": 9.83468226928081,
+    "mode": "2x_sun_only",
+    "primitives": 3282637
+  }
+]

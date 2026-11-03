@@ -1,0 +1,81 @@
+{
+  "glb_header_valid": true,
+  "buffer_ranges_valid": true,
+  "object_names_and_extras_preserved": true,
+  "glass_alpha_valid": true,
+  "no_cameras_or_lights": true,
+  "source_unchanged": true,
+  "nodes": 5965,
+  "unique_meshes": 4388,
+  "glass_materials": 9,
+  "roles": {
+    "walkable": 454,
+    "landscape": 227,
+    "detail": 3504,
+    "architecture": 1252,
+    "glass": 261,
+    "furniture": 244,
+    "door": 23
+  },
+  "chair_instances": 198,
+  "chair_meshes": 4,
+  "asset_bytes": 42560584,
+  "spawns": {
+    "plaza": {
+      "godot_player_center": [
+        -27.0,
+        1.25,
+        -85.0
+      ],
+      "blender_player_center": [
+        -27.0,
+        85.0,
+        1.25
+      ],
+      "godot_ground_y": 0.27,
+      "center_height_above_ground": 1.0
+    },
+    "e_foyer": {
+      "godot_player_center": [
+        -36.0,
+        1.91,
+        -104.5
+      ],
+      "blender_player_center": [
+        -36.0,
+        104.5,
+        1.91
+      ],
+      "godot_ground_y": 0.91,
+      "center_height_above_ground": 1.0
+    },
+    "e_rear_aisle": {
+      "godot_player_center": [
+        -37.0,
+        1.924,
+        -107.95
+      ],
+      "blender_player_center": [
+        -37.0,
+        107.95,
+        1.924
+      ],
+      "godot_ground_y": 0.924,
+      "center_height_above_ground": 1.0
+    },
+    "d_entrance": {
+      "godot_player_center": [
+        -5.8,
+        2.8,
+        -102.9
+      ],
+      "blender_player_center": [
+        -5.8,
+        102.9,
+        2.8
+      ],
+      "godot_ground_y": 1.8,
+      "center_height_above_ground": 1.0
+    }
+  }
+}

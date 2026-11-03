@@ -1,0 +1,45 @@
+{
+	"baseline_batches": {
+		"multimesh_count": 28,
+		"static_surface_count": 92
+	},
+	"failed_tests": 0,
+	"passed": true,
+	"passed_tests": 29,
+	"post_uninstall_batches": {
+
+	},
+	"test_log": [
+		"PASS: [Input: null] Rejected null correctly",
+		"PASS: [Input: unready Node3D] Rejected node without ready_to_play",
+		"PASS: [Input: ready_to_play = false] Rejected ready_to_play=false",
+		"PASS: [Input: ready_to_play = String] Rejected non-bool ready_to_play",
+		"PASS: [Input: ready_to_play = 0] Rejected integer 0",
+		"PASS: [Uninstall before install] Safe handling of premature uninstall",
+		"PASS: [10x consecutive premature uninstall] Repeated uninstalls handled safely",
+		"PASS: [Input: secondary null check] Rejected null cleanly",
+		"PASS: [Game Lifecycle Ready] CampusRuntime initialized in 4000 ms",
+		"PASS: [Cycle 1: install()] Installed successfully",
+		"PASS: [Cycle 2: repeated install()] Idempotent duplicate install detected",
+		"PASS: [Cycle 3: third install()] Second duplicate install handled",
+		"PASS: [Cycle 4: uninstall()] Clean uninstall executed",
+		"PASS: [Cycle 5: re-install()] Clean re-install succeeded after uninstall",
+		"PASS: [Cycle 6: second uninstall()] Second clean uninstall executed",
+		"PASS: [Cycle 7: redundant uninstall()] Redundant uninstall safely caught",
+		"PASS: [High-frequency stress (5 cycles)] Completed 5 back-to-back cycles (avg 77.92 ms/cycle)",
+		"PASS: [Multi-Instance: install A] Instance A installed",
+		"PASS: [Multi-Instance: install B blocked] Instance B acknowledged existing installation via game metadata",
+		"PASS: [Multi-Instance: uninstall B safe] Instance B uninstall rejected cleanly without unhooking A",
+		"PASS: [Multi-Instance: A remains installed] Instance A remains active",
+		"PASS: [Multi-Instance: uninstall A] Instance A uninstalled cleanly",
+		"PASS: [Mutation: install with volatile node] Installed with volatile mesh",
+		"PASS: [Mutation: uninstall after node freed] Uninstall survived deleted node gracefully (reported error count: 1)",
+		"PASS: [CampusRenderBatches MultiMeshes preserved] All 28 batches have identical instance counts and material overrides",
+		"PASS: [CampusRenderBatches StaticSurfaces preserved] All 92 merged surfaces have identical overrides",
+		"PASS: [DirectionalLight3D parameters restored] Normal bias, bias, blur, energy match baseline",
+		"PASS: [WorldEnvironment parameters restored] Ambient energy, exposure match baseline",
+		"PASS: [Game Metadata Cleared] antigravity_polish_installed removed"
+	],
+	"timestamp": "2026-11-02T00:20:25",
+	"total_tests": 29
+}

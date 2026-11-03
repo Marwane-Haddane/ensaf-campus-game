@@ -1,0 +1,447 @@
+{
+  "source": "campus.glb",
+  "method": "Actual transformed triangle planes; closed rectangular top faces only",
+  "coplanar_rectangle_overlaps": [
+    {
+      "a": "E6 white ceiling border",
+      "b": "E6 white ceiling border.002",
+      "y": 4.32,
+      "xz_min": [
+        -40.74399948120117,
+        -103.51400756835938
+      ],
+      "xz_max": [
+        -40.375999450683594,
+        -103.30599975585938
+      ],
+      "area_m2": 0.07654688134789467
+    },
+    {
+      "a": "E6 white ceiling border",
+      "b": "E6 white ceiling border.003",
+      "y": 4.32,
+      "xz_min": [
+        -33.624000549316406,
+        -103.51400756835938
+      ],
+      "xz_max": [
+        -33.25600051879883,
+        -103.30599975585938
+      ],
+      "area_m2": 0.07654688134789467
+    },
+    {
+      "a": "E6 white ceiling border.001",
+      "b": "E6 white ceiling border.002",
+      "y": 4.32,
+      "xz_min": [
+        -40.74399948120117,
+        -106.39400482177734
+      ],
+      "xz_max": [
+        -40.375999450683594,
+        -106.34599304199219
+      ],
+      "area_m2": 0.01766833642614074
+    },
+    {
+      "a": "E6 white ceiling border.001",
+      "b": "E6 white ceiling border.003",
+      "y": 4.32,
+      "xz_min": [
+        -33.624000549316406,
+        -106.39400482177734
+      ],
+      "xz_max": [
+        -33.25600051879883,
+        -106.34599304199219
+      ],
+      "area_m2": 0.01766833642614074
+    },
+    {
+      "a": "D7 long white floor band",
+      "b": "D7 short white floor band",
+      "y": 1.865,
+      "xz_min": [
+        -13.266999244689941,
+        -104.0219955444336
+      ],
+      "xz_max": [
+        -12.97800064086914,
+        -103.78300476074219
+      ],
+      "area_m2": 0.06906800281285541
+    },
+    {
+      "a": "D7 long white floor band.001",
+      "b": "D7 short white floor band.001",
+      "y": 5.205,
+      "xz_min": [
+        -13.266999244689941,
+        -104.0219955444336
+      ],
+      "xz_max": [
+        -12.97800064086914,
+        -103.78300476074219
+      ],
+      "area_m2": 0.06906800281285541
+    },
+    {
+      "a": "D7 long white floor band.002",
+      "b": "D7 short white floor band.002",
+      "y": 8.505,
+      "xz_min": [
+        -13.266999244689941,
+        -104.0219955444336
+      ],
+      "xz_max": [
+        -12.97800064086914,
+        -103.78300476074219
+      ],
+      "area_m2": 0.06906800281285541
+    },
+    {
+      "a": "D7 portico terrace slab",
+      "b": "D7 main entrance level landing",
+      "y": 1.8,
+      "xz_min": [
+        -2.190999984741211,
+        -103.86299896240234
+      ],
+      "xz_max": [
+        5.591000080108643,
+        -102.73699951171875
+      ],
+      "area_m2": 8.762527798240626
+    },
+    {
+      "a": "D7 raised entrance landing",
+      "b": "D7 closed entrance landing fascia",
+      "y": 1.8,
+      "xz_min": [
+        -13.0,
+        -104.87000274658203
+      ],
+      "xz_max": [
+        -2.5,
+        -104.80000305175781
+      ],
+      "area_m2": 0.7349967956542969
+    },
+    {
+      "a": "D7 rear gallery slab",
+      "b": "D7 intermediate stair landing",
+      "y": 5.1,
+      "xz_min": [
+        -1.600000023841858,
+        -123.6500015258789
+      ],
+      "xz_max": [
+        2.200000047683716,
+        -122.25
+      ],
+      "area_m2": 5.320005898475756
+    },
+    {
+      "a": "D7 main entrance level landing",
+      "b": "D7 ramp upper connection landing",
+      "y": 1.8,
+      "xz_min": [
+        -14.437999725341797,
+        -103.86299896240234
+      ],
+      "xz_max": [
+        -13.050000190734863,
+        -102.73699951171875
+      ],
+      "area_m2": 1.562886713516491
+    },
+    {
+      "a": "D9 continuous portico landing stone finish",
+      "b": "D9 level access landing",
+      "y": 1.814,
+      "xz_min": [
+        -2.197000026702881,
+        -107.50199890136719
+      ],
+      "xz_max": [
+        -2.1629998683929443,
+        -106.0580062866211
+      ],
+      "area_m2": 0.04909597749974637
+    }
+  ],
+  "identical_architecture_bounds": [
+    [
+      "D7 short facade fine mullion.005",
+      "D7 short facade fine mullion.006"
+    ]
+  ],
+  "sample_horizontal_faces": {
+    "E6 reception large format stone floor": [
+      {
+        "name": "E6 reception large format stone floor",
+        "y": 0.91,
+        "xz_min": [
+          -40.54750061035156,
+          -106.74749755859375
+        ],
+        "xz_max": [
+          -33.352500915527344,
+          -103.15249633789062
+        ],
+        "triangle_area": 25.48983649746515,
+        "rectangle_area": 25.86603268585168,
+        "fills_rectangle": false
+      },
+      {
+        "name": "E6 reception large format stone floor",
+        "y": 0.922,
+        "xz_min": [
+          -40.54750061035156,
+          -106.74749755859375
+        ],
+        "xz_max": [
+          -33.352500915527344,
+          -103.15249633789062
+        ],
+        "triangle_area": 25.48983649746515,
+        "rectangle_area": 25.86603268585168,
+        "fills_rectangle": false
+      }
+    ],
+    "E8 modular white acoustic ceiling tiles": [
+      {
+        "name": "E8 modular white acoustic ceiling tiles",
+        "y": 6.4375,
+        "xz_min": [
+          -46.59550094604492,
+          -124.24549865722656
+        ],
+        "xz_max": [
+          -27.404499053955078,
+          -108.65450286865234
+        ],
+        "triangle_area": 290.6020421217545,
+        "rectangle_area": 299.2068296780926,
+        "fills_rectangle": false
+      },
+      {
+        "name": "E8 modular white acoustic ceiling tiles",
+        "y": 6.4725,
+        "xz_min": [
+          -46.59550094604492,
+          -124.24549865722656
+        ],
+        "xz_max": [
+          -27.404499053955078,
+          -108.65450286865234
+        ],
+        "triangle_area": 290.6020421217545,
+        "rectangle_area": 299.2068296780926,
+        "fills_rectangle": false
+      }
+    ],
+    "E9 reception to hall continuous floor": [
+      {
+        "name": "E9 reception to hall continuous floor",
+        "y": 0.88,
+        "xz_min": [
+          -46.70000076293945,
+          -106.86000061035156
+        ],
+        "xz_max": [
+          -27.299999237060547,
+          -102.83999633789062
+        ],
+        "triangle_area": 77.98808901978191,
+        "rectangle_area": 77.98808901978191,
+        "fills_rectangle": true
+      },
+      {
+        "name": "E9 reception to hall continuous floor",
+        "y": 0.91,
+        "xz_min": [
+          -46.70000076293945,
+          -106.86000061035156
+        ],
+        "xz_max": [
+          -27.299999237060547,
+          -102.83999633789062
+        ],
+        "triangle_area": 77.98808901978191,
+        "rectangle_area": 77.98808901978191,
+        "fills_rectangle": true
+      }
+    ],
+    "D7 portico terrace slab": [
+      {
+        "name": "D7 portico terrace slab",
+        "y": 1.58,
+        "xz_min": [
+          -2.190999984741211,
+          -107.4959945678711
+        ],
+        "xz_max": [
+          5.591000080108643,
+          -102.66400146484375
+        ],
+        "triangle_area": 37.602570641112834,
+        "rectangle_area": 37.602570641112834,
+        "fills_rectangle": true
+      },
+      {
+        "name": "D7 portico terrace slab",
+        "y": 1.8,
+        "xz_min": [
+          -2.190999984741211,
+          -107.4959945678711
+        ],
+        "xz_max": [
+          5.591000080108643,
+          -102.66400146484375
+        ],
+        "triangle_area": 37.602570641112834,
+        "rectangle_area": 37.602570641112834,
+        "fills_rectangle": true
+      }
+    ],
+    "D7 polished lower hall floor": [
+      {
+        "name": "D7 polished lower hall floor",
+        "y": 0.38,
+        "xz_min": [
+          -12.824999809265137,
+          -135.5500030517578
+        ],
+        "xz_max": [
+          -2.075000047683716,
+          -108.44999694824219
+        ],
+        "triangle_area": 291.325059151648,
+        "rectangle_area": 291.325059151648,
+        "fills_rectangle": true
+      },
+      {
+        "name": "D7 polished lower hall floor",
+        "y": 0.43,
+        "xz_min": [
+          -12.824999809265137,
+          -135.5500030517578
+        ],
+        "xz_max": [
+          -2.075000047683716,
+          -108.44999694824219
+        ],
+        "triangle_area": 291.325059151648,
+        "rectangle_area": 291.325059151648,
+        "fills_rectangle": true
+      }
+    ],
+    "D7 main entrance level landing": [
+      {
+        "name": "D7 main entrance level landing",
+        "y": 1.69,
+        "xz_min": [
+          -14.437999725341797,
+          -103.86299896240234
+        ],
+        "xz_max": [
+          7.138000011444092,
+          -102.73699951171875
+        ],
+        "triangle_area": 24.294563851570274,
+        "rectangle_area": 24.294563851570274,
+        "fills_rectangle": true
+      },
+      {
+        "name": "D7 main entrance level landing",
+        "y": 1.8,
+        "xz_min": [
+          -14.437999725341797,
+          -103.86299896240234
+        ],
+        "xz_max": [
+          7.138000011444092,
+          -102.73699951171875
+        ],
+        "triangle_area": 24.294563851570274,
+        "rectangle_area": 24.294563851570274,
+        "fills_rectangle": true
+      }
+    ]
+  },
+  "normal_samples_identity_transforms": {
+    "E8 modular white acoustic ceiling tiles": [
+      [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "D7 polished lower hall floor": [
+      [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "modeled_repetitions": {
+    "E8 ceiling": "0.591 m tiles separated by 0.009 m gaps (actual vertex coordinates)",
+    "E5 facade": "22 horizontal stone bed joints and 108 vertical stone joints, 0.004 m thickness",
+    "D7 lower hall": "floor top 0.430 m; modeled joints 0.432-0.434 m",
+    "E6 reception": "stone floor top 0.922 m; continuous base floor top 0.910 m"
+  },
+  "limits": "Overlap records show geometry, not proof of visible artifacts. D9 stone finishes cover D7 entrance slabs at y1.812 and y1.814. No rendered shadow-on/off comparison was performed."
+}

@@ -1,0 +1,1360 @@
+{
+	"failed_assertions": 0,
+	"failures": [],
+	"passed": true,
+	"passed_assertions": 327,
+	"suites": {
+		"BATCH_INTEGRITY": {
+			"checks": [
+				{
+					"check": "CampusRuntime node exists",
+					"status": "PASS"
+				},
+				{
+					"check": "CampusRenderBatches node exists",
+					"status": "PASS"
+				},
+				{
+					"check": "MultiMesh batch count retained exactly (28 == 28)",
+					"status": "PASS"
+				},
+				{
+					"check": "StaticSurface batch count retained exactly (92 == 92)",
+					"status": "PASS"
+				},
+				{
+					"check": "MultiMesh total instance count retained (1346 == 1346)",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_0 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_1 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_2 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_3 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_4 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_5 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_6 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_7 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_8 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_9 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_10 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_11 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_12 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_13 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_14 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_15 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_16 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_17 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_18 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_19 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_20 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_21 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_22 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_23 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_24 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_25 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_26 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_27 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_28 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_29 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_30 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_31 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_32 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_33 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_34 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_35 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_36 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_37 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_38 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_39 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_40 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_41 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_42 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_43 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_44 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_45 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_46 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_47 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_48 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_49 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_50 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_51 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_52 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_53 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_54 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_55 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_56 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_57 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_58 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_59 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_60 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_61 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_62 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_63 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_64 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_65 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_66 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_67 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_68 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_69 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_70 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_71 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_72 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_73 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_74 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_75 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_76 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_77 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_78 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_79 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_80 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_81 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_82 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_83 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_84 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_85 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_86 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_87 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_88 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_89 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_90 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surface StaticSurface_91 has exactly 1 merged surface",
+					"status": "PASS"
+				},
+				{
+					"check": "Static surfaces remain merged single-draw calls",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 98
+		},
+		"FAULT_TOLERANCE": {
+			"checks": [
+				{
+					"check": "install(null) returns installed=false",
+					"status": "PASS"
+				},
+				{
+					"check": "install(null) reports error message",
+					"status": "PASS"
+				},
+				{
+					"check": "install(plain Node) rejected",
+					"status": "PASS"
+				},
+				{
+					"check": "install(dummy Node3D without ready_to_play) rejected",
+					"status": "PASS"
+				},
+				{
+					"check": "install(ready_to_play=false) rejected",
+					"status": "PASS"
+				},
+				{
+					"check": "install(empty tree with ready_to_play=true) handles gracefully without crashing",
+					"status": "PASS"
+				},
+				{
+					"check": "uninstall on mock tree completes cleanly",
+					"status": "PASS"
+				},
+				{
+					"check": "uninstall() on uninstalled module returns uninstalled=false",
+					"status": "PASS"
+				},
+				{
+					"check": "uninstall() returns status=not_installed",
+					"status": "PASS"
+				},
+				{
+					"check": "Second uninstall() remains safe and idempotent",
+					"status": "PASS"
+				},
+				{
+					"check": "uninstall() after target game freed does not crash engine",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 11
+		},
+		"IDEMPOTENCY_STRESS": {
+			"checks": [
+				{
+					"check": "Install 1: returns installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 1: returns already_installed=false",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 2: returns installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 2: reports already_installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 2: exactly 1 CanopyEntranceDownlight (found 1)",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 2: exactly 1 CreamEntranceSignage (found 1)",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 2: material override instance IDs identical (no double-wrapping)",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 3: returns installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 3: reports already_installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 3: exactly 1 CanopyEntranceDownlight (found 1)",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 3: exactly 1 CreamEntranceSignage (found 1)",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 3: material override instance IDs identical (no double-wrapping)",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 4: returns installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 4: reports already_installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 4: exactly 1 CanopyEntranceDownlight (found 1)",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 4: exactly 1 CreamEntranceSignage (found 1)",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 4: material override instance IDs identical (no double-wrapping)",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 5: returns installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 5: reports already_installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 5: exactly 1 CanopyEntranceDownlight (found 1)",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 5: exactly 1 CreamEntranceSignage (found 1)",
+					"status": "PASS"
+				},
+				{
+					"check": "Install 5: material override instance IDs identical (no double-wrapping)",
+					"status": "PASS"
+				},
+				{
+					"check": "Separate instance 1: returns installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Separate instance 1: reports already_installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Separate instance 1: CanopyEntranceDownlight not duplicated",
+					"status": "PASS"
+				},
+				{
+					"check": "Separate instance 1: CreamEntranceSignage not duplicated",
+					"status": "PASS"
+				},
+				{
+					"check": "Separate instance 2: returns installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Separate instance 2: reports already_installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Separate instance 2: CanopyEntranceDownlight not duplicated",
+					"status": "PASS"
+				},
+				{
+					"check": "Separate instance 2: CreamEntranceSignage not duplicated",
+					"status": "PASS"
+				},
+				{
+					"check": "Separate instance 3: returns installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Separate instance 3: reports already_installed=true",
+					"status": "PASS"
+				},
+				{
+					"check": "Separate instance 3: CanopyEntranceDownlight not duplicated",
+					"status": "PASS"
+				},
+				{
+					"check": "Separate instance 3: CreamEntranceSignage not duplicated",
+					"status": "PASS"
+				},
+				{
+					"check": "Final uninstall after idempotency stress succeeded",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 35
+		},
+		"INIT": {
+			"checks": [
+				{
+					"check": "Polish script loads cleanly",
+					"status": "PASS"
+				},
+				{
+					"check": "game.ready_to_play reached",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 2
+		},
+		"RAPID_LIFECYCLE_STRESS": {
+			"checks": [
+				{
+					"check": "Cycle 1: install returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: CanopyEntranceDownlight injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: CreamEntranceSignage injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: ceiling backing offset by -2mm",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: ceiling backing unhidden",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: ceiling backing material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: uninstall returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: uninstall status is clean",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: CanopyEntranceDownlight removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: CreamEntranceSignage removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: ceiling backing pos.y restored to exact baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: ceiling backing visibility restored to baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: ceiling backing material_override restored to null/baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 1: zero node leaks after uninstall (baseline=11296, current=11296)",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: install returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: CanopyEntranceDownlight injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: CreamEntranceSignage injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: ceiling backing offset by -2mm",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: ceiling backing unhidden",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: ceiling backing material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: uninstall returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: uninstall status is clean",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: CanopyEntranceDownlight removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: CreamEntranceSignage removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: ceiling backing pos.y restored to exact baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: ceiling backing visibility restored to baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: ceiling backing material_override restored to null/baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 2: zero node leaks after uninstall (baseline=11296, current=11296)",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: install returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: CanopyEntranceDownlight injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: CreamEntranceSignage injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: ceiling backing offset by -2mm",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: ceiling backing unhidden",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: ceiling backing material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: uninstall returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: uninstall status is clean",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: CanopyEntranceDownlight removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: CreamEntranceSignage removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: ceiling backing pos.y restored to exact baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: ceiling backing visibility restored to baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: ceiling backing material_override restored to null/baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 3: zero node leaks after uninstall (baseline=11296, current=11296)",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: install returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: CanopyEntranceDownlight injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: CreamEntranceSignage injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: ceiling backing offset by -2mm",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: ceiling backing unhidden",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: ceiling backing material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: uninstall returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: uninstall status is clean",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: CanopyEntranceDownlight removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: CreamEntranceSignage removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: ceiling backing pos.y restored to exact baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: ceiling backing visibility restored to baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: ceiling backing material_override restored to null/baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 4: zero node leaks after uninstall (baseline=11296, current=11296)",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: install returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: CanopyEntranceDownlight injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: CreamEntranceSignage injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: ceiling backing offset by -2mm",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: ceiling backing unhidden",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: ceiling backing material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: uninstall returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: uninstall status is clean",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: CanopyEntranceDownlight removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: CreamEntranceSignage removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: ceiling backing pos.y restored to exact baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: ceiling backing visibility restored to baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: ceiling backing material_override restored to null/baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 5: zero node leaks after uninstall (baseline=11296, current=11296)",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: install returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: CanopyEntranceDownlight injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: CreamEntranceSignage injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: ceiling backing offset by -2mm",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: ceiling backing unhidden",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: ceiling backing material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: uninstall returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: uninstall status is clean",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: CanopyEntranceDownlight removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: CreamEntranceSignage removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: ceiling backing pos.y restored to exact baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: ceiling backing visibility restored to baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: ceiling backing material_override restored to null/baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 6: zero node leaks after uninstall (baseline=11296, current=11296)",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: install returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: CanopyEntranceDownlight injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: CreamEntranceSignage injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: ceiling backing offset by -2mm",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: ceiling backing unhidden",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: ceiling backing material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: uninstall returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: uninstall status is clean",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: CanopyEntranceDownlight removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: CreamEntranceSignage removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: ceiling backing pos.y restored to exact baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: ceiling backing visibility restored to baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: ceiling backing material_override restored to null/baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 7: zero node leaks after uninstall (baseline=11296, current=11296)",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: install returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: CanopyEntranceDownlight injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: CreamEntranceSignage injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: ceiling backing offset by -2mm",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: ceiling backing unhidden",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: ceiling backing material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: uninstall returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: uninstall status is clean",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: CanopyEntranceDownlight removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: CreamEntranceSignage removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: ceiling backing pos.y restored to exact baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: ceiling backing visibility restored to baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: ceiling backing material_override restored to null/baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 8: zero node leaks after uninstall (baseline=11296, current=11296)",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: install returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: CanopyEntranceDownlight injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: CreamEntranceSignage injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: ceiling backing offset by -2mm",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: ceiling backing unhidden",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: ceiling backing material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: uninstall returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: uninstall status is clean",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: CanopyEntranceDownlight removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: CreamEntranceSignage removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: ceiling backing pos.y restored to exact baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: ceiling backing visibility restored to baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: ceiling backing material_override restored to null/baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 9: zero node leaks after uninstall (baseline=11296, current=11296)",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: install returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: CanopyEntranceDownlight injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: CreamEntranceSignage injected",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: ceiling backing offset by -2mm",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: ceiling backing unhidden",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: ceiling backing material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: uninstall returned true",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: uninstall status is clean",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: CanopyEntranceDownlight removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: CreamEntranceSignage removed after uninstall",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: ceiling backing pos.y restored to exact baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: ceiling backing visibility restored to baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: ceiling backing material_override restored to null/baseline",
+					"status": "PASS"
+				},
+				{
+					"check": "Cycle 10: zero node leaks after uninstall (baseline=11296, current=11296)",
+					"status": "PASS"
+				},
+				{
+					"check": "0 engine node leaks across 10 cycles (delta=0)",
+					"status": "PASS"
+				},
+				{
+					"check": "0 resource leaks across 10 cycles (delta=0)",
+					"status": "PASS"
+				},
+				{
+					"check": "Engine object count strictly stabilized (final=26622, initial=26610, delta=12)",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 143
+		},
+		"SCREEN_AND_WORKSTATION_SAFETY": {
+			"checks": [
+				{
+					"check": "Found 5 interactive stations in game",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Reception response PC' has valid screen_mesh",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Reception response PC' screen material is BaseMaterial3D",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Reception response PC' screen is SHADING_MODE_UNSHADED",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Campus security PC' has valid screen_mesh",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Campus security PC' screen material is BaseMaterial3D",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Campus security PC' screen is SHADING_MODE_UNSHADED",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Auditorium teaching PC' has valid screen_mesh",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Auditorium teaching PC' screen material is BaseMaterial3D",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Auditorium teaching PC' screen is SHADING_MODE_UNSHADED",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Reception response PC' screen_mesh still exists after polish",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Reception response PC' screen remains SHADING_MODE_UNSHADED",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Reception response PC' screen albedo color unchanged ((0.0314, 0.1451, 0.1843, 1) == (0.0314, 0.1451, 0.1843, 1))",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Reception response PC' screen material_override object preserved untouched",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Reception response PC' screen has no surface override material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Campus security PC' screen_mesh still exists after polish",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Campus security PC' screen remains SHADING_MODE_UNSHADED",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Campus security PC' screen albedo color unchanged ((0.0314, 0.1451, 0.1843, 1) == (0.0314, 0.1451, 0.1843, 1))",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Campus security PC' screen material_override object preserved untouched",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Campus security PC' screen has no surface override material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Auditorium teaching PC' screen_mesh still exists after polish",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Auditorium teaching PC' screen remains SHADING_MODE_UNSHADED",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Auditorium teaching PC' screen albedo color unchanged ((0.0314, 0.1451, 0.1843, 1) == (0.0314, 0.1451, 0.1843, 1))",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Auditorium teaching PC' screen material_override object preserved untouched",
+					"status": "PASS"
+				},
+				{
+					"check": "Station 'Auditorium teaching PC' screen has no surface override material applied",
+					"status": "PASS"
+				},
+				{
+					"check": "Found at least 3 unshaded screen surfaces in scene tree",
+					"status": "PASS"
+				},
+				{
+					"check": "0 unshaded materials were altered by polish module (altered=0)",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 27
+		},
+		"SYNCHRONOUS_FRAMELESS_CHURN": {
+			"checks": [
+				{
+					"check": "Frameless cycle 1: install succeeded",
+					"status": "PASS"
+				},
+				{
+					"check": "Frameless cycle 1: uninstall succeeded",
+					"status": "PASS"
+				},
+				{
+					"check": "Frameless cycle 2: install succeeded",
+					"status": "PASS"
+				},
+				{
+					"check": "Frameless cycle 2: uninstall succeeded",
+					"status": "PASS"
+				},
+				{
+					"check": "Frameless cycle 3: install succeeded",
+					"status": "PASS"
+				},
+				{
+					"check": "Frameless cycle 3: uninstall succeeded",
+					"status": "PASS"
+				},
+				{
+					"check": "Frameless cycle 4: install succeeded",
+					"status": "PASS"
+				},
+				{
+					"check": "Frameless cycle 4: uninstall succeeded",
+					"status": "PASS"
+				},
+				{
+					"check": "Frameless cycle 5: install succeeded",
+					"status": "PASS"
+				},
+				{
+					"check": "Frameless cycle 5: uninstall succeeded",
+					"status": "PASS"
+				},
+				{
+					"check": "Frameless churn: node count returned 100% to baseline without leak (11296 == 11296)",
+					"status": "PASS"
+				}
+			],
+			"failed": 0,
+			"passed": 11
+		}
+	},
+	"timestamp": "2026-11-02T01:04:42",
+	"total_assertions": 327
+}

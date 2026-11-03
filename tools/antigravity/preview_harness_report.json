@@ -1,0 +1,257 @@
+{
+	"benchmarks_baseline": [
+		{
+			"avg_frame_ms": 56.78,
+			"draw_calls": 1175,
+			"forced_draw_ms": 0.52,
+			"fps": 17.61,
+			"name": "Campus plaza",
+			"phase": "baseline",
+			"primitives": 1707839,
+			"video_mem_mb": 173.01,
+			"view_id": "plaza"
+		},
+		{
+			"avg_frame_ms": 67.59,
+			"draw_calls": 1392,
+			"forced_draw_ms": 0.55,
+			"fps": 14.8,
+			"name": "Reception / response desk",
+			"phase": "baseline",
+			"primitives": 3065047,
+			"video_mem_mb": 173.01,
+			"view_id": "reception"
+		},
+		{
+			"avg_frame_ms": 63.28,
+			"draw_calls": 976,
+			"forced_draw_ms": 0.48,
+			"fps": 15.8,
+			"name": "Auditorium rear aisle",
+			"phase": "baseline",
+			"primitives": 2989556,
+			"video_mem_mb": 173.01,
+			"view_id": "auditorium_rear"
+		},
+		{
+			"avg_frame_ms": 61.12,
+			"draw_calls": 1157,
+			"forced_draw_ms": 0.51,
+			"fps": 16.36,
+			"name": "Glazed building entrance",
+			"phase": "baseline",
+			"primitives": 1650820,
+			"video_mem_mb": 173.01,
+			"view_id": "glazed_entrance"
+		},
+		{
+			"avg_frame_ms": 54.64,
+			"draw_calls": 1218,
+			"forced_draw_ms": 0.49,
+			"fps": 18.3,
+			"name": "Security training area",
+			"phase": "baseline",
+			"primitives": 1783987,
+			"video_mem_mb": 173.01,
+			"view_id": "security"
+		},
+		{
+			"avg_frame_ms": 34.26,
+			"draw_calls": 1104,
+			"forced_draw_ms": 0.42,
+			"fps": 29.19,
+			"name": "Auditorium teaching desk",
+			"phase": "baseline",
+			"primitives": 2178238,
+			"video_mem_mb": 173.01,
+			"view_id": "auditorium_teaching"
+		},
+		{
+			"avg_frame_ms": 63.29,
+			"draw_calls": 1946,
+			"forced_draw_ms": 0.58,
+			"fps": 15.8,
+			"name": "Cream main entrance (front)",
+			"phase": "baseline",
+			"primitives": 2698790,
+			"video_mem_mb": 173.01,
+			"view_id": "cream_front"
+		},
+		{
+			"avg_frame_ms": 56.6,
+			"draw_calls": 1445,
+			"forced_draw_ms": 0.52,
+			"fps": 17.67,
+			"name": "Cream main entrance (45° exterior)",
+			"phase": "baseline",
+			"primitives": 1816313,
+			"video_mem_mb": 173.01,
+			"view_id": "cream_exterior_45"
+		},
+		{
+			"avg_frame_ms": 19.33,
+			"draw_calls": 327,
+			"forced_draw_ms": 0.35,
+			"fps": 51.73,
+			"name": "Cream main entrance (inside looking out)",
+			"phase": "baseline",
+			"primitives": 214121,
+			"video_mem_mb": 173.01,
+			"view_id": "cream_inside_out"
+		}
+	],
+	"benchmarks_polished": [
+		{
+			"avg_frame_ms": 57.48,
+			"draw_calls": 1175,
+			"forced_draw_ms": 0.53,
+			"fps": 17.4,
+			"name": "Campus plaza",
+			"phase": "polished",
+			"primitives": 1707863,
+			"video_mem_mb": 174.31,
+			"view_id": "plaza"
+		},
+		{
+			"avg_frame_ms": 72.64,
+			"draw_calls": 1391,
+			"forced_draw_ms": 0.56,
+			"fps": 13.77,
+			"name": "Reception / response desk",
+			"phase": "polished",
+			"primitives": 3065083,
+			"video_mem_mb": 174.31,
+			"view_id": "reception"
+		},
+		{
+			"avg_frame_ms": 62.2,
+			"draw_calls": 977,
+			"forced_draw_ms": 0.47,
+			"fps": 16.08,
+			"name": "Auditorium rear aisle",
+			"phase": "polished",
+			"primitives": 2989592,
+			"video_mem_mb": 174.31,
+			"view_id": "auditorium_rear"
+		},
+		{
+			"avg_frame_ms": 58.86,
+			"draw_calls": 1157,
+			"forced_draw_ms": 0.5,
+			"fps": 16.99,
+			"name": "Glazed building entrance",
+			"phase": "polished",
+			"primitives": 1650844,
+			"video_mem_mb": 174.31,
+			"view_id": "glazed_entrance"
+		},
+		{
+			"avg_frame_ms": 54.32,
+			"draw_calls": 1216,
+			"forced_draw_ms": 0.48,
+			"fps": 18.41,
+			"name": "Security training area",
+			"phase": "polished",
+			"primitives": 1784011,
+			"video_mem_mb": 174.31,
+			"view_id": "security"
+		},
+		{
+			"avg_frame_ms": 34.0,
+			"draw_calls": 1102,
+			"forced_draw_ms": 0.41,
+			"fps": 29.41,
+			"name": "Auditorium teaching desk",
+			"phase": "polished",
+			"primitives": 2178262,
+			"video_mem_mb": 174.31,
+			"view_id": "auditorium_teaching"
+		},
+		{
+			"avg_frame_ms": 65.15,
+			"draw_calls": 1950,
+			"forced_draw_ms": 0.59,
+			"fps": 15.35,
+			"name": "Cream main entrance (front)",
+			"phase": "polished",
+			"primitives": 2698978,
+			"video_mem_mb": 174.31,
+			"view_id": "cream_front"
+		},
+		{
+			"avg_frame_ms": 56.78,
+			"draw_calls": 1449,
+			"forced_draw_ms": 0.53,
+			"fps": 17.61,
+			"name": "Cream main entrance (45° exterior)",
+			"phase": "polished",
+			"primitives": 1816489,
+			"video_mem_mb": 174.31,
+			"view_id": "cream_exterior_45"
+		},
+		{
+			"avg_frame_ms": 18.37,
+			"draw_calls": 331,
+			"forced_draw_ms": 0.34,
+			"fps": 54.45,
+			"name": "Cream main entrance (inside looking out)",
+			"phase": "polished",
+			"primitives": 214297,
+			"video_mem_mb": 174.31,
+			"view_id": "cream_inside_out"
+		}
+	],
+	"captures": [],
+	"failures": [],
+	"finished_at": "2026-11-02T00:54:54",
+	"install_stats": {
+		"affected_areas": [
+			"Campus plaza",
+			"Reception / response desk",
+			"Auditorium rear aisle",
+			"Glazed building entrance",
+			"Security training area",
+			"Auditorium teaching desk",
+			"Cream main entrance"
+		],
+		"already_installed": false,
+		"changes": [
+			"Sun shadow normal bias adjusted from 2.0 to 0.80 (grounds floating furniture)",
+			"Sun directional shadow blend splits ensured active",
+			"Sun shadow blur calibrated to 1.40 for crisp contact shadows",
+			"Sun light energy calibrated to 0.32",
+			"Environment ambient light energy tuned to 0.28 (softens interior bleaching)",
+			"Environment tonemap exposure tuned to 0.95 (preserves readable daylight)",
+			"Canopy entrance warm downlight injected at (-14.0, 2.95, 1.55)",
+			"Architectural entrance signage '// ENSA FÈS' injected at (-14.0, 2.86, 0.165)",
+			"Acoustic ceiling moiré eliminated: reveal backing unhidden, offset by -2mm, softened albedo applied"
+		],
+		"errors": [],
+		"installed": true,
+		"measured_costs": {
+			"active_positional_shadows": 0,
+			"additional_draw_calls": 0,
+			"additional_texture_bytes": 0,
+			"install_time_msec": 61.42,
+			"multimesh_batches_retained": 28,
+			"static_surface_batches_retained": 92
+		},
+		"resource_counts": {
+			"environments_tuned": 1,
+			"injected_nodes": 2,
+			"lights_tuned": 1,
+			"materials_duplicated": 82,
+			"mesh_overrides_applied": 829,
+			"multimesh_batches_overridden": 14,
+			"static_surface_batches_overridden": 59
+		},
+		"target_renderer": "gl_compatibility",
+		"timestamp": "2026-11-02T00:54:50",
+		"version": "2.0.0",
+		"warnings": []
+	},
+	"msaa": "2x",
+	"passed": true,
+	"started_at": "2026-11-02T00:53:30",
+	"viewport": "1280x720"
+}

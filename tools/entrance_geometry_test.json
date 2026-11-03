@@ -1,0 +1,204 @@
+{
+	"checks": 554,
+	"door_opening": {
+		"center": "(-14, 1.655, 0.1)",
+		"floor_y": 0.52,
+		"height": 2.27,
+		"normal": "(0, 0, 1)",
+		"outward": "(0, 0, 1)",
+		"right": "(1, 0, 0)",
+		"source_glass_floor_y": 0.385,
+		"source_glass_names": [
+			"Entrance door glass",
+			"Entrance door glass.001",
+			"Entrance door glass.002",
+			"Entrance door glass.003"
+		],
+		"source_lintel_bottom_y": 2.79,
+		"source_recess_name": "Entrance dark recess",
+		"width": 4.4
+	},
+	"failures": [],
+	"ground_samples": [
+		{
+			"source": "R2 repaired AlignedApproachPaving",
+			"y": 0.0120000131428242,
+			"z": 5.5
+		},
+		{
+			"source": "R2 repaired AlignedApproachPaving",
+			"y": 0.0120000131428242,
+			"z": 5
+		},
+		{
+			"source": "R2 repaired AlignedApproachPaving",
+			"y": 0.0120000131428242,
+			"z": 4.5
+		},
+		{
+			"source": "R2 repaired AlignedApproachPaving",
+			"y": 0.0120000131428242,
+			"z": 4
+		},
+		{
+			"source": "R2 repaired RegularStep02",
+			"y": 0.350666582584381,
+			"z": 3.5
+		},
+		{
+			"source": "R2 repaired RegularStep03",
+			"y": 0.519999980926514,
+			"z": 3
+		},
+		{
+			"source": "R2 repaired LevelEntranceLanding",
+			"y": 0.519999980926514,
+			"z": 2.5
+		},
+		{
+			"source": "R2 repaired LevelEntranceLanding",
+			"y": 0.519999980926514,
+			"z": 2
+		},
+		{
+			"source": "R2 repaired LevelEntranceLanding",
+			"y": 0.519999980926514,
+			"z": 1.5
+		},
+		{
+			"source": "R2 repaired LevelEntranceLanding",
+			"y": 0.519999980926514,
+			"z": 1
+		},
+		{
+			"source": "R2 repaired LevelEntranceLanding",
+			"y": 0.519999980926514,
+			"z": 0.5
+		},
+		{
+			"source": "Main plinth / exact full visible floor support",
+			"y": 0.519999980926514,
+			"z": 0
+		},
+		{
+			"source": "Main plinth / exact full visible floor support",
+			"y": 0.519999980926514,
+			"z": -0.5
+		},
+		{
+			"source": "Main plinth / exact full visible floor support",
+			"y": 0.519999980926514,
+			"z": -1
+		},
+		{
+			"source": "Main plinth / exact full visible floor support",
+			"y": 0.519999980926514,
+			"z": -1.5
+		},
+		{
+			"source": "Main plinth / exact full visible floor support",
+			"y": 0.519999980926514,
+			"z": -2
+		},
+		{
+			"source": "Main plinth / exact full visible floor support",
+			"y": 0.519999980926514,
+			"z": -2.5
+		},
+		{
+			"source": "Main plinth / exact full visible floor support",
+			"y": 0.519999980926514,
+			"z": -3
+		}
+	],
+	"passed": true,
+	"repair": {
+		"approach_y": 0.012,
+		"bounds": "[P: (-52, -0.06, -33.9), S: (56, 3.1, 39.6)]",
+		"door_opening": {
+			"center": "(-14, 1.655, 0.1)",
+			"floor_y": 0.52,
+			"height": 2.27,
+			"normal": "(0, 0, 1)",
+			"outward": "(0, 0, 1)",
+			"right": "(1, 0, 0)",
+			"source_glass_floor_y": 0.385,
+			"source_glass_names": [
+				"Entrance door glass",
+				"Entrance door glass.001",
+				"Entrance door glass.002",
+				"Entrance door glass.003"
+			],
+			"source_lintel_bottom_y": 2.79,
+			"source_recess_name": "Entrance dark recess",
+			"width": 4.4
+		},
+		"floor_y": 0.52,
+		"installed": true,
+		"preserved": [
+			"Main plinth",
+			"Entry canopy",
+			"Canopy square column",
+			"Canopy square column.001",
+			"all facade/window/fence/tree meshes"
+		],
+		"ramp": "No R2 ramp exists in the source. D7 switchback ramps are separate and unchanged.",
+		"reception_e_rightmost_bay": {
+			"max": "(-33.56, 3.65, -102.7675)",
+			"min": "(-35.12, 1.03, -102.7925)",
+			"outward": "(0, 0, 1)",
+			"source_name": "E5 clear door or sidelight.003",
+			"threshold_top_y": 0.9375
+		},
+		"replaced": [
+			{
+				"source_bounds": "[P: (-16.275, 0.08, 2.95), S: (4.549999, 0.2, 1)]",
+				"source_name": "Entrance step"
+			},
+			{
+				"source_bounds": "[P: (-16.275, 0.08, 2.72), S: (4.549999, 0.37, 0.86)]",
+				"source_name": "Entrance step.001"
+			},
+			{
+				"source_bounds": "[P: (-16.275, 0.08, 2.49), S: (4.549999, 0.54, 0.72)]",
+				"source_name": "Entrance step.002"
+			},
+			{
+				"source_bounds": "[P: (-16.275, 0.08, 2.26), S: (4.549999, 0.71, 0.58)]",
+				"source_name": "Entrance step.003"
+			},
+			{
+				"source_bounds": "[P: (-16.1225, 0.928404, 2.593687), S: (0.044998, 0.423192, 1.312626)]",
+				"source_name": "Stair handrail"
+			},
+			{
+				"source_bounds": "[P: (-11.9225, 0.928404, 2.593687), S: (0.045, 0.423192, 1.312626)]",
+				"source_name": "Stair handrail.001"
+			},
+			{
+				"source_bounds": "[P: (-16.11902, 0.5, 3.78), S: (0.038044, 0.7, 0.04)]",
+				"source_name": "Handrail upright"
+			},
+			{
+				"source_bounds": "[P: (-16.11902, 0.8, 2.68), S: (0.038044, 0.7, 0.04)]",
+				"source_name": "Handrail upright.001"
+			},
+			{
+				"source_bounds": "[P: (-11.91902, 0.5, 3.78), S: (0.038042, 0.7, 0.04)]",
+				"source_name": "Handrail upright.002"
+			},
+			{
+				"source_bounds": "[P: (-11.91902, 0.8, 2.68), S: (0.038042, 0.7, 0.04)]",
+				"source_name": "Handrail upright.003"
+			}
+		],
+		"root": "R2EntranceGeometry:<Node3D#409515089247>",
+		"source_plinth_flat_front_z": 0.364719390869141,
+		"step_count": 3,
+		"step_rise": 0.169333333333333,
+		"step_run": 0.45,
+		"support_bounds": "[P: (-52, 0, -33.9), S: (56, 0.52, 34.4)]",
+		"threshold_collision_provenance": "Exact source Main plinth triangle collider, including its original bevels and full x[-52,4], z[-33.9,.5] footprint. Existing visible surface unchanged; no duplicate rendered floor.",
+		"visual_bounds": "[P: (-17.1, -0.06, -0.2), S: (6.2, 3.1, 5.9)]"
+	}
+}

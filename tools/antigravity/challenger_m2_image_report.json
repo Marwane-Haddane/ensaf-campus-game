@@ -1,0 +1,261 @@
+{
+	"failed_checks": 0,
+	"failures": [],
+	"passed": true,
+	"passed_checks": 83,
+	"suites": {
+		"auditorium_ceiling_moire": {
+			"center_panel": {
+				"edges_08_reduction_pct": 54.9537648612946,
+				"edges_15_reduction_pct": 80.6122448979592,
+				"gradient_reduction_pct": 38.6671218693649
+			},
+			"right_panel": {
+				"edges_15_reduction_pct": 35.6756756756757,
+				"gradient_reduction_pct": 14.1553353054114
+			}
+		},
+		"baseline_delta": {
+			"auditorium_rear": {
+				"mae": 0.0143663807307614,
+				"pct_changed": 64.5883246527778,
+				"psnr_db": 33.5745859744807,
+				"rmse": 0.0209541814967287
+			},
+			"auditorium_teaching": {
+				"mae": 0.0106532175970881,
+				"pct_changed": 51.2494574652778,
+				"psnr_db": 35.4287823416748,
+				"rmse": 0.0169262551375186
+			},
+			"cream_exterior_45": {
+				"mae": 0.032784613944883,
+				"pct_changed": 83.5928819444444,
+				"psnr_db": 25.9323419590096,
+				"rmse": 0.0505106435742446
+			},
+			"cream_front": {
+				"mae": 0.0336143155072634,
+				"pct_changed": 79.5317925347222,
+				"psnr_db": 25.9361426422314,
+				"rmse": 0.0504885464755643
+			},
+			"cream_inside_out": {
+				"mae": 0.0343532351043882,
+				"pct_changed": 83.3049045138889,
+				"psnr_db": 25.554292686961,
+				"rmse": 0.0527576406774095
+			},
+			"glazed_entrance": {
+				"mae": 0.02871115710991,
+				"pct_changed": 71.0869140625,
+				"psnr_db": 27.8991586832572,
+				"rmse": 0.0402756043454859
+			},
+			"plaza": {
+				"mae": 0.0147928193481345,
+				"pct_changed": 78.2212456597222,
+				"psnr_db": 32.3028950304276,
+				"rmse": 0.0242580143416915
+			},
+			"reception": {
+				"mae": 0.0155365833591189,
+				"pct_changed": 56.0894097222222,
+				"psnr_db": 32.5452722071281,
+				"rmse": 0.0235904589239518
+			},
+			"security": {
+				"mae": 0.0174260374763488,
+				"pct_changed": 65.4014756944444,
+				"psnr_db": 31.6268225648526,
+				"rmse": 0.0262215808990914
+			}
+		},
+		"cream_entrance_features": {
+			"canopy_downlight": {
+				"luminance_boost_pct": 10.6851057256457,
+				"warmth_boost": 0.0280484137596051
+			},
+			"marble_floor": {
+				"contrast_increase_pct": 16.0373355166608
+			},
+			"signage": {
+				"max_delta": 0.292810449997584,
+				"mean_delta": 0.0268790854214179
+			}
+		},
+		"dimensions": {
+			"auditorium_rear": {
+				"baseline_size": [
+					1280,
+					720
+				],
+				"polished_format": 5,
+				"polished_size": [
+					1280,
+					720
+				]
+			},
+			"auditorium_teaching": {
+				"baseline_size": [
+					1280,
+					720
+				],
+				"polished_format": 5,
+				"polished_size": [
+					1280,
+					720
+				]
+			},
+			"cream_exterior_45": {
+				"baseline_size": [
+					1280,
+					720
+				],
+				"polished_format": 5,
+				"polished_size": [
+					1280,
+					720
+				]
+			},
+			"cream_front": {
+				"baseline_size": [
+					1280,
+					720
+				],
+				"polished_format": 5,
+				"polished_size": [
+					1280,
+					720
+				]
+			},
+			"cream_inside_out": {
+				"baseline_size": [
+					1280,
+					720
+				],
+				"polished_format": 5,
+				"polished_size": [
+					1280,
+					720
+				]
+			},
+			"glazed_entrance": {
+				"baseline_size": [
+					1280,
+					720
+				],
+				"polished_format": 5,
+				"polished_size": [
+					1280,
+					720
+				]
+			},
+			"plaza": {
+				"baseline_size": [
+					1280,
+					720
+				],
+				"polished_format": 5,
+				"polished_size": [
+					1280,
+					720
+				]
+			},
+			"reception": {
+				"baseline_size": [
+					1280,
+					720
+				],
+				"polished_format": 5,
+				"polished_size": [
+					1280,
+					720
+				]
+			},
+			"security": {
+				"baseline_size": [
+					1280,
+					720
+				],
+				"polished_format": 5,
+				"polished_size": [
+					1280,
+					720
+				]
+			}
+		},
+		"pairwise_uniqueness": {
+			"closest_pair": "cream_front vs cream_inside_out",
+			"min_pairwise_mae": 0.167512601527194,
+			"total_pairs": 36
+		},
+		"variance": {
+			"auditorium_rear": {
+				"dynamic_range": 1,
+				"max_luminance": 1,
+				"mean_luminance": 0.315717850451842,
+				"min_luminance": 0,
+				"std_dev": 0.244316079587988
+			},
+			"auditorium_teaching": {
+				"dynamic_range": 0.963589072227478,
+				"max_luminance": 0.963589072227478,
+				"mean_luminance": 0.289547813825673,
+				"min_luminance": 0,
+				"std_dev": 0.26118345336349
+			},
+			"cream_exterior_45": {
+				"dynamic_range": 1,
+				"max_luminance": 1,
+				"mean_luminance": 0.591552820906215,
+				"min_luminance": 0,
+				"std_dev": 0.251307450638619
+			},
+			"cream_front": {
+				"dynamic_range": 0.954680740833282,
+				"max_luminance": 0.954680740833282,
+				"mean_luminance": 0.459772840551173,
+				"min_luminance": 0,
+				"std_dev": 0.201837588471316
+			},
+			"cream_inside_out": {
+				"dynamic_range": 1,
+				"max_luminance": 1,
+				"mean_luminance": 0.441777699965177,
+				"min_luminance": 0,
+				"std_dev": 0.18700718236881
+			},
+			"glazed_entrance": {
+				"dynamic_range": 1,
+				"max_luminance": 1,
+				"mean_luminance": 0.506627712717028,
+				"min_luminance": 0,
+				"std_dev": 0.301520356179747
+			},
+			"plaza": {
+				"dynamic_range": 0.986799214966595,
+				"max_luminance": 1,
+				"mean_luminance": 0.648541092847567,
+				"min_luminance": 0.0132007850334048,
+				"std_dev": 0.198649822260741
+			},
+			"reception": {
+				"dynamic_range": 0.949889421463013,
+				"max_luminance": 0.949889421463013,
+				"mean_luminance": 0.280187941516792,
+				"min_luminance": 0,
+				"std_dev": 0.137171872910519
+			},
+			"security": {
+				"dynamic_range": 1,
+				"max_luminance": 1,
+				"mean_luminance": 0.443140005175765,
+				"min_luminance": 0,
+				"std_dev": 0.274407698500793
+			}
+		}
+	},
+	"timestamp": "2026-11-02T00:19:21",
+	"total_checks": 83
+}

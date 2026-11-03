@@ -1,0 +1,43 @@
+{
+  "captures": [
+    "res://tools/launcher/integrated-home.png",
+    "res://tools/launcher/integrated-modes.png",
+    "res://tools/launcher/integrated-settings.png",
+    "res://tools/launcher/integrated-error.png",
+    "res://tools/launcher/integrated-loading.png",
+    "res://tools/launcher/integrated-ready.png"
+  ],
+  "checks": 72,
+  "failures": [],
+  "metrics": {
+    "boot_first_frame_ms": 104.175,
+    "max_frame_gap_ms": 653.256,
+    "menu_interactive_ms": 1153.229,
+    "stages": {
+      "ERROR/resource": 34.137,
+      "INITIALIZING/": 73.082,
+      "LOADING_GAME/batches": 158.311,
+      "LOADING_GAME/collision": 571.217,
+      "LOADING_GAME/entrances": 36.94,
+      "LOADING_GAME/first_frame": 107.509,
+      "LOADING_GAME/game_services": 20.912,
+      "LOADING_GAME/incident_ui": 329.763,
+      "LOADING_GAME/instantiate": 298.775,
+      "LOADING_GAME/merges": 71.61,
+      "LOADING_GAME/navigation_ui": 112.951,
+      "LOADING_GAME/occlusion": 43.221,
+      "LOADING_GAME/polish": 23.712,
+      "LOADING_GAME/readiness": 275.391,
+      "LOADING_GAME/request": 630.657,
+      "LOADING_GAME/resource": 318.044,
+      "LOADING_GAME/stations": 305.081,
+      "LOADING_GAME/test_gate": 49.097,
+      "LOADING_GAME/waiting": 44.866,
+      "MAIN_MENU/": 653.256,
+      "MAIN_MENU/first_frame": 570.868,
+      "READY/first_frame": 22.846,
+      "SELECT_MODE/": 590.864
+    }
+  },
+  "passed": true
+}

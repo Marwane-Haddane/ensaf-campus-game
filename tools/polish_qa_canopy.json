@@ -1,0 +1,53 @@
+{
+  "source": "assets/campus.glb",
+  "note": "One representative source tree; source normals are already smooth if radial dot is near 1.",
+  "surfaces": [
+    {
+      "node": "Campus plaza shade tree",
+      "material": "R3 - Leaf shade 0",
+      "vertices": 42,
+      "triangles": 80,
+      "lobe_vertices": [
+        42
+      ],
+      "normal_radial_dot_min": 0.97822436434797,
+      "normal_radial_dot_mean": 0.9944417481295186
+    },
+    {
+      "node": "Campus plaza shade tree",
+      "material": "R3 - Leaf shade 1",
+      "vertices": 84,
+      "triangles": 160,
+      "lobe_vertices": [
+        42,
+        42
+      ],
+      "normal_radial_dot_min": 0.9700861321614737,
+      "normal_radial_dot_mean": 0.9927604453158015
+    },
+    {
+      "node": "Campus plaza shade tree",
+      "material": "R3 - Leaf shade 2",
+      "vertices": 84,
+      "triangles": 160,
+      "lobe_vertices": [
+        42,
+        42
+      ],
+      "normal_radial_dot_min": 0.9398482796658334,
+      "normal_radial_dot_mean": 0.9857637528752586
+    },
+    {
+      "node": "Campus plaza shade tree",
+      "material": "R3 - Leaf shade 3",
+      "vertices": 84,
+      "triangles": 160,
+      "lobe_vertices": [
+        42,
+        42
+      ],
+      "normal_radial_dot_min": 0.9831412454251334,
+      "normal_radial_dot_mean": 0.9955304992634597
+    }
+  ]
+}

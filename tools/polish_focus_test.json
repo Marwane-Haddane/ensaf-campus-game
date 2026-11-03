@@ -1,0 +1,43 @@
+{
+	"checks": 36,
+	"failures": [],
+	"layouts": [
+		{
+			"card": "[P: (504, 602), S: (272, 64)]",
+			"resolution": "(1280, 720)",
+			"tag": "[P: (712.0596, 256.7427), S: (112, 48)]",
+			"tag_visible": true,
+			"viewport": "(1280, 720)"
+		},
+		{
+			"card": "[P: (344, 422), S: (272, 64)]",
+			"resolution": "(960, 540)",
+			"tag": "[P: (540.0447, 180.307), S: (112, 48)]",
+			"tag_visible": true,
+			"viewport": "(960, 540)"
+		},
+		{
+			"card": "[P: (184, 362), S: (272, 64)]",
+			"resolution": "(640, 480)",
+			"tag": "[P: (376.0397, 154.8284), S: (112, 48)]",
+			"tag_visible": true,
+			"viewport": "(640, 480)"
+		},
+		{
+			"card": "[P: (104, 238), S: (272, 64)]",
+			"resolution": "(480, 320)",
+			"tag": "[P: (322, 86.88564), S: (112, 48)]",
+			"tag_visible": true,
+			"viewport": "(480, 320)"
+		},
+		{
+			"card": "[P: (24, 158), S: (272, 64)]",
+			"resolution": "(320, 240)",
+			"tag": "[P: (322, 86.88564), S: (112, 48)]",
+			"tag_visible": false,
+			"viewport": "(320, 240)"
+		}
+	],
+	"passed": true,
+	"perimeter_segments": 42
+}
