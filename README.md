@@ -2,7 +2,11 @@
 
 Double-click **PLAY.cmd** to play on Windows. Use **EDIT.cmd** to edit the Godot project. Godot 4.3 is bundled from the engine already present on this PC; a separate engine installation is not required. Keep the entire campus-game folder together.
 
-The game uses the latest campus revision 9. The editable Blender source remains in `../campus-design-v9/ensaf-campus-v9-final.blend`.
+## Download for Windows
+
+Friends can download and unzip the standalone Windows build from the [latest release](https://github.com/Marwane-Haddane/ensaf-campus-game/releases/latest). Open **ENSA-Games.exe** to play. This release is for 64-bit Windows PCs. The source project and editing tools are not needed.
+
+The game uses the latest campus revision 9. The editable Blender source remains in `../3D-modeling/campus-design-v9/ensaf-campus-v9-final.blend`.
 
 ## Play
 
@@ -70,7 +74,7 @@ The terminal's files and command results are authored training data. Commands st
 
 ## Asset approval
 
-The five models selected and supplied by the user in `../3d models` have been integrated: the computer set, office desk, office chair, and both server racks. Their copied GLBs are in `assets/user_models`. The original downloads and Blender campus source remain unchanged. Scale, placement, collisions and interaction targets are set up in the game. The imported chairs replace the two earlier reception-chair placeholders in the game view; the Blender model retains its original contents. Credits are in [CREDITS.md](CREDITS.md), with provenance and approval in `ASSET-APPROVALS.md`. Any additional external assets still require user approval before download/import.
+The five models selected and supplied by the user in `../3D-modeling/3d models` have been integrated: the computer set, office desk, office chair, and both server racks. Their copied GLBs are in `assets/user_models`. The original downloads and Blender campus source remain unchanged. Scale, placement, collisions and interaction targets are set up in the game. The imported chairs replace the two earlier reception-chair placeholders in the game view; the Blender model retains its original contents. Credits are in [CREDITS.md](CREDITS.md), with provenance and approval in `ASSET-APPROVALS.md`. Any additional external assets still require user approval before download/import.
 
 ## Current scope and limits
 

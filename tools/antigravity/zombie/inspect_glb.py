@@ -1,6 +1,8 @@
 import json
+from pathlib import Path
 
-with open("3d models/zombie/pistol_animation_wip__really_stiff.glb", "rb") as f:
+source = Path(__file__).resolve().parents[4] / "3D-modeling" / "3d models" / "zombie"
+with (source / "pistol_animation_wip__really_stiff.glb").open("rb") as f:
     header = f.read(12)
     chunk0_header = f.read(8)
     json_length = int.from_bytes(chunk0_header[:4], 'little')

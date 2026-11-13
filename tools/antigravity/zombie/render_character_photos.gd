@@ -41,7 +41,7 @@ func _run() -> void:
 
 	var doc = GLTFDocument.new()
 	var state = GLTFState.new()
-	var err = doc.append_from_file("C:/1Project/Vr --- cyber/ensaf-campus-v4-project/ENSA-Fes-Campus-v4/3d models/zombie/pistol_animation_wip__really_stiff.glb", state)
+	var err = doc.append_from_file("C:/1Project/Vr --- cyber/ensaf-campus-v4-project/ENSA-Fes-Campus-v4/3D-modeling/3d models/zombie/pistol_animation_wip__really_stiff.glb", state)
 	if err == OK:
 		var inst = doc.generate_scene(state) as Node3D
 		studio.add_child(inst)

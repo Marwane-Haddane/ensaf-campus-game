@@ -28,6 +28,7 @@ var max_stamina: float = 100.0
 var stamina: float = 100.0
 
 var is_dead: bool = false
+var _vehicle_seated := false
 var input_enabled: bool = true
 
 var camera: Camera3D
@@ -50,6 +51,9 @@ var _jump_buffer_left := 0.0
 var _fallback_jump_down := false
 var _damage_roll := 0.0
 var _step_visual_offset := 0.0
+var _travel_speed := 0.0
+var _landing_dip := 0.0
+var _gait_weight := 0.0
 var _door_system: Node
 
 func _ready() -> void:
@@ -108,12 +112,24 @@ func _setup_weapon() -> void:
 		camera.add_child(weapon_controller)
 
 func set_input_enabled(enabled: bool) -> void:
-	input_enabled = enabled
-	if not enabled:
+	input_enabled = enabled and not _vehicle_seated
+	if not input_enabled:
 		velocity = Vector3.ZERO
+		_travel_speed = 0.0
 		if weapon_controller:
 			weapon_controller.call("set_aim", false)
 		_clear_interaction()
+
+func set_vehicle_seated(seated: bool) -> void:
+	_vehicle_seated = seated
+	set_input_enabled(false)
+	set_physics_process(not seated)
+	collision_layer = 0 if seated else 2
+	collision_mask = 0 if seated else 1 | 4
+	if weapon_controller:
+		if seated:
+			weapon_controller.call("cancel_reload")
+		weapon_controller.visible = not seated and not is_dead
 
 func add_recoil(kick: float) -> void:
 	if reduced_motion:
@@ -125,6 +141,11 @@ func switch_weapon_slot(slot_index: int) -> void:
 	var game = get_tree().root.find_child("ZombieGame", true, false)
 	var inv = game.get("inventory") if game else null
 	if inv == null:
+		return
+	var slots: Array = inv.get_weapon_slots()
+	if slot_index < 0 or slot_index >= slots.size():
+		return
+	if weapon_controller and not weapon_controller._opening_allows_weapon(str(slots[slot_index].id)):
 		return
 	var slot_info: Dictionary = inv.call("switch_slot", slot_index)
 	if slot_info.is_empty():
@@ -225,8 +246,14 @@ func _physics_process(delta: float) -> void:
 	horizontal = horizontal.move_toward(target_velocity, acceleration * delta)
 	velocity.x = horizontal.x
 	velocity.z = horizontal.y
+	var before_move := global_position
+	var fall_speed := velocity.y
 	_try_step_up(delta)
 	move_and_slide()
+	var travelled := global_position - before_move
+	_travel_speed = Vector2(travelled.x, travelled.z).length() / maxf(delta, 0.001)
+	if not grounded and is_on_floor() and fall_speed < -2.0:
+		_landing_dip = minf(0.055, absf(fall_speed) * 0.007)
 	_update_camera_motion(delta, move_vec)
 
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
@@ -267,13 +294,31 @@ func _update_camera_motion(delta: float, movement: Vector2) -> void:
 	recoil_pitch_offset = lerpf(recoil_pitch_offset,0.0,1.0-exp(-10.0*delta))
 	_damage_roll = lerpf(_damage_roll,0.0,1.0-exp(-15.0*delta))
 	_step_visual_offset = move_toward(_step_visual_offset,0.0,delta*1.8)
-	var bob := 0.0
-	if not reduced_motion and input_enabled and is_on_floor() and movement.length_squared()>0.01:
-		_head_bob_timer += delta*(10.0 if is_sprinting else 7.0)
-		bob = sin(_head_bob_timer)*0.018
-	camera.position.y = lerpf(camera.position.y,_initial_camera_y+bob-_step_visual_offset,blend)
-	camera.rotation.x = clampf(camera_pitch+recoil_pitch_offset,-deg_to_rad(86.0),deg_to_rad(86.0))
-	camera.rotation.z = 0.0 if reduced_motion else _damage_roll
+	var moving := input_enabled and is_on_floor() and _travel_speed > 0.08
+	var aiming := weapon_controller != null and bool(weapon_controller.get("is_aiming"))
+	var reloading := weapon_controller != null and bool(weapon_controller.get("is_reloading"))
+	var strength := clampf(_travel_speed / WALK_SPEED, 0.0, 1.4) if moving and not reduced_motion else 0.0
+	_gait_weight = lerpf(_gait_weight, strength, blend)
+	# Phase follows distance covered, so pushing a wall cannot cause walking sway.
+	if moving:
+		_head_bob_timer = fmod(_head_bob_timer + _travel_speed * delta * TAU / (2.7 if is_sprinting else 2.1), TAU)
+	_landing_dip = move_toward(_landing_dip, 0.0, delta * 0.19)
+	var steady := 0.2 if aiming else 1.0
+	var side := sin(_head_bob_timer)
+	var step := cos(_head_bob_timer * 2.0)
+	var bob := step * 0.012 * _gait_weight * steady
+	var landing := 0.0 if reduced_motion else _landing_dip
+	camera.position.y = lerpf(camera.position.y, _initial_camera_y + bob - _step_visual_offset - landing, blend)
+	camera.position.x = lerpf(camera.position.x, side * 0.008 * _gait_weight * steady, blend)
+	camera.rotation.x = clampf(camera_pitch + recoil_pitch_offset, -deg_to_rad(86.0), deg_to_rad(86.0))
+	camera.rotation.z = 0.0 if reduced_motion else _damage_roll + side * 0.003 * _gait_weight * steady
+	if weapon_controller:
+		var sprint := float(is_sprinting and moving and not aiming and not reloading)
+		var weight := _gait_weight * steady * (0.25 if reloading else 1.0)
+		var hand_offset := Vector3(side * 0.014, step * 0.011 - sprint * 0.045 - landing * 0.6, absf(side) * 0.008)
+		var hand_angles := Vector3(step * 0.012 - sprint * 0.12, side * 0.014, -side * 0.022 + sprint * 0.08)
+		weapon_controller.position = weapon_controller.position.lerp(hand_offset * weight, blend)
+		weapon_controller.rotation = weapon_controller.rotation.lerp(hand_angles * weight, blend)
 	var target_fov := 75.0
 	if not reduced_motion and input_enabled:
 		if weapon_controller != null and bool(weapon_controller.get("is_aiming")): target_fov = 67.0
@@ -339,7 +384,7 @@ func _try_interact() -> void:
 		else: current_interactable.call("interact", self)
 
 func take_damage(amount: float) -> void:
-	if is_dead or not input_enabled or not is_finite(amount) or amount<=0.0:
+	if is_dead or (not input_enabled and not _vehicle_seated) or not is_finite(amount) or amount<=0.0:
 		return
 	health = maxf(0.0, health - amount)
 	health_changed.emit(health, max_health)
@@ -395,6 +440,13 @@ func restore_state(data: Dictionary) -> void:
 	_damage_roll = 0.0
 	_step_visual_offset = 0.0
 	sprint_exhausted = false
+	_travel_speed = 0.0
+	_gait_weight = 0.0
+	_landing_dip = 0.0
+	_head_bob_timer = 0.0
+	if weapon_controller:
+		weapon_controller.position = Vector3.ZERO
+		weapon_controller.rotation = Vector3.ZERO
 	_stamina_recovery_delay = 0.0
 	
 	var pos: Array = data.get("position", [-27.0, 1.25, -85.0])

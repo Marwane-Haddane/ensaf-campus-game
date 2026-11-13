@@ -3,7 +3,7 @@ from pathlib import Path
 import hashlib, json, struct, zipfile
 
 project=Path(__file__).resolve().parents[2]
-source=project.parent/'3d models'/'zombie'
+source=project.parent/'3D-modeling'/'3d models'/'zombie'
 result={'mode':'zombie_rpg','availability':'coming_soon','source_directory':str(source),'imported_into_game':False,'assets':[]}
 for path in sorted(source.iterdir()):
     if not path.is_file(): continue

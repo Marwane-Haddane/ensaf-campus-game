@@ -5,7 +5,7 @@ signal dialogue_requested(dialogue_lines: Array, speaker_name: String)
 signal survivor_contacted
 
 @export var character_name: String = "Shaun"
-@export var model_path: String = "res://assets/antigravity/zombie/models/Characters_Shaun.tscn"
+@export var model_path: String = "res://assets/antigravity/zombie/models/Characters_Shaun.scn"
 @export var custom_dialogue: Array = []
 @export var reward_scrap: int = 0
 @export var reward_medkit: int = 0
@@ -39,6 +39,11 @@ func _setup_model() -> void:
 	var scene: PackedScene = load(model_path)
 	if scene:
 		model_instance = scene.instantiate() as Node3D
+		# The source kit includes every optional weapon on the same skeleton.
+		# Friendly unarmed NPCs retain body/accessory meshes only.
+		var equipment := ["Axe", "Guitar", "Knife", "Pistol", "Rifle", "Shotgun", "SMG", "Spear", "WoodenBat_Barbed", "WoodenBat_Saw"]
+		for mesh in model_instance.find_children("*", "MeshInstance3D", true, false):
+			if mesh.name in equipment: mesh.hide()
 		add_child(model_instance)
 		anim_player = model_instance.find_child("AnimationPlayer", true, false)
 		_play_anim("Idle")

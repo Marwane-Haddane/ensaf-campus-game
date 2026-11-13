@@ -53,7 +53,7 @@ The last reference is an aesthetic target; preserve our actual geometry and the 
 ## What already exists — preserve it
 
 - Optimized source campus in assets/campus.glb; object provenance in assets/asset-manifest.json.
-- Original editable Blender at ..\campus-design-v9\ensaf-campus-v9-final.blend. Do not overwrite it or regenerate the full campus export.
+- Original editable Blender at ..\3D-modeling\campus-design-v9\ensaf-campus-v9-final.blend. Do not overwrite it or regenerate the full campus export.
 - Shared bounded-cost campus material library, rendering batches, tree crown refinement and conservative solid-wall occlusion.
 - Three approved interactive PC assemblies; two approved server racks; imported office furniture.
 - Contextual PC outline/label/E prompt only while aiming at a nearby PC; range and wall checks.
@@ -69,7 +69,7 @@ Do not replace or duplicate these systems. Do not use always-visible interaction
 
 ## Asset policy
 
-The user explicitly requires review before importing/downloading NEW third-party 3D models. The five user-supplied approved GLBs already live in assets/user_models: gamer_setup_pack.glb, office_chair.glb, office_desk_140x60.glb, server_rack.glb and server_rack_1.glb. Original downloads are in ..\3d models. Reuse them where appropriate without altering the originals or their authored texture maps.
+The user explicitly requires review before importing/downloading NEW third-party 3D models. The five user-supplied approved GLBs already live in assets/user_models: gamer_setup_pack.glb, office_chair.glb, office_desk_140x60.glb, server_rack.glb and server_rack_1.glb. Original downloads are in ..\3D-modeling\3d models. Reuse them where appropriate without altering the originals or their authored texture maps.
 
 For any proposed new 3D asset, provide its preview, exact source URL, creator, license, download format and approximate size, then wait for user approval. Do not download/import it automatically. No purchases, publishing or uploads. Credit any new non-3D resources you create or are authorized to use, retaining licenses. Keep materials and textures original/licensed, shared and modest in size; avoid unnecessary huge assets.
 

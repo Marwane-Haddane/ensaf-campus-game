@@ -59,6 +59,7 @@ var _cached_candidate: CharacterBody3D
 var _step_due := 0.0
 var _visual_step_offset := 0.0
 var _model_base_y := 0.0
+var _gait_running := false
 static var _config_cache: Dictionary = {}
 
 func _ready() -> void:
@@ -110,7 +111,7 @@ func _setup_collision() -> void:
 	collision_mask = 1|2|4
 
 func _setup_model() -> void:
-	var scene := load(str(_config.get("scene","res://assets/antigravity/zombie/models/Zombie_Basic.tscn"))) as PackedScene
+	var scene := load(str(_config.get("scene","res://assets/antigravity/zombie/models/Zombie_Basic.scn"))) as PackedScene
 	if scene == null: return
 	model_instance = scene.instantiate() as Node3D
 	_model_base_y = model_instance.position.y
@@ -170,8 +171,11 @@ func _physics_process(delta: float) -> void:
 		State.ATTACK: _process_attack(delta)
 		State.HIT_REACT: _process_hit_react(delta)
 		State.INVESTIGATE: _process_investigate(delta)
+	var before_move := global_position
 	_try_step_up(delta)
 	move_and_slide()
+	var displacement := global_position - before_move
+	_update_locomotion(Vector2(displacement.x, displacement.z).length() / maxf(delta, 0.001), delta)
 	_visual_step_offset = move_toward(_visual_step_offset,0.0,delta*2.0)
 	if model_instance: model_instance.position.y = _model_base_y+_visual_step_offset
 
@@ -340,13 +344,14 @@ func _steer_towards(goal: Vector3,speed: float,delta: float) -> void:
 	if _recovery_remaining>0.0:
 		_recovery_remaining -= delta
 		direction = (direction+_recovery_direction*0.9).normalized()
-	var wanted := direction*speed
+	# Turn into the route before accelerating fully; avoid sideways skating.
+	var alignment := clampf((-global_basis.z).dot(direction), 0.0, 1.0)
+	var wanted := direction * speed * lerpf(0.28, 1.0, alignment)
 	velocity.x = move_toward(velocity.x,wanted.x,_acceleration*delta)
 	velocity.z = move_toward(velocity.z,wanted.z,_acceleration*delta)
 	_look_at_smooth(global_position+direction,delta*_turn_speed)
 	var actual := Vector2(velocity.x,velocity.z).length()
-	_play_anim("Idle" if actual<0.18 else ("Run" if speed>walk_speed+0.1 else "Walk"))
-	if anim_player and actual>=0.18: anim_player.speed_scale = clampf(actual/maxf(speed,0.1),0.55,1.15)
+
 	# Bounded deterministic sidestep replaces per-frame random velocity jitter.
 	if global_position.distance_squared_to(last_pos)<0.002 and actual>0.4:
 		stuck_timer += delta
@@ -487,6 +492,25 @@ func _look_at_smooth(target: Vector3,max_turn: float) -> void:
 	var direction := target-global_position
 	direction.y = 0.0
 	if direction.length_squared()>0.001: rotation.y = rotate_toward(rotation.y,atan2(-direction.x,-direction.z),max_turn)
+
+func _update_locomotion(actual_speed: float, delta: float) -> void:
+	# Keep attack, stagger and death timelines untouched. Use resolved movement,
+	# not desired velocity, so blocked enemies stop running on the spot.
+	if state not in [State.IDLE, State.PATROL, State.CHASE, State.INVESTIGATE] or anim_player == null:
+		return
+	if actual_speed < 0.10:
+		_gait_running = false
+		_play_anim("Idle")
+		anim_player.speed_scale = 1.0
+		return
+	# Separate thresholds avoid walk/run flicker during acceleration and corners.
+	_gait_running = state == State.CHASE and actual_speed > walk_speed * (1.05 if _gait_running else 1.25)
+	var running := _gait_running
+	var role := "Run" if running else "Walk"
+	_play_anim(role)
+	var authored_speed := float(_config.get("run_animation_speed" if running else "walk_animation_speed", run_speed if running else walk_speed))
+	var cadence := clampf(actual_speed / maxf(authored_speed, 0.1), 0.15, 1.5)
+	anim_player.speed_scale = lerpf(anim_player.speed_scale, cadence, 1.0 - exp(-12.0 * delta))
 
 func _play_anim(name: String,restart: bool = false) -> void:
 	if anim_player==null: return

@@ -466,8 +466,7 @@ func _build_display_confirm() -> PanelContainer:
 	keep_btn.name = "KeepButton"
 	keep_btn.text = "Keep Changes"
 	keep_btn.focus_mode = Control.FOCUS_ALL
-	for state in ["normal", "hover", "pressed", "focus"]:
-		keep_btn.add_theme_stylebox_override(state, LauncherTheme.make_accent_button_style(state))
+	LauncherTheme.style_primary(keep_btn)
 	keep_btn.pressed.connect(func(): intent_requested.emit(&"confirm_display", {}))
 	btn_row.add_child(keep_btn)
 

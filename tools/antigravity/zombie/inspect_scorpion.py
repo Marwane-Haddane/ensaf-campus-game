@@ -1,6 +1,6 @@
 import json
 
-with open("../3d models/zombie/scorpion__first_person_animations_2026_remake.glb", "rb") as f:
+with open("../3D-modeling/3d models/zombie/scorpion__first_person_animations_2026_remake.glb", "rb") as f:
     header = f.read(12)
     chunk0_header = f.read(8)
     json_length = int.from_bytes(chunk0_header[:4], 'little')

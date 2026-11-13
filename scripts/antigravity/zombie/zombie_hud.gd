@@ -4,6 +4,7 @@ extends CanvasLayer
 const DISPLAY_FONT := preload("res://assets/antigravity/zombie/hud/BarlowCondensed-ExtraBoldItalic.ttf")
 const PISTOL_ICON := preload("res://assets/antigravity/zombie/hud/desert-eagle.svg")
 const SMG_ICON := preload("res://assets/antigravity/zombie/hud/cz-skorpion.svg")
+const SHOTGUN_ICON := preload("res://assets/antigravity/zombie/hud/benelli-m4.svg")
 const CHEVRON_ICON := preload("res://assets/ui/icons/chevron.svg")
 const INK := Color("190d39f5")
 const VIOLET := Color("785bff")
@@ -63,19 +64,29 @@ var _victory_values: Array[Label] = []
 var banner_timer: float = 0.0
 
 var is_paused: bool = false
+var _driving := false
+var _free_roam_driving := false
 var reduced_motion: bool = false
 var notice_label: Label
-var boss_bar: ProgressBar
-var boss_label: Label
 var progression_label: Label
+var _notice_box: Control
+var _notice_detail: Label
+var _notice_squad_icon: Control
 var _notice_remaining := 0.0
+var _boss_box: MarginContainer
+var _boss_bar: Control
+var _boss_phase: Label
+var _boss_health := 0.0
+var _boss_damage_trail := 0.0
+var _boss_trail_hold := 0.0
 var _modal_scrim: ColorRect
 var _pause_fade: TextureRect
 var _objective_box: VBoxContainer
 var _weapon_icon: TextureRect
 var _ammo_warning: Label
+var _weapon_tile: VBoxContainer
 var _medkit_button: Button
-var _upgrade_buttons: Dictionary = {}
+var _upgrade_rows: Dictionary = {}
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -87,9 +98,18 @@ func _ready() -> void:
 	_layout_menus.call_deferred()
 
 func _process(delta: float) -> void:
-	if _notice_remaining>0:
+	if get_tree().paused:
+		return
+	if _notice_remaining > 0:
 		_notice_remaining = maxf(0.0,_notice_remaining-delta)
-		if notice_label: notice_label.visible = _notice_remaining>0
+		if _notice_remaining == 0.0 and is_instance_valid(_notice_box):
+			_notice_box.hide()
+			_layout_combat_hud()
+	if is_instance_valid(_boss_box) and _boss_box.visible and _boss_damage_trail > _boss_health:
+		_boss_trail_hold = maxf(0.0, _boss_trail_hold - delta)
+		if reduced_motion or _boss_trail_hold == 0.0:
+			_boss_damage_trail = _boss_health if reduced_motion else move_toward(_boss_damage_trail, _boss_health, 1.5 * delta)
+			_boss_bar.queue_redraw()
 
 func _apply_survival_theme() -> void:
 	var theme := Theme.new()
@@ -99,7 +119,7 @@ func _apply_survival_theme() -> void:
 	theme.default_font_size = 15
 	var root: Control = get_child(0)
 	root.theme = theme
-	for panel: PanelContainer in [inventory_menu,journal_menu,upgrade_menu,death_screen]:
+	for panel: PanelContainer in [inventory_menu,journal_menu]:
 		panel.theme = theme
 		var style := StyleBoxFlat.new()
 		style.bg_color = Color("101925f5")
@@ -135,47 +155,69 @@ func _apply_survival_theme() -> void:
 	fade_texture.height = 1
 	_pause_fade.texture = fade_texture
 	_modal_scrim.add_child(_pause_fade)
-	notice_label = _hud_label("", 18, CITRON)
-	notice_label.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	notice_label.offset_left = -421
-	notice_label.offset_right = -32
-	notice_label.offset_top = 28
-	notice_label.offset_bottom = 67
-	notice_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	notice_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	var notice_padding := StyleBoxEmpty.new()
-	notice_padding.content_margin_left = 20
-	notice_padding.content_margin_right = 24
-	notice_padding.content_margin_top = 5
-	notice_padding.content_margin_bottom = 5
-	notice_label.add_theme_stylebox_override("normal", notice_padding)
-	notice_label.hide()
-	root.add_child(notice_label)
-	_add_hud_plate(notice_label, INK, VIOLET, true)
-	var boss_box := VBoxContainer.new()
-	boss_box.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
-	boss_box.offset_left = -180
-	boss_box.offset_right = 180
-	boss_box.offset_top = 108
-	boss_box.offset_bottom = 146
-	root.add_child(boss_box)
-	boss_label = Label.new()
-	boss_label.text = "COURTYARD BRUTE"
-	boss_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	boss_label.add_theme_font_size_override("font_size",12)
-	boss_box.add_child(boss_label)
-	boss_bar = ProgressBar.new()
-	boss_bar.show_percentage = false
-	boss_bar.custom_minimum_size = Vector2(360,6)
-	var boss_fill := StyleBoxFlat.new()
-	boss_fill.bg_color = Color("c17955")
-	boss_fill.set_corner_radius_all(3)
-	boss_bar.add_theme_stylebox_override("fill", boss_fill)
-	boss_box.add_child(boss_bar)
-	boss_box.hide()
+	_build_combat_hud(root)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for node: Node in root.find_children("*","Control",true,false):
 		(node as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+func _build_combat_hud(root: Control) -> void:
+	_notice_box = Control.new()
+	root.add_child(_notice_box)
+	_add_hud_plate(_notice_box, INK, VIOLET, true)
+	_notice_squad_icon = Control.new()
+	_notice_squad_icon.size = Vector2(48, 36)
+	_notice_box.add_child(_notice_squad_icon)
+	_notice_squad_icon.draw.connect(func():
+		for x in [7.0, 29.0, 18.0]:
+			var center := Vector2(x, 11.0 if x == 18.0 else 15.0)
+			_notice_squad_icon.draw_circle(center, 5.0, CITRON)
+			_notice_squad_icon.draw_circle(center + Vector2(0, 13), 8.0, CITRON)
+		_draw_slant(_notice_squad_icon, Rect2(37, 0, 9, 36), VIOLET, 7)
+	)
+	notice_label = _hud_label("", 20)
+	notice_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_notice_box.add_child(notice_label)
+	_notice_detail = _hud_label("", 16)
+	_notice_detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_notice_box.add_child(_notice_detail)
+	_notice_box.hide()
+
+	_boss_box = _combat_plate(root, 26, 7)
+	var boss_box := VBoxContainer.new()
+	boss_box.add_theme_constant_override("separation", 4)
+	_boss_box.add_child(boss_box)
+	var header := HBoxContainer.new()
+	boss_box.add_child(header)
+	var name_label := _hud_label("COURTYARD BRUTE", 27)
+	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header.add_child(name_label)
+	_boss_phase = _hud_label("", 18)
+	header.add_child(_boss_phase)
+	_boss_bar = Control.new()
+	_boss_bar.custom_minimum_size.y = 15
+	boss_box.add_child(_boss_bar)
+	_boss_bar.resized.connect(_boss_bar.queue_redraw)
+	_boss_bar.draw.connect(_draw_boss_health)
+	_boss_box.hide()
+
+func _combat_plate(parent: Control, horizontal: int, vertical: int, accent_right := false) -> MarginContainer:
+	var panel := MarginContainer.new()
+	panel.add_theme_constant_override("margin_left", horizontal)
+	panel.add_theme_constant_override("margin_right", horizontal)
+	panel.add_theme_constant_override("margin_top", vertical)
+	panel.add_theme_constant_override("margin_bottom", vertical)
+	parent.add_child(panel)
+	_add_hud_plate(panel, INK, VIOLET, accent_right)
+	return panel
+
+func _draw_boss_health() -> void:
+	var extent := _boss_bar.size
+	_boss_bar.draw_rect(Rect2(Vector2.ZERO, extent), Color("3b2b55"))
+	_boss_bar.draw_rect(Rect2(0, 0, extent.x * _boss_damage_trail, extent.y), Color("ffad88"))
+	_boss_bar.draw_rect(Rect2(0, 0, extent.x * _boss_health, extent.y), Color("ff4473"))
+	for tick in range(1, 10):
+		var x := extent.x * tick / 10.0
+		_boss_bar.draw_line(Vector2(x, 0), Vector2(x, extent.y), Color("170c3833"), 1.0)
 
 func _layout_menus() -> void:
 	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
@@ -184,10 +226,12 @@ func _layout_menus() -> void:
 	pause_menu.position = Vector2(56, maxf(24, (viewport_size.y - pause_menu.size.y) * 0.32))
 	victory_screen.size = victory_screen.get_combined_minimum_size()
 	victory_screen.position = Vector2(56, maxf(18, (viewport_size.y - victory_screen.size.y) * 0.46))
-	for panel: PanelContainer in [inventory_menu,journal_menu,upgrade_menu,death_screen]:
+	for panel: PanelContainer in [inventory_menu,journal_menu,death_screen]:
 		panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
 		panel.size = panel.get_combined_minimum_size().min(viewport_size-Vector2(48,48))
 		panel.position = (viewport_size-panel.size)*.5
+	upgrade_menu.size = Vector2(minf(628.0, viewport_size.x - 48.0), 0)
+	upgrade_menu.position = (viewport_size - upgrade_menu.size) * Vector2(0.5, 0.37)
 	_layout_dialogue()
 
 func _layout_dialogue() -> void:
@@ -197,24 +241,34 @@ func _layout_dialogue() -> void:
 	dialogue_menu.position = Vector2((viewport_size.x - dialogue_menu.size.x) * 0.5,
 		viewport_size.y - dialogue_menu.size.y - 42)
 
-func update_progression(text: String) -> void:
-	if progression_label: progression_label.text = text
+func update_progression(summary: Dictionary) -> void:
+	progression_label.text = "%s   ·   %d XP   ·   MEDKIT +%d" % [
+		str(summary.rank_title).to_upper(), summary.xp, summary.medkit_healing]
 
 func update_boss(health: float,max_health: float,show: bool,phase: String = "") -> void:
-	if boss_bar:
-		boss_bar.get_parent().visible = show
-		boss_bar.max_value = max_health
-		boss_bar.value = health
-		match phase:
-			"windup":
-				boss_label.text = "BRUTE  ·  WIND-UP / MOVE"
-				boss_label.modulate = Color("f2bd70")
-			"recovery":
-				boss_label.text = "BRUTE  ·  RECOVERING / FIRE"
-				boss_label.modulate = Color("80ddc7")
-			_:
-				boss_label.text = "COURTYARD BRUTE"
-				boss_label.modulate = Color.WHITE
+	if not show:
+		_boss_box.hide()
+		return
+	var remaining := clampf(health / maxf(1.0, max_health), 0.0, 1.0)
+	var previous_trail := _boss_damage_trail
+	if not _boss_box.visible or remaining > _boss_health or reduced_motion:
+		_boss_damage_trail = remaining
+		_boss_trail_hold = 0.0
+	elif remaining < _boss_health:
+		_boss_trail_hold = 0.15
+	if remaining != _boss_health or previous_trail != _boss_damage_trail or not _boss_box.visible:
+		_boss_health = remaining
+		_boss_bar.queue_redraw()
+	match phase:
+		"windup":
+			_boss_phase.text = "WIND-UP / MOVE"
+			_boss_phase.modulate = Color("ffbf56")
+		"recovery":
+			_boss_phase.text = "RECOVERING / FIRE"
+			_boss_phase.modulate = Color("80ddc7")
+		_:
+			_boss_phase.text = ""
+	_boss_box.show()
 
 func update_reload(progress: float, weapon_name: String) -> void:
 	weapon_name_label.text = "RELOADING  %d%%" % int(progress * 100) if progress >= 0.0 else weapon_name.to_upper()
@@ -287,6 +341,9 @@ func _build_interaction_prompt(root: Control) -> void:
 
 func _position_prompt() -> void:
 	var center := _hud_root.size * 0.5
+	if _free_roam_driving:
+		_prompt.position = Vector2(center.x - _prompt.size.x * 0.5, _hud_root.size.y - _prompt.size.y - 52)
+		return
 	_prompt.position = Vector2(maxf(24, center.x - _prompt.size.x - 45), center.y - 22) if _prompt_beside_target \
 		else center + Vector2(-_prompt.size.x * 0.5, 54)
 
@@ -327,21 +384,68 @@ func _build_objective(root: Control) -> void:
 	objective_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	margin.add_child(objective_label)
 
-	progression_label = Label.new()
-	progression_label.add_theme_font_size_override("font_size", 15)
-	progression_label.add_theme_color_override("font_color", WHITE)
-	progression_label.add_theme_color_override("font_shadow_color", Color("120820"))
-	progression_label.add_theme_constant_override("shadow_offset_y", 1)
-	_objective_box.add_child(progression_label)
+	var progression_strip := _combat_plate(_objective_box, 22, 2, true)
+	progression_strip.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	progression_label = _hud_label("", 17)
+	progression_strip.add_child(progression_label)
+	_objective_box.resized.connect(_position_combat_hud)
 
 func _layout_objective() -> void:
 	var text_width := DISPLAY_FONT.get_string_size(objective_label.text,
 		HORIZONTAL_ALIGNMENT_LEFT, -1, 19).x
 	var viewport_width := get_viewport().get_visible_rect().size.x
-	var notice_width := minf(389, viewport_width * 0.31)
-	notice_label.offset_left = -32 - notice_width
-	var max_width := minf(886, viewport_width - notice_width - 80)
+	var notice_width := _combat_notice_width(viewport_width)
+	var available_width := viewport_width - 64.0
+	if viewport_width >= 860:
+		available_width -= notice_width + 16.0
+	var max_width := minf(886, available_width)
 	_objective_box.size = Vector2(minf(max_width, maxf(360, ceilf(text_width) + 186)), 0)
+	_layout_combat_hud()
+
+func _combat_notice_width(viewport_width: float) -> float:
+	return minf(viewport_width - 64.0, clampf(viewport_width * 0.31, 280.0, 342.0))
+
+func _layout_combat_hud() -> void:
+	if _boss_box == null:
+		return
+	var viewport_width := get_viewport().get_visible_rect().size.x
+	_boss_box.size = Vector2(minf(458.0, viewport_width - 64.0), 0)
+	if _notice_box.visible:
+		_fit_combat_notice(_combat_notice_width(viewport_width))
+	_position_combat_hud()
+
+func _fit_combat_notice(width: float) -> void:
+	const INSET := 24.0
+	const PADDING := 6.0
+	var has_detail := _notice_detail.visible
+	var text_left := INSET + (_notice_squad_icon.size.x + 10.0 if has_detail else 0.0)
+	var text_width := maxf(1.0, width - text_left - INSET)
+	# Give each label its final wrap width before measuring its height.
+	notice_label.size.x = text_width
+	notice_label.size.y = notice_label.get_minimum_size().y
+	var content_height := notice_label.size.y
+	if has_detail:
+		_notice_detail.size.x = text_width
+		_notice_detail.size.y = _notice_detail.get_minimum_size().y
+		content_height += _notice_detail.size.y
+	var inner_height := maxf(content_height, _notice_squad_icon.size.y) if has_detail else content_height
+	var text_top := PADDING + (inner_height - content_height) * 0.5
+	notice_label.position = Vector2(text_left, text_top)
+	_notice_detail.position = Vector2(text_left, text_top + notice_label.size.y)
+	_notice_squad_icon.position = Vector2(INSET, PADDING + (inner_height - _notice_squad_icon.size.y) * 0.5)
+	_notice_box.size = Vector2(width, inner_height + PADDING * 2.0)
+
+func _position_combat_hud() -> void:
+	if _boss_box == null:
+		return
+	var viewport_width := get_viewport().get_visible_rect().size.x
+	var objective_bottom := _objective_box.position.y + _objective_box.size.y
+	var notice_top := objective_bottom + 8.0 if viewport_width < 860 else 28.0
+	_notice_box.position = Vector2(viewport_width - _notice_box.size.x - 32.0, notice_top)
+	var top_lane_bottom := objective_bottom
+	if _notice_box.visible:
+		top_lane_bottom = maxf(top_lane_bottom, notice_top + _notice_box.size.y)
+	_boss_box.position = Vector2((viewport_width - _boss_box.size.x) * 0.5, maxf(106.0, top_lane_bottom + 10.0))
 
 func _build_vitals(root: Control) -> void:
 	var vitals := VBoxContainer.new()
@@ -394,6 +498,7 @@ func _add_vital(parent: VBoxContainer, label: Label, tint: Color) -> ProgressBar
 
 func _build_ammo(root: Control) -> void:
 	var tile := VBoxContainer.new()
+	_weapon_tile = tile
 	tile.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
 	tile.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	tile.grow_vertical = Control.GROW_DIRECTION_BEGIN
@@ -772,97 +877,206 @@ func _build_dialogue_menu() -> void:
 	_dialogue_next.add_child(_dialogue_key)
 	_add_hud_plate(_dialogue_key, INK, Color.TRANSPARENT, false, 5)
 
-func _interact_key_hint() -> String:
-	if InputMap.has_action("interact"):
-		for event in InputMap.action_get_events("interact"):
+func _key_hint(action: String, fallback: String) -> String:
+	if InputMap.has_action(action):
+		for event in InputMap.action_get_events(action):
 			if event is InputEventKey:
 				var key: Key = event.physical_keycode if event.physical_keycode else event.keycode
 				if key != KEY_NONE:
 					return OS.get_keycode_string(key)
-	return "E"
+	return fallback
 
 func _build_upgrade_menu() -> void:
 	upgrade_menu = PanelContainer.new()
-	upgrade_menu.set_anchors_preset(Control.PRESET_CENTER)
-	upgrade_menu.custom_minimum_size = Vector2(460, 300)
-	upgrade_menu.visible = false
+	upgrade_menu.hide()
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.08, 0.10, 0.17, 0.95)
-	style.border_color = Color(0.9, 0.7, 0.2, 0.8)
-	style.set_border_width_all(2)
-	style.set_corner_radius_all(8)
+	style.bg_color = Color("100920f5")
 	upgrade_menu.add_theme_stylebox_override("panel", style)
 	add_child(upgrade_menu)
-	
-	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 14)
-	upgrade_menu.add_child(vbox)
-	
-	var title := Label.new()
-	title.text = "FIELD WORKBENCH — UPGRADES (Cost: 25 Scrap)"
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_color_override("font_color", Color(0.95, 0.85, 0.4))
-	title.add_theme_font_size_override("font_size", 16)
-	vbox.add_child(title)
-	
-	var btn_armor := _create_btn("Reinforced Armor (+50 Max HP & Heal 50)", func():
-		upgrade_chosen.emit("upgrade_armor")
+
+	var content := VBoxContainer.new()
+	content.add_theme_constant_override("separation", 0)
+	upgrade_menu.add_child(content)
+	var header := _combat_plate(content, 46, 8)
+	var heading := VBoxContainer.new()
+	heading.add_theme_constant_override("separation", -2)
+	header.add_child(heading)
+	heading.add_child(_hud_label("UPGRADES", 22, CITRON))
+	heading.add_child(_hud_label("FIELD WORKBENCH", 43))
+
+	var padding := MarginContainer.new()
+	padding.add_theme_constant_override("margin_left", 12)
+	padding.add_theme_constant_override("margin_right", 12)
+	padding.add_theme_constant_override("margin_top", 18)
+	padding.add_theme_constant_override("margin_bottom", 16)
+	content.add_child(padding)
+	var rows := VBoxContainer.new()
+	rows.add_theme_constant_override("separation", 14)
+	padding.add_child(rows)
+	_add_upgrade_row(rows, "upgrade_armor")
+	_add_upgrade_row(rows, "upgrade_extended_mag")
+
+	var cancel := Button.new()
+	cancel.text = "    ESC    Cancel"
+	cancel.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	cancel.custom_minimum_size = Vector2(148, 38)
+	cancel.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	cancel.add_theme_font_override("font", DISPLAY_FONT)
+	cancel.add_theme_font_size_override("font_size", 21)
+	cancel.add_theme_color_override("font_color", WHITE)
+	cancel.add_theme_color_override("font_focus_color", CITRON)
+	cancel.add_theme_color_override("font_hover_color", CITRON)
+	cancel.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
+	cancel.add_theme_stylebox_override("hover", StyleBoxEmpty.new())
+	cancel.add_theme_stylebox_override("pressed", StyleBoxEmpty.new())
+	cancel.pressed.connect(func(): toggle_upgrade_menu(false))
+	rows.add_child(cancel)
+	cancel.draw.connect(func():
+		var edge := PackedVector2Array([Vector2(13, 7), Vector2(55, 7), Vector2(48, 31),
+			Vector2(6, 31), Vector2(13, 7)])
+		cancel.draw_polyline(edge, CITRON, 1.5, true)
+	)
+
+func _add_upgrade_row(parent: VBoxContainer, id: String) -> void:
+	var button := Button.new()
+	button.custom_minimum_size.y = 80
+	parent.add_child(button)
+	_style_action_plate(button)
+	button.pressed.connect(func():
+		upgrade_chosen.emit(id)
 		toggle_upgrade_menu(false)
 	)
-	_upgrade_buttons["upgrade_armor"] = btn_armor
-	vbox.add_child(btn_armor)
-	
-	var btn_mag := _create_btn("Extended Magazine (18 Rounds Mag)", func():
-		upgrade_chosen.emit("upgrade_extended_mag")
-		toggle_upgrade_menu(false)
-	)
-	_upgrade_buttons["upgrade_extended_mag"] = btn_mag
-	vbox.add_child(btn_mag)
-	
-	var btn_cancel := _create_btn("Cancel (Esc)", func(): toggle_upgrade_menu(false))
-	vbox.add_child(btn_cancel)
+
+	var inset := MarginContainer.new()
+	inset.add_theme_constant_override("margin_left", 38)
+	inset.add_theme_constant_override("margin_right", 28)
+	button.add_child(inset)
+	inset.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	inset.add_child(row)
+	var icon := Control.new()
+	icon.custom_minimum_size.x = 52
+	row.add_child(icon)
+	icon.resized.connect(icon.queue_redraw)
+	icon.draw.connect(func(): _draw_upgrade_icon(icon, id == "upgrade_armor"))
+
+	var copy := VBoxContainer.new()
+	copy.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	copy.alignment = BoxContainer.ALIGNMENT_CENTER
+	copy.add_theme_constant_override("separation", 0)
+	row.add_child(copy)
+	var title := _hud_label("", 26)
+	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	copy.add_child(title)
+	var benefit := _hud_label("", 19)
+	benefit.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	copy.add_child(benefit)
+
+	var offer := VBoxContainer.new()
+	offer.custom_minimum_size.x = 135
+	offer.alignment = BoxContainer.ALIGNMENT_CENTER
+	offer.add_theme_constant_override("separation", 0)
+	row.add_child(offer)
+	var price := _hud_label("", 26, CITRON)
+	price.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	offer.add_child(price)
+	var status := _hud_label("", 16)
+	status.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	offer.add_child(status)
+	for child: Node in button.find_children("*", "Control", true, false):
+		(child as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_upgrade_rows[id] = {"button":button, "title":title, "benefit":benefit, "price":price, "status":status}
+
+func _style_action_plate(button: Button) -> void:
+	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
+		button.add_theme_stylebox_override(state, StyleBoxEmpty.new())
+	button.draw.connect(func(): _draw_action_plate(button))
+	button.resized.connect(button.queue_redraw)
+	button.mouse_entered.connect(button.queue_redraw)
+	button.mouse_exited.connect(button.queue_redraw)
+	button.focus_entered.connect(button.queue_redraw)
+	button.focus_exited.connect(button.queue_redraw)
+
+func _draw_action_plate(button: Button) -> void:
+	var selected := not button.disabled and (button.has_focus() or button.is_hovered())
+	var extent := button.size
+	var tint := Color("241642") if not button.disabled else Color("1a122c")
+	_draw_slant(button, Rect2(Vector2.ZERO, extent), tint, 17.0)
+	var accent := CITRON if selected else (Color("594780") if button.disabled else VIOLET)
+	_draw_slant(button, Rect2(0, 0, 31, extent.y), accent, 17.0)
+	if selected:
+		button.draw_polyline(PackedVector2Array([Vector2(18, 1), Vector2(extent.x - 2, 1),
+			extent - Vector2(18, 1), Vector2(2, extent.y - 1), Vector2(18, 1)]), CITRON, 2.0, true)
+
+func _draw_upgrade_icon(icon: Control, armor: bool) -> void:
+	var center_y := icon.size.y * 0.5
+	var origin := Vector2(4, center_y - 19)
+	var outline := PackedVector2Array([Vector2(2, 6), Vector2(16, 1), Vector2(30, 6),
+		Vector2(29, 23), Vector2(23, 32), Vector2(16, 37), Vector2(9, 32),
+		Vector2(3, 23), Vector2(2, 6)]) if armor else PackedVector2Array([
+		Vector2(13, 2), Vector2(28, 2), Vector2(26, 17), Vector2(20, 30),
+		Vector2(13, 38), Vector2(2, 31), Vector2(10, 20), Vector2(13, 2)])
+	for index in range(outline.size()):
+		outline[index] += origin
+	icon.draw_polyline(outline, WHITE, 2.6, true)
+	if armor:
+		icon.draw_colored_polygon(PackedVector2Array([outline[0], outline[1], outline[5],
+			outline[6], outline[7]]), WHITE)
+	else:
+		icon.draw_polyline(PackedVector2Array([origin + Vector2(20, 7), origin + Vector2(18, 18),
+			origin + Vector2(13, 29)]), WHITE, 2.3, true)
+	icon.draw_line(Vector2(51, center_y - 25), Vector2(40, center_y + 25), VIOLET, 2.0, true)
 
 func _build_death_screen() -> void:
 	death_screen = PanelContainer.new()
-	death_screen.set_anchors_preset(Control.PRESET_CENTER)
-	death_screen.custom_minimum_size = Vector2(400, 260)
-	death_screen.visible = false
+	death_screen.custom_minimum_size.x = 492
+	death_screen.hide()
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.2, 0.04, 0.04, 0.96)
-	style.border_color = Color(0.9, 0.1, 0.1, 0.9)
-	style.set_border_width_all(2)
-	style.set_corner_radius_all(8)
+	style.bg_color = Color("100920f5")
 	death_screen.add_theme_stylebox_override("panel", style)
 	add_child(death_screen)
-	
-	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 14)
-	death_screen.add_child(vbox)
-	
-	var title := Label.new()
-	title.text = "YOU DIED"
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_color_override("font_color", Color(1.0, 0.2, 0.2))
-	title.add_theme_font_size_override("font_size", 28)
-	vbox.add_child(title)
-	
+
+	var content := VBoxContainer.new()
+	death_screen.add_child(content)
+	var header := _combat_plate(content, 40, 12)
+	var headings := VBoxContainer.new()
+	headings.add_theme_constant_override("separation", 0)
+	header.add_child(headings)
+	headings.add_child(_hud_label("AFTER HOURS", 19, Color("ff668b")))
+	headings.add_child(_hud_label("YOU DIED", 52))
+
+	var padding := MarginContainer.new()
+	for side in ["left", "right", "top", "bottom"]:
+		padding.add_theme_constant_override("margin_" + side, 18)
+	content.add_child(padding)
+	var actions := VBoxContainer.new()
+	actions.add_theme_constant_override("separation", 12)
+	padding.add_child(actions)
 	var subtitle := Label.new()
 	subtitle.text = "Overwhelmed by infected on campus."
-	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	subtitle.add_theme_color_override("font_color", Color(0.8, 0.7, 0.7))
-	vbox.add_child(subtitle)
-	
-	var btn_retry := _create_btn("Retry From Checkpoint", func():
-		death_screen.visible = false
-		retry_checkpoint_requested.emit()
-	)
-	vbox.add_child(btn_retry)
-	
-	var btn_restart := _create_btn("Restart Episode", func():
-		death_screen.visible = false
-		restart_mission_requested.emit()
-	)
-	vbox.add_child(btn_restart)
+	subtitle.add_theme_color_override("font_color", Color("d4ccdf"))
+	actions.add_child(subtitle)
+	_add_death_action(actions, "RETRY FROM CHECKPOINT", func(): retry_checkpoint_requested.emit())
+	_add_death_action(actions, "RESTART EPISODE", func(): restart_mission_requested.emit())
+
+func _add_death_action(parent: Control, title: String, callback: Callable) -> void:
+	var button := Button.new()
+	button.text = title
+	button.custom_minimum_size.y = 51
+	button.add_theme_font_override("font", DISPLAY_FONT)
+	button.add_theme_font_size_override("font_size", 24)
+	for state in ["font_color", "font_hover_color", "font_focus_color", "font_pressed_color"]:
+		button.add_theme_color_override(state, Color.TRANSPARENT)
+	parent.add_child(button)
+	_style_action_plate(button)
+	var caption := _hud_label(title, 24)
+	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	button.add_child(caption)
+	caption.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	button.pressed.connect(callback)
 
 func _build_victory_screen() -> void:
 	victory_screen = PanelContainer.new()
@@ -935,10 +1149,21 @@ func _create_btn(text: String, callback: Callable) -> Button:
 	return btn
 
 func show_banner_message(msg: String, duration: float = 3.0) -> void:
-	if notice_label:
-		notice_label.text = msg
-		notice_label.show()
-		_notice_remaining = duration
+	_show_notice(msg, "", duration)
+
+func show_squad_joined(member_name: String) -> void:
+	_show_notice("%s JOINED YOUR SQUAD" % member_name.to_upper(), "Watch each other's back.", 3.5)
+
+func _show_notice(title: String, detail: String, duration: float) -> void:
+	if not is_instance_valid(_notice_box):
+		return
+	notice_label.text = title
+	_notice_detail.text = detail
+	_notice_detail.visible = not detail.is_empty()
+	_notice_squad_icon.visible = _notice_detail.visible
+	_notice_remaining = maxf(0.0, duration)
+	_notice_box.visible = _notice_remaining > 0.0
+	_layout_combat_hud()
 
 func update_health(cur: float, max_v: float) -> void:
 	if health_bar:
@@ -954,10 +1179,17 @@ func update_stamina(cur: float, max_v: float) -> void:
 	if stamina_label:
 		stamina_label.text = "STAMINA    %d%%" % int(cur / max_v * 100.0 if max_v > 0.0 else 0.0)
 
+func set_armed(armed: bool) -> void:
+	_weapon_tile.visible = armed or _free_roam_driving
+
 func update_weapon_display(w_name: String, mag: int, reserve: int) -> void:
 	if weapon_name_label:
 		weapon_name_label.text = w_name.to_upper()
-		_weapon_icon.texture = SMG_ICON if "scorpion" in w_name.to_lower() else PISTOL_ICON
+		var weapon := w_name.to_lower()
+		if "shotgun" in weapon:
+			_weapon_icon.texture = SHOTGUN_ICON
+		else:
+			_weapon_icon.texture = SMG_ICON if "scorpion" in weapon else PISTOL_ICON
 	update_ammo(mag, reserve)
 
 func update_ammo(mag: int, reserve: int) -> void:
@@ -996,11 +1228,23 @@ func update_interaction_prompt(prompt_text: String, is_visible: bool) -> void:
 	_prompt.reset_size()
 	_position_prompt()
 
+func _input(event: InputEvent) -> void:
+	if not visible or not journal_menu.visible:
+		return
+	var game := get_parent()
+	if game.get("launcher_managed") and not game.is_processing_unhandled_input():
+		return
+	# The focused Close button can consume Tab as focus navigation.
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_TAB:
+		toggle_journal(false)
+		get_viewport().set_input_as_handled()
+
 func _unhandled_input(event: InputEvent) -> void:
 	if not visible:
 		return
 	var game := get_parent()
 	if game.get("launcher_managed") and not game.is_processing_unhandled_input(): return
+	if game.extraction_point and game.extraction_point.boarding: return
 	if death_screen.visible or victory_screen.visible: return
 	if event is InputEventKey and event.pressed and not event.echo:
 		var is_interact: bool = event.is_action_pressed("interact") if InputMap.has_action("interact") else event.keycode == KEY_E
@@ -1008,9 +1252,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_advance_dialogue()
 			get_viewport().set_input_as_handled()
 			return
-		if (inventory_menu.visible and event.keycode==KEY_I) or (journal_menu.visible and event.keycode==KEY_TAB):
+		if inventory_menu.visible and event.keycode == KEY_I:
 			toggle_inventory(false)
-			toggle_journal(false)
 			get_viewport().set_input_as_handled()
 			return
 		var is_pause: bool = (event.is_action_pressed("pause") if InputMap.has_action("pause") else (event.keycode == KEY_ESCAPE))
@@ -1072,7 +1315,7 @@ func _populate_inventory(inv: RefCounted) -> void:
 		"item_power_relay": "Control Bus Relay (Quest)"
 	}
 	for id in items:
-		if id == "ammo": continue # The weapon owns the live reserve.
+		if id in ["ammo", "ammo_shotgun"]: continue # The weapon owns live reserve ammo.
 		var count: int = items[id]
 		var item_lbl := Label.new()
 		item_lbl.text = "• %s: %d" % [names.get(id, id), count]
@@ -1112,6 +1355,16 @@ func _populate_journal(mission: RefCounted) -> void:
 			l.add_theme_color_override("font_color", Color(0.6, 0.65, 0.7))
 		journal_steps_container.add_child(l)
 
+	var supplies := Label.new()
+	supplies.text = "GEAR   Benelli M4: Security Substation (3). Shells: Reception,\nglazed entrance and gate approach. Reload with R."
+	supplies.add_theme_color_override("font_color", Color("ffbf66"))
+	journal_steps_container.add_child(supplies)
+
+	var encounters := Label.new()
+	encounters.text = "SIGHTINGS   Plaza: Walkers. Reception: Hooded Warrior.\nAuditorium steps: Screamer. Colonnade: Stalker.\nGlazed entrance: Crawlers and Winged Lion. Gate: Brute.\nROAD PATROL   Find the pickup on the road past the gate."
+	encounters.add_theme_color_override("font_color", Color("c3c9df"))
+	journal_steps_container.add_child(encounters)
+
 func show_dialogue(lines: Array, speaker: String) -> void:
 	dialogue_lines = lines
 	dialogue_index = 0
@@ -1119,7 +1372,7 @@ func show_dialogue(lines: Array, speaker: String) -> void:
 	_dialogue_speaker.text = parts[0].to_upper()
 	_dialogue_role.text = parts[1].to_upper()
 	_dialogue_role.visible = not parts[1].is_empty()
-	_dialogue_key.text = _interact_key_hint()
+	_dialogue_key.text = _key_hint("interact", "E")
 	var key_width := maxf(31, _dialogue_key.get_combined_minimum_size().x + 12)
 	_dialogue_key.size.x = key_width
 	for state in ["normal", "hover", "pressed"]:
@@ -1149,18 +1402,31 @@ func toggle_upgrade_menu(open: bool) -> void:
 		var inv: Variant = get_parent().get("inventory")
 		if inv != null:
 			for option: Dictionary in inv.get_upgrade_options():
-				var button: Button = _upgrade_buttons.get(option.id)
-				if button != null:
-					button.text="%s · %d scrap\n%s" % [option.title,option.cost,option.reason]
-					button.tooltip_text=option.description
-					button.disabled=not option.can_buy
+				var row: Dictionary = _upgrade_rows.get(option.id, {})
+				if row.is_empty():
+					continue
+				row.title.text = str(option.title).to_upper()
+				row.benefit.text = option.benefit
+				row.price.text = "%d SCRAP" % option.cost
+				row.status.text = str(option.reason).to_upper()
+				row.price.modulate = WHITE if option.can_buy else Color("a19aaf")
+				row.button.tooltip_text = option.description
+				row.button.disabled = not option.can_buy
+				row.button.queue_redraw()
 	upgrade_menu.visible = open
+	if open:
+		_layout_menus.call_deferred()
 	_update_input_capture()
 	if not open:
 		upgrade_menu_closed.emit()
 
 func show_death_screen() -> void:
 	death_screen.visible = true
+	_update_input_capture()
+
+func dismiss_end_screens() -> void:
+	death_screen.hide()
+	victory_screen.hide()
 	_update_input_capture()
 
 func show_victory_screen(stats: Dictionary) -> void:
@@ -1173,6 +1439,28 @@ func show_victory_screen(stats: Dictionary) -> void:
 func is_any_menu_open() -> bool:
 	return pause_menu.visible or inventory_menu.visible or journal_menu.visible or dialogue_menu.visible or upgrade_menu.visible or death_screen.visible or victory_screen.visible
 
+func set_driving(active: bool) -> void:
+	_driving = active
+	crosshair.visible = not (active or is_paused)
+	update_interaction_prompt("Use movement keys to drive", active)
+
+func set_free_roam_driving(active: bool) -> void:
+	_driving = active
+	_free_roam_driving = active
+	crosshair.visible = not (active or is_paused)
+	_weapon_icon.visible = not active
+	if active:
+		_ammo_warning.hide()
+		weapon_name_label.text = "CAMPUS PICKUP"
+		ammo_label.add_theme_color_override("font_color", CITRON)
+		update_driving_speed(0.0)
+	update_interaction_prompt("[%s] Exit pickup\nMovement keys to drive · %s to brake" % [
+		_key_hint("interact", "E"), _key_hint("jump", "Space")
+	], active)
+
+func update_driving_speed(speed_kph: float) -> void:
+	ammo_label.text = "%d KM/H" % roundi(speed_kph)
+
 func _update_input_capture() -> void:
 	if _modal_scrim:
 		_modal_scrim.visible = is_any_menu_open()
@@ -1181,7 +1469,9 @@ func _update_input_capture() -> void:
 		_hud_root.visible = not (dialogue_menu.visible or debrief)
 		_pause_fade.visible = is_paused or debrief
 		_objective_box.visible = not is_paused
-		crosshair.visible = not is_paused
+		crosshair.visible = not (is_paused or _driving)
+		if _driving:
+			_prompt.visible = not is_paused
 	_layout_menus.call_deferred()
 	menu_state_changed.emit(is_any_menu_open())
 	if is_any_menu_open():
@@ -1194,6 +1484,8 @@ func _focus_open_menu() -> void:
 	for panel: Control in [death_screen,victory_screen,dialogue_menu,upgrade_menu,inventory_menu,journal_menu,pause_menu]:
 		if not panel.is_visible_in_tree(): continue
 		var buttons: Array[Node] = panel.find_children("*","Button",true,false)
+		if panel == upgrade_menu:
+			buttons = buttons.filter(func(button: Button): return not button.disabled)
 		for index: int in range(buttons.size()):
 			var button: Button = buttons[index]
 			button.focus_neighbor_top = buttons[(index-1+buttons.size())%buttons.size()].get_path()

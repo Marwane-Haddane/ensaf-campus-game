@@ -30,7 +30,7 @@ func _start() -> void:
 	cam.near = 0.01
 	studio.add_child(cam)
 
-	var scene_path := "res://assets/antigravity/zombie/models/pistol_hands.tscn"
+	var scene_path := "res://assets/antigravity/zombie/models/pistol_hands.scn"
 	var scene: PackedScene = load(scene_path)
 	var inst: Node3D = scene.instantiate() as Node3D
 	studio.add_child(inst)

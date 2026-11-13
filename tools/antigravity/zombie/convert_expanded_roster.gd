@@ -2,14 +2,14 @@
 extends SceneTree
 
 func _init() -> void:
-	var base_extracted = "C:/1Project/Vr --- cyber/ensaf-campus-v4-project/ENSA-Fes-Campus-v4/3d models/zombie/extracted/Zombie Apocalypse Kit - March 2024/"
+	var base_extracted = "C:/1Project/Vr --- cyber/ensaf-campus-v4-project/ENSA-Fes-Campus-v4/3D-modeling/3d models/zombie/extracted/Zombie Apocalypse Kit - March 2024/"
 	var models = [
-		{"src": base_extracted + "Characters/glTF/Zombie_Ribcage.gltf", "dst": "res://assets/antigravity/zombie/models/Zombie_Ribcage.tscn"},
-		{"src": base_extracted + "Characters/glTF/Zombie_Arm.gltf", "dst": "res://assets/antigravity/zombie/models/Zombie_Arm.tscn"},
-		{"src": base_extracted + "Characters/glTF/Characters_Matt.gltf", "dst": "res://assets/antigravity/zombie/models/Characters_Matt.tscn"},
-		{"src": base_extracted + "Characters/glTF/Characters_Lis.gltf", "dst": "res://assets/antigravity/zombie/models/Characters_Lis.tscn"},
-		{"src": base_extracted + "Weapons/glTF/WoodenBat_Barbed.gltf", "dst": "res://assets/antigravity/zombie/models/WoodenBat_Barbed.tscn"},
-		{"src": base_extracted + "Vehicles/glTF/Vehicle_Pickup_Armored.gltf", "dst": "res://assets/antigravity/zombie/props/Vehicle_Pickup_Armored.tscn"},
+		{"src": base_extracted + "Characters/glTF/Zombie_Ribcage.gltf", "dst": "res://assets/antigravity/zombie/models/Zombie_Ribcage.scn"},
+		{"src": base_extracted + "Characters/glTF/Zombie_Arm.gltf", "dst": "res://assets/antigravity/zombie/models/Zombie_Arm.scn"},
+		{"src": base_extracted + "Characters/glTF/Characters_Matt.gltf", "dst": "res://assets/antigravity/zombie/models/Characters_Matt.scn"},
+		{"src": base_extracted + "Characters/glTF/Characters_Lis.gltf", "dst": "res://assets/antigravity/zombie/models/Characters_Lis.scn"},
+		{"src": base_extracted + "Weapons/glTF/WoodenBat_Barbed.gltf", "dst": "res://assets/antigravity/zombie/models/WoodenBat_Barbed.scn"},
+		{"src": base_extracted + "Vehicles/glTF/Vehicle_Pickup_Armored.gltf", "dst": "res://assets/antigravity/zombie/props/Vehicle_Pickup_Armored.scn"},
 	]
 
 	for item in models:

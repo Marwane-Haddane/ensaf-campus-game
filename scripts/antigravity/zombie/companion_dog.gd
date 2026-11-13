@@ -44,7 +44,7 @@ func _setup_collision() -> void:
 	collision_mask = 1 | 4 # World & obstacles
 
 func _setup_model() -> void:
-	var scene: PackedScene = load("res://assets/antigravity/zombie/models/Characters_GermanShepherd.tscn")
+	var scene: PackedScene = load("res://assets/antigravity/zombie/models/Characters_GermanShepherd.scn")
 	if scene:
 		model_instance = scene.instantiate() as Node3D
 		add_child(model_instance)

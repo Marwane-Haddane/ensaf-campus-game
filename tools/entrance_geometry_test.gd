@@ -7,7 +7,7 @@ class ProbeCampus extends BaseCampus:
 	var repair: Dictionary = {}
 	func _batch_repeated_meshes() -> void:
 		repair = Repair.install(self)
-		super._batch_repeated_meshes()
+		await super._batch_repeated_meshes()
 
 var campus: ProbeCampus
 var checks: int = 0

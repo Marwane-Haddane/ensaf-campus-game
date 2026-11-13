@@ -7,7 +7,7 @@ This document records the source files, licenses, author credits, archive paths,
 ## 1. Source Assets & Licenses
 
 ### A. Zombie Apocalypse Kit
-- **Source Archive:** `C:\1Project\Vr --- cyber\ensaf-campus-v4-project\ENSA-Fes-Campus-v4\3d models\zombie\Zombie Apocalypse Kit - March 2024-20261102T030551Z-1-001.zip`
+- **Source Archive:** `C:\1Project\Vr --- cyber\ensaf-campus-v4-project\ENSA-Fes-Campus-v4\3D-modeling\3d models\zombie\Zombie Apocalypse Kit - March 2024-20261102T030551Z-1-001.zip`
 - **Extracted Files:**
   - `Zombie Apocalypse Kit - March 2024/Characters/glTF/Zombie_Basic.gltf`
   - `Zombie Apocalypse Kit - March 2024/Characters/glTF/Zombie_Chubby.gltf`
@@ -34,23 +34,31 @@ This document records the source files, licenses, author credits, archive paths,
 - **Provenance Note:** The license text header in the archive mentions "Ultimate Platformer Pack by @Quaternius" while the folder is titled "Zombie Apocalypse Kit - March 2024". Both are Quaternius assets distributed under CC0 1.0.
 
 ### B. First-Person Animated Pistol
-- **Source File:** `C:\1Project\Vr --- cyber\ensaf-campus-v4-project\ENSA-Fes-Campus-v4\3d models\zombie\pistol_animation_wip__really_stiff.glb`
+- **Source File:** `C:\1Project\Vr --- cyber\ensaf-campus-v4-project\ENSA-Fes-Campus-v4\3D-modeling\3d models\zombie\pistol_animation_wip__really_stiff.glb`
 - **Destination:** `res://assets/antigravity/zombie/models/pistol_hands.glb`
 - **Author:** Stanless ([https://sketchfab.com/stanless](https://sketchfab.com/stanless))
 - **License:** **CC-BY-4.0** ([Creative Commons Attribution 4.0](http://creativecommons.org/licenses/by/4.0/))
 - **Title:** Pistol Animation (WIP + really stiff)
 
 ### C. CZ Scorpion EVO 3 SMG (First-Person Animated Viewmodel)
-- **Source File:** `C:\1Project\Vr --- cyber\ensaf-campus-v4-project\ENSA-Fes-Campus-v4\3d models\zombie\scorpion__first_person_animations_2026_remake.glb`
+- **Source File:** `C:\1Project\Vr --- cyber\ensaf-campus-v4-project\ENSA-Fes-Campus-v4\3D-modeling\3d models\zombie\scorpion__first_person_animations_2026_remake.glb`
 - **Destination:** `res://assets/antigravity/zombie/models/scorpion_hands.tscn`
 - **Rig Features:** Composite knuckle tactical gloves, digital wristwatch chronometer with illuminated cyan dial, dark tactical combat sleeves.
 - **Author:** 2026 Remake Rig
 - **License:** Author-provided game-ready asset
 
 ### D. Benelli M4 Tactical Shotgun
-- **Source File:** `C:\1Project\Vr --- cyber\ensaf-campus-v4-project\ENSA-Fes-Campus-v4\3d models\zombie\free_benelli_m4_shotgun_gameready_rigged.glb`
-- **Destination:** `res://assets/antigravity/zombie/models/Shotgun.tscn`
-- **License:** Game-ready rigged model
+- **Source File:** `C:\1Project\Vr --- cyber\ensaf-campus-v4-project\ENSA-Fes-Campus-v4\3D-modeling\3d models\zombie\free_benelli_m4_shotgun_gameready_rigged.glb`
+- **Destination:** `res://assets/antigravity/zombie/models/benelli_m4.glb`
+- **Author:** BAMEN ([source model](https://sketchfab.com/3d-models/free-benelli-m4-shotgun-gameready-rigged-36130a3d7e7d4cb3b21737805d1d15b2))
+- **License:** CC BY 4.0
+- **Game adaptation:** The supplied rig has no clips. The game animates the bolt, shells, recoil and support hand during firing and reload.
+
+### E. Hooded Warrior and Winged Lion
+- **Author:** iRahulRajput ([warrior source](https://sketchfab.com/3d-models/low-poly-female-warrior-charctor-5fae38115fc14abaaf5f70c26d0bc462), [winged lion source](https://sketchfab.com/3d-models/low-poly-lion-with-wings-warrior-character-model-b9369e4bec8d4bc295b71c8468caa8da))
+- **License:** CC BY 4.0
+- **Destinations:** `res://assets/antigravity/zombie/models/hooded_warrior.glb` and `res://assets/antigravity/zombie/models/winged_lion.glb`
+- **Game adaptation:** Added skeletons, skin weights and idle, walk, run, strike, flinch and fall clips with `tools/antigravity/zombie/rig_expanded_enemies.py`.
 
 ---
 

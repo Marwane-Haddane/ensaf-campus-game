@@ -54,7 +54,7 @@ func _build_ui() -> void:
 
 	var title := Label.new()
 	title.text = "CREDITS & LICENSING ATTRIBUTIONS"
-	title.add_theme_font_size_override("font_size", LauncherTheme.FONT_HEADING)
+	LauncherTheme.display(title, LauncherTheme.FONT_HEADING)
 	title.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
 	header.add_child(title)
 
@@ -93,7 +93,7 @@ func _build_ui() -> void:
 
 func _add_credit_card(parent: Control, section_title: String, body: String) -> void:
 	var panel := PanelContainer.new()
-	panel.add_theme_stylebox_override("panel", LauncherTheme.make_card_style("normal"))
+	panel.add_theme_stylebox_override("panel", LauncherTheme.make_card_style("normal", true))
 	parent.add_child(panel)
 
 	var svbox := VBoxContainer.new()
@@ -102,7 +102,7 @@ func _add_credit_card(parent: Control, section_title: String, body: String) -> v
 
 	var stitle := Label.new()
 	stitle.text = section_title
-	stitle.add_theme_font_size_override("font_size", LauncherTheme.FONT_NAV)
+	LauncherTheme.display(stitle, 24)
 	stitle.add_theme_color_override("font_color", LauncherTheme.COL_ACCENT)
 	svbox.add_child(stitle)
 

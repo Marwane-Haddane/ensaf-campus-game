@@ -57,6 +57,15 @@ var _noise_cooldown := 0.0
 var _audio_players: Dictionary = {}
 var _muzzle_skeleton: Skeleton3D
 var _muzzle_bone := -1
+const PistolViewmodel = preload("res://scripts/antigravity/zombie/pistol_viewmodel.gd")
+var _pistol_pose: PistolViewmodel
+const ShotgunViewmodel = preload("res://scripts/antigravity/zombie/shotgun_viewmodel.gd")
+const SHELL_RELOAD_LEAD := 0.25
+const SHELL_RELOAD_RETURN := 0.26
+var _shotgun_pose: ShotgunViewmodel
+var _shells_planned := 0
+var _shells_loaded := 0
+var _shell_load_time := 0.49
 
 func _init() -> void:
 	_load_all_configs()
@@ -76,15 +85,7 @@ func _apply_weapon_config(w_id: String) -> void:
 	current_weapon_id = w_id
 	weapon_data = config_weapons.get(w_id, {})
 	
-	if not weapon_pools.has(w_id):
-		weapon_pools[w_id] = {
-			"mag": int(weapon_data.get("initial_mag", 12)),
-			"capacity": int(weapon_data.get("magazine_capacity", 12)),
-			"reserve": int(weapon_data.get("initial_reserve", 36)),
-			"max_reserve": int(weapon_data.get("max_reserve", 72))
-		}
-	
-	var pool: Dictionary = weapon_pools[w_id]
+	var pool := _get_ammo_pool(w_id)
 	mag_ammo = int(pool.get("mag", 12))
 	mag_capacity = int(pool.get("capacity", 12))
 	reserve_ammo = int(pool.get("reserve", 36))
@@ -106,14 +107,27 @@ func _apply_weapon_config(w_id: String) -> void:
 	ammo_changed.emit(mag_ammo, reserve_ammo)
 	weapon_switched.emit(current_weapon_id, weapon_data.get("name", "Weapon"))
 
+func _get_ammo_pool(weapon_id: String) -> Dictionary:
+	if not weapon_pools.has(weapon_id):
+		var config: Dictionary = config_weapons.get(weapon_id, {})
+		weapon_pools[weapon_id] = {
+			"mag": int(config.get("initial_mag", 12)),
+			"capacity": int(config.get("magazine_capacity", 12)),
+			"reserve": int(config.get("initial_reserve", 36)),
+			"max_reserve": int(config.get("max_reserve", 72))
+		}
+	return weapon_pools[weapon_id]
+
 func _setup_viewmodel() -> void:
+	_pistol_pose = null
+	_shotgun_pose = null
 	if viewmodel_root != null:
 		viewmodel_root.hide()
 		viewmodel_root.queue_free()
 		viewmodel_root = null
 		anim_player = null
 	
-	var scene_path: String = weapon_data.get("scene", "res://assets/antigravity/zombie/models/pistol_hands.tscn")
+	var scene_path: String = weapon_data.get("scene", "res://assets/antigravity/zombie/models/pistol_hands.scn")
 	var scene: PackedScene = load(scene_path)
 	if scene:
 		viewmodel_root = scene.instantiate() as Node3D
@@ -135,7 +149,19 @@ func _setup_viewmodel() -> void:
 				var a = anim_player.get_animation(idle_anim)
 				if a:
 					a.loop_mode = Animation.LOOP_LINEAR
+			if current_weapon_id == "pistol" and _muzzle_skeleton and anim_player.has_animation(idle_anim) \
+					and anim_player.has_animation(_get_anim_name("reload_start")):
+				anim_player.advance(0.0)
+				var pose := PistolViewmodel.new()
+				if pose.setup(_muzzle_skeleton):
+					_pistol_pose = pose
+					anim_player.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL
+					_pistol_pose.apply(0.0, -1.0, mag_ammo == 0)
 		
+		if current_weapon_id == "shotgun":
+			_shotgun_pose = ShotgunViewmodel.new()
+			_shotgun_pose.setup(viewmodel_root, _muzzle_skeleton, mag_ammo == 0)
+
 		if muzzle_flash == null:
 			muzzle_flash = OmniLight3D.new()
 			muzzle_flash.light_color = Color(1.0, 0.8, 0.4)
@@ -188,10 +214,14 @@ func _process(delta: float) -> void:
 	
 	if is_reloading:
 		reload_timer -= delta
+		if _shotgun_pose:
+			_update_shell_reload()
 		if reload_timer <= 0.0:
 			_finish_reload()
 		else:
 			_update_reload_pose()
+	elif _pistol_pose:
+		anim_player.advance(delta)
 	
 	# Smooth aim blending
 	if viewmodel_root:
@@ -200,14 +230,32 @@ func _process(delta: float) -> void:
 		_visual_recoil = lerpf(_visual_recoil,0.0,1.0-exp(-17.0*delta))
 		var blend := 1.0-exp(-14.0*delta)
 		var reload_dip := 0.0
+		var pistol_handling := 0.0
 		if is_reloading:
 			var progress := get_reload_progress()
 			reload_dip = 0.035 * sin(PI * progress)
-			if current_weapon_id == "pistol":
-				# Keep the imported magazine change below the aim line.
-				reload_dip = 0.70 * smoothstep(0.0, 0.20, progress) * (1.0 - smoothstep(0.80, 1.0, progress))
-		viewmodel_root.position = viewmodel_root.position.lerp(target_pos+Vector3(0,-reload_dip,_visual_recoil),blend)
+			if _pistol_pose:
+				pistol_handling = smoothstep(0.05, 0.30, progress) * (1.0 - smoothstep(0.76, 1.0, progress))
+				reload_dip = -0.060 * pistol_handling
+		var movement := Vector3(0, -reload_dip, _visual_recoil - 0.09 * pistol_handling)
 		var target_rotation := aim_rotation if steady_aim else hip_rotation
+		if _pistol_pose:
+			var progress := get_reload_progress() if is_reloading else -1.0
+			_pistol_pose.apply(delta, progress, mag_ammo == 0)
+			target_rotation += Vector3(-0.09, 0.08, -0.18) * pistol_handling
+		if _shotgun_pose:
+			var elapsed := _reload_duration - reload_timer
+			var handling := 0.0
+			var insert_phase := -1.0
+			if is_reloading:
+				handling = smoothstep(0.0, SHELL_RELOAD_LEAD, elapsed) * smoothstep(0.0, SHELL_RELOAD_RETURN, reload_timer)
+				var insert_time := elapsed - SHELL_RELOAD_LEAD
+				if insert_time >= 0.0 and insert_time < _shells_planned * _shell_load_time:
+					insert_phase = fmod(insert_time, _shell_load_time) / _shell_load_time
+			_shotgun_pose.update(delta, handling, insert_phase)
+			movement = _shotgun_pose.offset
+			target_rotation += _shotgun_pose.angles
+		viewmodel_root.position = viewmodel_root.position.lerp(target_pos + movement, blend)
 		viewmodel_root.quaternion = viewmodel_root.quaternion.slerp(Quaternion.from_euler(target_rotation+Vector3(_visual_recoil*0.8,0,0)),blend)
 	
 	# Muzzle flash timer decay
@@ -232,6 +280,7 @@ func set_aim(aiming: bool) -> void:
 				anim_player.queue(idle_anim)
 
 func switch_to_slot(weapon_id: String) -> bool:
+	if not _opening_allows_weapon(weapon_id): return false
 	if player and not bool(player.get("input_enabled")):
 		return false
 	if weapon_id == current_weapon_id or not config_weapons.has(weapon_id):
@@ -243,6 +292,8 @@ func switch_to_slot(weapon_id: String) -> bool:
 	
 	_apply_weapon_config(weapon_id)
 	_setup_viewmodel()
+	if _shotgun_pose:
+		_shotgun_pose.draw()
 	var draw := _get_anim_name("draw")
 	if anim_player and not draw.is_empty() and anim_player.has_animation(draw):
 		anim_player.play(draw,0.10)
@@ -250,6 +301,7 @@ func switch_to_slot(weapon_id: String) -> bool:
 	return true
 
 func quick_melee() -> bool:
+	if not _opening_allows_weapon(current_weapon_id): return false
 	if player and not bool(player.get("input_enabled")):
 		return false
 	if is_reloading or fire_cooldown_timer > 0.0:
@@ -293,11 +345,16 @@ func _perform_melee_strike() -> void:
 			_spawn_impact_fx(res.position, res.normal)
 
 func trigger_fire() -> bool:
+	if not _opening_allows_weapon(current_weapon_id): return false
 	if player and not bool(player.get("input_enabled")):
 		return false
-	if is_reloading or fire_cooldown_timer > 0.0:
+	if fire_cooldown_timer > 0.0:
 		return false
-	
+	if is_reloading:
+		if not _shotgun_pose or mag_ammo <= 0:
+			return false
+		cancel_reload()
+
 	if bool(weapon_data.get("melee", false)):
 		var fire_rate: float = float(weapon_data.get("fire_rate", 0.52))
 		fire_cooldown_timer = fire_rate
@@ -321,11 +378,15 @@ func trigger_fire() -> bool:
 	ammo_changed.emit(mag_ammo, reserve_ammo)
 	weapon_fired.emit()
 	_play_synth_sound("shoot")
-	_visual_recoil = minf(0.045,_visual_recoil+0.020)
+	_visual_recoil = minf(0.036, _visual_recoil + 0.013) if _pistol_pose else minf(0.045, _visual_recoil + 0.020)
 	_emit_gunshot_noise()
 	
-	# Viewmodel animation
-	if anim_player:
+	# The pistol slide cycles independently of the grip and aim animation.
+	if _pistol_pose:
+		_pistol_pose.fire()
+	elif _shotgun_pose:
+		_shotgun_pose.fire(mag_ammo == 0)
+	elif anim_player:
 		var fire_key: String = "fire_last" if mag_ammo == 0 else "fire"
 		var anim_name: String = _get_anim_name(fire_key)
 		if anim_name.is_empty():
@@ -444,6 +505,10 @@ func _perform_single_pellet_raycast() -> void:
 func _get_muzzle_global_position() -> Vector3:
 	if camera == null:
 		return global_position
+	if _pistol_pose:
+		return _pistol_pose.muzzle_position()
+	if _shotgun_pose:
+		return _shotgun_pose.muzzle_position()
 	if is_instance_valid(_muzzle_skeleton) and _muzzle_bone>=0:
 		var point := _muzzle_skeleton.global_transform * _muzzle_skeleton.get_bone_global_pose(_muzzle_bone).origin
 		if camera.to_local(point).z < -0.03: return point
@@ -507,7 +572,14 @@ func start_reload() -> void:
 	
 	is_reloading = true
 	_reload_duration = maxf(0.1, float(weapon_data.get("reload_time", 2.0)))
+	if _shotgun_pose:
+		_shells_planned = mini(mag_capacity - mag_ammo, reserve_ammo)
+		_shells_loaded = 0
+		_shell_load_time = float(weapon_data.get("shell_load_time", 0.49))
+		_reload_duration = SHELL_RELOAD_LEAD + _shells_planned * _shell_load_time + SHELL_RELOAD_RETURN
 	reload_timer = _reload_duration
+	if _pistol_pose:
+		_pistol_pose.begin_reload()
 	_reload_clips.clear()
 	if anim_player:
 		anim_player.clear_queue()
@@ -524,23 +596,17 @@ func get_reload_progress() -> float:
 
 func _update_reload_pose() -> void:
 	var progress := get_reload_progress()
-	if current_weapon_id == "pistol":
-		# This imported rig loses the hand contact during the magazine change.
-		# Lower the held pistol as one piece, change the magazine out of view,
-		# then raise the same two-handed pose.
-		var changing_magazine := progress >= 0.20 and progress < 0.80
-		if viewmodel_root:
-			viewmodel_root.visible = not changing_magazine
-		if not changing_magazine:
-			var idle := _get_anim_name("idle")
-			if anim_player and anim_player.has_animation(idle) and anim_player.current_animation != idle:
-				anim_player.play(idle, 0.08)
-			return
-		progress = inverse_lerp(0.20, 0.80, progress)
+	if _pistol_pose:
+		var clip := _get_anim_name("reload_start")
+		var reach := smoothstep(0.0, 0.32, progress) * (1.0 - smoothstep(0.72, 1.0, progress))
+		if anim_player.current_animation != clip:
+			anim_player.play(clip, 0.0, 0.0)
+			anim_player.advance(0.0)
+		anim_player.seek(anim_player.get_animation(clip).length * 0.52 * reach, true)
+		return
 	if _reload_clips.is_empty():
 		return
-	# The pistol has three authored phases, including a held magazine pose.
-	# Other rigs can use a single clip on the same reload clock.
+	# Other rigs can use a single clip or a sequence on the same reload clock.
 	var timeline := progress * _reload_clips.size()
 	var phase := mini(int(timeline), _reload_clips.size() - 1)
 	var clip := _reload_clips[phase]
@@ -558,6 +624,9 @@ func _restore_ready_pose() -> void:
 	var clip := _get_anim_name("aim" if is_aiming else "idle")
 	if anim_player.has_animation(clip):
 		anim_player.play(clip, 0.12)
+		if _pistol_pose:
+			anim_player.advance(0.0)
+			_pistol_pose.apply(0.0, -1.0, mag_ammo == 0)
 
 func cancel_reload() -> void:
 	if is_reloading:
@@ -565,12 +634,26 @@ func cancel_reload() -> void:
 		reload_timer = 0.0
 		_restore_ready_pose()
 
+func _update_shell_reload() -> void:
+	var elapsed := _reload_duration - reload_timer - SHELL_RELOAD_LEAD
+	var seated := clampi(floori(elapsed / _shell_load_time + 0.18), 0, _shells_planned)
+	var inserted := seated - _shells_loaded
+	if inserted <= 0:
+		return
+	_shells_loaded = seated
+	mag_ammo += inserted
+	reserve_ammo -= inserted
+	_shotgun_pose.chamber_loaded()
+	_sync_pool()
+	ammo_changed.emit(mag_ammo, reserve_ammo)
+	_play_synth_sound("click")
+
 func _finish_reload() -> void:
 	if not is_reloading:
 		return
 	
 	var needed: int = maxi(0,mag_capacity - mag_ammo)
-	var reload_amount: int = mini(needed, reserve_ammo)
+	var reload_amount: int = 0 if _shotgun_pose else mini(needed, reserve_ammo)
 	mag_ammo += reload_amount
 	reserve_ammo -= reload_amount
 	is_reloading = false
@@ -584,9 +667,9 @@ func _finish_reload() -> void:
 
 func add_ammo(amount: int, target_weapon_id: String = "") -> int:
 	var w_id := target_weapon_id if not target_weapon_id.is_empty() else current_weapon_id
-	if not weapon_pools.has(w_id):
+	if not config_weapons.has(w_id):
 		return 0
-	var pool: Dictionary = weapon_pools[w_id]
+	var pool := _get_ammo_pool(w_id)
 	var cur_res: int = int(pool.get("reserve", 0))
 	var max_res: int = int(pool.get("max_reserve", 72))
 	var can_take: int = maxi(0, max_res - cur_res)
@@ -673,3 +756,12 @@ func reset_state() -> void:
 	}
 	_apply_weapon_config("pistol")
 	if is_inside_tree(): _setup_viewmodel()
+
+func _opening_allows_weapon(weapon_id: String) -> bool:
+	if not is_inside_tree(): return true
+	var game := get_tree().root.find_child("ZombieGame", true, false)
+	if game == null: return true
+	if not game.has_intro_weapon(): return false
+	if weapon_id == "scorpion" and not game.mission_state.power_restored:
+		return false
+	return true

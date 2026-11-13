@@ -3,6 +3,8 @@ extends Node3D
 ## Call `await build()` after adding this node to the scene tree.
 
 const CAMPUS_PATH: String = "res://assets/campus.glb"
+const TeachingInterior = preload("res://assets/teaching_interior.scn")
+const SuppliedFurniture = preload("res://scripts/furniture_props.gd")
 const MANIFEST_PATH: String = "res://assets/asset-manifest.json"
 const BATCH_THRESHOLD: int = 8
 const WORLD_COLLISION_LAYER: int = 1
@@ -10,7 +12,10 @@ const CampusMaterials = preload("res://scripts/campus_materials.gd")
 const CanopyDetail = preload("res://scripts/canopy_detail.gd")
 const EntranceGeometry = preload("res://scripts/entrance_geometry.gd")
 const AtriumRepair = preload("res://scripts/atrium_entrance_repair.gd")
+const GlazedSideFacade = preload("res://scripts/glazed_side_facade.gd")
 const CampusDoors = preload("res://scripts/campus_doors.gd")
+const D7RearFacade = preload("res://scripts/d7_rear_facade.gd")
+const AuditoriumRearFacade = preload("res://scripts/auditorium_rear_facade.gd")
 
 var campus_scene: Node3D
 var mesh_nodes: Array[MeshInstance3D] = []
@@ -119,6 +124,7 @@ func build() -> void:
 	campus_scene.name = "CampusSource"
 	if campus_scene.get_parent() == null: add_child(campus_scene)
 	_collect_meshes(campus_scene)
+	_install_teaching_interior()
 	stats["mesh_nodes"] = mesh_nodes.size()
 	var processed: int = 0
 	for mesh_node: MeshInstance3D in mesh_nodes:
@@ -185,10 +191,13 @@ func build() -> void:
 	var entrance_result: Dictionary = EntranceGeometry.install(self)
 	stats["entrance_repair"] = {"installed":entrance_result.get("installed",false),"step_count":entrance_result.get("step_count",0),"floor_y":entrance_result.get("floor_y",0.0)}
 	var atrium_result: Dictionary = AtriumRepair.install(self)
+	GlazedSideFacade.install(self)
 	stats["atrium_repair"] = {"installed":atrium_result.get("installed",false),"floor_y":atrium_result.get("floor_y",0.0)}
 	door_system = CampusDoors.new()
 	add_child(door_system)
 	stats["interactive_doors"] = door_system.install(self)
+	D7RearFacade.install(self, mesh_nodes, material_library)
+	AuditoriumRearFacade.install(self)
 	build_progress.emit("Preparing repeated render batches","batches",null,null)
 	await _batch_repeated_meshes()
 	if cancelled:
@@ -199,6 +208,7 @@ func build() -> void:
 	if cancelled:
 		_building = false
 		return
+	await _install_supplied_furniture()
 	stats["unique_collision_shapes"] = _shape_cache.size() + _split_shape_cache.size() + _chair_shape_cache.size()
 	stats["materials"] = material_library.stats
 	stats["build_seconds"] = float(Time.get_ticks_msec() - started_msec) / 1000.0
@@ -234,6 +244,8 @@ func _normalize_name(source_name: String) -> String:
 
 
 func _record_for(mesh_node: MeshInstance3D) -> Dictionary:
+	if mesh_node.has_meta("teaching_interior"):
+		return {"name": mesh_node.get_meta("campus_source_name"), "role": mesh_node.get_meta("campus_role")}
 	var extras_value: Variant = mesh_node.get_meta("extras", {})
 	var extras: Dictionary = extras_value as Dictionary if extras_value is Dictionary else {}
 	var source_name: String = str(mesh_node.get_meta("campus_source_name", extras.get("campus_source_name", mesh_node.name)))
@@ -253,6 +265,79 @@ func _collect_meshes(node: Node) -> void:
 			mesh_nodes.append(mesh_node)
 	for child: Node in node.get_children():
 		_collect_meshes(child)
+
+
+func _install_teaching_interior() -> void:
+	var interior := TeachingInterior.instantiate() as Node3D
+	var replaced: Dictionary = {}
+	for source_name: String in interior.get_meta("replaces"):
+		replaced[source_name] = true
+	var retained: Array[MeshInstance3D] = []
+	for mesh_node: MeshInstance3D in mesh_nodes:
+		var source_name := str(_record_for(mesh_node)["name"])
+		if replaced.has(source_name):
+			# Retire the old mesh before the collision and render batches are built.
+			# Keep its transform in case an imported child is parented to it.
+			mesh_node.mesh = null
+		else:
+			retained.append(mesh_node)
+	var retired := mesh_nodes.size() - retained.size()
+	mesh_nodes = retained
+	var existing := mesh_nodes.size()
+	campus_scene.add_child(interior)
+	_collect_meshes(interior)
+	stats["teaching_interior"] = {"installed": mesh_nodes.size() - existing, "retired": retired}
+
+
+func _install_supplied_furniture() -> void:
+	var furniture := Node3D.new()
+	furniture.name = "SuppliedHallFurniture"
+	campus_scene.add_child(furniture)
+	# The bench backs onto the classroom partition and faces the open hall.
+	# Both footprints stay outside the door, stair, and lift approaches.
+	var bench := SuppliedFurniture.place(furniture, "supplied_bench", Vector3(-18.65, .67, -3.75), PI / 2)
+	var bin := SuppliedFurniture.place(furniture, "supplied_bin", Vector3(-18.65, .67, -2.3))
+	var installed := int(bench != null) + int(bin != null)
+	# Waiting areas on both galleries at every level. Benches face the courtyard,
+	# preserving the gallery walking routes and keeping the room doors free.
+	for floor_y: float in [.67, 3.605, 6.755]:
+		for gallery: Array in [[-9.35, PI], [-19.65, 0.0]]:
+			var bench_position := Vector3(-25.5, floor_y, gallery[0])
+			var bin_position := Vector3(-27.1, floor_y, gallery[0])
+			bench = SuppliedFurniture.place(furniture, "supplied_bench", bench_position, gallery[1])
+			bin = SuppliedFurniture.place(furniture, "supplied_bin", bin_position)
+			installed += int(bench != null) + int(bin != null)
+	# Match the marked open plaza with perimeter seating facing the clear centre.
+	# Let the physics server register the campus before sampling each paving height.
+	await get_tree().physics_frame
+	var plaza_furniture := Node3D.new()
+	plaza_furniture.name = "SuppliedPlazaFurniture"
+	campus_scene.add_child(plaza_furniture)
+	var plaza_setups: Array = [
+		[Vector3(-44.5, 0, -71), Vector3(-42.9, 0, -71), PI],
+		[Vector3(-32, 0, -71), Vector3(-30.4, 0, -71), PI],
+		[Vector3(-12, 0, -71), Vector3(-10.4, 0, -71), PI],
+		[Vector3(-55, 0, -80), Vector3(-55, 0, -78.4), PI / 2],
+		[Vector3(-55, 0, -91), Vector3(-55, 0, -89.4), PI / 2],
+		[Vector3(1, 0, -80), Vector3(1, 0, -78.4), -PI / 2],
+		[Vector3(1, 0, -90), Vector3(1, 0, -88.4), -PI / 2],
+	]
+	var outdoor_installed := 0
+	for setup: Array in plaza_setups:
+		for index: int in range(2):
+			var position: Vector3 = setup[index]
+			var query := PhysicsRayQueryParameters3D.create(position + Vector3.UP * 2, position - Vector3.UP, WORLD_COLLISION_LAYER)
+			var ground := get_world_3d().direct_space_state.intersect_ray(query)
+			if ground.is_empty():
+				push_warning("No plaza paving beneath supplied furniture at " + str(position))
+				continue
+			position.y = ground["position"].y
+			var kind := "supplied_bench" if index == 0 else "supplied_bin"
+			var yaw: float = setup[2] if index == 0 else 0.0
+			var prop := SuppliedFurniture.place(plaza_furniture, kind, position, yaw)
+			outdoor_installed += int(prop != null)
+	stats["outdoor_furniture"] = outdoor_installed
+	stats["supplied_furniture"] = installed + outdoor_installed
 
 
 func _is_passable_door(source_name: String, classification: String) -> bool:

@@ -213,12 +213,12 @@ After Codex's controller is runnable, inspect the real integrated menu in a sepa
 The user supplied:
 
 ```text
-..\3d models\zombie\free_benelli_m4_shotgun_gameready_rigged.glb
-..\3d models\zombie\low_poly_female_warrior_charctor.glb
-..\3d models\zombie\low_poly_lion_with_wings_warrior_character_model.glb
-..\3d models\zombie\pistol_animation_wip__really_stiff.glb
-..\3d models\zombie\scorpion__first_person_animations_2026_remake.glb
-..\3d models\zombie\Zombie Apocalypse Kit - March 2024-20261102T030551Z-1-001.zip
+..\3D-modeling\3d models\zombie\free_benelli_m4_shotgun_gameready_rigged.glb
+..\3D-modeling\3d models\zombie\low_poly_female_warrior_charctor.glb
+..\3D-modeling\3d models\zombie\low_poly_lion_with_wings_warrior_character_model.glb
+..\3D-modeling\3d models\zombie\pistol_animation_wip__really_stiff.glb
+..\3D-modeling\3d models\zombie\scorpion__first_person_animations_2026_remake.glb
+..\3D-modeling\3d models\zombie\Zombie Apocalypse Kit - March 2024-20261102T030551Z-1-001.zip
 ```
 
 Do not copy these into the boot scene or preload them for the mode card. One first-person asset is about 141 MB; loading it for a menu would undermine this task. Codex will record the inventory and available provenance/animation information for a later independent RPG mode. Keep COMING SOON honest. Any later playable mode needs its own agreed gameplay scope, adapter, saves, settings and tests.

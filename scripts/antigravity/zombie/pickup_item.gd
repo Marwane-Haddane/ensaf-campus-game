@@ -2,6 +2,8 @@ extends Area3D
 ## In-World Usable Pickup (Ammo, Medkits, Scrap, Power Components)
 
 const Geometry = preload("res://scripts/antigravity/zombie/prop_geometry.gd")
+const SupplyMarker = preload("res://scripts/antigravity/zombie/supply_marker.gd")
+const SupplyVisuals = preload("res://scripts/antigravity/zombie/supply_visuals.gd")
 const SUPPLY_CACHE_ID := "item_power_fuse"
 
 signal collected(item_id: String, item_type: String, amount: int)
@@ -10,6 +12,7 @@ signal collected(item_id: String, item_type: String, amount: int)
 @export var item_type: String = "ammo" # "ammo", "medkit", "scrap", "quest"
 @export var item_name: String = "9mm Ammo Box"
 @export var amount: int = 12
+@export var weapon_id := ""
 
 var _base_y: float = 0.0
 var _anim_time: float = 0.0
@@ -31,6 +34,12 @@ func _ready() -> void:
 		set_cache_open(is_collected)
 	else:
 		_setup_visual()
+		if item_type == "ammo":
+			SupplyMarker.attach(self, "%s  +%d\nReload ammunition" % [item_name.to_upper(), amount], Color("ffbf66") if weapon_id == "shotgun" else Color("b3f2d7"), 0.55, 8)
+		elif item_type == "medkit":
+			SupplyMarker.attach(self, "MEDKIT\nStore for healing", Color("b3f2d7"), 0.55, 8)
+		elif item_type == "scrap":
+			SupplyMarker.attach(self, "SCRAP  +%d\nWorkbench upgrades" % amount, Color("ffbf66"), 0.55, 8)
 
 func _build_supply_cache() -> void:
 	var shell := Geometry.metal(Color("464e34"), 0.08)
@@ -91,25 +100,18 @@ func set_focused(focused: bool) -> void:
 		_cache_trim.emission_energy_multiplier = 0.35 if focused and not is_collected else 0.0
 
 func _setup_visual() -> void:
-	# Build distinct colored visual box/shape with icon/mesh
+	if item_type in ["ammo", "medkit", "scrap", "weapon"]:
+		SupplyVisuals.build(self, item_type, weapon_id)
+		_add_collision(Vector3(0.66, 0.58, 0.65))
+		if item_type == "weapon":
+			SupplyMarker.attach(self, "PISTOL CASE", Color("ffbf66"), 0.55, 12)
+		return
+
 	var mesh_inst := MeshInstance3D.new()
 	var box := BoxMesh.new()
 	var mat := StandardMaterial3D.new()
 	
 	match item_type:
-		"ammo":
-			box.size = Vector3(0.25, 0.15, 0.18)
-			mat.albedo_color = Color(0.2, 0.45, 0.25) # Army olive
-			mat.roughness = 0.5
-		"medkit":
-			box.size = Vector3(0.3, 0.2, 0.15)
-			mat.albedo_color = Color(0.85, 0.2, 0.2) # First aid red
-			mat.emission_enabled = true
-			mat.emission = Color(0.3, 0.05, 0.05)
-		"scrap":
-			box.size = Vector3(0.22, 0.22, 0.1)
-			mat.albedo_color = Color(0.65, 0.6, 0.5) # Metallic scrap
-			mat.metallic = 0.8
 		"quest":
 			# The glazed entrance relay is a keyed cartridge rather than a glowing cube.
 			mesh_inst.free()
@@ -141,7 +143,7 @@ func _process(delta: float) -> void:
 	_anim_time += delta
 	# Subtle hover and rotate
 	position.y = _base_y + sin(_anim_time * 2.5) * 0.04
-	rotate_y(delta * 1.5)
+	# Keep recognizable faces and markings stable while the pickup gently bobs.
 
 func _get_interact_key_hint() -> String:
 	if InputMap.has_action("interact"):
@@ -159,12 +161,14 @@ func get_interaction_prompt() -> String:
 	if item_id == SUPPLY_CACHE_ID:
 		return "[%s] Open Supply Cache" % k
 	match item_type:
+		"weapon":
+			return "[%s] Take the pistol" % k
 		"ammo":
-			return "[%s] Pick up %s (+%d rounds)" % [k, item_name, amount]
+			return "[%s] Take %s (+%d)" % [k, item_name, amount]
 		"medkit":
-			return "[%s] Pick up %s (+%d)" % [k, item_name, amount]
+			return "[%s] Store %s (use from inventory to heal)" % [k, item_name]
 		"scrap":
-			return "[%s] Collect %s (+%d scrap)" % [k, item_name, amount]
+			return "[%s] Collect %s (+%d scrap for workbench upgrades)" % [k, item_name, amount]
 		"quest":
 			return "[%s] Take %s" % [k, item_name]
 	return "[%s] Pick up " % k + item_name
@@ -176,13 +180,18 @@ func interact(player: Node) -> void:
 	var inventory = player.get_tree().root.find_child("ZombieGame", true, false)
 	var inv = inventory.get("inventory") if inventory else null
 	
-	if item_type == "ammo":
-		# Add directly to player weapon reserve or inventory
+	if item_type == "weapon":
+		inv.unlock_weapon("pistol")
+	elif item_type == "ammo":
 		var wc = player.get("weapon_controller")
-		if wc and wc.has_method("add_ammo"):
-			wc.call("add_ammo", amount)
-		if inv and inv.has_method("add_item"):
-			inv.call("add_item", "ammo", amount)
+		if wc == null:
+			return
+		var accepted: int = wc.add_ammo(amount, weapon_id)
+		if accepted == 0:
+			if inventory:
+				inventory.hud.show_banner_message("Ammo reserve full", 2.0)
+			return
+		amount = accepted
 	elif item_type == "medkit":
 		if inv and inv.has_method("add_item"):
 			inv.call("add_item", "medkit", amount)

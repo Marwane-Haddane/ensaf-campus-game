@@ -128,7 +128,7 @@ func _build_ui() -> void:
 
 	var title := Label.new()
 	title.text = "SETTINGS & PREFERENCES"
-	title.add_theme_font_size_override("font_size", LauncherTheme.FONT_HEADING)
+	LauncherTheme.display(title, LauncherTheme.FONT_HEADING)
 	title.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
 	header.add_child(title)
 
@@ -147,7 +147,7 @@ func _build_ui() -> void:
 	_content_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_content_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_content_panel.custom_minimum_size = Vector2(0, 300)
-	_content_panel.add_theme_stylebox_override("panel", LauncherTheme.make_card_style("normal"))
+	_content_panel.add_theme_stylebox_override("panel", LauncherTheme.make_card_style("normal", true))
 	vbox.add_child(_content_panel)
 
 	var tab_stack := MarginContainer.new()
@@ -176,9 +176,7 @@ func _build_ui() -> void:
 	_apply_btn.text = "Apply Changes"
 	_apply_btn.custom_minimum_size = Vector2(150, 42)
 	_apply_btn.focus_mode = Control.FOCUS_ALL
-	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
-		_apply_btn.add_theme_stylebox_override(state, LauncherTheme.make_accent_button_style(state))
-	_apply_btn.add_theme_color_override("font_color", Color(0.05, 0.08, 0.12, 1.0))
+	LauncherTheme.style_primary(_apply_btn)
 	_apply_btn.pressed.connect(func(): intent_requested.emit(&"apply_settings", {}))
 	_apply_btn.disabled = true
 	bar.add_child(_apply_btn)
@@ -221,11 +219,11 @@ func _build_graphics_tab() -> Control:
 	var vbox := VBoxContainer.new()
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	vbox.add_theme_constant_override("separation", 18)
+	vbox.add_theme_constant_override("separation", 11)
 	scroll.add_child(vbox)
 
 	# Resolution
-	var res_row := _create_row(vbox, "Display Resolution")
+	var res_row := _create_graphics_row(vbox, "Display Resolution")
 	_res_option = OptionButton.new()
 	_res_option.focus_mode = Control.FOCUS_ALL
 	_res_option.add_item("1280 × 720 (Native Iris Target)")
@@ -238,7 +236,7 @@ func _build_graphics_tab() -> Control:
 	res_row.add_child(_res_option)
 
 	# Fullscreen
-	var fs_row := _create_row(vbox, "Display Mode")
+	var fs_row := _create_graphics_row(vbox, "Display Mode")
 	_fullscreen_check = CheckBox.new()
 	_fullscreen_check.focus_mode = Control.FOCUS_ALL
 	_fullscreen_check.text = "Fullscreen"
@@ -246,7 +244,7 @@ func _build_graphics_tab() -> Control:
 	fs_row.add_child(_fullscreen_check)
 
 	# Presets
-	var preset_row := _create_row(vbox, "Graphics Preset")
+	var preset_row := _create_graphics_row(vbox, "Graphics Preset")
 	_preset_option = OptionButton.new()
 	_preset_option.focus_mode = Control.FOCUS_ALL
 	_preset_option.add_item("Low")
@@ -260,7 +258,7 @@ func _build_graphics_tab() -> Control:
 	preset_row.add_child(_preset_option)
 
 	# Frame Cap
-	var fps_row := _create_row(vbox, "Frame Rate Limit")
+	var fps_row := _create_graphics_row(vbox, "Frame Rate Limit")
 	_fps_option = OptionButton.new()
 	_fps_option.focus_mode = Control.FOCUS_ALL
 	_fps_option.add_item("30 FPS (Power Saving)")
@@ -274,7 +272,7 @@ func _build_graphics_tab() -> Control:
 	fps_row.add_child(_fps_option)
 
 	# V-Sync
-	var vsync_row := _create_row(vbox, "Vertical Sync")
+	var vsync_row := _create_graphics_row(vbox, "Vertical Sync")
 	_vsync_check = CheckBox.new()
 	_vsync_check.focus_mode = Control.FOCUS_ALL
 	_vsync_check.text = "Enable V-Sync"
@@ -516,6 +514,15 @@ func _build_accessibility_tab() -> Control:
 
 	return scroll
 
+func _create_graphics_row(parent: Control, label_text: String) -> HBoxContainer:
+	if parent.get_child_count() > 0:
+		var rule := HSeparator.new()
+		var style := StyleBoxLine.new()
+		style.color = LauncherTheme.COL_BORDER
+		rule.add_theme_stylebox_override("separator", style)
+		parent.add_child(rule)
+	return _create_row(parent, label_text)
+
 func _create_row(parent: Control, label_text: String) -> HBoxContainer:
 	var hbox := HBoxContainer.new()
 	hbox.add_theme_constant_override("separation", 20)
@@ -615,8 +622,7 @@ func _build_discard_modal() -> void:
 	apply_b.name = "ApplyButton"
 	apply_b.text = "Apply & Exit"
 	apply_b.focus_mode = Control.FOCUS_ALL
-	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
-		apply_b.add_theme_stylebox_override(state, LauncherTheme.make_accent_button_style(state))
+	LauncherTheme.style_primary(apply_b)
 	apply_b.pressed.connect(func():
 		_close_discard_modal()
 		intent_requested.emit(&"apply_settings", {})

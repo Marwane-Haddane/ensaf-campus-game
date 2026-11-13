@@ -31,7 +31,7 @@ func _run() -> void:
 	cam.near = 0.05
 	studio.add_child(cam)
 
-	var scn = load("res://assets/antigravity/zombie/models/pistol_hands.tscn")
+	var scn = load("res://assets/antigravity/zombie/models/pistol_hands.scn")
 	var inst: Node3D = scn.instantiate()
 	cam.add_child(inst)
 

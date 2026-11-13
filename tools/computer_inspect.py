@@ -1,5 +1,5 @@
 import struct,json,pathlib
-p=pathlib.Path(r'C:\1Project\Vr --- cyber\ensaf-campus-v4-project\ENSA-Fes-Campus-v4\3d models\gamer_setup_pack.glb')
+p=pathlib.Path(r'C:\1Project\Vr --- cyber\ensaf-campus-v4-project\ENSA-Fes-Campus-v4\3D-modeling\3d models\cyber\gamer_setup_pack.glb')
 b=p.read_bytes(); n,t=struct.unpack_from('<II',b,12);j=json.loads(b[20:20+n]);
 print('ASSET',json.dumps(j.get('asset'),indent=2));print('EXTENSIONS',j.get('extensionsUsed'));print('SCENES',j.get('scenes'))
 for i,v in enumerate(j.get('nodes',[])): print('NODE',i,json.dumps(v))

@@ -4,8 +4,8 @@
 ## Completely eliminates baked-in HUDs, debug text, and rectangular box artifacts.
 extends SceneTree
 
-const INTRO_DEST_DIR := "C:/1Project/Vr --- cyber/ensaf-campus-v4-project/ENSA-Fes-Campus-v4/3d models/intro"
-const ZOMBIE_DEST_DIR := "C:/1Project/Vr --- cyber/ensaf-campus-v4-project/ENSA-Fes-Campus-v4/3d models/zombie"
+const INTRO_DEST_DIR := "C:/1Project/Vr --- cyber/ensaf-campus-v4-project/ENSA-Fes-Campus-v4/3D-modeling/3d models/intro"
+const ZOMBIE_DEST_DIR := "C:/1Project/Vr --- cyber/ensaf-campus-v4-project/ENSA-Fes-Campus-v4/3D-modeling/3d models/zombie"
 
 const TARGET_W := 1920
 const TARGET_H := 1080

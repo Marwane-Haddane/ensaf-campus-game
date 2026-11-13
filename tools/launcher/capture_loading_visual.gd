@@ -48,13 +48,13 @@ func _run_capture() -> void:
 
 	# Print UI geometry for validation
 	print("UI_METRICS: ", JSON.stringify({
-		"title": page._title_label.text,
-		"mode": page._mode_label.text,
+		"title": page._deployment._brand.text,
+		"mode": page._deployment._title.text,
 		"stage": page._stage_label.text,
 		"progress_visible": page._progress_bar.visible,
 		"progress_value": page._progress_bar.value,
 		"tip": page._tip_label.text,
-		"counter": page._counter_label.text,
+		"slide_index": page._current_slide_idx + 1,
 		"current_slide_texture": page._bg_current.texture.resource_path if page._bg_current.texture else "none"
 	}))
 

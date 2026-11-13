@@ -32,8 +32,8 @@ const OBJECTIVE_REWARDS := {
 const STEPS: Array[Dictionary] = [
 	{
 		"id": "obj_explore",
-		"text": "Find a supply cache. The campus gate has lost power.",
-		"hint": "Collect supplies near the plaza pallets, then enter Reception. Search at your own pace; ammunition is limited.",
+		"text": "Explore Reception and find the emergency pistol case.",
+		"hint": "Walk to Reception and look for the marked pistol case. Then recover the breaker fuse before crossing the courtyard.",
 		"chapter":"01 / STRANDED", "radio":"The emergency gate is offline. Find supplies before entering the buildings."
 	},
 	{
@@ -69,7 +69,7 @@ const STEPS: Array[Dictionary] = [
 	{
 		"id": "obj_extract",
 		"text": "Board the extraction truck at the campus gate.",
-		"hint": "Follow the headlights to the pickup truck. Aim at it and use Interact to board. You can leave the remaining infected behind.",
+		"hint": "Follow the headlights and use Interact to board. Use the movement controls to drive the truck through the open gate.",
 		"chapter":"07 / AFTER HOURS", "radio":"The route is clear. Get to the truck and leave the campus together."
 	}
 ]
@@ -119,7 +119,7 @@ func on_event(event_name: String, data: Dictionary = {}) -> void:
 			if item_id.is_empty() or item_id in collected_quest_items: return
 			collected_quest_items.append(item_id)
 			
-			if current_step_index == 0:
+			if current_step_index == 0 and item_id == "item_intro_pistol":
 				_advance_step() # Any pickup completes exploration step
 			
 			_evaluate_quest_progress()

@@ -8,6 +8,8 @@ const MODELS := {
 	"chair": {"path": "res://assets/user_models/office_chair.glb", "height": 1.10},
 	"server_rack": {"path": "res://assets/user_models/server_rack.glb", "height": 2.0},
 	"server_rack_1": {"path": "res://assets/user_models/server_rack_1.glb", "height": 2.0},
+	"supplied_bench": {"path": "res://assets/user_models/supplied_bench.glb", "height": 0.90},
+	"supplied_bin": {"path": "res://assets/user_models/supplied_bin.glb", "height": 0.90},
 }
 
 static func place(parent: Node3D, kind: String, position: Vector3, yaw: float = 0.0) -> Node3D:

@@ -3,7 +3,7 @@
     "pistol": {
       "id": "pistol",
       "name": "9mm Tactical Pistol",
-      "scene": "res://assets/antigravity/zombie/models/pistol_hands.tscn",
+      "scene": "res://assets/antigravity/zombie/models/pistol_hands.scn",
       "magazine_capacity": 12,
       "extended_capacity": 18,
       "max_reserve": 72,
@@ -13,7 +13,7 @@
       "headshot_multiplier": 2.2,
       "fire_rate": 0.28,
       "range": 60.0,
-      "recoil_pitch": 1.5,
+      "recoil_pitch": 1.0,
       "recoil_yaw": 0.4,
       "spread": 0.008,
       "reload_time": 2.0,
@@ -30,16 +30,16 @@
         "draw": "Armature|A_Draw",
         "holster": "Armature|A_Holster"
       },
-      "viewmodel_scale": 0.24,
+      "viewmodel_scale": 0.156,
       "hip_position": [
-        0.14,
-        -0.29,
-        -0.34
+        0.06,
+        -0.142,
+        -0.248
       ],
       "aim_position": [
-        -0.06,
-        -0.19,
-        -0.16
+        -0.055,
+        -0.143,
+        -0.233
       ],
       "hip_rotation": [
         0,
@@ -55,7 +55,7 @@
     "scorpion": {
       "id": "scorpion",
       "name": "CZ Scorpion EVO 3",
-      "scene": "res://assets/antigravity/zombie/models/scorpion_hands.tscn",
+      "scene": "res://assets/antigravity/zombie/models/scorpion_hands.scn",
       "magazine_capacity": 20,
       "extended_capacity": 30,
       "max_reserve": 100,
@@ -107,12 +107,12 @@
     "shotgun": {
       "id": "shotgun",
       "name": "Benelli M4 Tactical Shotgun",
-      "scene": "res://assets/antigravity/zombie/models/Shotgun.tscn",
+      "scene": "res://assets/antigravity/zombie/models/benelli_m4.glb",
       "magazine_capacity": 6,
       "extended_capacity": 8,
       "max_reserve": 36,
       "initial_mag": 6,
-      "initial_reserve": 18,
+      "initial_reserve": 12,
       "damage": 15.0,
       "pellet_count": 8,
       "headshot_multiplier": 1.75,
@@ -123,28 +123,16 @@
       "spread": 0.042,
       "reload_time": 2.4,
       "automatic": false,
-      "animations": {
-        "idle": "",
-        "aim": "",
-        "aim_back": "",
-        "fire": "",
-        "fire_last": "",
-        "reload_start": "",
-        "reloading": "",
-        "reload_end": "",
-        "draw": "",
-        "holster": ""
-      },
-      "viewmodel_scale": 0.012,
+      "viewmodel_scale": 0.4,
       "hip_position": [
-        0.1,
-        -0.18,
-        -0.25
+        0.19,
+        -0.22,
+        -0.54
       ],
       "aim_position": [
-        0.0,
-        -0.14,
-        -0.2
+        0,
+        -0.077,
+        -0.54
       ],
       "hip_rotation": [
         0.0,
@@ -155,12 +143,13 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "shell_load_time": 0.49
     },
     "bat": {
       "id": "bat",
       "name": "Barbed Wire Baseball Bat",
-      "scene": "res://assets/antigravity/zombie/models/WoodenBat_Barbed.tscn",
+      "scene": "res://assets/antigravity/zombie/models/WoodenBat_Barbed.scn",
       "magazine_capacity": 1,
       "extended_capacity": 1,
       "max_reserve": 0,

@@ -1,25 +1,26 @@
 ## launcher_theme.gd — ENSA Games launcher theme factory
-## Builds a Theme resource with the dark navy/graphite palette, cyan-teal accent,
-## and consistent typography hierarchy for the launcher presentation.
+## Shared launcher styling based on the After Hours HUD.
 ## This file is owned by Antigravity and must not depend on Codex scripts.
 class_name LauncherTheme
 
 # ── Palette ──────────────────────────────────────────────────────────────────
-const COL_BG_DEEP      := Color(0.08, 0.10, 0.14, 1.0)      # Deep navy
-const COL_BG_PANEL     := Color(0.10, 0.13, 0.18, 0.92)     # Panel overlay
-const COL_BG_CARD      := Color(0.12, 0.15, 0.21, 0.88)     # Card surface
-const COL_BG_HOVER     := Color(0.14, 0.18, 0.25, 0.95)     # Hover surface
-const COL_BG_SELECTED  := Color(0.10, 0.20, 0.28, 0.95)     # Selected surface
-const COL_BG_INPUT     := Color(0.07, 0.09, 0.13, 0.95)     # Input fields
-const COL_BORDER       := Color(0.20, 0.25, 0.32, 0.6)      # Subtle border
-const COL_BORDER_FOCUS := Color(0.30, 0.85, 0.78, 0.8)      # Focus border (teal)
-const COL_ACCENT       := Color(0.30, 0.85, 0.78, 1.0)      # Cyan-teal accent
-const COL_ACCENT_DIM   := Color(0.20, 0.55, 0.52, 1.0)      # Dimmed accent
-const COL_ACCENT_HOVER := Color(0.35, 0.92, 0.85, 1.0)      # Accent hover
-const COL_TEXT_PRIMARY  := Color(0.92, 0.94, 0.96, 1.0)     # Off-white
-const COL_TEXT_SECONDARY:= Color(0.55, 0.60, 0.68, 1.0)     # Steel gray
-const COL_TEXT_DISABLED := Color(0.38, 0.42, 0.48, 1.0)     # Disabled
-const COL_TEXT_ACCENT   := Color(0.30, 0.85, 0.78, 1.0)     # Accent text
+const COL_BG_DEEP      := Color("10091e")
+const COL_BG_PANEL     := Color("190d32f5")
+const COL_BG_CARD      := Color("20113aee")
+const COL_BG_HOVER     := Color("352053")
+const COL_BG_SELECTED  := Color("281847")
+const COL_BG_INPUT     := Color("120a23")
+const COL_BORDER       := Color("513876")
+const COL_VIOLET       := Color("8a5eff")
+const COL_BORDER_FOCUS := Color("e7ff35")
+const COL_ACCENT       := Color("e7ff35")
+const COL_ACCENT_DIM   := Color("bc9aff")
+const COL_ACCENT_HOVER := Color("f1ff75")
+const COL_TEXT_PRIMARY  := Color("fff9f3")
+const COL_TEXT_SECONDARY:= Color("d4ccdf")
+const COL_TEXT_DISABLED := Color("9d93af")
+const COL_TEXT_ACCENT   := COL_ACCENT
+const DISPLAY_FONT := preload("res://assets/antigravity/zombie/hud/BarlowCondensed-ExtraBoldItalic.ttf")
 const COL_ERROR        := Color(0.90, 0.35, 0.30, 1.0)      # Error red
 const COL_WARNING      := Color(0.95, 0.75, 0.25, 1.0)      # Warning amber
 const COL_SUCCESS      := Color(0.30, 0.80, 0.45, 1.0)      # Success green
@@ -27,17 +28,17 @@ const COL_COMING_SOON  := Color(0.95, 0.65, 0.15, 1.0)      # Coming soon badge
 const COL_OVERLAY      := Color(0.0, 0.0, 0.0, 0.55)        # Dim overlay
 
 # ── Typography sizes (base 720p, stretch scales) ────────────────────────────
-const FONT_TITLE       := 36
-const FONT_HEADING     := 24
+const FONT_TITLE       := 50
+const FONT_HEADING     := 32
 const FONT_NAV         := 18
 const FONT_BODY        := 16
 const FONT_SMALL       := 13
 const FONT_BADGE       := 12
 
 # ── Layout ───────────────────────────────────────────────────────────────────
-const MARGIN_SAFE      := 56   # ~48-64 px safe area
-const CORNER_RADIUS    := 6
-const CORNER_RADIUS_LG := 10
+const MARGIN_SAFE      := 48
+const CORNER_RADIUS    := 0
+const CORNER_RADIUS_LG := 0
 const BORDER_WIDTH     := 1
 const FOCUS_BORDER_W   := 2
 
@@ -52,6 +53,7 @@ static func create_theme() -> Theme:
 	_setup_tabs(theme)
 	_setup_sliders(theme)
 	_setup_option_button(theme)
+	_setup_checkboxes(theme)
 	_setup_scroll(theme)
 	_setup_line_edit(theme)
 	return theme
@@ -81,35 +83,35 @@ static func _make_flat_box(bg: Color, corner: int = CORNER_RADIUS,
 
 
 static func make_accent_button_style(state: String) -> StyleBoxFlat:
+	var style := _make_flat_box(COL_ACCENT, 0, Color.TRANSPARENT, 0, 14.0)
 	match state:
-		"normal":
-			return _make_flat_box(COL_ACCENT.darkened(0.15), CORNER_RADIUS, Color.TRANSPARENT, 0, 14.0)
 		"hover":
-			return _make_flat_box(COL_ACCENT, CORNER_RADIUS, Color.TRANSPARENT, 0, 14.0)
+			style.bg_color = COL_ACCENT_HOVER
 		"pressed":
-			return _make_flat_box(COL_ACCENT.darkened(0.3), CORNER_RADIUS, Color.TRANSPARENT, 0, 14.0)
+			style.bg_color = COL_ACCENT.darkened(0.16)
 		"focus":
-			return _make_flat_box(COL_ACCENT.darkened(0.15), CORNER_RADIUS, COL_TEXT_PRIMARY, FOCUS_BORDER_W, 14.0)
+			style = _make_flat_box(Color.TRANSPARENT, 0, COL_TEXT_PRIMARY, FOCUS_BORDER_W, 14.0)
 		"disabled":
-			return _make_flat_box(COL_BG_CARD, CORNER_RADIUS, COL_BORDER, BORDER_WIDTH, 14.0)
-	return _make_flat_box(COL_ACCENT.darkened(0.15), CORNER_RADIUS)
+			style = _make_flat_box(COL_BG_CARD, 0, COL_BORDER, 1, 14.0)
+	style.skew.x = 0.19
+	return style
 
 static func make_ghost_button_style(state: String) -> StyleBoxFlat:
+	var style := _make_flat_box(COL_BG_PANEL, 0, Color.TRANSPARENT, 0, 10.0)
 	match state:
-		"normal":
-			return _make_flat_box(Color.TRANSPARENT, CORNER_RADIUS, Color.TRANSPARENT, 0, 10.0)
 		"hover":
-			return _make_flat_box(COL_BG_HOVER, CORNER_RADIUS, Color.TRANSPARENT, 0, 10.0)
+			style.bg_color = COL_BG_HOVER
 		"pressed":
-			return _make_flat_box(COL_BG_SELECTED, CORNER_RADIUS, Color.TRANSPARENT, 0, 10.0)
+			style.bg_color = COL_BG_SELECTED
 		"focus":
-			return _make_flat_box(Color.TRANSPARENT, CORNER_RADIUS, COL_BORDER_FOCUS, FOCUS_BORDER_W, 10.0)
+			style = _make_flat_box(Color.TRANSPARENT, 0, COL_BORDER_FOCUS, FOCUS_BORDER_W, 10.0)
 		"disabled":
-			return _make_flat_box(Color.TRANSPARENT, CORNER_RADIUS, Color.TRANSPARENT, 0, 10.0)
-	return _make_flat_box(Color.TRANSPARENT, CORNER_RADIUS)
+			style.bg_color = Color.TRANSPARENT
+	style.skew.x = 0.14
+	return style
 
 static func make_card_style(state: String = "normal", is_accent: bool = false) -> StyleBoxFlat:
-	var border := COL_BORDER
+	var border := COL_VIOLET if is_accent else COL_BORDER
 	var border_w := BORDER_WIDTH
 	var bg := COL_BG_CARD
 	match state:
@@ -120,6 +122,7 @@ static func make_card_style(state: String = "normal", is_accent: bool = false) -
 		"focus":
 			border = COL_BORDER_FOCUS
 			border_w = FOCUS_BORDER_W
+			bg = Color.TRANSPARENT
 		"selected":
 			bg = COL_BG_SELECTED
 			border = COL_ACCENT
@@ -127,10 +130,26 @@ static func make_card_style(state: String = "normal", is_accent: bool = false) -
 		"disabled":
 			bg = COL_BG_DEEP
 			border = COL_BORDER.darkened(0.3)
-	return _make_flat_box(bg, CORNER_RADIUS_LG, border, border_w, 16.0)
+	var style := _make_flat_box(bg, 0, border, border_w, 18.0)
+	style.skew.x = 0.04
+	if is_accent and state == "normal":
+		style.border_width_left = 5
+	return style
+
+static func display(label: Label, font_size: int) -> void:
+	label.add_theme_font_override("font", DISPLAY_FONT)
+	label.add_theme_font_size_override("font_size", font_size)
+	label.uppercase = true
+
+static func style_primary(button: Button) -> void:
+	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
+		button.add_theme_stylebox_override(state, make_accent_button_style(state))
+	for state in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color"]:
+		button.add_theme_color_override(state, COL_BG_DEEP)
 
 static func make_badge_style(color: Color) -> StyleBoxFlat:
-	var sb := _make_flat_box(color.darkened(0.6), 4, color, 1, 4.0)
+	var sb := _make_flat_box(COL_BG_INPUT, 0, color, 1, 4.0)
+	sb.skew.x = 0.17
 	sb.content_margin_left = 8.0
 	sb.content_margin_right = 8.0
 	sb.content_margin_top = 2.0
@@ -153,6 +172,7 @@ static func _setup_buttons(theme: Theme) -> void:
 	theme.set_color("font_pressed_color", "Button", COL_ACCENT)
 	theme.set_color("font_focus_color", "Button", COL_TEXT_PRIMARY)
 	theme.set_color("font_disabled_color", "Button", COL_TEXT_DISABLED)
+	theme.set_font("font", "Button", DISPLAY_FONT)
 	theme.set_font_size("font_size", "Button", FONT_NAV)
 
 static func _setup_panels(theme: Theme) -> void:
@@ -166,17 +186,14 @@ static func _setup_labels(theme: Theme) -> void:
 	theme.set_color("font_color", "Label", COL_TEXT_PRIMARY)
 
 static func _setup_tabs(theme: Theme) -> void:
-	theme.set_stylebox("tab_selected", "TabBar",
-		_make_flat_box(COL_BG_SELECTED, CORNER_RADIUS, COL_ACCENT, BORDER_WIDTH, 10.0))
-	theme.set_stylebox("tab_unselected", "TabBar",
-		_make_flat_box(Color.TRANSPARENT, CORNER_RADIUS, Color.TRANSPARENT, 0, 10.0))
-	theme.set_stylebox("tab_hovered", "TabBar",
-		_make_flat_box(COL_BG_HOVER, CORNER_RADIUS, Color.TRANSPARENT, 0, 10.0))
-	theme.set_stylebox("tab_focus", "TabBar",
-		_make_flat_box(Color.TRANSPARENT, CORNER_RADIUS, COL_BORDER_FOCUS, FOCUS_BORDER_W, 10.0))
-	theme.set_color("font_selected_color", "TabBar", COL_ACCENT)
+	theme.set_stylebox("tab_selected", "TabBar", make_accent_button_style("normal"))
+	theme.set_stylebox("tab_unselected", "TabBar", make_ghost_button_style("normal"))
+	theme.set_stylebox("tab_hovered", "TabBar", make_ghost_button_style("hover"))
+	theme.set_stylebox("tab_focus", "TabBar", make_ghost_button_style("focus"))
+	theme.set_color("font_selected_color", "TabBar", COL_BG_DEEP)
 	theme.set_color("font_unselected_color", "TabBar", COL_TEXT_SECONDARY)
 	theme.set_color("font_hovered_color", "TabBar", COL_TEXT_PRIMARY)
+	theme.set_font("font", "TabBar", DISPLAY_FONT)
 	theme.set_font_size("font_size", "TabBar", FONT_NAV)
 
 static func _setup_sliders(theme: Theme) -> void:
@@ -211,6 +228,16 @@ static func _setup_scroll(theme: Theme) -> void:
 		_make_flat_box(COL_ACCENT_DIM, 3))
 	theme.set_stylebox("grabber_pressed", "VScrollBar",
 		_make_flat_box(COL_ACCENT, 3))
+
+static func _setup_checkboxes(theme: Theme) -> void:
+	for checked in [false, true]:
+		var fill := COL_ACCENT.to_html(false) if checked else COL_BG_INPUT.to_html(false)
+		var stroke := COL_ACCENT.to_html(false) if checked else COL_TEXT_SECONDARY.to_html(false)
+		var mark := '<path d="M5 9l3 3 5-6" fill="none" stroke="#10091e" stroke-width="2"/>' if checked else ""
+		var svg := '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"><rect x="1" y="1" width="16" height="16" rx="1" fill="#%s" stroke="#%s" stroke-width="2"/>%s</svg>' % [fill, stroke, mark]
+		var image := Image.new()
+		if image.load_svg_from_string(svg) == OK:
+			theme.set_icon("checked" if checked else "unchecked", "CheckBox", ImageTexture.create_from_image(image))
 
 static func _setup_line_edit(theme: Theme) -> void:
 	theme.set_stylebox("normal", "LineEdit",

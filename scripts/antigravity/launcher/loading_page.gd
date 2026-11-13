@@ -1,6 +1,6 @@
 ## loading_page.gd — AAA Cinematic Loading Screen System
 ## Displays full-screen cinematic slideshow with Ken Burns camera effect,
-## data-driven enemy/survival tips, smooth crossfades, and bottom-left UI.
+## data-driven tips, smooth crossfades, and a two-column footer.
 ## Respects real loading telemetry without fake percentages or stalls.
 class_name LauncherLoadingPage
 extends Control
@@ -12,8 +12,6 @@ const SlideRegistry = preload("res://scripts/antigravity/launcher/slide_registry
 signal intent_requested(action: StringName, payload: Dictionary)
 
 # ── Colors & Styling ─────────────────────────────────────────────────────────
-const COL_CYAN_ACCENT := Color(0.0, 0.94, 0.88, 1.0)
-const COL_TEXT_MUTED := Color(0.72, 0.78, 0.88, 1.0)
 const SLIDE_DURATION := 7.0
 const CROSSFADE_DURATION := 1.2
 
@@ -21,14 +19,10 @@ const CROSSFADE_DURATION := 1.2
 var _bg_layer: Control
 var _bg_current: TextureRect
 var _bg_next: TextureRect
-var _vignette_rect: TextureRect
-
-# ── Bottom-Left UI Nodes ─────────────────────────────────────────────────────
-var _bottom_margin: MarginContainer
+# ── Loading UI ──────────────────────────────────────────────────────────────
 var _panel: PanelContainer
-var _accent_bar: ColorRect
-var _title_label: Label
-var _mode_label: Label
+var _subtitle: Label
+var _tip_rule: HSeparator
 var _progress_bar: ProgressBar
 var _status_row: HBoxContainer
 var _spinner: Control
@@ -36,13 +30,17 @@ var _stage_label: Label
 var _units_label: Label
 var _tip_row: HBoxContainer
 var _tip_icon: Control
-var _tip_prefix: Label
 var _tip_label: Label
-var _counter_label: Label
 var _still_preparing_label: Label
 var _cancel_btn: Button
-var _classic_cancel_style: StyleBoxFlat
+var _cancel_key: Label
 var _ambient_player: AudioStreamPlayer
+var _status_panel: PanelContainer
+var _status_content: VBoxContainer
+var _heading_row: HBoxContainer
+var _loading_heading: Label
+var _tip_badge: Label
+var _track_ticks: Control
 
 # ── Slideshow State ──────────────────────────────────────────────────────────
 var _active_mode_id: String = "zombie_rpg"
@@ -55,7 +53,6 @@ var _texture_cache: Dictionary = {} # path -> Texture2D
 
 # ── Telemetry & Accessibility ────────────────────────────────────────────────
 var _deployment: Control
-var _classic_content: VBoxContainer
 var _percent_label: Label
 var _request_id: String = ""
 var _spin_angle: float = 0.0
@@ -81,9 +78,7 @@ func _ready() -> void:
 	_init_audio()
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_RESIZED:
-		_layout_elements()
-	elif what == NOTIFICATION_VISIBILITY_CHANGED:
+	if what == NOTIFICATION_VISIBILITY_CHANGED:
 		if is_instance_valid(_ambient_player):
 			if visible and is_inside_tree():
 				if not _ambient_player.playing:
@@ -122,276 +117,233 @@ func _build_ui() -> void:
 	_bg_next.modulate.a = 0.0
 	_bg_layer.add_child(_bg_next)
 
-	# 2. Soft Bottom-Left Radial Dark Gradient for UI Legibility (No heavy box)
-	_vignette_rect = TextureRect.new()
-	_vignette_rect.name = "BottomLeftVignette"
-	_vignette_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_vignette_rect.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	_vignette_rect.grow_vertical = Control.GROW_DIRECTION_BOTH
-	_vignette_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	_vignette_rect.stretch_mode = TextureRect.STRETCH_SCALE
-	_vignette_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_vignette_rect.texture = _create_soft_vignette_gradient()
-	add_child(_vignette_rect)
+	_deployment = DeploymentLayout.new()
+	add_child(_deployment)
+	_build_case_footer()
+	_build_status_footer()
+	_apply_deployment_layout()
 
-	# 3. Bottom-Left Margin & Container
-	_bottom_margin = MarginContainer.new()
-	_bottom_margin.name = "BottomLeftMargin"
-	_bottom_margin.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
-	_bottom_margin.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_bottom_margin.mouse_filter = Control.MOUSE_FILTER_PASS
-	add_child(_bottom_margin)
-
+func _build_case_footer() -> void:
 	_panel = PanelContainer.new()
 	_panel.name = "LoadingPanel"
-	_panel.mouse_filter = Control.MOUSE_FILTER_PASS
-	var empty_sb := StyleBoxEmpty.new()
-	_panel.add_theme_stylebox_override("panel", empty_sb)
-	_bottom_margin.add_child(_panel)
+	_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+	_deployment.left.add_child(_panel)
 
-	var vbox := VBoxContainer.new()
-	_classic_content = vbox
-	vbox.name = "LoadingVBox"
-	vbox.alignment = BoxContainer.ALIGNMENT_BEGIN
-	vbox.add_theme_constant_override("separation", 10)
-	_panel.add_child(vbox)
+	var info := VBoxContainer.new()
+	info.add_theme_constant_override("separation", 5)
+	_panel.add_child(info)
+	_subtitle = Label.new()
+	_subtitle.add_theme_font_size_override("font_size", 21)
+	_subtitle.add_theme_color_override("font_color", Color("dce8ec"))
+	_deployment.left.add_child(_subtitle)
+	_deployment.left.move_child(_subtitle, 0)
 
-	# Header: Vertical Accent Bar + ENSA GAMES + Mode Subtitle
-	var header_hbox := HBoxContainer.new()
-	header_hbox.add_theme_constant_override("separation", 12)
-	vbox.add_child(header_hbox)
+	_tip_rule = HSeparator.new()
+	var line := StyleBoxLine.new()
+	line.color = Color("9cbac36b")
+	_tip_rule.add_theme_stylebox_override("separator", line)
+	info.add_child(_tip_rule)
 
-	_accent_bar = ColorRect.new()
-	_accent_bar.name = "CyanAccentBar"
-	_accent_bar.custom_minimum_size = Vector2(3.5, 38)
-	_accent_bar.color = COL_CYAN_ACCENT
-	header_hbox.add_child(_accent_bar)
-
-	var titles_vbox := VBoxContainer.new()
-	titles_vbox.add_theme_constant_override("separation", 2)
-	header_hbox.add_child(titles_vbox)
-
-	_title_label = Label.new()
-	_title_label.name = "BrandLabel"
-	_title_label.text = "ENSA GAMES"
-	_title_label.add_theme_font_size_override("font_size", 22)
-	_title_label.add_theme_color_override("font_color", Color.WHITE)
-	titles_vbox.add_child(_title_label)
-
-	_mode_label = Label.new()
-	_mode_label.name = "ModeLabel"
-	_mode_label.text = "Zombie RPG Survival"
-	_mode_label.add_theme_font_size_override("font_size", 14)
-	_mode_label.add_theme_color_override("font_color", COL_TEXT_MUTED)
-	titles_vbox.add_child(_mode_label)
-
-	# Thin Elegant Cyan Progress Bar
-	_progress_bar = ProgressBar.new()
-	_progress_bar.name = "ProgressBar"
-	_progress_bar.custom_minimum_size = Vector2(390, 5)
-	_progress_bar.show_percentage = false
-	_progress_bar.visible = false
-
-	var sb_bg := StyleBoxFlat.new()
-	sb_bg.bg_color = Color(0.08, 0.12, 0.18, 0.75)
-	sb_bg.corner_radius_top_left = 2
-	sb_bg.corner_radius_top_right = 2
-	sb_bg.corner_radius_bottom_left = 2
-	sb_bg.corner_radius_bottom_right = 2
-	_progress_bar.add_theme_stylebox_override("background", sb_bg)
-
-	var sb_fill := StyleBoxFlat.new()
-	sb_fill.bg_color = COL_CYAN_ACCENT
-	sb_fill.corner_radius_top_left = 2
-	sb_fill.corner_radius_top_right = 2
-	sb_fill.corner_radius_bottom_left = 2
-	sb_fill.corner_radius_bottom_right = 2
-	_progress_bar.add_theme_stylebox_override("fill", sb_fill)
-	vbox.add_child(_progress_bar)
-
-	# Status Line: Spinner + Stage Text + Optional Percentage
-	_status_row = HBoxContainer.new()
-	_status_row.add_theme_constant_override("separation", 10)
-	vbox.add_child(_status_row)
-
-	_spinner = Control.new()
-	_spinner.name = "StatusSpinner"
-	_spinner.custom_minimum_size = Vector2(16, 16)
-	_spinner.draw.connect(_on_draw_spinner)
-	_status_row.add_child(_spinner)
-
-	_stage_label = Label.new()
-	_stage_label.name = "StageLabel"
-	_stage_label.text = "Loading world assets..."
-	_stage_label.add_theme_font_size_override("font_size", 14)
-	_stage_label.add_theme_color_override("font_color", COL_TEXT_MUTED)
-	_status_row.add_child(_stage_label)
-
-	# Units label (e.g. "Preparing render batches: 730 / 2200 units")
-	_units_label = Label.new()
-	_units_label.name = "UnitsLabel"
-	_units_label.text = ""
-	_units_label.add_theme_font_size_override("font_size", 12)
-	_units_label.add_theme_color_override("font_color", Color(0.55, 0.62, 0.72))
-	_units_label.visible = false
-	vbox.add_child(_units_label)
-
-	# Tip Line: Tip Icon + "Tip:" (cyan) + Tip Text (white) + Subtle Slide Counter
 	_tip_row = HBoxContainer.new()
 	_tip_row.add_theme_constant_override("separation", 6)
-	vbox.add_child(_tip_row)
-
+	info.add_child(_tip_row)
 	_tip_icon = Control.new()
-	_tip_icon.name = "TipIcon"
 	_tip_icon.custom_minimum_size = Vector2(16, 16)
 	_tip_icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	_tip_icon.draw.connect(_on_draw_tip_icon)
 	_tip_row.add_child(_tip_icon)
-
-	_tip_prefix = Label.new()
-	_tip_prefix.name = "TipPrefix"
-	_tip_prefix.text = "Tip:"
-	_tip_prefix.add_theme_font_size_override("font_size", 13)
-	_tip_prefix.add_theme_color_override("font_color", COL_CYAN_ACCENT)
-	_tip_prefix.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	_tip_row.add_child(_tip_prefix)
-
+	_tip_badge = DeploymentLayout.display_label("FIELD TIP", 20, DeploymentLayout.WHITE)
+	_tip_badge.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_tip_badge.add_theme_stylebox_override("normal", _cyber_badge_style())
+	_tip_row.add_child(_tip_badge)
 	_tip_label = Label.new()
-	_tip_label.name = "TipLabel"
-	_tip_label.text = "Go for headshots to take down zombies faster and conserve ammo."
-	_tip_label.add_theme_font_size_override("font_size", 13)
-	_tip_label.add_theme_color_override("font_color", Color(0.88, 0.92, 0.98))
+	_tip_label.add_theme_font_size_override("font_size", 17)
+	_tip_label.add_theme_color_override("font_color", Color("dce8ec"))
 	_tip_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_tip_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_tip_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	_tip_row.add_child(_tip_label)
 
-	_counter_label = Label.new()
-	_counter_label.name = "SlideCounter"
-	_counter_label.text = "|  01 / 24"
-	_counter_label.add_theme_font_size_override("font_size", 13)
-	_counter_label.add_theme_color_override("font_color", Color(0.48, 0.55, 0.68))
-	_counter_label.size_flags_horizontal = Control.SIZE_SHRINK_END
-	_counter_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	_tip_row.add_child(_counter_label)
+func _build_status_footer() -> void:
+	_status_panel = PanelContainer.new()
+	_status_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_deployment.right.add_child(_status_panel)
+	_status_content = VBoxContainer.new()
+	_status_content.add_theme_constant_override("separation", 6)
+	_status_panel.add_child(_status_content)
+	var status := _status_content
+	_heading_row = HBoxContainer.new()
+	status.add_child(_heading_row)
+	_loading_heading = DeploymentLayout.display_label("PREPARING CAMPUS", 25)
+	_loading_heading.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_heading_row.add_child(_loading_heading)
+	_status_row = HBoxContainer.new()
+	_status_row.add_theme_constant_override("separation", 8)
+	status.add_child(_status_row)
 
-	# Still preparing state
+	_spinner = Control.new()
+	_spinner.custom_minimum_size = Vector2(16, 16)
+	_spinner.draw.connect(_on_draw_spinner)
+	_status_row.add_child(_spinner)
+	_stage_label = Label.new()
+	_stage_label.add_theme_font_size_override("font_size", 17)
+	_stage_label.add_theme_color_override("font_color", DeploymentLayout.WHITE)
+	_stage_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_stage_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_status_row.add_child(_stage_label)
+	_percent_label = DeploymentLayout.display_label("", 38, DeploymentLayout.BLUE)
+	_heading_row.add_child(_percent_label)
+
+	_progress_bar = ProgressBar.new()
+	_progress_bar.name = "ProgressBar"
+	_progress_bar.show_percentage = false
+	_progress_bar.hide()
+	status.add_child(_progress_bar)
+	_track_ticks = Control.new()
+	_track_ticks.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_progress_bar.add_child(_track_ticks)
+	_track_ticks.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_track_ticks.resized.connect(_track_ticks.queue_redraw)
+	_track_ticks.draw.connect(func():
+		for tick in range(1, 10):
+			var x := _track_ticks.size.x * tick / 10.0
+			_track_ticks.draw_line(Vector2(x, 4), Vector2(x, _track_ticks.size.y - 4),
+				Color("15344a99"), 1.0)
+	)
+
+	_units_label = Label.new()
+	_units_label.add_theme_font_size_override("font_size", 13)
+	_units_label.add_theme_color_override("font_color", Color("b8cbd4"))
+	_units_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_units_label.hide()
+	_status_row.add_child(_units_label)
+
 	_still_preparing_label = Label.new()
-	_still_preparing_label.name = "StillPreparingLabel"
-	_still_preparing_label.text = ""
-	_still_preparing_label.add_theme_font_size_override("font_size", 12)
+	_still_preparing_label.add_theme_font_size_override("font_size", 13)
 	_still_preparing_label.add_theme_color_override("font_color", LauncherTheme.COL_WARNING)
-	_still_preparing_label.visible = false
-	vbox.add_child(_still_preparing_label)
+	_still_preparing_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_still_preparing_label.hide()
+	status.add_child(_still_preparing_label)
 
-	# Cancel Button (discreet AAA styling, preserves keyboard focus)
 	_cancel_btn = Button.new()
 	_cancel_btn.name = "CancelButton"
-	_cancel_btn.text = "Cancel Loading"
-	_cancel_btn.custom_minimum_size = Vector2(130, 28)
-	_cancel_btn.add_theme_font_size_override("font_size", 12)
-	_cancel_btn.focus_mode = Control.FOCUS_ALL
+	_cancel_btn.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	_cancel_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_cancel_btn.pressed.connect(_on_cancel_pressed)
-	_cancel_btn.visible = false
+	_cancel_btn.hide()
+	status.add_child(_cancel_btn)
 
-	var cancel_sb := StyleBoxFlat.new()
-	cancel_sb.bg_color = Color(0.12, 0.16, 0.22, 0.8)
-	cancel_sb.border_width_left = 1
-	cancel_sb.border_width_top = 1
-	cancel_sb.border_width_right = 1
-	cancel_sb.border_width_bottom = 1
-	cancel_sb.border_color = Color(0.3, 0.4, 0.5, 0.6)
-	cancel_sb.corner_radius_top_left = 3
-	cancel_sb.corner_radius_top_right = 3
-	cancel_sb.corner_radius_bottom_left = 3
-	cancel_sb.corner_radius_bottom_right = 3
-	_classic_cancel_style = cancel_sb
-	_cancel_btn.add_theme_stylebox_override("normal", cancel_sb)
-	vbox.add_child(_cancel_btn)
-
-	_deployment = DeploymentLayout.new()
-	add_child(_deployment)
-	_percent_label = DeploymentLayout.display_label("", 30, DeploymentLayout.CITRON)
-	_status_row.add_child(_percent_label)
-	_apply_deployment_layout()
-	_layout_elements()
+	_cancel_key = Label.new()
+	_cancel_key.text = "ESC"
+	_cancel_key.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_cancel_key.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_cancel_key.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_cancel_key.add_theme_font_size_override("font_size", 14)
+	_cancel_btn.add_child(_cancel_key)
+	_cancel_key.position = Vector2(1, 2)
+	_cancel_key.size = Vector2(49, 29)
 
 func _is_after_hours() -> bool:
 	return _active_mode_id == "zombie_rpg"
 
 func _apply_deployment_layout() -> void:
 	var after_hours := _is_after_hours()
-	_deployment.visible = after_hours
-	_bottom_margin.visible = not after_hours
-	_vignette_rect.visible = not after_hours
-	var status_parent: VBoxContainer = _deployment.right if after_hours else _classic_content
-	var tip_parent: VBoxContainer = _deployment.left if after_hours else _classic_content
-	for control: Control in [_status_row, _progress_bar, _units_label, _still_preparing_label, _cancel_btn]:
-		if control.get_parent() != status_parent:
-			control.reparent(status_parent, false)
-	if _tip_row.get_parent() != tip_parent:
-		_tip_row.reparent(tip_parent, false)
-	if not after_hours:
-		_classic_content.move_child(_progress_bar, 1)
-		_classic_content.move_child(_tip_row, 4)
-	_percent_label.visible = after_hours and not _percent_label.text.is_empty()
-	_tip_prefix.visible = not after_hours
-	_counter_label.visible = not after_hours
-	_tip_label.add_theme_font_size_override("font_size", 17 if after_hours else 13)
-	_stage_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL if after_hours else Control.SIZE_FILL
-	_stage_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART if after_hours else TextServer.AUTOWRAP_OFF
-	_stage_label.add_theme_font_size_override("font_size", 17 if after_hours else 14)
-	_stage_label.add_theme_color_override("font_color", DeploymentLayout.WHITE if after_hours else COL_TEXT_MUTED)
-	_progress_bar.custom_minimum_size = Vector2(0, 13) if after_hours else Vector2(390, 5)
-	var fill := _progress_bar.get_theme_stylebox("fill") as StyleBoxFlat
-	fill.bg_color = DeploymentLayout.CITRON if after_hours else COL_CYAN_ACCENT
-	var track := _progress_bar.get_theme_stylebox("background") as StyleBoxFlat
-	track.bg_color = Color("402979") if after_hours else Color(0.08, 0.12, 0.18, 0.75)
-	_cancel_btn.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN if after_hours else Control.SIZE_FILL
-	_cancel_btn.text = "ESC   CANCEL LOADING" if after_hours else "Cancel Loading"
+	_deployment.set_cyber(not after_hours, false, not after_hours)
+	_subtitle.visible = not after_hours
+	_tip_rule.hide()
+	_tip_icon.visible = after_hours
+	_tip_badge.visible = not after_hours
+	_cancel_key.visible = not after_hours
+	_percent_label.add_theme_font_size_override("font_size", 30 if after_hours else 38)
+	_percent_label.add_theme_color_override("font_color", DeploymentLayout.CITRON if after_hours else DeploymentLayout.BLUE)
+	_percent_label.reparent(_status_row if after_hours else _heading_row)
+	_units_label.reparent(_status_content if after_hours else _status_row)
 	if after_hours:
+		_status_content.move_child(_units_label, _status_content.get_children().find(_still_preparing_label))
+	_stage_label.add_theme_font_size_override("font_size", 17 if after_hours else 14)
+	_units_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART if after_hours else TextServer.AUTOWRAP_OFF
+	_heading_row.visible = not after_hours
+	_status_content.move_child(_heading_row, 0)
+	_status_content.move_child(_progress_bar, 1)
+	_status_content.move_child(_status_row, 0 if after_hours else 2)
+	_track_ticks.visible = not after_hours
+
+	var panel_style: StyleBox = StyleBoxEmpty.new()
+	if not after_hours:
+		var plate := StyleBoxFlat.new()
+		plate.bg_color = Color("071b30ed")
+		plate.border_color = Color("42bfff8c")
+		plate.set_border_width_all(1)
+		plate.border_width_left = 5
+		plate.skew.x = 0.10
+		plate.content_margin_left = 20
+		plate.content_margin_right = 20
+		plate.content_margin_top = 8
+		plate.content_margin_bottom = 10
+		panel_style = plate
+	_status_panel.add_theme_stylebox_override("panel", panel_style)
+	_subtitle.add_theme_font_override("font", DeploymentLayout.DISPLAY_FONT)
+	_subtitle.add_theme_font_size_override("font_size", 25)
+	_subtitle.add_theme_color_override("font_color", DeploymentLayout.BLUE)
+	_tip_row.add_theme_constant_override("separation", 0 if not after_hours else 6)
+	if after_hours:
+		_tip_label.remove_theme_stylebox_override("normal")
+	else:
+		_tip_label.add_theme_stylebox_override("normal", _cyber_badge_style(false))
+
+	var track := StyleBoxFlat.new()
+	track.bg_color = Color("402979") if after_hours else Color("17354f")
+	track.set_corner_radius_all(2 if after_hours else 0)
+	if not after_hours:
+		track.set_border_width_all(1)
+		track.border_color = Color("5a9fca")
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = DeploymentLayout.CITRON if after_hours else DeploymentLayout.BLUE
+	fill.set_corner_radius_all(2 if after_hours else 0)
+	_progress_bar.add_theme_stylebox_override("background", track)
+	_progress_bar.add_theme_stylebox_override("fill", fill)
+	_progress_bar.custom_minimum_size.y = 13 if after_hours else 17
+
+	if after_hours:
+		_cancel_btn.text = "ESC   CANCEL LOADING"
+		_cancel_btn.custom_minimum_size.y = 28
 		DeploymentLayout.style_action(_cancel_btn, false, 19)
 	else:
-		for state in ["normal", "hover", "pressed", "focus"]:
-			_cancel_btn.remove_theme_stylebox_override(state)
-		for key in ["font_color", "font_focus_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color"]:
-			_cancel_btn.remove_theme_color_override(key)
-		_cancel_btn.remove_theme_font_override("font")
-		_cancel_btn.add_theme_font_size_override("font_size", 12)
-		_cancel_btn.add_theme_stylebox_override("normal", _classic_cancel_style)
+		_style_cyber_cancel()
 
-func _layout_elements() -> void:
-	if not is_instance_valid(_bottom_margin):
-		return
-	var vp_size := get_viewport_rect().size
-	if vp_size.x <= 0 or vp_size.y <= 0:
-		vp_size = Vector2(1280, 720)
+func _cyber_badge_style(solid: bool = true) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("12679c") if solid else Color("071b30e6")
+	style.skew.x = 0.17
+	style.content_margin_left = 15
+	style.content_margin_right = 15
+	style.content_margin_top = 5
+	style.content_margin_bottom = 5
+	return style
 
-	var pad_x := 48.0
-	var pad_y := 44.0
-	_bottom_margin.offset_left = pad_x
-	_bottom_margin.offset_bottom = -pad_y
-	_bottom_margin.offset_right = minf(vp_size.x - pad_x, pad_x + 680.0)
-	_bottom_margin.offset_top = -pad_y - 210.0
-
-func _create_soft_vignette_gradient() -> GradientTexture2D:
-	var grad := Gradient.new()
-	grad.colors = PackedColorArray([
-		Color(0.01, 0.02, 0.05, 0.92),
-		Color(0.01, 0.02, 0.05, 0.60),
-		Color(0.01, 0.02, 0.05, 0.25),
-		Color(0.01, 0.02, 0.05, 0.0)
-	])
-	grad.offsets = PackedFloat32Array([0.0, 0.28, 0.62, 1.0])
-
-	var gtex := GradientTexture2D.new()
-	gtex.gradient = grad
-	gtex.fill = GradientTexture2D.FILL_RADIAL
-	gtex.fill_from = Vector2(0.0, 1.0)
-	gtex.fill_to = Vector2(0.85, 0.15)
-	gtex.width = 512
-	gtex.height = 512
-	return gtex
+func _style_cyber_cancel() -> void:
+	_cancel_btn.text = "Cancel loading"
+	_cancel_btn.custom_minimum_size.y = 34
+	_cancel_btn.add_theme_font_override("font", DeploymentLayout.DISPLAY_FONT)
+	_cancel_btn.add_theme_font_size_override("font_size", 21)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		var style := StyleBoxFlat.new()
+		style.content_margin_left = 63
+		style.content_margin_right = 12
+		style.bg_color = Color.TRANSPARENT if state in ["normal", "focus"] else Color("123e61")
+		style.skew.x = 0.15
+		if state == "focus":
+			style.border_color = DeploymentLayout.BLUE
+			style.set_border_width_all(1)
+		_cancel_btn.add_theme_stylebox_override(state, style)
+	for color in ["font_color", "font_focus_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color"]:
+		_cancel_btn.add_theme_color_override(color, DeploymentLayout.WHITE)
+	var keycap := StyleBoxFlat.new()
+	keycap.bg_color = Color("071b30")
+	keycap.border_color = Color("97dbff")
+	keycap.set_border_width_all(1)
+	keycap.skew.x = 0.15
+	_cancel_key.add_theme_stylebox_override("normal", keycap)
 
 # ── Slideshow Logic ──────────────────────────────────────────────────────────
 
@@ -425,16 +377,13 @@ func _display_slide(slide: Dictionary, animate: bool) -> void:
 	var path: String = slide.get("image_path", "")
 	var tex := _load_slide_texture(path)
 
-	# Update tip & counter text
+	# Update the slide tip
 	var tip_text: String = slide.get("tip", "")
 	var is_impl: bool = slide.get("is_implemented", true)
 	if not is_impl and slide.get("category", "") == "enemy":
 		_tip_label.text = "[Concept Preview] %s" % tip_text
 	else:
 		_tip_label.text = "%s" % tip_text
-
-	var total := _slides.size()
-	_counter_label.text = "|  %02d / %02d" % [_current_slide_idx + 1, total]
 
 	# Preload upcoming slide
 	_preload_next_slide()
@@ -515,7 +464,7 @@ func _on_draw_spinner() -> void:
 	var center := _spinner.size * 0.5
 	var r := 6.5
 	# Subtle dim background ring track for AAA feel
-	var tint := DeploymentLayout.VIOLET if _is_after_hours() else COL_CYAN_ACCENT
+	var tint := DeploymentLayout.VIOLET if _is_after_hours() else DeploymentLayout.BLUE
 	_spinner.draw_arc(center, r, 0, TAU, 24, Color(tint, 0.28), 1.5, true)
 	if _reduced_motion:
 		_spinner.draw_arc(center, r, 0, TAU * 0.75, 24, tint, 2.0, true)
@@ -526,7 +475,7 @@ func _on_draw_tip_icon() -> void:
 	if not is_instance_valid(_tip_icon):
 		return
 	var c := _tip_icon.size * 0.5
-	var tint := DeploymentLayout.VIOLET if _is_after_hours() else COL_CYAN_ACCENT
+	var tint := DeploymentLayout.VIOLET if _is_after_hours() else DeploymentLayout.BLUE
 	# Sleek lightbulb icon matching reference image
 	var bulb_center := Vector2(c.x, c.y - 2.5)
 	_tip_icon.draw_arc(bulb_center, 4.5, deg_to_rad(-45), deg_to_rad(225), 18, tint, 1.5, true)
@@ -598,10 +547,6 @@ func update_from_model(model: Dictionary) -> void:
 	if mode_id != _active_mode_id:
 		_active_mode_id = mode_id
 		_apply_deployment_layout()
-		if _active_mode_id == "incident_response" or _active_mode_id == "cyber":
-			_mode_label.text = "Cybersecurity Incident Response"
-		else:
-			_mode_label.text = "Zombie RPG Survival"
 		_slides = SlideRegistry.get_slides_for_mode(_active_mode_id)
 		_current_slide_idx = 0
 		_slide_timer = 0.0
@@ -614,36 +559,38 @@ func update_from_model(model: Dictionary) -> void:
 	var stage_lbl: String = loading.get("stage_label", "")
 	var res_prog = loading.get("resource_progress", null)
 	var mission: Dictionary = model.get("mission", {})
-	_deployment.mission_code.text = str(mission.get("id", "ZB-2026-001"))
-	_percent_label.hide()
-
-	# Status text with genuine percentage when measurable
-	if res_prog != null and (res_prog is float or res_prog is int):
-		var pct := int(clampf(float(res_prog) * 100.0, 0.0, 100.0))
-		if _is_after_hours():
-			_stage_label.text = stage_lbl if not stage_lbl.is_empty() else "Loading assets"
-			_percent_label.text = "%d%%" % pct
-			_percent_label.show()
-		elif stage_lbl != "":
-			_stage_label.text = "%s... %d%%" % [stage_lbl, pct]
-		else:
-			_stage_label.text = "Loading assets... %d%%" % pct
-	elif stage_lbl != "":
-		_stage_label.text = stage_lbl
-	else:
-		_stage_label.text = "Loading simulation..."
-
-	# Work units counter
+	var default_code := "ZB-2026-001" if _is_after_hours() else "IR-2026-001"
+	var mission_code := str(mission.get("id", ""))
+	_deployment.mission_code.text = default_code if mission_code.is_empty() else mission_code
+	var mission_title := str(mission.get("title", ""))
+	_subtitle.text = "ENSA INCIDENT RESPONSE"
+	var title := "THE BORROWED SESSION" if mission_title.is_empty() else mission_title.to_upper()
+	_deployment.set_loading_title("THE BORROWED\nSESSION" if title == "THE BORROWED SESSION" else title)
 	var comp = loading.get("completed_units", null)
 	var tot = loading.get("total_units", null)
-	if comp != null and tot != null:
-		_units_label.text = "%s: %s / %s units" % [stage_lbl, str(comp), str(tot)]
+	var valid_units := (comp is int or comp is float) and (tot is int or tot is float) \
+		and is_finite(float(comp)) and is_finite(float(tot)) and float(comp) >= 0.0 and float(tot) > 0.0
+	var measured: bool = (res_prog is float or res_prog is int) and is_finite(float(res_prog))
+	if not _is_after_hours() and not measured and valid_units:
+		res_prog = float(comp) / float(tot)
+		measured = true
+	_stage_label.text = stage_lbl if not stage_lbl.is_empty() else "Loading simulation..."
+	_percent_label.visible = measured
+	_spinner.visible = _is_after_hours() or not measured
+	if measured:
+		var percentage := clampf(float(res_prog) * 100.0, 0.0, 100.0)
+		_percent_label.text = "%d%%" % (int(percentage) if _is_after_hours() else roundi(percentage))
+
+	# Work units counter
+	if valid_units:
+		var count := "%s / %s units" % [_format_units(int(comp)), _format_units(int(tot))]
+		_units_label.text = "%s: %s" % [stage_lbl, count] if _is_after_hours() else count
 		_units_label.visible = true
 	else:
 		_units_label.visible = false
 
 	# Resource stage progress bar (visible only when resource_progress is a valid float/int)
-	if res_prog != null and (res_prog is float or res_prog is int):
+	if measured:
 		_progress_bar.visible = true
 		_progress_bar.value = clamp(float(res_prog) * 100.0, 0.0, 100.0)
 	else:
@@ -664,6 +611,15 @@ func update_from_model(model: Dictionary) -> void:
 	_cancel_btn.visible = can_cancel
 	if can_cancel and was_focused:
 		_cancel_btn.grab_focus()
+
+func _format_units(count: int) -> String:
+	var digits := str(count)
+	var groups: Array[String] = []
+	while digits.length() > 3:
+		groups.push_front(digits.right(3))
+		digits = digits.left(digits.length() - 3)
+	groups.push_front(digits)
+	return ",".join(groups)
 
 func focus_primary() -> void:
 	if _cancel_btn.visible and is_instance_valid(_cancel_btn):

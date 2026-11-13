@@ -2,7 +2,6 @@ extends "res://scripts/antigravity/launcher/launcher_view.gd"
 ## Antigravity owns behavior; this integration layer calibrates the newest
 ## reference's typography/spacing and proportional scaling at different sizes.
 var _reference_styled := false
-var _reference_font: SystemFont
 var _reference_layout_pending := false
 var _zombie_launch_button: Button
 
@@ -41,7 +40,7 @@ func _sync_registered_preview(model: Dictionary) -> void:
 			_zombie_launch_button.add_theme_stylebox_override(state,StyleBoxEmpty.new())
 		var focus := StyleBoxFlat.new()
 		focus.bg_color = Color.TRANSPARENT
-		focus.border_color = Color("6fe8d1")
+		focus.border_color = LauncherTheme.COL_ACCENT
 		focus.set_border_width_all(1)
 		_zombie_launch_button.add_theme_stylebox_override("focus",focus)
 		_zombie_launch_button.pressed.connect(func(): intent_requested.emit(&"show_briefing",{"mode_id":"zombie_rpg"}))
@@ -55,7 +54,7 @@ func _sync_registered_preview(model: Dictionary) -> void:
 	home._zombie_lock.visible = not available
 	home._zombie_thumb.modulate = Color.WHITE if available else Color(.65,.65,.70,.85)
 	home._zombie_badge.text = "PLAY EPISODE  ›" if available else "COMING SOON"
-	var accent: Color = Color("6fe8d1") if available else LauncherTheme.COL_COMING_SOON
+	var accent: Color = LauncherTheme.COL_ACCENT if available else LauncherTheme.COL_COMING_SOON
 	home._zombie_badge.add_theme_color_override("font_color",accent)
 	home._zombie_badge.add_theme_stylebox_override("normal",LauncherTheme.make_badge_style(accent))
 	home._zombie_desc.text = "Restore power. Help the survivor. Reach extraction." if available else "Explore. Survive. Protect your resources."
@@ -70,33 +69,18 @@ func _apply_reference_layout() -> void:
 	var home: Control = _pages.get("home")
 	if home == null or home.get("_root_vbox") == null or home.size.x<1 or home.size.y<1: return
 	if not _reference_styled:
-		_reference_font = SystemFont.new()
-		_reference_font.font_names = PackedStringArray(["Segoe UI","Arial"])
-		_reference_font.font_weight = 700
-		home._heading_label.add_theme_font_override("font",_reference_font)
 		for button: Button in [home._play_btn,home._modes_btn,home._continue_btn,home._settings_btn,home._how_to_play_btn,home._credits_btn,home._quit_btn]:
-			button.custom_minimum_size.y = 50
-		home._case_title_label.add_theme_font_override("font",_reference_font)
-		home._case_title_label.add_theme_font_size_override("font_size",24)
-		home._workstation_rect.get_parent().get_parent().size_flags_stretch_ratio = 2.1
-		home._zombie_title.add_theme_font_size_override("font_size",17)
-		var card_style := home._zombie_card.get_theme_stylebox("panel").duplicate() as StyleBoxFlat
-		if card_style != null:
-			card_style.bg_color = Color(0,0,0,0)
-			card_style.set_border_width_all(0)
-			home._zombie_card.add_theme_stylebox_override("panel",card_style)
-		for segment: Panel in home._progress_segments: segment.custom_minimum_size = Vector2(26,12)
-		_style_reference_labels(home)
+			button.custom_minimum_size.y = 46
 		_reference_styled = true
 	# Native responsive notifications run again on resize and page visibility.
 	# Reset their physical-pixel values before applying one proportional scale,
 	# otherwise the minimum size and type are scaled twice after navigation.
-	home._heading_label.add_theme_font_size_override("font_size",46)
+	home._heading_label.add_theme_font_size_override("font_size",58)
 	home._subheading_label.add_theme_font_size_override("font_size",18)
 	home._emblem_rect.custom_minimum_size = Vector2(64,64)
-	home._cta_play_btn.custom_minimum_size = Vector2(290,54)
-	home._workstation_rect.get_parent().custom_minimum_size = Vector2(260,190)
-	home._zombie_thumb.get_parent().custom_minimum_size = Vector2(0,92)
+	home._cta_play_btn.custom_minimum_size = Vector2(290,56)
+	home._workstation_rect.get_parent().custom_minimum_size = Vector2(196,136)
+	home._zombie_thumb.get_parent().custom_minimum_size = Vector2(125,130)
 	# Work in a 720-high design coordinate space. This also covers standalone
 	# harnesses that set content_scale_size to the physical display resolution.
 	var factor: float = minf(home.size.y/720.0,home.size.x/1280.0)
@@ -114,23 +98,6 @@ func _apply_reference_layout() -> void:
 	content.add_theme_constant_override("separation",14)
 	home._main_content_margin.add_theme_constant_override("margin_bottom",28)
 	var required: float = content.get_combined_minimum_size().y
-	var top: int = int(clampf(720.0-36.0-28.0-required,64.0,130.0))
+	var top: int = int(clampf(720.0-36.0-28.0-required,32.0,110.0))
 	home._main_content_margin.add_theme_constant_override("margin_top",top)
-	for segment: Panel in home._progress_segments: segment.custom_minimum_size = Vector2(26,12)
-
-func _style_reference_labels(node: Node) -> void:
-	if node is Label:
-		if node.text == "ENSA GAMES":
-			node.add_theme_font_override("font",_reference_font)
-			node.add_theme_font_size_override("font_size",24)
-		elif node.text.begins_with("Campus Operations &"):
-			node.text = "Campus Operations & Simulation Hub"
-			node.add_theme_font_size_override("font_size",10)
-		elif node.text == "Play" and node.get_parent().get_parent().get_parent() == _pages.home._cta_play_btn:
-			node.add_theme_font_override("font",_reference_font)
-			node.add_theme_font_size_override("font_size",20)
-			node.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-			node.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			for sibling: Node in node.get_parent().get_children():
-				if sibling is Control and not sibling is Label: sibling.visible = false
-	for child: Node in node.get_children(): _style_reference_labels(child)
+	for segment: Panel in home._progress_segments: segment.custom_minimum_size = Vector2(15,12)

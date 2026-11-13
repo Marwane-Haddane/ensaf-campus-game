@@ -169,14 +169,7 @@ func _run_suite() -> void:
 	var ready_panel: PanelContainer = ready_page.get_panel()
 	_assert(ready_panel != null, "Ready PanelContainer must exist")
 	if ready_panel:
-		var rp_rect := ready_panel.get_global_rect()
-		var center_diff := absf((rp_rect.position.x + rp_rect.size.x * 0.5) - 640.0)
-		_assert(center_diff <= 2.0, "Ready panel must be horizontally centered (diff=%.1f, rect=%s)" % [center_diff, rp_rect])
-		var v_diff := absf((rp_rect.position.y + rp_rect.size.y * 0.5) - 360.0)
-		_assert(v_diff <= 2.0, "Ready panel must be vertically centered (diff=%.1f, rect=%s)" % [v_diff, rp_rect])
-		_assert(rp_rect.position.x >= 0 and rp_rect.end.x <= 1280.0, "Ready panel must not clip horizontally")
-		_assert(rp_rect.position.y >= 0 and rp_rect.end.y <= 720.0, "Ready panel must not clip vertically")
-		print("  ✓ Ready panel centered at: %s (center diff X: %.1f, Y: %.1f)" % [rp_rect, center_diff, v_diff])
+		_assert_ready_footer(ready_panel, Vector2(1280, 720), "1280x720")
 
 	# 5. Rapid Interrupted Page Transitions Test
 	print("\n--- Rapid Interrupted Page Transitions Test ---")
@@ -281,13 +274,7 @@ func _run_suite() -> void:
 		_view.present(fixtures["09_ready"])
 		await _wait_settled()
 		if ready_panel:
-			var rp_rect := ready_panel.get_global_rect()
-			var expected_center := Vector2(rsize) * 0.5
-			var cur_center := rp_rect.position + rp_rect.size * 0.5
-			var diff := (cur_center - expected_center).abs()
-			_assert(diff.x <= 2.0 and diff.y <= 2.0, "%s Ready panel centering off by %s (expected %s, got %s)" % [rname, diff, expected_center, cur_center])
-			_assert(rp_rect.position.x >= 0 and rp_rect.end.x <= rsize.x, "%s Ready panel clipped horizontally" % rname)
-			_assert(rp_rect.position.y >= 0 and rp_rect.end.y <= rsize.y, "%s Ready panel clipped vertically" % rname)
+			_assert_ready_footer(ready_panel, Vector2(rsize), rname)
 		if _capture_mode and not _is_headless:
 			_capture_screen("%s_ready" % rname)
 
@@ -721,6 +708,13 @@ func _assert(condition: bool, msg: String) -> void:
 func _fail(msg: String) -> void:
 	_test_failures += 1
 	printerr("  ✗ FAIL: ", msg)
+
+func _assert_ready_footer(panel: PanelContainer, viewport: Vector2, label: String) -> void:
+	var rect := panel.get_global_rect()
+	_assert(rect.position.x >= viewport.x * 0.60 and rect.end.x <= viewport.x,
+		"%s Ready actions must fit the right column: %s" % [label, rect])
+	_assert(rect.position.y >= viewport.y * 0.55 and rect.end.y <= viewport.y,
+		"%s Ready actions must fit the bottom footer: %s" % [label, rect])
 
 func _get_fixtures() -> Dictionary:
 	return {

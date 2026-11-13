@@ -9,11 +9,11 @@ func _run() -> void:
 	var brain_dir = "C:/Users/marwa/.gemini/antigravity/brain/739e62fe-b07b-44e5-a79e-efc11cd9c30c/"
 
 	var targets = [
-		{"path": "res://assets/antigravity/zombie/models/Zombie_Ribcage.tscn", "name": "zombie_ribcage_screamer", "cam_pos": Vector3(0, 1.1, 2.5), "look_at": Vector3(0, 0.9, 0)},
-		{"path": "res://assets/antigravity/zombie/models/Zombie_Arm.tscn", "name": "zombie_arm_stalker", "cam_pos": Vector3(0, 1.2, 2.6), "look_at": Vector3(0, 0.9, 0)},
-		{"path": "res://assets/antigravity/zombie/models/Characters_Matt.tscn", "name": "survivor_matt_guard", "cam_pos": Vector3(0, 1.2, 2.5), "look_at": Vector3(0, 1.0, 0)},
-		{"path": "res://assets/antigravity/zombie/models/Characters_Lis.tscn", "name": "survivor_lis_medic", "cam_pos": Vector3(0, 1.1, 2.5), "look_at": Vector3(0, 0.9, 0)},
-		{"path": "res://assets/antigravity/zombie/models/WoodenBat_Barbed.tscn", "name": "weapon_bat_barbed", "cam_pos": Vector3(0, 0.4, 1.2), "look_at": Vector3(0, 0.3, 0)},
+		{"path": "res://assets/antigravity/zombie/models/Zombie_Ribcage.scn", "name": "zombie_ribcage_screamer", "cam_pos": Vector3(0, 1.1, 2.5), "look_at": Vector3(0, 0.9, 0)},
+		{"path": "res://assets/antigravity/zombie/models/Zombie_Arm.scn", "name": "zombie_arm_stalker", "cam_pos": Vector3(0, 1.2, 2.6), "look_at": Vector3(0, 0.9, 0)},
+		{"path": "res://assets/antigravity/zombie/models/Characters_Matt.scn", "name": "survivor_matt_guard", "cam_pos": Vector3(0, 1.2, 2.5), "look_at": Vector3(0, 1.0, 0)},
+		{"path": "res://assets/antigravity/zombie/models/Characters_Lis.scn", "name": "survivor_lis_medic", "cam_pos": Vector3(0, 1.1, 2.5), "look_at": Vector3(0, 0.9, 0)},
+		{"path": "res://assets/antigravity/zombie/models/WoodenBat_Barbed.scn", "name": "weapon_bat_barbed", "cam_pos": Vector3(0, 0.4, 1.2), "look_at": Vector3(0, 0.3, 0)},
 	]
 
 	for target in targets:
