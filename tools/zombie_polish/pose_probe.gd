@@ -1,7 +1,7 @@
 extends SceneTree
 func _init() -> void: call_deferred("run")
 func run() -> void:
-	var instance: Node3D = load("res://assets/antigravity/zombie/models/pistol_hands.tscn").instantiate()
+	var instance: Node3D = load("res://assets/antigravity/zombie/models/pistol_hands.scn").instantiate()
 	root.add_child(instance)
 	var anim: AnimationPlayer = instance.find_child("AnimationPlayer",true,false)
 	var skel: Skeleton3D = instance.find_child("Skeleton3D",true,false)

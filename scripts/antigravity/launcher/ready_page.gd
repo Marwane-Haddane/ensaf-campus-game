@@ -1,6 +1,4 @@
-## ready_page.gd — Mission ready page
-## Displayed when world, collision, props, and player are fully initialized.
-## Presents Enter Mission button emitting enter_game with active request_id.
+## Cinematic mission-ready screen. The request ID remains the launch authority.
 class_name LauncherReadyPage
 extends Control
 
@@ -9,17 +7,15 @@ const LauncherTheme = preload("res://scripts/antigravity/launcher/launcher_theme
 
 signal intent_requested(action: StringName, payload: Dictionary)
 
-var _title_label: Label
-var _mission_label: Label
+var _request_id := ""
+var _deployment: DeploymentLayout
+var _campus_art: TextureRect
+var _kicker: Label
+var _details: Label
 var _enter_btn: Button
 var _return_btn: Button
-var _request_id: String = ""
-var _center: CenterContainer
 var _panel: PanelContainer
-var _deployment: Control
-var _campus_art: TextureRect
-var _deployment_enter: Button
-var _deployment_details: Label
+var _mode := ""
 
 func get_page_id() -> String:
 	return "ready"
@@ -29,89 +25,6 @@ func get_panel() -> PanelContainer:
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	grow_horizontal = Control.GROW_DIRECTION_BOTH
-	grow_vertical = Control.GROW_DIRECTION_BOTH
-	_build_ui()
-	_build_deployment()
-
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_RESIZED or what == NOTIFICATION_VISIBILITY_CHANGED:
-		if is_instance_valid(_center):
-			_center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-
-func _build_ui() -> void:
-	_center = CenterContainer.new()
-	_center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_center.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	_center.grow_vertical = Control.GROW_DIRECTION_BOTH
-	_center.use_top_left = false
-	add_child(_center)
-
-	_panel = PanelContainer.new()
-	_panel.custom_minimum_size = Vector2(520, 320)
-	_panel.add_theme_stylebox_override("panel", LauncherTheme.make_card_style("selected", true))
-	_center.add_child(_panel)
-
-	var vbox := VBoxContainer.new()
-	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-	vbox.add_theme_constant_override("separation", 20)
-	_panel.add_child(vbox)
-
-	var badge := Label.new()
-	badge.text = "CAMPUS ENVIRONMENT PREPARED"
-	badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	badge.add_theme_font_size_override("font_size", LauncherTheme.FONT_BADGE)
-	badge.add_theme_color_override("font_color", LauncherTheme.COL_SUCCESS)
-	badge.add_theme_stylebox_override("normal", LauncherTheme.make_badge_style(LauncherTheme.COL_SUCCESS))
-	vbox.add_child(badge)
-
-	_title_label = Label.new()
-	_title_label.text = "READY FOR DEPLOYMENT"
-	_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_title_label.add_theme_font_size_override("font_size", LauncherTheme.FONT_TITLE)
-	_title_label.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
-	vbox.add_child(_title_label)
-
-	_mission_label = Label.new()
-	_mission_label.text = "ENSA Incident Response • IR-2026-001"
-	_mission_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_mission_label.add_theme_font_size_override("font_size", LauncherTheme.FONT_BODY)
-	_mission_label.add_theme_color_override("font_color", LauncherTheme.COL_ACCENT)
-	vbox.add_child(_mission_label)
-
-	var hint := Label.new()
-	hint.text = "All world collision, stations, and simulation systems are verified."
-	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hint.add_theme_font_size_override("font_size", LauncherTheme.FONT_SMALL)
-	hint.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_SECONDARY)
-	vbox.add_child(hint)
-
-	var btn_row := HBoxContainer.new()
-	btn_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	btn_row.add_theme_constant_override("separation", 20)
-	vbox.add_child(btn_row)
-
-	_enter_btn = Button.new()
-	_enter_btn.text = "Enter Mission"
-	_enter_btn.custom_minimum_size = Vector2(200, 48)
-	_enter_btn.focus_mode = Control.FOCUS_ALL
-	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
-		_enter_btn.add_theme_stylebox_override(state, LauncherTheme.make_accent_button_style(state))
-	_enter_btn.add_theme_color_override("font_color", Color(0.05, 0.08, 0.12, 1.0))
-	_enter_btn.add_theme_color_override("font_hover_color", Color(0.02, 0.05, 0.08, 1.0))
-	_enter_btn.add_theme_color_override("font_pressed_color", Color(0.0, 0.0, 0.0, 1.0))
-	_enter_btn.add_theme_color_override("font_focus_color", Color(0.05, 0.08, 0.12, 1.0))
-	_enter_btn.pressed.connect(_on_enter_pressed)
-	btn_row.add_child(_enter_btn)
-
-	_return_btn = Button.new()
-	_return_btn.text = "Return to Menu"
-	_return_btn.custom_minimum_size = Vector2(160, 48)
-	_return_btn.focus_mode = Control.FOCUS_ALL
-	_return_btn.pressed.connect(func(): intent_requested.emit(&"return_to_menu", {}))
-	btn_row.add_child(_return_btn)
-
-func _build_deployment() -> void:
 	_campus_art = TextureRect.new()
 	_campus_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_campus_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
@@ -121,55 +34,90 @@ func _build_deployment() -> void:
 
 	_deployment = DeploymentLayout.new()
 	add_child(_deployment)
-	var kicker := DeploymentLayout.display_label("READY FOR DEPLOYMENT", 24, DeploymentLayout.CITRON)
-	_deployment.left.add_child(kicker)
-	_deployment.left.move_child(kicker, 0)
-	_deployment_details = Label.new()
-	_deployment_details.add_theme_font_size_override("font_size", 17)
-	_deployment.left.add_child(_deployment_details)
+	_kicker = DeploymentLayout.display_label("READY FOR DEPLOYMENT", 24, DeploymentLayout.CITRON)
+	_deployment.left.add_child(_kicker)
+	_deployment.left.move_child(_kicker, 0)
+	_details = Label.new()
+	_details.add_theme_font_size_override("font_size", 17)
+	_deployment.left.add_child(_details)
 
-	_deployment_enter = Button.new()
-	_deployment_enter.text = "ENTER MISSION"
-	_deployment_enter.custom_minimum_size.y = 64
-	DeploymentLayout.style_action(_deployment_enter, true, 36)
-	_deployment_enter.pressed.connect(_on_enter_pressed)
-	_deployment.right.add_child(_deployment_enter)
+	_panel = PanelContainer.new()
+	_panel.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+	_deployment.right.add_child(_panel)
+	var actions := VBoxContainer.new()
+	actions.add_theme_constant_override("separation", 6)
+	_panel.add_child(actions)
+	_enter_btn = Button.new()
+	_enter_btn.text = "ENTER MISSION"
+	_enter_btn.pressed.connect(func(): intent_requested.emit(&"enter_game", {"request_id": _request_id}))
+	actions.add_child(_enter_btn)
+	_return_btn = Button.new()
+	_return_btn.text = "RETURN TO MENU"
+	_return_btn.pressed.connect(func(): intent_requested.emit(&"return_to_menu", {}))
+	actions.add_child(_return_btn)
 
-	var back := Button.new()
-	back.text = "RETURN TO MENU"
-	back.custom_minimum_size.y = 39
-	DeploymentLayout.style_action(back, false, 21)
-	back.pressed.connect(func(): intent_requested.emit(&"return_to_menu", {}))
-	_deployment.right.add_child(back)
+func _apply_mode(after_hours: bool) -> void:
+	_deployment.set_cyber(not after_hours, true)
+	var art := "res://assets/loading/zombie/campus_courtyard.webp" if after_hours \
+		else "res://assets/launcher/campus-dusk-reference.png"
+	_campus_art.texture = LauncherTheme.load_texture_safe(art)
+	_enter_btn.custom_minimum_size.y = 64 if after_hours else 59
+	_return_btn.custom_minimum_size.y = 39
+	_details.add_theme_font_size_override("font_size", 17 if after_hours else 20)
+	if after_hours:
+		_details.remove_theme_font_override("font")
+		_kicker.add_theme_font_override("font", DeploymentLayout.DISPLAY_FONT)
+		_kicker.add_theme_color_override("font_color", DeploymentLayout.CITRON)
+		DeploymentLayout.style_action(_enter_btn, true, 36)
+		DeploymentLayout.style_action(_return_btn, false, 21)
+	else:
+		var font := DeploymentLayout.cyber_display_font()
+		var spaced := FontVariation.new()
+		spaced.base_font = _details.get_theme_default_font()
+		spaced.spacing_glyph = 4
+		_details.add_theme_font_override("font", spaced)
+		_kicker.add_theme_font_override("font", font)
+		_kicker.add_theme_color_override("font_color", DeploymentLayout.TEAL)
+		_style_cyber_action(_enter_btn, font, true)
+		_style_cyber_action(_return_btn, font, false)
 
-	_deployment.hide()
-	_campus_art.hide()
-
-func _on_enter_pressed() -> void:
-	intent_requested.emit(&"enter_game", {"request_id": _request_id})
+func _style_cyber_action(button: Button, font: Font, primary: bool) -> void:
+	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	button.add_theme_font_override("font", font)
+	button.add_theme_font_size_override("font_size", 30 if primary else 18)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		var style := StyleBoxFlat.new()
+		style.skew.x = 0.36
+		if state == "focus":
+			style.bg_color = Color.TRANSPARENT
+			style.set_border_width_all(2)
+			style.border_color = Color("d3fffa") if primary else DeploymentLayout.TEAL
+		elif primary:
+			style.bg_color = DeploymentLayout.TEAL if state == "normal" else Color("8bf7eb")
+		else:
+			style.bg_color = Color.TRANSPARENT if state == "normal" else Color("143943cf")
+		button.add_theme_stylebox_override(state, style)
+	for state in ["font_color", "font_focus_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color"]:
+		button.add_theme_color_override(state, Color("0b222b") if primary else Color("f0f5f7"))
 
 func update_from_model(model: Dictionary) -> void:
-	var loading_data = model.get("loading", {})
-	_request_id = loading_data.get("request_id", "")
-	var mission_data = model.get("mission", {})
-	var title = mission_data.get("title", "")
-	var code = mission_data.get("id", "")
-	if title != "":
-		_mission_label.text = "%s • %s" % [title, code]
-	var mode: String = model.get("selected_mode_id", "")
+	_request_id = str(model.get("loading", {}).get("request_id", ""))
+	var mission: Dictionary = model.get("mission", {})
+	var mode := str(model.get("selected_mode_id", ""))
 	if mode.is_empty():
-		mode = mission_data.get("mode_id", "")
-	var after_hours: bool = mode == "zombie_rpg" or code == "ZB-2026-001"
-	if after_hours and _campus_art.texture == null:
-		_campus_art.texture = LauncherTheme.load_texture_safe("res://assets/loading/zombie/campus_courtyard.webp")
-	_center.visible = not after_hours
-	_campus_art.visible = after_hours
-	_deployment.visible = after_hours
-	_deployment.mission_code.text = code if code != "" else "ZB-2026-001"
-	_deployment_details.text = "After Hours  ·  %s" % _deployment.mission_code.text
+		mode = str(mission.get("mode_id", ""))
+	var code := str(mission.get("id", ""))
+	var after_hours := mode == "zombie_rpg" or code == "ZB-2026-001"
+	var theme_mode := "after_hours" if after_hours else "cyber"
+	if theme_mode != _mode:
+		_mode = theme_mode
+		_apply_mode(after_hours)
+	if code.is_empty():
+		code = "ZB-2026-001" if after_hours else "IR-2026-001"
+	_deployment.mission_code.text = code
+	var title := str(mission.get("title", ""))
+	_details.text = "After Hours  ·  %s" % code if after_hours \
+		else ("THE BORROWED SESSION" if title.is_empty() else title.to_upper())
 
 func focus_primary() -> void:
-	if _deployment.visible:
-		_deployment_enter.grab_focus()
-	elif is_instance_valid(_enter_btn):
-		_enter_btn.grab_focus()
+	_enter_btn.grab_focus()

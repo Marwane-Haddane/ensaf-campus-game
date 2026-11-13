@@ -2,7 +2,7 @@
 
 User instruction: show external 3D models for validation before downloading or importing them. Existing user-owned campus exports are already authorized.
 
-On 31 October 2026, the user supplied five chosen GLBs in `../3d models` and explicitly requested that integration continue. Those five files are approved and imported into `assets/user_models`; the originals remain unchanged. No additional external models were downloaded. Credits and modifications are recorded in [CREDITS.md](CREDITS.md).
+On 31 October 2026, the user supplied five chosen GLBs in `../3D-modeling/3d models` and explicitly requested that integration continue. Those five files are approved and imported into `assets/user_models`; the originals remain unchanged. No additional external models were downloaded. Credits and modifications are recorded in [CREDITS.md](CREDITS.md).
 
 Approved files: `gamer_setup_pack.glb`, `office_chair.glb`, `office_desk_140x60.glb`, `server_rack.glb`, and `server_rack (1).glb` (copied into the game as `server_rack_1.glb`).
 

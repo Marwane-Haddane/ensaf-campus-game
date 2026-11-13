@@ -32,7 +32,7 @@ def transform(node):
 
 
 def inspect(filename):
-    path = ROOT / "3d models" / filename
+    path = ROOT / "3D-modeling" / "3d models" / "cyber" / filename
     data = path.read_bytes()
     length, tag = struct.unpack_from("<II", data, 12)
     doc = json.loads(data[20:20+length])

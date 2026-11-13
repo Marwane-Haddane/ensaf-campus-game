@@ -2,8 +2,8 @@
 extends SceneTree
 
 func _init() -> void:
-	var src_path := "C:/1Project/Vr --- cyber/ensaf-campus-v4-project/ENSA-Fes-Campus-v4/3d models/zombie/scorpion__first_person_animations_2026_remake.glb"
-	var dst_path := "res://assets/antigravity/zombie/models/scorpion_hands.tscn"
+	var src_path := "C:/1Project/Vr --- cyber/ensaf-campus-v4-project/ENSA-Fes-Campus-v4/3D-modeling/3d models/zombie/scorpion__first_person_animations_2026_remake.glb"
+	var dst_path := "res://assets/antigravity/zombie/models/scorpion_hands.scn"
 
 	print("Converting Scorpion GLB: ", src_path)
 	var doc = GLTFDocument.new()

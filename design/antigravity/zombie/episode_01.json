@@ -3,7 +3,7 @@
   "title": "After Hours",
   "subtitle": "A campus survival story",
   "main_objective": "Restore power and reach extraction",
-  "estimated_duration_minutes": "6\u201310",
+  "estimated_duration_minutes": "6\u00e2\u20ac\u201c10",
   "player_spawn": {
     "position": [
       -27.0,
@@ -81,7 +81,7 @@
   "objectives": [
     {
       "id": "obj_explore",
-      "text": "Find a supply cache. The campus gate has lost power.",
+      "text": "Explore Reception and find the emergency pistol case.",
       "trigger": "start"
     },
     {
@@ -117,6 +117,17 @@
   ],
   "pickups": [
     {
+      "id": "item_intro_pistol",
+      "type": "weapon",
+      "name": "Emergency Pistol",
+      "amount": 1,
+      "position": [
+        -37.5,
+        1.25,
+        -103.5
+      ]
+    },
+    {
       "id": "item_power_fuse",
       "type": "quest",
       "name": "Main Breaker Fuse",
@@ -143,10 +154,12 @@
       "type": "ammo",
       "amount": 12,
       "position": [
-        -29.5,
-        1.35,
-        -88.0
-      ]
+        -29.1,
+        1.25,
+        -90.0
+      ],
+      "weapon_id": "pistol",
+      "name": "Pistol Magazine"
     },
     {
       "id": "medkit_plaza_1",
@@ -176,7 +189,9 @@
         -37.5,
         2.05,
         -103.5
-      ]
+      ],
+      "weapon_id": "pistol",
+      "name": "Pistol Magazine"
     },
     {
       "id": "scrap_reception_1",
@@ -196,7 +211,9 @@
         -7.5,
         2.95,
         -104.0
-      ]
+      ],
+      "weapon_id": "scorpion",
+      "name": "Scorpion Magazine"
     },
     {
       "id": "medkit_security_1",
@@ -216,6 +233,42 @@
         -39.0,
         2.05,
         -109.0
+      ]
+    },
+    {
+      "id": "shells_reception",
+      "type": "ammo",
+      "weapon_id": "shotgun",
+      "name": "12-Gauge Shells",
+      "amount": 8,
+      "position": [
+        -34.2,
+        1.92,
+        -104.2
+      ]
+    },
+    {
+      "id": "shells_glazed",
+      "type": "ammo",
+      "weapon_id": "shotgun",
+      "name": "12-Gauge Shells",
+      "amount": 8,
+      "position": [
+        -8.7,
+        2.8,
+        -102.6
+      ]
+    },
+    {
+      "id": "shells_gate",
+      "type": "ammo",
+      "weapon_id": "shotgun",
+      "name": "12-Gauge Shells",
+      "amount": 8,
+      "position": [
+        -24.0,
+        1.25,
+        -75.8
       ]
     }
   ],
@@ -245,20 +298,20 @@
       "id": "walker_plaza_2",
       "type": "walker",
       "position": [
-        -32.0,
+        -32,
         1.25,
-        -94.0
+        -97
       ],
       "patrol_points": [
         [
-          -32.0,
+          -32,
           1.25,
-          -94.0
+          -97
         ],
         [
-          -26.0,
+          -34,
           1.25,
-          -90.0
+          -98
         ]
       ]
     },
@@ -371,20 +424,20 @@
       "id": "crawler_garden_1",
       "type": "crawler",
       "position": [
-        -14.0,
-        2.1,
-        -100.0
+        -13.3,
+        1.25,
+        -97.0
       ],
       "patrol_points": [
         [
-          -14.0,
-          2.1,
-          -100.0
+          -13.3,
+          1.25,
+          -97.0
         ],
         [
-          -10.0,
-          2.4,
-          -102.0
+          -10.5,
+          1.25,
+          -98.3
         ]
       ]
     },
@@ -413,20 +466,20 @@
       "id": "screamer_auditorium_1",
       "type": "screamer",
       "position": [
-        -43.0,
-        1.5,
-        -116.0
+        -38,
+        1.92,
+        -100
       ],
       "patrol_points": [
         [
-          -43.0,
-          1.5,
-          -116.0
+          -38,
+          1.92,
+          -100
         ],
         [
-          -40.0,
-          1.5,
-          -112.0
+          -40,
+          1.92,
+          -101.5
         ]
       ]
     },
@@ -448,6 +501,48 @@
           -11.0,
           2.4,
           -101.0
+        ]
+      ]
+    },
+    {
+      "id": "warrior_reception",
+      "type": "warrior",
+      "position": [
+        -29.4,
+        1.25,
+        -99.2
+      ],
+      "patrol_points": [
+        [
+          -29.4,
+          1.25,
+          -99.2
+        ],
+        [
+          -27,
+          1.25,
+          -101
+        ]
+      ]
+    },
+    {
+      "id": "winged_lion_glazed",
+      "type": "winged_lion",
+      "position": [
+        -12.0,
+        1.25,
+        -94.0
+      ],
+      "patrol_points": [
+        [
+          -12,
+          1.25,
+          -94
+        ],
+        [
+          -9,
+          1.25,
+          -96.5
         ]
       ]
     },
@@ -476,7 +571,7 @@
   ],
   "props": [
     {
-      "scene": "res://assets/antigravity/zombie/props/TrafficBarrier_1.tscn",
+      "scene": "res://assets/antigravity/zombie/props/TrafficBarrier_1.scn",
       "position": [
         -22.0,
         1.25,
@@ -490,7 +585,7 @@
       ]
     },
     {
-      "scene": "res://assets/antigravity/zombie/props/TrafficBarrier_1.tscn",
+      "scene": "res://assets/antigravity/zombie/props/TrafficBarrier_1.scn",
       "position": [
         -18.0,
         1.25,
@@ -504,7 +599,7 @@
       ]
     },
     {
-      "scene": "res://assets/antigravity/zombie/props/Pallet.tscn",
+      "scene": "res://assets/antigravity/zombie/props/Pallet.scn",
       "position": [
         -30.0,
         1.25,
@@ -518,11 +613,11 @@
       ]
     },
     {
-      "scene": "res://assets/antigravity/zombie/props/Barrel.tscn",
+      "scene": "res://assets/antigravity/zombie/props/Barrel.scn",
       "position": [
-        -29.5,
+        -31.5,
         1.25,
-        -86.8
+        -86.6
       ],
       "rotation_y": 0.0,
       "scale": [
@@ -532,7 +627,7 @@
       ]
     },
     {
-      "scene": "res://assets/antigravity/zombie/props/Container_Red.tscn",
+      "scene": "res://assets/antigravity/zombie/props/Container_Red.scn",
       "position": [
         -15.0,
         1.25,
@@ -546,11 +641,11 @@
       ]
     },
     {
-      "scene": "res://assets/antigravity/zombie/props/Vehicle_Pickup_Armored.tscn",
+      "scene": "res://assets/antigravity/zombie/props/Vehicle_Pickup_Armored.scn",
       "position": [
         -20.0,
         1.25,
-        -67.0
+        -68.5
       ],
       "rotation_y": 180.0,
       "scale": [
@@ -560,7 +655,7 @@
       ]
     }
   ],
-  "briefing": "The emergency grid has failed after hours. Reception holds the fuse, the glazed entrance holds the relay, and Shaun is sheltering people by the Auditorium. Restore power, check in with him, clear the brute from the gate route and reach the extraction truck. Supplies and workbench upgrades can make the route safer; eliminating every infected is optional.",
+  "briefing": "Explore Reception and find the emergency pistol case. Recover the breaker fuse, then cross the courtyard to the glazed entrance for the relay. Infected have been reported beyond Reception. Restore power, contact Shaun, clear the gate and escape.",
   "story_beats": [
     {
       "id": "arrival",
@@ -625,5 +720,12 @@
       60
     ],
     "note": "Objectives, unique kills and caches grant one-time experience. Rank improves field medicine; scrap pays for permanent equipment upgrades."
+  },
+  "shotgun_cache": {
+    "position": [
+      3.2,
+      2.8,
+      -111.0
+    ]
   }
 }

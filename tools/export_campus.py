@@ -12,7 +12,7 @@ from pathlib import Path
 from mathutils import Vector
 
 ROOT = Path(__file__).resolve().parents[2]
-SOURCE = ROOT / 'campus-design-v9' / 'ensaf-campus-v9-final.blend'
+SOURCE = ROOT / '3D-modeling' / 'campus-design-v9' / 'ensaf-campus-v9-final.blend'
 OUT = ROOT / 'campus-game' / 'assets'
 OUT.mkdir(parents=True, exist_ok=True)
 START = time.time()

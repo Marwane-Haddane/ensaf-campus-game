@@ -41,7 +41,7 @@ func _start() -> void:
 
 	var doc = GLTFDocument.new()
 	var state = GLTFState.new()
-	var glb_path := "C:/1Project/Vr --- cyber/ensaf-campus-v4-project/ENSA-Fes-Campus-v4/3d models/zombie/scorpion__first_person_animations_2026_remake.glb"
+	var glb_path := "C:/1Project/Vr --- cyber/ensaf-campus-v4-project/ENSA-Fes-Campus-v4/3D-modeling/3d models/zombie/scorpion__first_person_animations_2026_remake.glb"
 	var err = doc.append_from_file(glb_path, state)
 	if err != OK:
 		quit(1)

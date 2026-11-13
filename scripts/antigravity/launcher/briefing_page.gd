@@ -16,6 +16,7 @@ var _title_label: Label
 var _objective_label: Label
 var _desc_label: Label
 var _controls_grid: GridContainer
+var _controls_scroll: ScrollContainer
 
 var _start_btn: Button
 var _skip_btn: Button
@@ -36,6 +37,7 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESIZED or what == NOTIFICATION_VISIBILITY_CHANGED:
 		if is_instance_valid(_margin):
 			_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			_fit_controls_panel()
 
 func _build_ui() -> void:
 	_margin = MarginContainer.new()
@@ -85,8 +87,10 @@ func _build_ui() -> void:
 	# Mission title
 	_title_label = Label.new()
 	_title_label.text = "The borrowed session"
-	_title_label.add_theme_font_size_override("font_size", LauncherTheme.FONT_TITLE)
+	LauncherTheme.display(_title_label, LauncherTheme.FONT_TITLE)
 	_title_label.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
+	_title_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_title_label.add_theme_stylebox_override("normal", LauncherTheme.make_card_style("normal", true))
 	left_vbox.add_child(_title_label)
 
 	# Primary Objective Card
@@ -100,13 +104,14 @@ func _build_ui() -> void:
 
 	var obj_hdr := Label.new()
 	obj_hdr.text = "PRIMARY OBJECTIVE"
-	obj_hdr.add_theme_font_size_override("font_size", LauncherTheme.FONT_BADGE)
-	obj_hdr.add_theme_color_override("font_color", LauncherTheme.COL_ACCENT)
+	LauncherTheme.display(obj_hdr, 16)
+	obj_hdr.add_theme_color_override("font_color", LauncherTheme.COL_ACCENT_DIM)
 	obj_vbox.add_child(obj_hdr)
 
 	_objective_label = Label.new()
 	_objective_label.text = "Find the marked workstation"
-	_objective_label.add_theme_font_size_override("font_size", LauncherTheme.FONT_NAV)
+	LauncherTheme.display(_objective_label, 26)
+	_objective_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_objective_label.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
 	obj_vbox.add_child(_objective_label)
 
@@ -119,6 +124,8 @@ func _build_ui() -> void:
 	_desc_label = Label.new()
 	_desc_label.text = "A simulated cyber security incident has occurred on the campus network. An unauthorized access artifact was detected originating from a workstation inside the faculty complex.\n\nYour task is to explore the campus, locate the compromised machine indicated on your guide, inspect its simulated terminal files, preserve evidence, contain any active lateral movement, and file an official incident response report."
 	_desc_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_desc_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_desc_label.add_theme_stylebox_override("normal", LauncherTheme.make_card_style("normal"))
 	_desc_label.add_theme_font_size_override("font_size", LauncherTheme.FONT_BODY)
 	_desc_label.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_SECONDARY)
 	desc_scroll.add_child(_desc_label)
@@ -132,12 +139,8 @@ func _build_ui() -> void:
 	_start_btn.text = "Start Mission"
 	_start_btn.custom_minimum_size = Vector2(180, 48)
 	_start_btn.focus_mode = Control.FOCUS_ALL
-	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
-		_start_btn.add_theme_stylebox_override(state, LauncherTheme.make_accent_button_style(state))
-	_start_btn.add_theme_color_override("font_color", Color(0.05, 0.08, 0.12, 1.0))
-	_start_btn.add_theme_color_override("font_hover_color", Color(0.02, 0.05, 0.08, 1.0))
-	_start_btn.add_theme_color_override("font_pressed_color", Color(0.0, 0.0, 0.0, 1.0))
-	_start_btn.add_theme_color_override("font_focus_color", Color(0.05, 0.08, 0.12, 1.0))
+	LauncherTheme.style_primary(_start_btn)
+	_start_btn.add_theme_font_size_override("font_size", 24)
 	_start_btn.pressed.connect(func():
 		intent_requested.emit(&"start_mission", {
 			"mode_id": _mode_id,
@@ -161,11 +164,16 @@ func _build_ui() -> void:
 	btn_row.add_child(_skip_btn)
 
 	# ── Right Column: Configured Controls & Operational Intel ────────────────
+	var right_column := VBoxContainer.new()
+	right_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	right_column.size_flags_stretch_ratio = 0.9
+	hbox.add_child(right_column)
+	var controls_spacer := Control.new()
+	controls_spacer.custom_minimum_size.y = 60
+	right_column.add_child(controls_spacer)
 	var right_panel := PanelContainer.new()
-	right_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	right_panel.size_flags_stretch_ratio = 0.9
-	right_panel.add_theme_stylebox_override("panel", LauncherTheme.make_card_style("normal"))
-	hbox.add_child(right_panel)
+	right_panel.add_theme_stylebox_override("panel", LauncherTheme.make_card_style("normal", true))
+	right_column.add_child(right_panel)
 
 	var right_vbox := VBoxContainer.new()
 	right_vbox.add_theme_constant_override("separation", 16)
@@ -173,22 +181,29 @@ func _build_ui() -> void:
 
 	var controls_title := Label.new()
 	controls_title.text = "FIELD CONTROLS"
-	controls_title.add_theme_font_size_override("font_size", LauncherTheme.FONT_HEADING)
+	LauncherTheme.display(controls_title, LauncherTheme.FONT_HEADING)
 	controls_title.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
 	right_vbox.add_child(controls_title)
 
-	var controls_scroll := ScrollContainer.new()
-	controls_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	controls_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	right_vbox.add_child(controls_scroll)
+	_controls_scroll = ScrollContainer.new()
+	_controls_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	right_vbox.add_child(_controls_scroll)
 
 	_controls_grid = GridContainer.new()
 	_controls_grid.columns = 2
 	_controls_grid.add_theme_constant_override("h_separation", 24)
-	_controls_grid.add_theme_constant_override("v_separation", 10)
-	controls_scroll.add_child(_controls_grid)
+	_controls_grid.add_theme_constant_override("v_separation", 5)
+	_controls_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_controls_scroll.add_child(_controls_grid)
+	_controls_grid.minimum_size_changed.connect(_fit_controls_panel, CONNECT_DEFERRED)
 
 	_populate_default_controls()
+
+func _fit_controls_panel() -> void:
+	if not is_instance_valid(_controls_grid):
+		return
+	var available_height := maxf(100.0, size.y - 2.0 * LauncherTheme.MARGIN_SAFE - 156.0)
+	_controls_scroll.custom_minimum_size.y = minf(_controls_grid.get_combined_minimum_size().y, available_height)
 
 func _populate_default_controls() -> void:
 	var default_hints = [
@@ -209,6 +224,7 @@ func _set_controls_hints(hints: Array) -> void:
 	_cached_hints = hints.duplicate(true)
 
 	for child in _controls_grid.get_children():
+		_controls_grid.remove_child(child)
 		child.queue_free()
 
 	for hint in hints:
@@ -216,12 +232,15 @@ func _set_controls_hints(hints: Array) -> void:
 		act_label.text = hint.get("action", "")
 		act_label.add_theme_font_size_override("font_size", LauncherTheme.FONT_SMALL)
 		act_label.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_SECONDARY)
+		act_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		_controls_grid.add_child(act_label)
 
 		var bind_label := Label.new()
 		bind_label.text = hint.get("binding", "")
-		bind_label.add_theme_font_size_override("font_size", LauncherTheme.FONT_SMALL)
+		LauncherTheme.display(bind_label, 15)
 		bind_label.add_theme_color_override("font_color", LauncherTheme.COL_ACCENT)
+		bind_label.add_theme_stylebox_override("normal", LauncherTheme.make_badge_style(LauncherTheme.COL_VIOLET))
+		bind_label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		_controls_grid.add_child(bind_label)
 
 func update_from_model(model: Dictionary) -> void:

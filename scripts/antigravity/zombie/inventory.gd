@@ -10,8 +10,8 @@ signal reward_claimed(reward_id: String, experience: int, scrap: int)
 const RANK_THRESHOLDS := [0, 60, 150, 300]
 const RANK_TITLES := ["New arrival", "Field responder", "Campus defender", "Survivor"]
 const UPGRADE_CATALOG := {
-	"upgrade_armor":{"id":"upgrade_armor","title":"Kevlar reinforcement","cost":25,"description":"+50 maximum health and 50 immediate healing. Best for close encounters."},
-	"upgrade_extended_mag":{"id":"upgrade_extended_mag","title":"Extended magazines","cost":25,"description":"Pistol 12→18; Scorpion 20→30. Fewer reloads, without creating free ammunition."}
+	"upgrade_armor":{"id":"upgrade_armor","title":"Kevlar reinforcement","cost":25,"benefit":"+50 max health and +50 healing","description":"+50 maximum health and 50 immediate healing. Best for close encounters."},
+	"upgrade_extended_mag":{"id":"upgrade_extended_mag","title":"Extended magazines","cost":25,"benefit":"Pistol 12 to 18  ·  Scorpion 20 to 30","description":"Pistol 12→18; Scorpion 20→30. Fewer reloads, without creating free ammunition."}
 }
 var experience: int = 0
 var claimed_rewards: Array[String] = []

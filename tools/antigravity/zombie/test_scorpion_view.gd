@@ -29,7 +29,7 @@ func _start() -> void:
 	cam.fov = 70.0
 	studio.add_child(cam)
 
-	var scn: PackedScene = load("res://assets/antigravity/zombie/models/scorpion_hands.tscn")
+	var scn: PackedScene = load("res://assets/antigravity/zombie/models/scorpion_hands.scn")
 	var inst: Node3D = scn.instantiate() as Node3D
 	cam.add_child(inst)
 

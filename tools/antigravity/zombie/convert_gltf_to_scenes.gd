@@ -3,15 +3,15 @@ extends SceneTree
 
 func _init() -> void:
 	var models = [
-		{"src": "res://assets/antigravity/zombie/models/pistol_hands.glb", "dst": "res://assets/antigravity/zombie/models/pistol_hands.tscn"},
-		{"src": "res://assets/antigravity/zombie/models/Zombie_Basic.gltf", "dst": "res://assets/antigravity/zombie/models/Zombie_Basic.tscn"},
-		{"src": "res://assets/antigravity/zombie/models/Zombie_Chubby.gltf", "dst": "res://assets/antigravity/zombie/models/Zombie_Chubby.tscn"},
-		{"src": "res://assets/antigravity/zombie/models/Characters_Shaun.gltf", "dst": "res://assets/antigravity/zombie/models/Characters_Shaun.tscn"},
-		{"src": "res://assets/antigravity/zombie/props/TrafficBarrier_1.gltf", "dst": "res://assets/antigravity/zombie/props/TrafficBarrier_1.tscn"},
-		{"src": "res://assets/antigravity/zombie/props/Pallet.gltf", "dst": "res://assets/antigravity/zombie/props/Pallet.tscn"},
-		{"src": "res://assets/antigravity/zombie/props/Barrel.gltf", "dst": "res://assets/antigravity/zombie/props/Barrel.tscn"},
-		{"src": "res://assets/antigravity/zombie/props/Container_Red.gltf", "dst": "res://assets/antigravity/zombie/props/Container_Red.tscn"},
-		{"src": "res://assets/antigravity/zombie/props/Vehicle_Pickup.gltf", "dst": "res://assets/antigravity/zombie/props/Vehicle_Pickup.tscn"},
+		{"src": "res://assets/antigravity/zombie/models/pistol_hands.glb", "dst": "res://assets/antigravity/zombie/models/pistol_hands.scn"},
+		{"src": "res://assets/antigravity/zombie/models/Zombie_Basic.gltf", "dst": "res://assets/antigravity/zombie/models/Zombie_Basic.scn"},
+		{"src": "res://assets/antigravity/zombie/models/Zombie_Chubby.gltf", "dst": "res://assets/antigravity/zombie/models/Zombie_Chubby.scn"},
+		{"src": "res://assets/antigravity/zombie/models/Characters_Shaun.gltf", "dst": "res://assets/antigravity/zombie/models/Characters_Shaun.scn"},
+		{"src": "res://assets/antigravity/zombie/props/TrafficBarrier_1.gltf", "dst": "res://assets/antigravity/zombie/props/TrafficBarrier_1.scn"},
+		{"src": "res://assets/antigravity/zombie/props/Pallet.gltf", "dst": "res://assets/antigravity/zombie/props/Pallet.scn"},
+		{"src": "res://assets/antigravity/zombie/props/Barrel.gltf", "dst": "res://assets/antigravity/zombie/props/Barrel.scn"},
+		{"src": "res://assets/antigravity/zombie/props/Container_Red.gltf", "dst": "res://assets/antigravity/zombie/props/Container_Red.scn"},
+		{"src": "res://assets/antigravity/zombie/props/Vehicle_Pickup.gltf", "dst": "res://assets/antigravity/zombie/props/Vehicle_Pickup.scn"},
 	]
 
 	for item in models:

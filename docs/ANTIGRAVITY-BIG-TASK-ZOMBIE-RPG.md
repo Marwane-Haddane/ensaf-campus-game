@@ -62,7 +62,7 @@ Codex owns shared launcher/core integration, mode registration and final cross-m
 Source folder, outside the game:
 
 ```text
-C:\1Project\Vr --- cyber\ensaf-campus-v4-project\ENSA-Fes-Campus-v4\3d models\zombie
+C:\1Project\Vr --- cyber\ensaf-campus-v4-project\ENSA-Fes-Campus-v4\3D-modeling\3d models\zombie
 ```
 
 Read `design/future_zombie_assets.json` for hashes, sizes, embedded metadata and the initial inventory. Original files stay unchanged.

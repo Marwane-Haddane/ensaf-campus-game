@@ -29,6 +29,7 @@ var loading_data: Dictionary = {}
 var capturing_action := ""
 var initialized := false
 var _canvas: CanvasLayer
+var _storyboard: Control
 var _boot: Control
 var _boot_status: Label
 var _boot_logo: TextureRect
@@ -233,6 +234,7 @@ func _on_view_intent(action: StringName, payload: Dictionary) -> void:
 		_quit()
 		return
 	if not initialized: return
+	if is_instance_valid(_storyboard): return
 	if settings.confirmation_pending and action not in [&"confirm_display",&"revert_display"]: return
 	if state.value == "LOADING_GAME" and action not in [&"cancel_loading"]: return
 	match action:
@@ -256,7 +258,10 @@ func _on_view_intent(action: StringName, payload: Dictionary) -> void:
 			pending_checkpoint = {}
 			selected_mode = str(payload.get("mode_id",""))
 			selected_mission = str(payload.get("mission_id",""))
-			_start_mission()
+			if (selected_mode == "zombie_rpg" and selected_mission == "ZB-2026-001") or (selected_mode == "incident_response" and selected_mission == "IR-2026-001"):
+				_show_mission_storyboard()
+			else:
+				_start_mission()
 		&"continue_game":
 			if state.value != "MAIN_MENU" or not continue_data.get("available",false): return
 			var continue_saves: RefCounted = mode_services.save_for(str(continue_data.get("mode_id","")))
@@ -343,6 +348,23 @@ func _input(event: InputEvent) -> void:
 	capturing_action = ""
 	get_viewport().set_input_as_handled()
 	_refresh()
+
+func _show_mission_storyboard() -> void:
+	var script_path := "res://scripts/launcher/cyber_storyboard.gd" if selected_mode == "incident_response" else "res://scripts/launcher/zombie_storyboard.gd"
+	var story_script := load(script_path) as Script
+	_storyboard = story_script.new()
+	view.hide()
+	view.set_process_unhandled_input(false)
+	_storyboard.finished.connect(_finish_mission_storyboard)
+	_canvas.add_child(_storyboard)
+
+func _finish_mission_storyboard() -> void:
+	_storyboard.hide()
+	_storyboard.queue_free()
+	_storyboard = null
+	view.show()
+	view.set_process_unhandled_input(true)
+	_start_mission()
 
 func _start_mission() -> void:
 	if state.value == "MAIN_MENU": state.change("SELECT_MODE")

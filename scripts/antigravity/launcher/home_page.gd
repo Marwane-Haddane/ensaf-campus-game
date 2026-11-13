@@ -92,7 +92,7 @@ func _update_responsive_layout() -> void:
 	var sf := clampf(h / 720.0, 0.8, 1.5)
 
 	if is_instance_valid(_heading_label):
-		_heading_label.add_theme_font_size_override("font_size", roundi(36 * sf))
+		LauncherTheme.display(_heading_label, roundi(62 * sf))
 	if is_instance_valid(_subheading_label):
 		_subheading_label.add_theme_font_size_override("font_size", roundi(15 * sf))
 	if is_instance_valid(_cta_play_btn):
@@ -100,11 +100,11 @@ func _update_responsive_layout() -> void:
 	if is_instance_valid(_workstation_rect) and is_instance_valid(_workstation_rect.get_parent()):
 		var thumb_panel := _workstation_rect.get_parent() as PanelContainer
 		if thumb_panel:
-			thumb_panel.custom_minimum_size = Vector2(roundf(230 * sf), roundf(144 * sf))
+			thumb_panel.custom_minimum_size = Vector2(roundf(196 * sf), roundf(136 * sf))
 	if is_instance_valid(_zombie_thumb) and is_instance_valid(_zombie_thumb.get_parent()):
 		var z_box := _zombie_thumb.get_parent() as PanelContainer
 		if z_box:
-			z_box.custom_minimum_size = Vector2(roundf(200 * sf), roundf(110 * sf))
+			z_box.custom_minimum_size = Vector2(roundf(125 * sf), roundf(130 * sf))
 	if is_instance_valid(_emblem_rect):
 		_emblem_rect.custom_minimum_size = Vector2(roundf(56 * sf), roundf(56 * sf))
 
@@ -130,9 +130,9 @@ func _build_ui() -> void:
 	_left_rail.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
 	var rail_sb := StyleBoxFlat.new()
-	rail_sb.bg_color = Color(0.06, 0.08, 0.12, 0.94)
-	rail_sb.border_width_right = 1
-	rail_sb.border_color = Color(0.20, 0.25, 0.32, 0.5)
+	rail_sb.bg_color = LauncherTheme.COL_BG_DEEP
+	rail_sb.border_width_right = 5
+	rail_sb.border_color = LauncherTheme.COL_VIOLET
 	_left_rail.add_theme_stylebox_override("panel", rail_sb)
 	upper_body.add_child(_left_rail)
 
@@ -162,7 +162,7 @@ func _build_ui() -> void:
 	var brand_title := Label.new()
 	brand_title.text = "ENSA GAMES"
 	brand_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	brand_title.add_theme_font_size_override("font_size", 18)
+	LauncherTheme.display(brand_title, 28)
 	brand_title.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
 	rail_vbox.add_child(brand_title)
 
@@ -176,7 +176,7 @@ func _build_ui() -> void:
 	# Fine divider below branding
 	var brand_divider := ColorRect.new()
 	brand_divider.custom_minimum_size = Vector2(0, 1)
-	brand_divider.color = Color(0.20, 0.25, 0.32, 0.5)
+	brand_divider.color = LauncherTheme.COL_BORDER
 	rail_vbox.add_child(brand_divider)
 
 	# Navigation items VBox
@@ -195,7 +195,7 @@ func _build_ui() -> void:
 	_play_btn.expand_icon = true
 	_play_btn.add_theme_constant_override("icon_max_width", 18)
 	_play_btn.add_theme_constant_override("h_separation", 12)
-	_play_btn.add_theme_font_size_override("font_size", 15)
+	_play_btn.add_theme_font_size_override("font_size", 20)
 	_style_selected_play_btn(_play_btn)
 	_play_btn.pressed.connect(func(): intent_requested.emit(&"play", {}))
 	nav_vbox.add_child(_play_btn)
@@ -275,7 +275,9 @@ func _build_ui() -> void:
 
 	_heading_label = Label.new()
 	_heading_label.text = "ENSA Incident\nResponse"
-	_heading_label.add_theme_font_size_override("font_size", 36)
+	LauncherTheme.display(_heading_label, 62)
+	_heading_label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	_heading_label.add_theme_stylebox_override("normal", LauncherTheme.make_card_style("normal", true))
 	_heading_label.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
 	hero_vbox.add_child(_heading_label)
 
@@ -305,7 +307,7 @@ func _build_ui() -> void:
 	# ── Fine Divider Line ────────────────────────────────────────────────────
 	var divider := ColorRect.new()
 	divider.custom_minimum_size = Vector2(0, 1)
-	divider.color = Color(0.25, 0.32, 0.42, 0.4)
+	divider.color = LauncherTheme.COL_BORDER
 	main_vbox.add_child(divider)
 
 	var split_spacer := Control.new()
@@ -322,14 +324,14 @@ func _build_ui() -> void:
 	# Left: Active Case Section
 	var active_case_section := _build_active_case_section()
 	active_case_section.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	active_case_section.size_flags_stretch_ratio = 1.35
+	active_case_section.size_flags_stretch_ratio = 1.45
 	lower_hbox.add_child(active_case_section)
 
 	# Vertical divider rule
 	var v_rule := ColorRect.new()
 	v_rule.custom_minimum_size = Vector2(1, 146)
 	v_rule.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	v_rule.color = Color(0.20, 0.25, 0.32, 0.5)
+	v_rule.color = LauncherTheme.COL_BORDER
 	lower_hbox.add_child(v_rule)
 
 	# Right: Zombie RPG Survival Preview
@@ -390,38 +392,9 @@ func _update_nav_focus_chain() -> void:
 				btn.focus_neighbor_right = _cta_play_btn.get_path()
 
 func _style_selected_play_btn(btn: Button) -> void:
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.08, 0.22, 0.25, 0.70)
-	sb.border_width_left = 3
-	sb.border_color = LauncherTheme.COL_ACCENT
-	sb.corner_radius_top_right = 4
-	sb.corner_radius_bottom_right = 4
-	sb.content_margin_left = 12.0
-	sb.content_margin_right = 12.0
-	sb.content_margin_top = 8.0
-	sb.content_margin_bottom = 8.0
-	sb.anti_aliasing = true
-
-	var sb_hover := sb.duplicate()
-	sb_hover.bg_color = Color(0.12, 0.28, 0.32, 0.85)
-
-	var sb_focus := sb.duplicate()
-	sb_focus.border_width_top = 1
-	sb_focus.border_width_bottom = 1
-	sb_focus.border_width_right = 1
-	sb_focus.border_color = LauncherTheme.COL_ACCENT
-
-	btn.add_theme_stylebox_override("normal", sb)
-	btn.add_theme_stylebox_override("hover", sb_hover)
-	btn.add_theme_stylebox_override("pressed", sb_hover)
-	btn.add_theme_stylebox_override("focus", sb_focus)
-	btn.add_theme_color_override("font_color", Color.WHITE)
-	btn.add_theme_color_override("font_hover_color", Color.WHITE)
-	btn.add_theme_color_override("font_focus_color", Color.WHITE)
-	btn.add_theme_color_override("icon_normal_color", LauncherTheme.COL_ACCENT)
-	btn.add_theme_color_override("icon_hover_color", LauncherTheme.COL_ACCENT)
-	btn.add_theme_color_override("icon_focus_color", LauncherTheme.COL_ACCENT)
-	btn.add_theme_color_override("icon_pressed_color", LauncherTheme.COL_ACCENT)
+	LauncherTheme.style_primary(btn)
+	for state in ["normal", "hover", "focus", "pressed"]:
+		btn.add_theme_color_override("icon_" + state + "_color", LauncherTheme.COL_BG_DEEP)
 
 func _make_nav_btn(parent: Control, label: String, icon_path: String, callback: Callable) -> Button:
 	var btn := Button.new()
@@ -449,7 +422,7 @@ func _make_nav_btn(parent: Control, label: String, icon_path: String, callback: 
 		sb.content_margin_bottom = 8.0
 		btn.add_theme_stylebox_override(state, sb)
 
-	btn.add_theme_font_size_override("font_size", 15)
+	btn.add_theme_font_size_override("font_size", 20)
 	btn.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_SECONDARY)
 	btn.add_theme_color_override("font_hover_color", LauncherTheme.COL_TEXT_PRIMARY)
 	btn.add_theme_color_override("font_focus_color", LauncherTheme.COL_TEXT_PRIMARY)
@@ -461,70 +434,15 @@ func _make_nav_btn(parent: Control, label: String, icon_path: String, callback: 
 
 func _build_cta_play_button() -> Button:
 	var btn := Button.new()
-	btn.custom_minimum_size = Vector2(290, 50)
+	btn.text = "PLAY"
+	btn.custom_minimum_size = Vector2(290, 56)
 	btn.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-	btn.focus_mode = Control.FOCUS_ALL
-
-	var sb_normal := StyleBoxFlat.new()
-	sb_normal.bg_color = Color(0.24, 0.82, 0.73, 1.0)
-	sb_normal.corner_radius_top_left = 6
-	sb_normal.corner_radius_top_right = 6
-	sb_normal.corner_radius_bottom_left = 6
-	sb_normal.corner_radius_bottom_right = 6
-	sb_normal.content_margin_left = 24.0
-	sb_normal.content_margin_right = 20.0
-	sb_normal.content_margin_top = 12.0
-	sb_normal.content_margin_bottom = 12.0
-	sb_normal.anti_aliasing = true
-
-	var sb_hover := sb_normal.duplicate()
-	sb_hover.bg_color = Color(0.30, 0.88, 0.79, 1.0)
-
-	var sb_pressed := sb_normal.duplicate()
-	sb_pressed.bg_color = Color(0.18, 0.70, 0.62, 1.0)
-
-	var sb_focus := sb_normal.duplicate()
-	sb_focus.border_width_left = 2
-	sb_focus.border_width_top = 2
-	sb_focus.border_width_right = 2
-	sb_focus.border_width_bottom = 2
-	sb_focus.border_color = Color.WHITE
-
-	btn.add_theme_stylebox_override("normal", sb_normal)
-	btn.add_theme_stylebox_override("hover", sb_hover)
-	btn.add_theme_stylebox_override("pressed", sb_pressed)
-	btn.add_theme_stylebox_override("focus", sb_focus)
-
-	var margin := MarginContainer.new()
-	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	margin.add_theme_constant_override("margin_left", 20)
-	margin.add_theme_constant_override("margin_right", 20)
-	margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	btn.add_child(margin)
-
-	var hbox := HBoxContainer.new()
-	hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	margin.add_child(hbox)
-
-	var label := Label.new()
-	label.text = "Play"
-	label.add_theme_font_size_override("font_size", 18)
-	label.add_theme_color_override("font_color", Color(0.04, 0.08, 0.10, 1.0))
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hbox.add_child(label)
-
-	var spacer := Control.new()
-	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hbox.add_child(spacer)
-
-	var chevron := Label.new()
-	chevron.text = "›"
-	chevron.add_theme_font_size_override("font_size", 22)
-	chevron.add_theme_color_override("font_color", Color(0.04, 0.08, 0.10, 1.0))
-	chevron.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hbox.add_child(chevron)
-
+	btn.add_theme_font_size_override("font_size", 32)
+	btn.icon = LauncherTheme.load_texture_safe("res://assets/launcher/icons/player-play.svg")
+	btn.expand_icon = true
+	btn.add_theme_constant_override("icon_max_width", 25)
+	btn.add_theme_constant_override("h_separation", 12)
+	_style_selected_play_btn(btn)
 	btn.pressed.connect(func(): intent_requested.emit(&"play", {}))
 	return btn
 
@@ -582,7 +500,7 @@ func _build_active_case_section() -> Control:
 
 	# Workstation thumbnail
 	var thumb_panel := PanelContainer.new()
-	thumb_panel.custom_minimum_size = Vector2(230, 144)
+	thumb_panel.custom_minimum_size = Vector2(196, 136)
 	thumb_panel.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var thumb_sb := StyleBoxFlat.new()
 	thumb_sb.bg_color = Color(0.05, 0.07, 0.10, 0.8)
@@ -630,7 +548,8 @@ func _build_active_case_section() -> Control:
 
 	_case_title_label = Label.new()
 	_case_title_label.text = "The borrowed session"
-	_case_title_label.add_theme_font_size_override("font_size", 18)
+	LauncherTheme.display(_case_title_label, 25)
+	_case_title_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_case_title_label.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
 	details_vbox.add_child(_case_title_label)
 
@@ -698,39 +617,26 @@ func _build_active_case_section() -> Control:
 	_case_objective_label.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
 	obj_row.add_child(_case_objective_label)
 
-	return hbox
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel", LauncherTheme.make_card_style("normal", true))
+	card.add_child(hbox)
+	return card
 
 func _build_zombie_card() -> PanelContainer:
 	_zombie_card = PanelContainer.new()
 	_zombie_card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_zombie_card.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_zombie_card.size_flags_vertical = Control.SIZE_FILL
 	_zombie_card.size_flags_stretch_ratio = 1.0
 	_zombie_card.mouse_filter = Control.MOUSE_FILTER_PASS
 
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.04, 0.07, 0.11, 0.35)
-	sb.corner_radius_top_left = 6
-	sb.corner_radius_top_right = 6
-	sb.corner_radius_bottom_left = 6
-	sb.corner_radius_bottom_right = 6
-	sb.border_width_left = 1
-	sb.border_width_top = 1
-	sb.border_width_right = 1
-	sb.border_width_bottom = 1
-	sb.border_color = Color(0.18, 0.24, 0.30, 0.35)
-	sb.content_margin_left = 12.0
-	sb.content_margin_right = 12.0
-	sb.content_margin_top = 10.0
-	sb.content_margin_bottom = 10.0
-	_zombie_card.add_theme_stylebox_override("panel", sb)
-
-	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 6)
-	_zombie_card.add_child(vbox)
+	_zombie_card.add_theme_stylebox_override("panel", LauncherTheme.make_card_style("normal", true))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	_zombie_card.add_child(row)
 
 	# Thumbnail with lock overlay
 	var thumb_box := PanelContainer.new()
-	thumb_box.custom_minimum_size = Vector2(0, 110)
+	thumb_box.custom_minimum_size = Vector2(125, 130)
 	var tsb := StyleBoxFlat.new()
 	tsb.corner_radius_top_left = 4
 	tsb.corner_radius_top_right = 4
@@ -738,7 +644,7 @@ func _build_zombie_card() -> PanelContainer:
 	tsb.corner_radius_bottom_right = 4
 	thumb_box.add_theme_stylebox_override("panel", tsb)
 	thumb_box.clip_contents = true
-	vbox.add_child(thumb_box)
+	row.add_child(thumb_box)
 
 	_zombie_thumb = TextureRect.new()
 	_zombie_thumb.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -767,9 +673,12 @@ func _build_zombie_card() -> PanelContainer:
 	_zombie_lock.texture = LauncherTheme.load_texture_safe("res://assets/launcher/icons/lock.svg")
 	lock_center.add_child(_zombie_lock)
 
-	# Badge row
+	var vbox := VBoxContainer.new()
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_theme_constant_override("separation", 5)
+	row.add_child(vbox)
 	var badge_row := HBoxContainer.new()
-	vbox.add_child(badge_row)
 
 	_zombie_badge = Label.new()
 	_zombie_badge.text = "COMING SOON"
@@ -780,8 +689,8 @@ func _build_zombie_card() -> PanelContainer:
 
 	# Title
 	_zombie_title = Label.new()
-	_zombie_title.text = "Zombie RPG Survival"
-	_zombie_title.add_theme_font_size_override("font_size", 15)
+	_zombie_title.text = "After Hours"
+	LauncherTheme.display(_zombie_title, 28)
 	_zombie_title.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
 	vbox.add_child(_zombie_title)
 
@@ -792,6 +701,7 @@ func _build_zombie_card() -> PanelContainer:
 	_zombie_desc.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_SECONDARY)
 	_zombie_desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(_zombie_desc)
+	vbox.add_child(badge_row)
 
 	return _zombie_card
 
@@ -800,9 +710,9 @@ func _build_bottom_strip() -> PanelContainer:
 	_bottom_strip.custom_minimum_size = Vector2(0, 36)
 
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.04, 0.06, 0.09, 0.96)
+	sb.bg_color = LauncherTheme.COL_BG_DEEP
 	sb.border_width_top = 1
-	sb.border_color = Color(0.20, 0.25, 0.32, 0.5)
+	sb.border_color = LauncherTheme.COL_BORDER
 	_bottom_strip.add_theme_stylebox_override("panel", sb)
 
 	var hbox := HBoxContainer.new()
@@ -838,7 +748,7 @@ func _build_bottom_strip() -> PanelContainer:
 
 	var vdiv := ColorRect.new()
 	vdiv.custom_minimum_size = Vector2(1, 0)
-	vdiv.color = Color(0.20, 0.25, 0.32, 0.5)
+	vdiv.color = LauncherTheme.COL_BORDER
 	hbox.add_child(vdiv)
 
 	# Right segment with Menu ready

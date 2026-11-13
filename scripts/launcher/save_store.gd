@@ -22,6 +22,8 @@ func read_save() -> Dictionary:
 	return payload
 
 func validate(payload: Dictionary) -> bool:
+	if payload.has("cyber_lab"):
+		if not payload.cyber_lab is Dictionary or not preload("res://scripts/cyber/blackout_lab.gd").valid_snapshot(payload.cyber_lab): return false
 	if payload.get("version") != VERSION or payload.get("mode_id") != "incident_response" or payload.get("mission_id") != "IR-2026-001": return false
 	if not payload.get("training") is Dictionary or not payload.get("player") is Dictionary: return false
 	var data: Dictionary = payload.training
@@ -59,6 +61,7 @@ func capture(game: Node3D) -> Dictionary:
 	var ui: Node = game.get("training")
 	var player: Node3D = game.get("player")
 	return {"version":VERSION,"mode_id":"incident_response","mission_id":"IR-2026-001",
+	"cyber_lab":ui.workstation_shell.cyber.snapshot(),
 	"saved_at":Time.get_datetime_string_from_system(true),"player":{"position":[player.position.x,player.position.y,player.position.z],"yaw":player.rotation.y,"pitch":game.get("pitch")},
 	"training":{"state":ui.get("state").duplicate(true),"points":ui.get("points"),"journal":Array(ui.get("journal")),
 	"command_history":Array(ui.get("command_history")),"report_answers":ui.get("report_answers").duplicate(true),
@@ -93,6 +96,8 @@ func restore(game: Node3D, payload: Dictionary) -> bool:
 	ui.set("report_answers",data.report_answers.duplicate(true))
 	ui.set("report_preview_valid",data.report_preview_valid)
 	ui.set("submitted_report_text",data.submitted_report_text)
+	if payload.get("cyber_lab") is Dictionary:
+		if not ui.workstation_shell.cyber.restore(payload.cyber_lab): return false
 	ui.call("_refresh_ui")
 	game.call("restore_safe_pose",payload.player)
 	return true

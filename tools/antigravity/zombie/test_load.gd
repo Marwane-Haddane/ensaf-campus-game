@@ -4,11 +4,11 @@ extends SceneTree
 func _init() -> void:
 	print("--- Testing load of converted .tscn files ---")
 	var paths = [
-		"res://assets/antigravity/zombie/models/pistol_hands.tscn",
-		"res://assets/antigravity/zombie/models/Zombie_Basic.tscn",
-		"res://assets/antigravity/zombie/models/Zombie_Chubby.tscn",
-		"res://assets/antigravity/zombie/models/Characters_Shaun.tscn",
-		"res://assets/antigravity/zombie/props/Vehicle_Pickup.tscn"
+		"res://assets/antigravity/zombie/models/pistol_hands.scn",
+		"res://assets/antigravity/zombie/models/Zombie_Basic.scn",
+		"res://assets/antigravity/zombie/models/Zombie_Chubby.scn",
+		"res://assets/antigravity/zombie/models/Characters_Shaun.scn",
+		"res://assets/antigravity/zombie/props/Vehicle_Pickup.scn"
 	]
 	for p in paths:
 		var scene: PackedScene = load(p)

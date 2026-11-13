@@ -7,6 +7,7 @@ signal launcher_settings_requested
 signal launcher_restart_requested
 signal mission_progress_updated(step_id: String, text: String)
 
+const ModelPlacement = preload("res://scripts/antigravity/zombie/model_placement.gd")
 const CampusRuntime = preload("res://scripts/campus_runtime.gd")
 const CampusOcclusion = preload("res://scripts/campus_occlusion.gd")
 const SaveStore = preload("res://scripts/antigravity/zombie/save_store.gd")
@@ -22,6 +23,13 @@ const ExtractionPoint = preload("res://scripts/antigravity/zombie/extraction_poi
 const ZombieHUD = preload("res://scripts/antigravity/zombie/zombie_hud.gd")
 const CompanionDog = preload("res://scripts/antigravity/zombie/companion_dog.gd")
 const LootChest = preload("res://scripts/antigravity/zombie/loot_chest.gd")
+const DrivablePickup = preload("res://scripts/antigravity/zombie/drivable_pickup.gd")
+const RoadLoop = preload("res://scripts/antigravity/zombie/road_loop.gd")
+const RoadEncounters = preload("res://scripts/antigravity/zombie/road_encounters.gd")
+
+const PICKUP_START := Vector3(-28.0, 0.16, -61.0)
+const DRIVE_BOUNDS := Rect2(-114.0, -166.0, 204.0, 203.0)
+const ROADKILL_MIN_SPEED := 5.5
 
 var launcher_managed: bool = false
 var runtime_preferences: Dictionary = {}
@@ -57,6 +65,10 @@ var extraction_point: Area3D
 var _power_station: StaticBody3D
 var _extraction_truck: Node3D
 var _extraction_barriers: Array[Node3D] = []
+var _pickup: DrivablePickup
+var _road_loop: RoadLoop
+var _road_encounters: RoadEncounters
+var _pickup_exit_requested := false
 
 var config_episode: Dictionary = {}
 
@@ -186,6 +198,7 @@ func _initialize_game_world() -> void:
 	
 	# 4. Dress Route Props
 	initialization_progress.emit("Placing barricades and supplies", "props", null, null)
+	await get_tree().physics_frame
 	_spawn_route_props()
 	
 	# 5. Spawn Player
@@ -197,6 +210,8 @@ func _initialize_game_world() -> void:
 	_spawn_pickups()
 	_spawn_interactive_stations()
 	_spawn_enemies()
+	_setup_free_roam()
+	_update_opening()
 	apply_runtime_preferences(runtime_preferences)
 	
 	# Start mission sequence
@@ -240,15 +255,17 @@ func _spawn_route_props() -> void:
 			var scl: Array = p_data.get("scale", [1, 1, 1])
 			inst.scale = Vector3(float(scl[0]), float(scl[1]), float(scl[2]))
 			add_child(inst)
-			match scene_path.get_file():
-				"Vehicle_Pickup_Armored.tscn":
+			var support := _ground_point(inst.position)
+			ModelPlacement.ground(inst, support.y)
+			inst.add_to_group("route_props")
+			# Match the asset stem so compressed and text scenes behave identically.
+			match scene_path.get_file().get_basename():
+				"Vehicle_Pickup_Armored":
 					_extraction_truck = inst
-					var rear_wheels := inst.get_node_or_null("BackWheels") as MeshInstance3D
-					if rear_wheels:
-						inst.position = _ground_point(inst.position, -rear_wheels.get_aabb().position.y)
-				"TrafficBarrier_1.tscn":
-					inst.position = _ground_point(inst.position)
+				"TrafficBarrier_1":
 					_extraction_barriers.append(inst)
+				_:
+					ModelPlacement.add_static_collision(inst)
 
 func _spawn_player() -> void:
 	player = PlayerController.new()
@@ -259,6 +276,107 @@ func _spawn_player() -> void:
 	player.rotation_degrees.y = float(p_spawn.get("yaw_degrees", 0.0))
 	add_child(player)
 	_wire_player_events()
+
+func _setup_free_roam() -> void:
+	_road_loop = RoadLoop.new()
+	_road_loop.name = "CampusRoadLoop"
+	add_child(_road_loop)
+	_pickup = DrivablePickup.new()
+	_pickup.name = "CampusPickup"
+	_pickup.position = _ground_point(PICKUP_START, 0.02)
+	_pickup.rotation.y = PI / 2.0
+	_pickup.driving_bounds = DRIVE_BOUNDS
+	add_child(_pickup)
+	_pickup.setup_pickup()
+	_pickup.entry_requested.connect(_enter_pickup)
+	_road_encounters = RoadEncounters.new()
+	_road_encounters.name = "RoadEncounters"
+	add_child(_road_encounters)
+	_road_encounters.configure(_road_loop.encounter_points())
+	_road_encounters.enemy_died.connect(func(enemy_id: String):
+		mission_state.record_kill(0.0, enemy_id)
+	)
+
+func _enter_pickup(driver: CharacterBody3D) -> void:
+	if driver != player or not ready_to_play or not has_entered_gameplay or is_session_frozen:
+		return
+	if hud.is_any_menu_open() or player.is_dead or extraction_point.boarding or extraction_point.driving or mission_state.extracted:
+		return
+	# The same interact event must not reach the exit handler after seating.
+	get_viewport().set_input_as_handled()
+	player.set_vehicle_seated(true)
+	player.global_position = _pickup.global_position
+	_pickup.start_driving(player)
+	hud.set_free_roam_driving(true)
+
+func _try_exit_pickup() -> void:
+	if _pickup.speed_kph() > 5.0:
+		hud.show_banner_message("Brake to exit the pickup.", 1.6)
+		return
+	var exit_at: Variant = _pickup.find_exit_position(player)
+	if exit_at == null:
+		hud.show_banner_message("Move the pickup to clear space before exiting.", 2.2)
+		return
+	_leave_pickup(exit_at)
+	_resume()
+
+func _leave_pickup(exit_at: Vector3) -> void:
+	_pickup_exit_requested = false
+	_pickup.stop_driving()
+	player.global_position = exit_at
+	player.rotation.y = _pickup.rotation.y + PI
+	player.camera_pitch = 0.0
+	player.camera.rotation.x = 0.0
+	player.camera.make_current()
+	player.set_vehicle_seated(false)
+	hud.set_free_roam_driving(false)
+	_refresh_hud()
+	_update_opening()
+
+func _reset_free_roam() -> void:
+	_pickup_exit_requested = false
+	if not is_instance_valid(_pickup):
+		return
+	if _pickup.driving:
+		_leave_pickup(player.global_position)
+	_pickup.reset()
+	_road_encounters.clear()
+
+func _physics_process(delta: float) -> void:
+	if not ready_to_play or not has_entered_gameplay or is_session_frozen or player.is_dead:
+		return
+	if extraction_point.boarding or extraction_point.driving or mission_state.extracted:
+		return
+	if _pickup_exit_requested:
+		_pickup_exit_requested = false
+		_try_exit_pickup()
+	if _pickup.driving:
+		player.global_position = _pickup.global_position
+		_apply_roadkill(delta)
+	var focus := player.global_position
+	_road_encounters.update(delta, focus, _road_loop.is_near_road(focus))
+
+func _apply_roadkill(delta: float) -> void:
+	if absf(_pickup.forward_speed()) < ROADKILL_MIN_SPEED:
+		return
+	var bumper := _pickup.bumper_position()
+	var motion := _pickup.get_real_velocity() * delta
+	if motion.length_squared() < 0.00001:
+		return
+	var hit_radius := _pickup.bumper_half_width() + 0.33
+	for enemy: Node3D in _road_encounters.get_active_enemies():
+		if enemy.is_dead():
+			continue
+		var torso := enemy.global_position + Vector3.UP * 0.64
+		var closest := Geometry3D.get_closest_point_to_segment(torso, bumper - motion, bumper)
+		if closest.distance_squared_to(torso) > hit_radius * hit_radius:
+			continue
+		var clear_path := PhysicsRayQueryParameters3D.create(closest, torso, 1)
+		if not get_world_3d().direct_space_state.intersect_ray(clear_path).is_empty():
+			continue
+		var damage: float = enemy.health
+		enemy.take_damage(damage, false, torso, motion.normalized())
+		mission_state.record_damage(damage - enemy.health)
 
 func _ground_point(point: Vector3, offset: float = 0.02) -> Vector3:
 	# Authored placements describe the location, not a guessed elevation.
@@ -283,9 +401,12 @@ func _spawn_pickup(data: Dictionary) -> void:
 	pickup.item_id = id
 	pickup.item_type = data.get("type", "ammo")
 	pickup.item_name = data.get("name", "Supplies")
+	pickup.weapon_id = data.get("weapon_id", "")
 	pickup.amount = int(data.get("amount", 12))
 	var pos: Array = data.get("position", [0, 0, 0])
 	pickup.position = Vector3(float(pos[0]), float(pos[1]), float(pos[2]))
+	if pickup.item_type == "ammo":
+		pickup.position = _ground_point(pickup.position, 0.13)
 	pickup.is_collected = claimed
 	add_child(pickup)
 	spawned_pickups[id] = pickup
@@ -300,6 +421,11 @@ func _on_pickup_collected(id: String, type: String, amount: int) -> void:
 	mission_state.on_event("pickup_item", {"item_id": id, "type": type, "amount": amount})
 	hud.update_scrap(inventory.get_item_count("scrap"))
 	match id:
+		"item_intro_pistol":
+			player.weapon_controller.show()
+			hud.update_weapon_display("9mm Tactical Pistol", player.weapon_controller.mag_ammo, player.weapon_controller.reserve_ammo)
+			hud.show_banner_message("Pistol recovered. Search Reception for the breaker fuse.", 5.0)
+			_create_checkpoint("cp_pistol", "Pistol Recovered")
 		"item_power_fuse":
 			hud.show_banner_message("Main Breaker Fuse recovered", 2.0)
 			_create_checkpoint("cp_fuse", "Main Breaker Fuse Recovered")
@@ -307,7 +433,12 @@ func _on_pickup_collected(id: String, type: String, amount: int) -> void:
 			hud.show_banner_message("Control Bus Relay recovered", 2.0)
 			_create_checkpoint("cp_relay", "Control Bus Relay Recovered")
 		_:
-			hud.show_banner_message("+%d %s" % [amount, type.capitalize()], 2.0)
+			var label := type.capitalize()
+			for data: Dictionary in config_episode.get("pickups", []):
+				if data.get("id") == id:
+					label = str(data.get("name", label))
+					break
+			hud.show_banner_message("+%d %s" % [amount, label], 2.0)
 
 func _spawn_interactive_stations() -> void:
 	# 1. Shaun Survivor NPC
@@ -331,7 +462,7 @@ func _spawn_interactive_stations() -> void:
 	var matt := SurvivorNPC.new()
 	matt.name = "SurvivorMatt"
 	matt.character_name = "Matt (Security Tech)"
-	matt.model_path = "res://assets/antigravity/zombie/models/Characters_Matt.tscn"
+	matt.model_path = "res://assets/antigravity/zombie/models/Characters_Matt.scn"
 	matt.position = _ground_point(Vector3(2.5, 2.80, -108.5))
 	matt.rotation_degrees.y = 210.0
 	matt.reward_scrap = 25
@@ -351,8 +482,8 @@ func _spawn_interactive_stations() -> void:
 	var lis := SurvivorNPC.new()
 	lis.name = "SurvivorLis"
 	lis.character_name = "Lis (Field Medic)"
-	lis.model_path = "res://assets/antigravity/zombie/models/Characters_Lis.tscn"
-	lis.position = _ground_point(Vector3(-29.5, 1.25, -88.0))
+	lis.model_path = "res://assets/antigravity/zombie/models/Characters_Lis.scn"
+	lis.position = _ground_point(Vector3(-31.4, 1.25, -89.1))
 	lis.rotation_degrees.y = 90.0
 	lis.reward_medkit = 1
 	lis.custom_dialogue = [
@@ -375,7 +506,7 @@ func _spawn_interactive_stations() -> void:
 		_create_checkpoint("cp_survivor", "Survivor Shaun Contacted")
 		if dog and is_instance_valid(dog) and player:
 			dog.activate_follow(player)
-			hud.call("show_banner_message", "Max joined your squad! Watch each other's back!", 3.5)
+			hud.show_squad_joined("Max")
 	)
 	
 	# 2. Power Breaker Station
@@ -401,7 +532,7 @@ func _spawn_interactive_stations() -> void:
 	var upg_station := UpgradeStation.new()
 	var upg_data: Dictionary = config_episode.get("upgrade_station", {})
 	var upg_pos: Array = upg_data.get("position", [-35.0, 1.91, -105.0])
-	upg_station.position = Vector3(float(upg_pos[0]), float(upg_pos[1]), float(upg_pos[2]))
+	upg_station.position = _ground_point(Vector3(float(upg_pos[0]), float(upg_pos[1]), float(upg_pos[2])))
 	add_child(upg_station)
 	
 	upg_station.upgrade_menu_opened.connect(func():
@@ -422,14 +553,18 @@ func _spawn_interactive_stations() -> void:
 	var chest_shotgun := LootChest.new()
 	chest_shotgun.chest_id = "chest_shotgun_substation"
 	chest_shotgun.loot_type = "shotgun"
-	chest_shotgun.position = Vector3(3.2, 2.80, -111.0)
+	var cache_pos: Array = config_episode.get("shotgun_cache", {}).get("position", [-27.9, 1.25, -89.1])
+	chest_shotgun.position = _ground_point(Vector3(cache_pos[0], cache_pos[1], cache_pos[2]))
 	add_child(chest_shotgun)
+	chest_shotgun.chest_opened.connect(func(id: String, _reward: String):
+		mission_state.on_event("pickup_item", {"item_id": id})
+	)
 	
 	var chest_scrap := LootChest.new()
 	chest_scrap.chest_id = "chest_scrap_reception"
 	chest_scrap.loot_type = "scrap"
 	chest_scrap.loot_amount = 30
-	chest_scrap.position = Vector3(-24.5, 0.55, -88.0)
+	chest_scrap.position = _ground_point(Vector3(-24.5, 1.25, -88.0))
 	add_child(chest_scrap)
 
 func _spawn_enemies() -> void:
@@ -447,6 +582,7 @@ func _spawn_enemies() -> void:
 		var pos: Array = e_data.get("position", [0, 0, 0])
 		enemy.position = _ground_point(Vector3(float(pos[0]), float(pos[1]), float(pos[2])))
 		add_child(enemy)
+		_prepare_encounter(enemy)
 		active_enemies.append(enemy)
 		
 		if enemy.is_boss:
@@ -474,6 +610,8 @@ func _wire_player_events() -> void:
 		hud.call("update_stamina", cur, max_v)
 	)
 	player.player_died.connect(func():
+		if is_instance_valid(_pickup) and _pickup.driving:
+			_leave_pickup(player.global_position)
 		hud.call("show_death_screen")
 	)
 	player.interact_target_changed.connect(func(info: Dictionary):
@@ -495,12 +633,11 @@ func _wire_player_events() -> void:
 
 func _wire_hud_events() -> void:
 	inventory.progression_changed.connect(func(summary: Dictionary):
-		hud.update_progression("%s  ·  %d XP  ·  Medkit +%d" % [summary.rank_title,summary.xp,summary.medkit_healing]))
+		hud.update_progression(summary))
 	mission_state.objective_completed.connect(func(id: String,xp: int,scrap: int):
 		if inventory.claim_reward("objective:"+id,xp,scrap):
 			hud.show_banner_message("Objective secured  +%d XP%s" % [xp,"  +%d scrap" % scrap if scrap>0 else ""],3.0))
-	var initial_progress: Dictionary = inventory.get_progression_summary()
-	hud.update_progression("%s  ·  %d XP" % [initial_progress.rank_title,initial_progress.xp])
+	hud.update_progression(inventory.get_progression_summary())
 	hud.menu_state_changed.connect(func(open: bool):
 		if is_session_frozen or not has_entered_gameplay: return
 		if open: _pause()
@@ -579,6 +716,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			else:
 				hud.toggle_pause(true)
 		
+		elif _pickup.driving:
+			var interact_pressed: bool = event.is_action_pressed("interact") if InputMap.has_action("interact") else event.keycode == KEY_E
+			if interact_pressed and not event.echo:
+				_pickup_exit_requested = true
+				get_viewport().set_input_as_handled()
+		elif extraction_point.driving:
+			return
 		elif event.keycode == KEY_I:
 			if not hud.pause_menu.visible:
 				var open: bool = not hud.inventory_menu.visible
@@ -606,8 +750,12 @@ func _create_checkpoint(cp_id: String, cp_name: String) -> void:
 func _process(delta: float) -> void:
 	if not ready_to_play or is_session_frozen or not has_entered_gameplay: return
 	if not get_tree().paused: mission_state.tick_playtime(delta)
+	_update_opening()
 	var weapon = player.weapon_controller
-	hud.update_reload(weapon.get_reload_progress() if weapon.is_reloading else -1.0, weapon.get_current_weapon_name())
+	if _pickup.driving:
+		hud.update_driving_speed(_pickup.speed_kph())
+	else:
+		hud.update_reload(weapon.get_reload_progress() if weapon.is_reloading else -1.0, weapon.get_current_weapon_name())
 	if is_instance_valid(brute_boss):
 		var nearby: bool = is_instance_valid(player) and player.global_position.distance_to(brute_boss.global_position)<18.0
 		var encounter_active: bool = mission_state.get_current_step().get("id") == "obj_boss" \
@@ -648,16 +796,12 @@ func restore_safe_pose(data: Dictionary) -> bool:
 func _retry_checkpoint() -> void:
 	var saved: Dictionary = save_store.read_save()
 	if not saved.is_empty():
+		_reset_free_roam()
 		save_store.restore(self, saved)
 		restore_safe_pose(saved.get("player_state", {}))
 		_resync_world_state()
 		_refresh_hud()
-		if hud:
-			if hud.death_screen:
-				hud.death_screen.visible = false
-			if hud.victory_screen:
-				hud.victory_screen.visible = false
-		_resume()
+		hud.dismiss_end_screens()
 		hud.call("show_banner_message", "Checkpoint Restored: " + current_checkpoint_name, 3.0)
 	else:
 		_restart_mission()
@@ -710,6 +854,7 @@ func _resync_world_state() -> void:
 				var pos: Array = e_data.get("position", [0, 0, 0])
 				enemy.position = _ground_point(Vector3(float(pos[0]), float(pos[1]), float(pos[2])))
 				add_child(enemy)
+				_prepare_encounter(enemy)
 				active_enemies.append(enemy)
 				if enemy.is_boss:
 					brute_boss = enemy
@@ -741,6 +886,7 @@ func _restart_mission() -> void:
 
 func _reset_mode_state() -> void:
 	get_tree().paused = false
+	_reset_free_roam()
 	current_checkpoint_id = "cp_start"
 	current_checkpoint_name = "Campus Plaza Arrival"
 	has_restored_checkpoint = false
@@ -805,10 +951,7 @@ func _reset_mode_state() -> void:
 		hud.toggle_journal(false)
 		hud.toggle_upgrade_menu(false)
 		hud.call("close_dialogue")
-		if hud.death_screen:
-			hud.death_screen.visible = false
-		if hud.victory_screen:
-			hud.victory_screen.visible = false
+		hud.dismiss_end_screens()
 	
 	_refresh_hud()
 	start_gameplay()
@@ -830,6 +973,9 @@ func start_gameplay() -> void:
 
 func set_frozen(frozen: bool) -> void:
 	is_session_frozen = frozen
+	if is_instance_valid(_pickup):
+		_pickup.set_physics_process(not frozen and _pickup.driving)
+		_road_encounters.set_frozen(frozen)
 	if frozen:
 		_set_capture(false)
 		if player:
@@ -858,8 +1004,7 @@ func _refresh_hud() -> void:
 			hud.call("update_weapon_display", wc.call("get_current_weapon_name"), wc.mag_ammo, wc.reserve_ammo)
 	if inventory:
 		hud.call("update_scrap", inventory.get_item_count("scrap"))
-		var progress: Dictionary = inventory.get_progression_summary()
-		hud.update_progression("%s  ·  %d XP  ·  Medkit +%d" % [progress.rank_title,progress.xp,progress.medkit_healing])
+		hud.update_progression(inventory.get_progression_summary())
 	if mission_state:
 		hud.call("update_objective", mission_state.get_current_objective_text())
 
@@ -905,7 +1050,46 @@ func _resume() -> void:
 			hud.show_victory_screen(mission_state.get_completion_summary())
 		return
 	get_tree().paused = false
-	if player and not bool(player.get("is_dead")) and not is_session_frozen:
+	if player and not bool(player.get("is_dead")) and not is_session_frozen and not extraction_point.driving:
 		player.set_input_enabled(true)
 	_set_capture(true)
 
+
+# Opening progression also derives from mission steps for existing checkpoints.
+func has_intro_weapon() -> bool:
+	return "item_intro_pistol" in collected_pickups or mission_state.current_step_index > 0
+
+func _prepare_encounter(enemy: Node3D) -> void:
+	enemy.hide()
+	enemy.process_mode = Node.PROCESS_MODE_DISABLED
+	enemy.collision_layer = 0
+	enemy.set_meta("encounter_waiting", true)
+
+func _update_opening() -> void:
+	var armed := has_intro_weapon()
+	var in_pickup := is_instance_valid(_pickup) and _pickup.driving
+	var in_extraction: bool = is_instance_valid(extraction_point) and (extraction_point.boarding or extraction_point.driving)
+	var show_weapon: bool = armed and not player.is_dead and not in_pickup and not in_extraction
+	player.weapon_controller.visible = show_weapon
+	hud.set_armed(show_weapon)
+	for enemy in active_enemies:
+		if not is_instance_valid(enemy) or enemy.is_dead():
+			continue
+		if mission_state.current_step_index < 2:
+			_prepare_encounter(enemy)
+			continue
+		if not enemy.get_meta("encounter_waiting", false):
+			continue
+		var required_step := 4 if enemy.is_boss else 2
+		if mission_state.current_step_index < required_step:
+			continue
+		var distance: float = player.global_position.distance_to(enemy.global_position)
+		if distance < 7.0 or distance > 35.0:
+			continue
+		# Encounters enter outside the camera view, so turning a corner reveals them naturally.
+		if player.camera.is_position_in_frustum(enemy.global_position + Vector3.UP):
+			continue
+		enemy.set_meta("encounter_waiting", false)
+		enemy.collision_layer = 4
+		enemy.process_mode = Node.PROCESS_MODE_INHERIT
+		enemy.show()

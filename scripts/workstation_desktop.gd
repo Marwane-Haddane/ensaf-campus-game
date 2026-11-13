@@ -160,7 +160,7 @@ func _build_bars() -> void:
 	apps.size = Vector2(145,35)
 	top.add_child(apps)
 	_app_menu = PopupMenu.new()
-	for text: String in ["Terminal","Home folder","Help","Evidence","Reports","Return to campus"]: _app_menu.add_item(text)
+	for text: String in ["Terminal","Home folder","Help","Evidence","Reports","Return to campus","Operation Blackout"]: _app_menu.add_item(text)
 	_app_menu.id_pressed.connect(func(id: int):
 		match id:
 			0: focus_terminal()
@@ -169,6 +169,9 @@ func _build_bars() -> void:
 			3: open_folder(HOME+"/Evidence")
 			4: open_folder(HOME+"/Reports")
 			5: exit_requested.emit()
+			6:
+				focus_terminal()
+				submit_command("lab status" if shell.cyber.active else "mission start blackout")
 	)
 	apps.add_child(_app_menu)
 	var terminal := _button("",focus_terminal,"terminal")
@@ -442,7 +445,7 @@ func _build_file_manager() -> void:
 	file_window.hide()
 
 func reset_session() -> void:
-	terminal_text = "Campus incident response lab\nCase IR-2026-001 — The borrowed session\n\nStart here: [color=#55aaf0]cat ~/Help/START_HERE.md[/color]\nYour case files are in [color=#55aaf0]~/Evidence[/color]\n"
+	terminal_text = "Campus incident response lab\nCase IR-2026-001 — The borrowed session\nAdvanced mission: [color=#55aaf0]mission start blackout[/color]\n\nStart here: [color=#55aaf0]cat ~/Help/START_HERE.md[/color]\nYour case files are in [color=#55aaf0]~/Evidence[/color]\n"
 	history.clear()
 	history_index = 0
 	command_input.clear()
@@ -464,6 +467,11 @@ func _refresh_prompt() -> void:
 
 func submit_command(line: String) -> void:
 	var command := line.strip_edges()
+	if command in ["lab restart", "mission start blackout"]:
+		for key: String in _apps.keys():
+			if key.begins_with("Python: "):
+				_apps[key].queue_free()
+				_apps.erase(key)
 	command_input.clear()
 	if command.is_empty(): return
 	history.append(command)
@@ -481,6 +489,7 @@ func submit_command(line: String) -> void:
 	refresh_state()
 	call_deferred("_scroll_end")
 	match str(result.action):
+		"editor": _open_python_editor(str(result.path))
 		"report": report_requested.emit()
 		"journal": journal_requested.emit()
 	if str(result.action).is_empty(): command_input.grab_focus()
@@ -597,6 +606,7 @@ func _activate_file() -> void:
 	if item==null: return
 	var entry: Dictionary = item.get_metadata(0)
 	if entry.directory: open_folder(entry.path)
+	elif str(entry.path).ends_with(".py"): _open_python_editor(str(entry.path))
 	elif str(entry.path).ends_with("/Reports/incident-report.md"): report_requested.emit()
 	else: _select_file()
 
@@ -669,3 +679,42 @@ func _process(_delta: float) -> void:
 			_last_clock = value
 	if is_instance_valid(_task_files): _task_files.visible = _files_opened
 	if is_instance_valid(_task_terminal): _task_terminal.visible = true
+
+func _open_python_editor(path: String) -> void:
+	var key := "Python: " + path.get_file()
+	if _apps.has(key):
+		_apps[key].show()
+		_apps[key].raise_window()
+		return
+	var window := DesktopWindow.new()
+	windows.add_child(window)
+	window.configure(key, Rect2(180,65,930,585))
+	_apps[key] = window
+	var layout := VBoxContainer.new()
+	window.content.add_child(layout)
+	var label := Label.new()
+	label.text = "Python lab · print candidates · Save / Run writes ~/Documents/candidates.txt"
+	layout.add_child(label)
+	var editor := CodeEdit.new()
+	editor.name = "PythonEditor"
+	editor.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	editor.add_theme_font_override("font",_mono)
+	editor.add_theme_font_size_override("font_size",16)
+	editor.text = str(shell.read_file(path).text)
+	editor.indent_size = 4
+	editor.indent_use_spaces = true
+	layout.add_child(editor)
+	var row := HBoxContainer.new()
+	layout.add_child(row)
+	var feedback := Label.new()
+	row.add_child(_button("Save",func():
+		feedback.text = "Saved" if shell.save_script(path,editor.text) else "Save failed: 12 KB maximum."
+	))
+	row.add_child(_button("Save / Run",func():
+		if shell.save_script(path,editor.text):
+			submit_command("python3 " + path + " > ~/Documents/candidates.txt")
+			feedback.text = "Result is in Terminal"
+		else: feedback.text = "Save failed: 12 KB maximum."
+	))
+	row.add_child(feedback)
+	editor.grab_focus()

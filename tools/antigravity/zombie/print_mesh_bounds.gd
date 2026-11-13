@@ -1,7 +1,7 @@
 extends SceneTree
 
 func _init() -> void:
-	var scn: PackedScene = load("res://assets/antigravity/zombie/models/pistol_hands.tscn")
+	var scn: PackedScene = load("res://assets/antigravity/zombie/models/pistol_hands.scn")
 	var node = scn.instantiate()
 	for child in node.find_children("*", "MeshInstance3D"):
 		var mi := child as MeshInstance3D

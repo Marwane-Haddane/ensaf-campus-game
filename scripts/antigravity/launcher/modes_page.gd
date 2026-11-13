@@ -56,7 +56,7 @@ func _build_ui() -> void:
 
 	var title := Label.new()
 	title.text = "SELECT SIMULATION MODE"
-	title.add_theme_font_size_override("font_size", LauncherTheme.FONT_HEADING)
+	LauncherTheme.display(title, LauncherTheme.FONT_HEADING)
 	title.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
 	header.add_child(title)
 
@@ -101,6 +101,7 @@ func update_from_model(model: Dictionary) -> void:
 
 	# Clear old cards
 	for child in _cards_container.get_children():
+		_cards_container.remove_child(child)
 		child.queue_free()
 
 	_primary_focus_target = null
@@ -143,7 +144,8 @@ func _build_mode_card(mode: Dictionary) -> Control:
 
 		# Thumbnail
 		var img := TextureRect.new()
-		img.custom_minimum_size = Vector2(0, 160)
+		img.custom_minimum_size = Vector2(0, 175)
+		img.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		img.clip_contents = true
@@ -167,29 +169,31 @@ func _build_mode_card(mode: Dictionary) -> Control:
 		# Titles
 		var t_lbl := Label.new()
 		t_lbl.text = title_str
-		t_lbl.add_theme_font_size_override("font_size", LauncherTheme.FONT_HEADING)
+		LauncherTheme.display(t_lbl, 33)
+		t_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		t_lbl.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_PRIMARY)
 		vbox.add_child(t_lbl)
 
 		var s_lbl := Label.new()
 		s_lbl.text = sub_str
-		s_lbl.add_theme_font_size_override("font_size", LauncherTheme.FONT_SMALL)
-		s_lbl.add_theme_color_override("font_color", LauncherTheme.COL_ACCENT_DIM)
+		LauncherTheme.display(s_lbl, 19)
+		s_lbl.add_theme_color_override("font_color", LauncherTheme.COL_ACCENT)
 		vbox.add_child(s_lbl)
 
 		var d_lbl := Label.new()
 		d_lbl.text = desc_str
-		d_lbl.add_theme_font_size_override("font_size", LauncherTheme.FONT_SMALL)
+		d_lbl.add_theme_font_size_override("font_size", LauncherTheme.FONT_BODY)
 		d_lbl.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_SECONDARY)
 		d_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		d_lbl.custom_minimum_size = Vector2(220, 36)
-		d_lbl.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		vbox.add_child(d_lbl)
 
 		var act := Label.new()
 		act.text = "Open Mission Briefing →"
-		act.add_theme_font_size_override("font_size", LauncherTheme.FONT_NAV)
-		act.add_theme_color_override("font_color", LauncherTheme.COL_ACCENT)
+		LauncherTheme.display(act, 20)
+		act.add_theme_color_override("font_color", LauncherTheme.COL_BG_DEEP)
+		act.add_theme_stylebox_override("normal", LauncherTheme.make_accent_button_style("normal"))
+		act.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		vbox.add_child(act)
 
 		btn.pressed.connect(func():
@@ -244,7 +248,8 @@ func _build_mode_card(mode: Dictionary) -> Control:
 
 		var t_lbl := Label.new()
 		t_lbl.text = title_str
-		t_lbl.add_theme_font_size_override("font_size", LauncherTheme.FONT_HEADING)
+		LauncherTheme.display(t_lbl, 30)
+		t_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		t_lbl.add_theme_color_override("font_color", LauncherTheme.COL_TEXT_SECONDARY)
 		vbox.add_child(t_lbl)
 

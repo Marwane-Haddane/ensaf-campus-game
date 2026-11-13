@@ -113,6 +113,15 @@ func run_test() -> void:
 	check(not paused and not app.game.hud.pause_menu.visible,"Escape can also resume the paused game")
 	# Keep testing checkpoint routing even when a mode-owned pause UI needs work.
 	if paused: app.game._resume()
+	app.game.player.take_damage(5000.0)
+	await frames()
+	var retry := root.gui_get_focus_owner() as Button
+	check(paused and retry != null and retry.text.to_upper() == "RETRY FROM CHECKPOINT","Death focuses the checkpoint retry action")
+	if retry != null:
+		await click(retry)
+	check(not paused and app.game.player.input_enabled and not app.game.hud._modal_scrim.visible,
+		"Checkpoint retry restores gameplay and removes the input-blocking overlay")
+	check(root.get_camera_3d() == app.game.player.camera,"Checkpoint retry restores the player camera")
 	app.game.inventory.add_item("scrap",7)
 	var scrap: int = app.game.inventory.get_item_count("scrap")
 	app._save_checkpoint()
@@ -145,9 +154,61 @@ func run_test() -> void:
 	check(FileAccess.get_file_as_string(app.saves.path)==saved_bytes,"Cancel/replacement without Enter preserves the previous checkpoint")
 	intent("enter_game",{"request_id":cancelled_id})
 	check(app.state.value=="READY","A cancelled request cannot enter the replacement session")
+	if app.state.value=="READY":
+		intent("enter_game",{"request_id":app.current_request})
+		await verify_extraction_drive()
 	intent("return_to_menu")
 	await until(func():return app.loader._disposing==0)
 	finish()
+
+func verify_extraction_drive() -> void:
+	var game: Node3D = app.game
+	var exit: Area3D = game.extraction_point
+	var mission: RefCounted = game.mission_state
+	var truck: CharacterBody3D = exit._vehicle
+	var parked := truck.global_position
+	exit.interact(game.player)
+	check(not exit.boarding,"The truck remains locked before the mission objectives")
+	var pistol: Node = game.spawned_pickups.get("item_intro_pistol")
+	check(is_instance_valid(pistol), "The opening emergency pistol is present")
+	if not is_instance_valid(pistol):
+		return
+	pistol.interact(game.player)
+	mission.on_event("pickup_item",{"item_id":"item_power_fuse"})
+	mission.on_event("pickup_item",{"item_id":"item_power_relay"})
+	mission.on_event("power_restored")
+	exit.set_powered(true)
+	mission.on_event("talk_survivor")
+	mission.on_event("boss_killed")
+	var player: CharacterBody3D = game.player
+	player.global_position = parked + truck.global_basis.x * 3.2
+	player.look_at(Vector3(parked.x, player.global_position.y, parked.z))
+	check(await until(func(): return player.current_interactable == exit, 2000),"The truck can be targeted from beside the cab")
+	await press(KEY_E)
+	check(exit.boarding and paused,"Interact boards the truck and pauses the world during the camera transition")
+	if not await until(func(): return exit.driving, 4000):
+		check(false,"Boarding gives the player control of the truck")
+		return
+	check(not paused and not mission.extracted and not game.player.input_enabled,"The camera handoff enables driving with the on-foot controls suspended")
+	check(root.get_camera_3d() == exit._drive_camera,"Driving uses the truck camera")
+	Input.action_press("move_right")
+	var steering := await until(func(): return absf(truck._wheel_pivots[1].rotation.y) > 0.1, 2000)
+	Input.action_release("move_right")
+	check(steering,"Steering turns the front wheels")
+	await until(func(): return is_zero_approx(truck._wheel_pivots[1].rotation.y), 1000)
+	Input.action_press("move_back")
+	var reversed := await until(func(): return truck.global_position.z > parked.z + 0.4, 2500)
+	Input.action_release("move_back")
+	check(reversed,"The truck can reverse")
+	check(absf(truck._wheel_pivots[0].rotation.x) > 0.1,"Wheels roll as the truck moves")
+	await press(KEY_ESCAPE)
+	check(paused and exit.driving,"The pause menu suspends driving without leaving the truck")
+	await press(KEY_ESCAPE)
+	check(not paused and not game.player.input_enabled,"Resuming keeps control assigned to the truck")
+	Input.action_press("move_forward")
+	var escaped := await until(func(): return mission.extracted, 6000)
+	Input.action_release("move_forward")
+	check(escaped and game.hud.victory_screen.visible,"Driving through the gate completes extraction at the debrief")
 
 func finish() -> void:
 	paused = false

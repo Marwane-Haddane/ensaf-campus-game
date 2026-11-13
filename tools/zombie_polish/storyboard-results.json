@@ -1,5 +1,5 @@
 {
-  "checks": 28,
+  "checks": 55,
   "failures": [],
   "frames": [
     {
@@ -9,54 +9,72 @@
       "title": "01 / Campus after hours"
     },
     {
-      "detail": "A walker closes in. Create distance, then fire. The selected enemy runs its normal AI and takes damage from real weapon traces.",
-      "id": "02-combat",
-      "image": "captures/02-combat.png",
-      "title": "02 / First contact"
+      "detail": "The opening begins unarmed. Look for the emergency pistol case in Reception.",
+      "id": "02-pistol",
+      "image": "captures/02-pistol.png",
+      "title": "02 / Recover the emergency pistol"
     },
     {
-      "detail": "Reception is the first power-component stop. Chapter positioning is scripted; collection uses the actual pickup interaction.",
+      "detail": "Open the Reception supply cache and recover the Main Breaker Fuse. Collecting it lets infected encounters start.",
       "id": "03-reception",
       "image": "captures/03-reception.png",
-      "title": "03 / Recover the fuse"
+      "title": "03 / Recover the breaker fuse"
+    },
+    {
+      "detail": "The marked case opens and equips the Benelli M4. Pistol magazines and 12-gauge shells replenish different reserves.",
+      "id": "04-cache",
+      "image": "captures/04-cache.png",
+      "title": "04 / Open the weapons case"
+    },
+    {
+      "detail": "A walker closes in. Create distance, then fire. The selected enemy runs its normal AI and takes damage from real weapon traces.",
+      "id": "05-combat",
+      "image": "captures/05-combat.png",
+      "title": "05 / First contact"
+    },
+    {
+      "detail": "Cross to the glazed entrance and recover the second component for the Security Substation.",
+      "id": "06-relay",
+      "image": "captures/06-relay.png",
+      "title": "06 / Recover the control relay"
     },
     {
       "detail": "Spend recovered scrap on a real upgrade. Objective and kill XP improve rank and medkit effectiveness; rewards are saved once.",
-      "id": "04-upgrade",
-      "image": "captures/04-upgrade.png",
-      "title": "04 / Build your survivor"
+      "id": "07-upgrade",
+      "image": "captures/07-upgrade.png",
+      "title": "07 / Build your survivor"
     },
     {
-      "detail": "The breaker consumes the fuse and relay. The objective and rank rewards advance from the interaction, not a fabricated timer.",
-      "id": "05-power",
-      "image": "captures/05-power.png",
-      "title": "05 / Bring the grid online"
+      "detail": "Install the fuse and relay separately. Both slots must be filled before the grid comes back online.",
+      "id": "08-power",
+      "image": "captures/08-power.png",
+      "title": "08 / Bring the grid online"
     },
     {
       "detail": "Speak with the survivor after restoring power. Dialogue owns input and pauses threats; the journal explains the final route.",
-      "id": "06-survivor",
-      "image": "captures/06-survivor.png",
-      "title": "06 / Shaun's escape plan"
+      "id": "09-survivor",
+      "image": "captures/09-survivor.png",
+      "title": "09 / Shaun's escape plan"
     },
     {
       "detail": "The brute uses a distinct health bar, slower committed attacks and a readable windup. Move out of its contact range during the attack.",
-      "id": "07-brute",
-      "image": "captures/07-brute.png",
-      "title": "07 / Clear the courtyard"
+      "id": "10-brute",
+      "image": "captures/10-brute.png",
+      "title": "10 / Clear the courtyard"
     },
     {
-      "detail": "The episode ends after the component, power, survivor and brute prerequisites. The debrief uses actual mission statistics.",
-      "id": "08-extraction",
-      "image": "captures/08-extraction.png",
-      "title": "08 / Extraction and debrief"
+      "detail": "Boarding shifts to the truck camera. Drive along the opening and clear the gate.",
+      "id": "11-truck",
+      "image": "captures/11-truck.png",
+      "title": "11 / Take the wheel"
+    },
+    {
+      "detail": "Once the truck clears the gate, the debrief shows active playtime, infected defeated and damage dealt.",
+      "id": "12-extraction",
+      "image": "captures/12-extraction.png",
+      "title": "12 / Extraction and debrief"
     }
   ],
   "method": "Script-assisted native gameplay: physical movement/combat and real interaction callbacks; safe repositioning between distant chapters; other enemies temporarily held for reproducibility.",
-  "movement_frame_ms": {
-    "median": 64.32,
-    "note": "Short native movement sample; excludes captures/loading and is not a sustained FPS guarantee.",
-    "p95": 639.267,
-    "sample_count": 55
-  },
   "passed": true
 }

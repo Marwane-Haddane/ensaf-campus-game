@@ -16,10 +16,10 @@ func required_resources() -> Array[String]:
 		ENTRY_SCENE_PATH,
 		"res://assets/campus.glb",
 		"res://assets/antigravity/zombie/route_navmesh.res",
-		"res://assets/antigravity/zombie/models/pistol_hands.tscn",
-		"res://assets/antigravity/zombie/models/Zombie_Basic.tscn",
-		"res://assets/antigravity/zombie/models/Zombie_Chubby.tscn",
-		"res://assets/antigravity/zombie/models/Characters_Shaun.tscn"
+		"res://assets/antigravity/zombie/models/pistol_hands.scn",
+		"res://assets/antigravity/zombie/models/Zombie_Basic.scn",
+		"res://assets/antigravity/zombie/models/Zombie_Chubby.scn",
+		"res://assets/antigravity/zombie/models/Characters_Shaun.scn"
 	]
 	
 	# Include runtime campus chunks if manifest is present
@@ -31,13 +31,15 @@ func required_resources() -> Array[String]:
 			for chunk_path: String in sections["chunks"]:
 				paths.append(chunk_path)
 	
-	# Surface textures
-	# Keep weapon changes free of a synchronous first-use model load.
-	var weapon_manifest: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://design/antigravity/zombie/weapons.json"))
-	if weapon_manifest is Dictionary:
-		for config: Dictionary in weapon_manifest.get("weapons",{}).values():
-			var model: String = str(config.get("scene",""))
-			if ResourceLoader.exists(model) and model not in paths: paths.append(model)
+	# Prepare combat models before spawning actors or switching weapons.
+	for manifest in ["weapons", "enemies"]:
+		var path := "res://design/antigravity/zombie/%s.json" % manifest
+		var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+		if data is Dictionary:
+			for config: Dictionary in data.get(manifest, {}).values():
+				var model: String = str(config.get("scene", ""))
+				if ResourceLoader.exists(model) and model not in paths:
+					paths.append(model)
 	var surface_manifest := "res://assets/runtime_surfaces/manifest.json"
 	if FileAccess.file_exists(surface_manifest):
 		var surfaces: Variant = JSON.parse_string(FileAccess.get_file_as_string(surface_manifest))

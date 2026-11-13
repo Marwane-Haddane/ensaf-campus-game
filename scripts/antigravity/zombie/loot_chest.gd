@@ -2,6 +2,8 @@ extends StaticBody3D
 ## Interactive Military Loot Chest
 ## Contains survival rewards such as scrap caches, field medkits, or unlockable weapons.
 
+const SupplyMarker = preload("res://scripts/antigravity/zombie/supply_marker.gd")
+
 signal chest_opened(chest_id: String, reward_type: String)
 
 @export var chest_id: String = "chest_default"
@@ -13,11 +15,14 @@ var lid_mesh: MeshInstance3D = null
 var _lid_hinge: Node3D
 var _inventory: RefCounted
 var _open_tween: Tween
+var _marker: Label3D
 
 func _ready() -> void:
 	add_to_group("interactables")
 	add_to_group("loot_chests")
 	_setup_collision_and_mesh()
+	if loot_type == "shotgun":
+		_marker = SupplyMarker.attach(self, "◆  BENELLI M4  /  WEAPONS CASE", Color("ffbf66"), 1.18, 35)
 	var game := get_tree().root.find_child("ZombieGame",true,false)
 	_inventory = game.get("inventory") if game else null
 	if _inventory != null:
@@ -85,6 +90,7 @@ func _sync_open_state() -> void:
 	var claimed: bool = _inventory.has_claimed_reward("cache:"+chest_id)
 	if claimed == is_opened: return
 	is_opened = claimed
+	if _marker: _marker.visible = not claimed
 	if _open_tween != null and _open_tween.is_running(): _open_tween.kill()
 	if _lid_hinge != null: _lid_hinge.rotation_degrees.x = -70.0 if is_opened else 0.0
 
@@ -97,35 +103,34 @@ func get_interaction_prompt() -> String:
 		if not events.is_empty() and events[0] is InputEventKey:
 			key = OS.get_keycode_string(events[0].physical_keycode if events[0].physical_keycode!=0 else events[0].keycode)
 	if loot_type == "shotgun":
-		return "[%s] Open tactical weapons cache" % key
+		return "[%s] Open weapons case · Benelli M4" % key
 	return "[%s] Recover supplies · %d scrap + medkit" % [key,loot_amount]
 
-func interact(_player: Node) -> void:
+func interact(player: Node) -> void:
 	if is_opened:
 		return
 	var game = get_tree().root.find_child("ZombieGame", true, false)
 	var inv = game.get("inventory") if game else null
 	var hud = game.get("hud") if game else null
 	if inv == null: return
-	var awarded: bool = inv.claim_reward("cache:"+chest_id,15,loot_amount if loot_type!="shotgun" else 0,{"ammo_shotgun":12} if loot_type=="shotgun" else {"medkit":1})
+	var awarded: bool = inv.claim_reward("cache:"+chest_id,15,loot_amount if loot_type!="shotgun" else 0,{} if loot_type=="shotgun" else {"medkit":1})
 	if not awarded:
 		_sync_open_state()
 		return
 	is_opened = true
-	
+
 	_play_open_sound()
 	_animate_open()
-	
 	if loot_type == "shotgun":
-		if inv and inv.has_method("unlock_weapon"):
-			inv.call("unlock_weapon", "shotgun")
-		if hud:
-			hud.call("show_banner_message", "UNLOCKED: Benelli M4 Shotgun & 12 Shells! [Press 3]", 4.5)
-	else:
-		if hud:
-			hud.call("show_banner_message", "+%d Scrap & +1 Field Medkit recovered!" % loot_amount, 3.5)
-	
+		inv.unlock_weapon("shotgun")
+		player.switch_weapon_slot(2)
 	chest_opened.emit(chest_id, loot_type)
+
+	if hud:
+		if loot_type == "shotgun":
+			hud.call("show_banner_message", "BENELLI M4 EQUIPPED · 3 to switch back · R to load shells", 4.5)
+		else:
+			hud.call("show_banner_message", "+%d Scrap & +1 Field Medkit recovered!" % loot_amount, 3.5)
 
 func _animate_open() -> void:
 	if _lid_hinge:
