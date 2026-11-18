@@ -6,10 +6,19 @@ class_name ComputerProp
 ## Source: Phuc, CC BY 4.0. See the GLB's embedded asset.extras attribution.
 
 const ASSET := "res://assets/user_models/gamer_setup_pack.glb"
+## Low preset: the same 5 parts joined per part (2 materials each) and decimated to
+## ~3.4k tris (tools/props_low.py). Node, screen and LED material names are kept.
+const ASSET_LOW := "res://assets/user_models/low/gamer_setup_pack_low.glb"
+const CampusQuality = preload("res://scripts/launcher/campus_quality.gd")
 const NATIVE_MONITOR_WIDTH := 0.8012037873268127
 
+static func asset_path() -> String:
+	if CampusQuality.requested_preset() == "low" and ResourceLoader.exists(ASSET_LOW):
+		return ASSET_LOW
+	return ASSET
+
 static func create(parent: Node3D, base: Vector3, width: float = 1.0) -> Dictionary:
-	var packed := load(ASSET) as PackedScene
+	var packed := load(asset_path()) as PackedScene
 	if packed == null:
 		push_error("The approved computer asset could not be loaded: " + ASSET)
 		return {}
@@ -79,7 +88,7 @@ static func create(parent: Node3D, base: Vector3, width: float = 1.0) -> Diction
 		if part != null:
 			component_bounds[key] = _bounds(part, part.transform)
 	var station_world := _world_transform(station)
-	station.set_meta("source_asset", ASSET)
+	station.set_meta("source_asset", asset_path())
 	station.set_meta("monitor_width_m", monitor_width)
 	return {
 		"root": station,

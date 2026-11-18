@@ -117,8 +117,10 @@ func test_station(station: Dictionary, approach: Vector3) -> void:
 			mesh_count += 1
 			if mesh.mesh is PrimitiveMesh:
 				primitives += 1
-		check(mesh_count == 37 and primitives == 0, name + " uses supplied meshes without primitive PC", {"meshes":mesh_count,"primitives":primitives})
-		check(node.get_meta("source_asset", "") == "res://assets/user_models/gamer_setup_pack.glb", name + " source metadata matches approved model")
+		# Medium/High mount the 37 supplied meshes; Low mounts the joined 6 (tools/props_low.py).
+		var expected_meshes := 6 if ComputerProp.asset_path() == ComputerProp.ASSET_LOW else 37
+		check(mesh_count == expected_meshes and primitives == 0, name + " uses supplied meshes without primitive PC", {"meshes":mesh_count,"primitives":primitives})
+		check(node.get_meta("source_asset", "") == ComputerProp.asset_path(), name + " source metadata matches approved model")
 		var screen_mesh := asset.screen_mesh as MeshInstance3D
 		check(screen_mesh != null and str(screen_mesh.name) == "sm_monitor_mt_monitor_screen_0", name + " interaction targets native display")
 		check(is_equal_approx(float(asset.monitor_width), 0.72), name + " monitor width is realistic")
@@ -184,7 +186,7 @@ func action(name: String) -> InputEventAction:
 	return event
 
 func collect_source_roots(node: Node, results: Array[Node3D]) -> void:
-	if node is Node3D and node.get_meta("source_asset", "") == "res://assets/user_models/gamer_setup_pack.glb":
+	if node is Node3D and node.get_meta("source_asset", "") == ComputerProp.asset_path():
 		results.append(node as Node3D)
 	for child in node.get_children():
 		collect_source_roots(child, results)

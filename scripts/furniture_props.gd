@@ -3,11 +3,14 @@ class_name FurnitureProps
 ## User-supplied GLBs. position is the floor centre; yaw is in radians and
 ## fronts face +Z at zero yaw. See tools/furniture_sources.json for attribution.
 
+const CampusQuality = preload("res://scripts/launcher/campus_quality.gd")
+
 const MODELS := {
 	"desk": {"path": "res://assets/user_models/office_desk_140x60.glb", "height": 0.75},
 	"chair": {"path": "res://assets/user_models/office_chair.glb", "height": 1.10},
 	"server_rack": {"path": "res://assets/user_models/server_rack.glb", "height": 2.0},
-	"server_rack_1": {"path": "res://assets/user_models/server_rack_1.glb", "height": 2.0},
+	# Low preset swaps in the decimated cable looms (tools/props_low.py).
+	"server_rack_1": {"path": "res://assets/user_models/server_rack_1.glb", "low_path": "res://assets/user_models/low/server_rack_1_low.glb", "height": 2.0},
 	"supplied_bench": {"path": "res://assets/user_models/supplied_bench.glb", "height": 0.90},
 	"supplied_bin": {"path": "res://assets/user_models/supplied_bin.glb", "height": 0.90},
 }
@@ -17,7 +20,10 @@ static func place(parent: Node3D, kind: String, position: Vector3, yaw: float = 
 		push_error("Unknown approved furniture kind: " + kind)
 		return null
 	var config: Dictionary = MODELS[kind]
-	var packed := load(config.path) as PackedScene
+	var path: String = config.path
+	if config.has("low_path") and CampusQuality.requested_preset() == "low" and ResourceLoader.exists(config.low_path):
+		path = config.low_path
+	var packed := load(path) as PackedScene
 	if packed == null:
 		push_error("Approved furniture could not be loaded: " + str(config.path))
 		return null
@@ -66,7 +72,7 @@ static func place(parent: Node3D, kind: String, position: Vector3, yaw: float = 
 		collision.shape = shape
 		collision.position = box.get_center()
 		body.add_child(collision)
-	prop.set_meta("source_asset", config.path)
+	prop.set_meta("source_asset", path)
 	prop.set_meta("furniture_kind", kind)
 	prop.set_meta("local_bounds", box)
 	prop.set_meta("front", Vector3.BACK)
