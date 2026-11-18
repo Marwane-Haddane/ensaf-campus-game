@@ -1,0 +1,164 @@
+{
+  "provenance": "Procedural, deterministic (tools/material_kit_high.py); no external images.",
+  "size": 1024,
+  "kinds": {
+    "asphalt": {
+      "repeat_m": 1.5,
+      "normal_scale": 0.8,
+      "albedo_mean": 0.857,
+      "files": {
+        "albedo": "res://assets/runtime_surfaces_high/asphalt_albedo.png",
+        "normal": "res://assets/runtime_surfaces_high/asphalt_normal.png",
+        "roughness": "res://assets/runtime_surfaces_high/asphalt_roughness.png"
+      }
+    },
+    "carpet": {
+      "repeat_m": 0.6,
+      "normal_scale": 0.6,
+      "albedo_mean": 0.898,
+      "files": {
+        "albedo": "res://assets/runtime_surfaces_high/carpet_albedo.png",
+        "normal": "res://assets/runtime_surfaces_high/carpet_normal.png",
+        "roughness": "res://assets/runtime_surfaces_high/carpet_roughness.png"
+      }
+    },
+    "fabric": {
+      "repeat_m": 0.25,
+      "normal_scale": 0.5,
+      "albedo_mean": 0.9,
+      "files": {
+        "albedo": "res://assets/runtime_surfaces_high/fabric_albedo.png",
+        "normal": "res://assets/runtime_surfaces_high/fabric_normal.png",
+        "roughness": "res://assets/runtime_surfaces_high/fabric_roughness.png"
+      }
+    },
+    "floor_stone": {
+      "repeat_m": 2.0,
+      "normal_scale": 0.15,
+      "albedo_mean": 0.952,
+      "files": {
+        "albedo": "res://assets/runtime_surfaces_high/floor_stone_albedo.png",
+        "normal": "res://assets/runtime_surfaces_high/floor_stone_normal.png",
+        "roughness": "res://assets/runtime_surfaces_high/floor_stone_roughness.png"
+      }
+    },
+    "limestone": {
+      "repeat_m": 2.0,
+      "normal_scale": 0.55,
+      "albedo_mean": 0.901,
+      "files": {
+        "albedo": "res://assets/runtime_surfaces_high/limestone_albedo.png",
+        "normal": "res://assets/runtime_surfaces_high/limestone_normal.png",
+        "roughness": "res://assets/runtime_surfaces_high/limestone_roughness.png"
+      }
+    },
+    "mineral": {
+      "repeat_m": 2.0,
+      "normal_scale": 0.45,
+      "albedo_mean": 0.926,
+      "files": {
+        "albedo": "res://assets/runtime_surfaces_high/mineral_albedo.png",
+        "normal": "res://assets/runtime_surfaces_high/mineral_normal.png",
+        "roughness": "res://assets/runtime_surfaces_high/mineral_roughness.png"
+      }
+    },
+    "paving": {
+      "repeat_m": 2.4,
+      "normal_scale": 0.9,
+      "albedo_mean": 0.859,
+      "files": {
+        "albedo": "res://assets/runtime_surfaces_high/paving_albedo.png",
+        "normal": "res://assets/runtime_surfaces_high/paving_normal.png",
+        "roughness": "res://assets/runtime_surfaces_high/paving_roughness.png"
+      }
+    },
+    "slate": {
+      "repeat_m": 1.6,
+      "normal_scale": 0.9,
+      "albedo_mean": 0.835,
+      "files": {
+        "albedo": "res://assets/runtime_surfaces_high/slate_albedo.png",
+        "normal": "res://assets/runtime_surfaces_high/slate_normal.png",
+        "roughness": "res://assets/runtime_surfaces_high/slate_roughness.png"
+      }
+    },
+    "terrazzo": {
+      "repeat_m": 1.25,
+      "normal_scale": 0.2,
+      "albedo_mean": 0.863,
+      "files": {
+        "albedo": "res://assets/runtime_surfaces_high/terrazzo_albedo.png",
+        "normal": "res://assets/runtime_surfaces_high/terrazzo_normal.png",
+        "roughness": "res://assets/runtime_surfaces_high/terrazzo_roughness.png"
+      }
+    },
+    "wood": {
+      "repeat_m": 1.2,
+      "normal_scale": 0.35,
+      "albedo_mean": 0.861,
+      "files": {
+        "albedo": "res://assets/runtime_surfaces_high/wood_albedo.png",
+        "normal": "res://assets/runtime_surfaces_high/wood_normal.png",
+        "roughness": "res://assets/runtime_surfaces_high/wood_roughness.png"
+      }
+    },
+    "wood_horizontal": {
+      "repeat_m": 1.2,
+      "normal_scale": 0.35,
+      "albedo_mean": 0.838,
+      "files": {
+        "albedo": "res://assets/runtime_surfaces_high/wood_horizontal_albedo.png",
+        "normal": "res://assets/runtime_surfaces_high/wood_horizontal_normal.png",
+        "roughness": "res://assets/runtime_surfaces_high/wood_horizontal_roughness.png"
+      }
+    },
+    "wood_transverse": {
+      "repeat_m": 1.2,
+      "normal_scale": 0.35,
+      "albedo_mean": 0.843,
+      "files": {
+        "albedo": "res://assets/runtime_surfaces_high/wood_transverse_albedo.png",
+        "normal": "res://assets/runtime_surfaces_high/wood_transverse_normal.png",
+        "roughness": "res://assets/runtime_surfaces_high/wood_transverse_roughness.png"
+      }
+    }
+  },
+  "textures": [
+    "res://assets/runtime_surfaces_high/asphalt_albedo.png",
+    "res://assets/runtime_surfaces_high/asphalt_normal.png",
+    "res://assets/runtime_surfaces_high/asphalt_roughness.png",
+    "res://assets/runtime_surfaces_high/carpet_albedo.png",
+    "res://assets/runtime_surfaces_high/carpet_normal.png",
+    "res://assets/runtime_surfaces_high/carpet_roughness.png",
+    "res://assets/runtime_surfaces_high/fabric_albedo.png",
+    "res://assets/runtime_surfaces_high/fabric_normal.png",
+    "res://assets/runtime_surfaces_high/fabric_roughness.png",
+    "res://assets/runtime_surfaces_high/floor_stone_albedo.png",
+    "res://assets/runtime_surfaces_high/floor_stone_normal.png",
+    "res://assets/runtime_surfaces_high/floor_stone_roughness.png",
+    "res://assets/runtime_surfaces_high/limestone_albedo.png",
+    "res://assets/runtime_surfaces_high/limestone_normal.png",
+    "res://assets/runtime_surfaces_high/limestone_roughness.png",
+    "res://assets/runtime_surfaces_high/mineral_albedo.png",
+    "res://assets/runtime_surfaces_high/mineral_normal.png",
+    "res://assets/runtime_surfaces_high/mineral_roughness.png",
+    "res://assets/runtime_surfaces_high/paving_albedo.png",
+    "res://assets/runtime_surfaces_high/paving_normal.png",
+    "res://assets/runtime_surfaces_high/paving_roughness.png",
+    "res://assets/runtime_surfaces_high/slate_albedo.png",
+    "res://assets/runtime_surfaces_high/slate_normal.png",
+    "res://assets/runtime_surfaces_high/slate_roughness.png",
+    "res://assets/runtime_surfaces_high/terrazzo_albedo.png",
+    "res://assets/runtime_surfaces_high/terrazzo_normal.png",
+    "res://assets/runtime_surfaces_high/terrazzo_roughness.png",
+    "res://assets/runtime_surfaces_high/wood_albedo.png",
+    "res://assets/runtime_surfaces_high/wood_normal.png",
+    "res://assets/runtime_surfaces_high/wood_roughness.png",
+    "res://assets/runtime_surfaces_high/wood_horizontal_albedo.png",
+    "res://assets/runtime_surfaces_high/wood_horizontal_normal.png",
+    "res://assets/runtime_surfaces_high/wood_horizontal_roughness.png",
+    "res://assets/runtime_surfaces_high/wood_transverse_albedo.png",
+    "res://assets/runtime_surfaces_high/wood_transverse_normal.png",
+    "res://assets/runtime_surfaces_high/wood_transverse_roughness.png"
+  ]
+}

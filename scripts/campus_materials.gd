@@ -7,6 +7,21 @@ var stats: Dictionary = {"materials": 0, "texture_sets": 0, "normal_texture_sets
 var _allowed_names: Dictionary = {}
 var _materials: Dictionary = {}
 var _texture_sets: Dictionary = {}
+## High preset: 1024 px PBR kit (albedo + normal + roughness) from tools/material_kit_high.py.
+## Low and Medium keep the original small textures above.
+const CampusQuality = preload("res://scripts/launcher/campus_quality.gd")
+const HIGH_MANIFEST := "res://assets/runtime_surfaces_high/manifest.json"
+var high_detail: bool = false
+var _high_kinds: Dictionary = {}
+
+
+func _init() -> void:
+	high_detail = CampusQuality.requested_preset() == "high"
+	if high_detail and FileAccess.file_exists(HIGH_MANIFEST):
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(HIGH_MANIFEST))
+		if parsed is Dictionary:
+			_high_kinds = (parsed as Dictionary).get("kinds", {}) as Dictionary
+	stats["high_detail"] = high_detail and not _high_kinds.is_empty()
 
 
 func configure_manifest(material_records: Array) -> void:
@@ -70,6 +85,14 @@ func material_for(original: Material, _source_name: String = "") -> Material:
 		# Small hardware and modeled joints benefit from a smooth constant finish.
 		_configure_finish(material, family)
 	else:
+		var high_kind: String = _high_kind(family)
+		if not high_kind.is_empty():
+			_apply_high_kit(material, family, high_kind)
+			_materials[key] = material
+			stats["materials"] = _materials.size()
+			var counts: Dictionary = stats["families"] as Dictionary
+			counts[family] = int(counts.get(family, 0)) + 1
+			return material
 		var texture_kind: String = _texture_kind(family)
 		var texture_set: Dictionary = _get_texture_set(texture_kind)
 		material.albedo_texture = texture_set["albedo"] as Texture2D
@@ -182,6 +205,45 @@ func _configure_finish(material: StandardMaterial3D, family: String) -> void:
 		"metal_painted":
 			material.metallic = 0.24
 			material.roughness = 0.43
+
+
+func _high_kind(family: String) -> String:
+	if _high_kinds.is_empty():
+		return ""
+	var kind: String = {"wood_vertical": "wood", "veined_stone": "floor_stone", "metal_painted": ""}.get(family, family)
+	return kind if _high_kinds.has(kind) else ""
+
+
+func _apply_high_kit(material: StandardMaterial3D, family: String, kind: String) -> void:
+	var info: Dictionary = _high_kinds[kind] as Dictionary
+	var files: Dictionary = info.get("files", {}) as Dictionary
+	var cache_key: String = "high:" + kind
+	if not _texture_sets.has(cache_key):
+		var set_textures: Dictionary = {}
+		for channel: String in ["albedo", "normal", "roughness"]:
+			var path: String = str(files.get(channel, ""))
+			if ResourceLoader.exists(path):
+				set_textures[channel] = load(path) as Texture2D
+		_texture_sets[cache_key] = set_textures
+		stats["texture_sets"] = _texture_sets.size()
+		stats["normal_texture_sets"] = int(stats["normal_texture_sets"]) + (1 if set_textures.has("normal") else 0)
+		stats["roughness_texture_sets"] = int(stats["roughness_texture_sets"]) + (1 if set_textures.has("roughness") else 0)
+	var textures: Dictionary = _texture_sets[cache_key] as Dictionary
+	material.albedo_texture = textures.get("albedo") as Texture2D
+	material.uv1_triplanar = true
+	material.uv1_world_triplanar = true
+	material.uv1_triplanar_sharpness = 8.0
+	material.uv1_scale = Vector3.ONE / maxf(float(info.get("repeat_m", 2.0)), 0.05)
+	if textures.has("normal"):
+		material.normal_enabled = true
+		material.normal_texture = textures["normal"] as Texture2D
+		material.normal_scale = float(info.get("normal_scale", 0.5))
+	_configure_finish(material, family)
+	if textures.has("roughness"):
+		# Godot multiplies the constant finish roughness by this map (values ~0.75-1.0).
+		material.roughness_texture = textures["roughness"] as Texture2D
+		material.roughness_texture_channel = BaseMaterial3D.TEXTURE_CHANNEL_RED
+	material.set_meta("campus_high_kit", kind)
 
 
 func _texture_kind(family: String) -> String:
