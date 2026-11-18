@@ -1,4 +1,5 @@
 extends RefCounted
+const CampusQuality = preload("res://scripts/launcher/campus_quality.gd")
 ## Metadata only. Loading this registry must not load a scene or GLB.
 const MODES := [
 	{"id":"incident_response","title":"ENSA Incident Response","subtitle":"Cybersecurity training",
@@ -11,7 +12,8 @@ const MODES := [
 	"save_namespace":"zombie_rpg","settings_namespace":"zombie_rpg",
 	"artwork_path":"res://assets/antigravity/launcher/mode_zombie.png",
 	"description":"A future campus survival experience. Preview only — not playable yet."}]
-const ASSETS: Array[String] = ["res://assets/campus.glb",
+## Campus geometry is added per Graphics Preset by CampusQuality.resource_paths().
+const ASSETS: Array[String] = [
 	"res://assets/user_models/gamer_setup_pack.glb", "res://assets/user_models/office_desk_140x60.glb",
 	"res://assets/user_models/office_chair.glb", "res://assets/user_models/server_rack.glb",
 	"res://assets/user_models/server_rack_1.glb", "res://main.tscn"]
@@ -36,13 +38,8 @@ static func entries(registration_path: String = REGISTRATION_PATH) -> Array:
 				else: modes.append(mode)
 	return modes
 static func asset_paths() -> Array[String]:
-	var paths: Array[String] = ASSETS.duplicate()
-	var campus_manifest := "res://assets/runtime_campus/manifest.json"
-	if FileAccess.file_exists(campus_manifest):
-		var sections: Variant = JSON.parse_string(FileAccess.get_file_as_string(campus_manifest))
-		if sections is Dictionary and sections.get("version",0)==1 and not sections.get("chunks",[]).is_empty():
-			paths.erase("res://assets/campus.glb")
-			for path: String in sections.chunks: paths.append(path)
+	var paths: Array[String] = CampusQuality.resource_paths()
+	paths.append_array(ASSETS)
 	var manifest: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://assets/runtime_surfaces/manifest.json"))
 	if manifest is Dictionary:
 		for path: String in manifest.get("textures",[]): paths.append(path)

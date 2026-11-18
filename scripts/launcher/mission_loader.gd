@@ -15,6 +15,8 @@ var retained_resources: Dictionary = {}
 var latest: Dictionary = {}
 var metrics: Array[Dictionary] = []
 var resource_paths: Array[String] = Registry.asset_paths()
+## Default list captured at startup; replaced per load so a new Graphics Preset applies.
+var _startup_paths: Array[String] = resource_paths.duplicate()
 var test_frame_gate := false
 var _disposing := 0
 var current_adapter: RefCounted
@@ -88,7 +90,7 @@ func _run(generation: int, id: String, preferences: Dictionary, mode_id: String)
 		return
 	current_adapter = adapter
 	# Tests may substitute resource_paths for missing-resource/cancellation probes.
-	var paths: Array[String] = resource_paths if mode_id == "incident_response" else adapter.required_resources()
+	var paths: Array[String] = (Registry.asset_paths() if resource_paths == _startup_paths else resource_paths) if mode_id == "incident_response" else adapter.required_resources()
 	for path: String in paths:
 		if generation != _generation:
 			_worker_busy = false
@@ -96,8 +98,8 @@ func _run(generation: int, id: String, preferences: Dictionary, mode_id: String)
 		# Reuse owned resources on replay; don't impose a polling frame for each
 		# already-loaded section or duplicate background requests for cached data.
 		if retained_resources.has(path) and is_instance_valid(retained_resources[path]): continue
-		var title := "Loading campus resource" if path.ends_with("campus.glb") else "Loading " + path.get_file().get_basename().replace("_"," ")
-		if "/runtime_campus/" in path: title = "Loading campus sections"
+		var title := "Loading campus resource" if path.get_file().begins_with("campus") and path.ends_with(".glb") else "Loading " + path.get_file().get_basename().replace("_"," ")
+		if "/runtime_campus" in path: title = "Loading campus sections"
 		elif "/runtime_surfaces/" in path: title = "Loading campus surface finishes"
 		_stage(id,title,"resource")
 		if not ResourceLoader.exists(path):

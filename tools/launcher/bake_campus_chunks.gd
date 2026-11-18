@@ -3,10 +3,17 @@ extends SceneTree
 ## triangle shapes avoid one large main-thread instantiation/collision job.
 const Runtime = preload("res://scripts/campus_runtime.gd")
 func _init() -> void: call_deferred("bake")
+## Args (after --): --source=res://assets/campus_low.glb --out=res://assets/runtime_campus_low
+## Defaults bake the Medium (original) campus into res://assets/runtime_campus.
+var source_path := "res://assets/campus.glb"
+var folder := "res://assets/runtime_campus"
 func bake() -> void:
+	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--source="): source_path = arg.trim_prefix("--source=")
+		elif arg.begins_with("--out="): folder = arg.trim_prefix("--out=")
 	var runtime = Runtime.new()
 	runtime._load_manifest()
-	var packed := load("res://assets/campus.glb") as PackedScene
+	var packed := load(source_path) as PackedScene
 	var source := packed.instantiate() as Node3D
 	var meshes: Array[MeshInstance3D] = []
 	collect(source,meshes)
@@ -31,9 +38,8 @@ func bake() -> void:
 					pieces.append(shape)
 				shape_cache[key] = pieces
 			mesh.set_meta("derived_triangle_shapes",shape_cache[key])
-	var folder := "res://assets/runtime_campus"
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(folder))
-	var manifest := {"version":1,"source_sha256":FileAccess.get_sha256("res://assets/campus.glb"),"source_meshes":meshes.size(),"chunks":[],"triangle_shapes":shape_cache.size()}
+	var manifest := {"version":1,"source_sha256":FileAccess.get_sha256(source_path),"source_meshes":meshes.size(),"chunks":[],"triangle_shapes":shape_cache.size()}
 	# The imported scene is a flat collection of campus objects. Group complete
 	# top-level subtrees, preserving all local transforms and original names.
 	var index := 0

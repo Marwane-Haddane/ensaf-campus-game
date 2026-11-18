@@ -112,7 +112,9 @@ func _run_harness() -> void:
 
 	# 1. Viewport configuration (1280x720, 2x MSAA)
 	root.size = Vector2i(1280, 720)
-	root.msaa_3d = Viewport.MSAA_2X
+	# Match the Graphics Preset's MSAA (settings_store.gd): low off, medium 2x, high 4x.
+	var preset: String = preload("res://scripts/launcher/campus_quality.gd").requested_preset()
+	root.msaa_3d = {"low": Viewport.MSAA_DISABLED, "high": Viewport.MSAA_4X}.get(preset, Viewport.MSAA_2X)
 
 	# 2. Instantiate unmodified production scene
 	var scene_res: PackedScene = load("res://main.tscn")
@@ -302,6 +304,26 @@ func _benchmark_all_views(phase_name: String) -> Array[Dictionary]:
 		var primitives: int = Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME)
 		var video_mem_mb: float = float(Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED)) / (1024.0 * 1024.0)
 
+		# The forced loop above renders each frame twice (engine frame + force_draw),
+		# so "fps" is roughly half of play. Also record normal frames and GPU/CPU render time.
+		var vp_rid: RID = root.get_viewport_rid()
+		RenderingServer.viewport_set_measure_render_time(vp_rid, true)
+		for _i in range(5):
+			await process_frame
+		var natural_usec: int = 0
+		var gpu_ms_total: float = 0.0
+		var cpu_ms_total: float = 0.0
+		for _i in range(30):
+			var natural_start: int = Time.get_ticks_usec()
+			await process_frame
+			natural_usec += Time.get_ticks_usec() - natural_start
+			gpu_ms_total += RenderingServer.viewport_get_measured_render_time_gpu(vp_rid)
+			cpu_ms_total += RenderingServer.viewport_get_measured_render_time_cpu(vp_rid)
+		var gpu_ms: float = gpu_ms_total / 30.0
+		var render_cpu_ms: float = cpu_ms_total / 30.0
+		# Uncapped estimate: the slower of GPU and CPU render work bounds the frame.
+		var est_fps: float = 1000.0 / maxf(maxf(gpu_ms, render_cpu_ms), 0.001)
+
 		var record: Dictionary = {
 			"phase": phase_name,
 			"view_id": view_def["id"],
@@ -311,11 +333,15 @@ func _benchmark_all_views(phase_name: String) -> Array[Dictionary]:
 			"forced_draw_ms": snappedf(avg_forced_draw_ms, 0.01),
 			"draw_calls": draw_calls,
 			"primitives": primitives,
-			"video_mem_mb": snappedf(video_mem_mb, 0.01)
+			"video_mem_mb": snappedf(video_mem_mb, 0.01),
+			"natural_frame_ms": snappedf(float(natural_usec) / 1000.0 / 30.0, 0.01),
+			"gpu_ms": snappedf(gpu_ms, 0.01),
+			"render_cpu_ms": snappedf(render_cpu_ms, 0.01),
+			"est_play_fps": snappedf(est_fps, 0.1)
 		}
 		results.append(record)
-		print("BENCHMARK [%s | %s]: %.1f FPS, %.2f ms, %d draw calls, %d primitives" % [
-			phase_name, view_def["id"], fps, avg_frame_ms, draw_calls, primitives
+		print("BENCHMARK [%s | %s]: %.1f FPS, %.2f ms, %d draw calls, %d primitives | play: gpu %.1f ms, cpu %.1f ms, ~%.0f FPS" % [
+			phase_name, view_def["id"], fps, avg_frame_ms, draw_calls, primitives, gpu_ms, render_cpu_ms, est_fps
 		])
 	return results
 

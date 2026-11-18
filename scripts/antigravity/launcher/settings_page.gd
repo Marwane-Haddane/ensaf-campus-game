@@ -247,10 +247,14 @@ func _build_graphics_tab() -> Control:
 	var preset_row := _create_graphics_row(vbox, "Graphics Preset")
 	_preset_option = OptionButton.new()
 	_preset_option.focus_mode = Control.FOCUS_ALL
-	_preset_option.add_item("Low")
+	_preset_option.add_item("Low (Faster campus)")
 	_preset_option.add_item("Medium (Recommended)")
-	_preset_option.add_item("High")
+	_preset_option.add_item("High (Extra detail)")
 	_preset_option.selected = 1
+	_preset_option.tooltip_text = "Low: lighter campus models for higher FPS.
+Medium: original campus detail.
+High: extra detail where available (uses Medium campus until added).
+Campus detail changes apply the next time a mission loads."
 	_preset_option.item_selected.connect(func(idx):
 		var p_str = PRESETS[clampi(idx, 0, PRESETS.size() - 1)]
 		_emit_edit("graphics_preset", p_str)

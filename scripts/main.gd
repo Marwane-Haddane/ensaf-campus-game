@@ -4,6 +4,7 @@ signal launcher_return_requested
 signal launcher_settings_requested
 
 const CampusRuntime = preload("res://scripts/campus_runtime.gd")
+const CampusQuality = preload("res://scripts/launcher/campus_quality.gd")
 const TrainingUI = preload("res://scripts/training_ui.gd")
 const ApprovedComputer = preload("res://scripts/computer_prop.gd")
 const ApprovedFurniture = preload("res://scripts/furniture_props.gd")
@@ -225,6 +226,7 @@ func _setup_environment() -> void:
 	sun.shadow_enabled = true
 	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
 	sun.directional_shadow_max_distance = 45
+	_apply_sun_quality(sun, CampusQuality.requested_preset(runtime_preferences))
 	sun.directional_shadow_blend_splits = true
 	sun.shadow_bias = 0.12
 	sun.shadow_normal_bias = 2.0
@@ -339,9 +341,14 @@ func apply_runtime_preferences(data: Dictionary) -> void:
 	mouse_sensitivity = clampf(float(data.get("mouse_sensitivity",1.0)),.5,3.0)
 	for child: Node in get_children():
 		if child is DirectionalLight3D:
-			child.directional_shadow_max_distance = {"low":24.0,"medium":45.0,"high":60.0}.get(data.get("graphics_preset","medium"),45.0)
+			_apply_sun_quality(child, str(data.get("graphics_preset","medium")))
 	var labels := {"E":"interact","J":"response_plan","Tab":"destinations"}
 	_update_key_labels(self,labels,data.get("bindings",{}))
+
+## Low: one shadow cascade (half the sun shadow draw calls) over 24 m.
+func _apply_sun_quality(sun: DirectionalLight3D, preset: String) -> void:
+	sun.directional_shadow_max_distance = {"low":24.0,"medium":45.0,"high":60.0}.get(preset,45.0)
+	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL if preset == "low" else DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
 
 func _update_key_labels(node: Node, labels: Dictionary, bindings: Dictionary) -> void:
 	if node is Label:

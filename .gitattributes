@@ -1,3 +1,4 @@
 runtime/Godot.exe filter=lfs diff=lfs merge=lfs -text
 assets/campus.glb filter=lfs diff=lfs merge=lfs -text
 assets/antigravity/zombie/models/scorpion_hands.tscn filter=lfs diff=lfs merge=lfs -text
+assets/campus_low.glb filter=lfs diff=lfs merge=lfs -text

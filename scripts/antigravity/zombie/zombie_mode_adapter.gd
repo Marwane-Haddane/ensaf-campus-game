@@ -3,6 +3,7 @@ extends RefCounted
 ## Follows the ENSA Games mode contract cleanly without dependencies on cybersecurity code.
 
 const SaveStore = preload("res://scripts/antigravity/zombie/save_store.gd")
+const CampusQuality = preload("res://scripts/launcher/campus_quality.gd")
 const ENTRY_SCENE_PATH: String = "res://scenes/antigravity/zombie/zombie_game.tscn"
 
 var saves = SaveStore.new()
@@ -14,7 +15,6 @@ func save_service() -> RefCounted:
 func required_resources() -> Array[String]:
 	var paths: Array[String] = [
 		ENTRY_SCENE_PATH,
-		"res://assets/campus.glb",
 		"res://assets/antigravity/zombie/route_navmesh.res",
 		"res://assets/antigravity/zombie/models/pistol_hands.scn",
 		"res://assets/antigravity/zombie/models/Zombie_Basic.scn",
@@ -22,14 +22,8 @@ func required_resources() -> Array[String]:
 		"res://assets/antigravity/zombie/models/Characters_Shaun.scn"
 	]
 	
-	# Include runtime campus chunks if manifest is present
-	var campus_manifest := "res://assets/runtime_campus/manifest.json"
-	if FileAccess.file_exists(campus_manifest):
-		var sections: Variant = JSON.parse_string(FileAccess.get_file_as_string(campus_manifest))
-		if sections is Dictionary and sections.get("version", 0) == 1 and not sections.get("chunks", []).is_empty():
-			paths.erase("res://assets/campus.glb")
-			for chunk_path: String in sections["chunks"]:
-				paths.append(chunk_path)
+	# Campus geometry for the chosen Graphics Preset (sections, or the single GLB).
+	paths.append_array(CampusQuality.resource_paths())
 	
 	# Prepare combat models before spawning actors or switching weapons.
 	for manifest in ["weapons", "enemies"]:
@@ -66,10 +60,10 @@ func create_session(resources: Dictionary, preferences: Dictionary) -> Node3D:
 	game.launcher_managed = true
 	game.runtime_preferences = preferences
 	game.save_store = saves
-	game.prepared_campus = resources.get("res://assets/campus.glb")
+	game.prepared_campus = resources.get(CampusQuality.campus_path(preferences))
 	
 	for path: String in resources:
-		if "/runtime_campus/" in path:
+		if CampusQuality.is_campus_section(path):
 			var res = resources[path]
 			if res is PackedScene:
 				game.prepared_sections.append(res)

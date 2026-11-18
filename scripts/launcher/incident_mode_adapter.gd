@@ -3,6 +3,7 @@ extends RefCounted
 ## shared loading pipeline, so future modes can own independent scenes and saves.
 const Registry = preload("res://scripts/launcher/mode_registry.gd")
 const SaveStore = preload("res://scripts/launcher/save_store.gd")
+const CampusQuality = preload("res://scripts/launcher/campus_quality.gd")
 var saves = SaveStore.new()
 func save_service() -> RefCounted: return saves
 func required_resources() -> Array[String]: return Registry.asset_paths()
@@ -14,9 +15,9 @@ func create_session(resources: Dictionary,preferences: Dictionary) -> Node3D:
 	if game == null: return null
 	game.launcher_managed = true
 	game.runtime_preferences = preferences
-	game.prepared_campus = resources.get("res://assets/campus.glb")
+	game.prepared_campus = resources.get(CampusQuality.campus_path(preferences))
 	for path: String in Registry.asset_paths():
-		if "/runtime_campus/" in path: game.prepared_sections.append(resources[path])
+		if CampusQuality.is_campus_section(path) and resources.has(path): game.prepared_sections.append(resources[path])
 	return game
 func initialization_finished(game: Node3D) -> bool: return bool(game.get("initialization_finished"))
 func validate_ready(game: Node3D) -> bool:

@@ -10,3 +10,8 @@
 /tools/**/*.png.import
 /tools/**/captures/
 /Zombie Apocalypse Kit - March 2024/
+
+# Art audit: keep reports/data, skip backups, scratch work and screenshots
+/art_audit/backups/
+/art_audit/work/
+/art_audit/**/*.png

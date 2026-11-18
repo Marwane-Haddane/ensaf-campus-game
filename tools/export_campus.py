@@ -1,20 +1,37 @@
 """Export a runtime-only copy of the final campus. Never save the source .blend.
 
-Run once with Blender 4.3 --background --threads 4 --python this_file.
+Run once with Blender 4.3 --background --threads 4 --python this_file [-- --quality=low|medium].
 All geometry changes exist only in memory. Linked chairs remain linked in glTF.
+
+Quality levels (player picks Graphics Preset in Settings):
+  medium (default) -> assets/campus.glb      original look (chairs 0.4 collapse, roof 0.1 collapse)
+  low              -> assets/campus_low.glb  game-ready rebuilds (art_audit roadmap items 1-2)
+  high             -> reserved for assets/campus_high.glb (extra detail, not built yet)
 """
 import bpy
 import json
 import math
 import struct
+import sys
 import time
 from pathlib import Path
 from mathutils import Vector
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from campus_chairs import optimize_chairs  # noqa: E402  (art_audit roadmap item 1)
+from campus_roof import optimize_roof  # noqa: E402  (art_audit roadmap item 2)
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / '3D-modeling' / 'campus-design-v9' / 'ensaf-campus-v9-final.blend'
 OUT = ROOT / 'campus-game' / 'assets'
 OUT.mkdir(parents=True, exist_ok=True)
+_args = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
+QUALITY = next((a.split('=', 1)[1] for a in _args if a.startswith('--quality=')), 'medium')
+assert QUALITY in ('low', 'medium'), 'Supported export qualities: low, medium'
+SUFFIX = '' if QUALITY == 'medium' else '-' + QUALITY
+GLB_NAME = 'campus.glb' if QUALITY == 'medium' else f'campus_{QUALITY}.glb'
+MANIFEST_NAME = f'asset-manifest{SUFFIX}.json'
+INVENTORY_NAME = f'source-inventory{SUFFIX}.json'
 START = time.time()
 SOURCE_STAT = (SOURCE.stat().st_size, SOURCE.stat().st_mtime_ns)
 
@@ -94,7 +111,7 @@ for obj in objects:
                               'vertices': len(obj.data.vertices) if obj.type == 'MESH' else 0,
                               'polygons': len(obj.data.polygons) if obj.type == 'MESH' else 0,
                               'modifiers': [m.type for m in obj.modifiers], **bounds(obj)})
-(OUT / 'source-inventory.json').write_text(json.dumps({'objects': initial_inventory, 'excluded': excluded}, indent=2), encoding='utf-8')
+(OUT / INVENTORY_NAME).write_text(json.dumps({'objects': initial_inventory, 'excluded': excluded}, indent=2), encoding='utf-8')
 log('Selected', len(objects), 'geometry objects; excluded', len(excluded))
 
 # Remove unrelated data before evaluating the runtime meshes. No disk source writes.
@@ -176,6 +193,11 @@ for index, obj in enumerate(objects):
         log('Evaluated meshes', index, '/', len(objects))
 
 bpy.context.view_layer.update()
+# Game-ready auditorium chairs: 4 x 23k-tri masters -> 2 shared ~1.7k-tri meshes, 3 materials.
+chair_report = optimize_chairs(objects, log=log) if QUALITY == 'low' else []
+# Game-ready E9 stone roof/frame: 1.64M tris -> ~15k (was 0.1 collapse -> ~164k).
+roof_report = optimize_roof(objects, log=log) if QUALITY == 'low' else []
+bpy.context.view_layer.update()
 unique_meshes = {}
 for obj in objects:
     unique_meshes.setdefault(obj.data.as_pointer(), []).append(obj)
@@ -184,7 +206,7 @@ for linked in unique_meshes.values():
     mesh = obj.data
     before = len(mesh.vertices)
     is_roof = obj.name.startswith('E9 unified smooth stone roof')
-    is_chair = obj.name.startswith('E9 auditorium row ')
+    is_chair = obj.name.startswith('E9 auditorium row ') and QUALITY == 'medium'
     ratio = .10 if is_roof and before > 100000 else (.40 if is_chair and before > 2000 else None)
     if ratio is None:
         continue
@@ -236,7 +258,7 @@ for obj in objects:
     obj.select_set(True)
 log('Exporting GLB', len(objects), 'nodes;', len({o.data.as_pointer() for o in objects}), 'unique meshes')
 bpy.ops.export_scene.gltf(
-    filepath=str(OUT / 'campus.glb'),
+    filepath=str(OUT / GLB_NAME),
     export_format='GLB',
     use_selection=True,
     export_yup=True,
@@ -257,16 +279,16 @@ bpy.ops.export_scene.gltf(
 
 manifest = {
     'source': str(SOURCE), 'source_unchanged': SOURCE_STAT == (SOURCE.stat().st_size, SOURCE.stat().st_mtime_ns),
-    'asset': 'campus.glb', 'asset_bytes': (OUT/'campus.glb').stat().st_size,
+    'asset': GLB_NAME, 'quality': QUALITY, 'asset_bytes': (OUT/GLB_NAME).stat().st_size,
     'coordinate_convention': 'Blender (x,y,z) -> Godot (x,z,-y); metres',
     'geometry_objects': len(objects), 'unique_meshes': len({o.data.as_pointer() for o in objects}),
     'instanced_triangles': sum(n['triangles'] for n in nodes),
-    'optimizations': optimizations, 'material_simplification': 'Constant Principled PBR; glass via alpha blend; no procedural texture baking',
+    'optimizations': optimizations, 'chair_rebuild': chair_report, 'roof_rebuild': roof_report, 'material_simplification': 'Constant Principled PBR; glass via alpha blend; no procedural texture baking',
     'materials': sorted(material_records, key=lambda m:m['name']),
     'spawns': spawns, 'nodes': nodes, 'excluded': excluded,
     'export_seconds': round(time.time()-START, 2),
 }
-(OUT/'asset-manifest.json').write_text(json.dumps(manifest, indent=2), encoding='utf-8')
+(OUT/MANIFEST_NAME).write_text(json.dumps(manifest, indent=2), encoding='utf-8')
 assert manifest['source_unchanged'], 'Source file changed unexpectedly'
 assert any(n['name'].startswith('E9 unified smooth stone roof') for n in nodes)
 assert any(n['name'] == 'E9 rear entrance cross aisle' for n in nodes)

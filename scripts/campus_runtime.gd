@@ -2,7 +2,8 @@ extends Node3D
 ## Loads the original campus as a playable static world without moving its objects.
 ## Call `await build()` after adding this node to the scene tree.
 
-const CAMPUS_PATH: String = "res://assets/campus.glb"
+const CAMPUS_PATH: String = "res://assets/campus.glb"  # medium; see campus_quality.gd
+const CampusQuality = preload("res://scripts/launcher/campus_quality.gd")
 const TeachingInterior = preload("res://assets/teaching_interior.scn")
 const SuppliedFurniture = preload("res://scripts/furniture_props.gd")
 const MANIFEST_PATH: String = "res://assets/asset-manifest.json"
@@ -82,10 +83,11 @@ func build() -> void:
 	_load_manifest()
 	build_progress.emit("Loading campus resource","campus_resource",null,null)
 	var packed: PackedScene = prepared_asset
-	if packed == null and prepared_sections.is_empty(): packed = load(CAMPUS_PATH) as PackedScene
+	var campus_path: String = CampusQuality.campus_path()
+	if packed == null and prepared_sections.is_empty(): packed = load(campus_path) as PackedScene
 	if packed == null and prepared_sections.is_empty():
-		push_error("Campus asset could not be loaded: " + CAMPUS_PATH)
-		build_error = "Campus asset could not be loaded: " + CAMPUS_PATH
+		push_error("Campus asset could not be loaded: " + campus_path)
+		build_error = "Campus asset could not be loaded: " + campus_path
 		_building = false
 		return
 	build_progress.emit("Creating campus geometry","instantiate",null,null)
@@ -198,6 +200,10 @@ func build() -> void:
 	stats["interactive_doors"] = door_system.install(self)
 	D7RearFacade.install(self, mesh_nodes, material_library)
 	AuditoriumRearFacade.install(self)
+	low_detail = CampusQuality.requested_preset() == "low"
+	stats["quality"] = CampusQuality.requested_preset()
+	if low_detail:
+		_disable_small_shadow_casters()
 	build_progress.emit("Preparing repeated render batches","batches",null,null)
 	await _batch_repeated_meshes()
 	if cancelled:
@@ -484,6 +490,26 @@ func _disable_glass_shadow(mesh_node: MeshInstance3D) -> void:
 	stats["transparent_meshes_without_shadows"] = int(stats["transparent_meshes_without_shadows"]) + 1
 
 
+## Low preset: objects smaller than this (AABB diagonal, metres) stop casting sun
+## shadows. The sun shadow pass was ~half of all draw calls (art_audit item 3).
+const LOW_SHADOW_MIN_SIZE: float = 1.5
+## Low preset merge limits (Medium keeps the original 1-surface / 1200 tris / 5+ rules).
+const LOW_MERGE_MAX_TRIS: int = 6000
+var low_detail: bool = false
+
+
+func _disable_small_shadow_casters() -> void:
+	var count: int = 0
+	for mesh_node: MeshInstance3D in mesh_nodes:
+		if mesh_node.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF:
+			continue
+		var size: Vector3 = mesh_node.mesh.get_aabb().size * mesh_node.global_transform.basis.get_scale().abs()
+		if size.length() < LOW_SHADOW_MIN_SIZE:
+			mesh_node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			count += 1
+	stats["low_shadow_casters_disabled"] = count
+
+
 func _batchable_opaque(material: Material) -> bool:
 	if material is BaseMaterial3D:
 		return (material as BaseMaterial3D).transparency == BaseMaterial3D.TRANSPARENCY_DISABLED
@@ -555,35 +581,48 @@ func _merge_small_static_meshes() -> void:
 		if _budget_due(): await _yield_budget()
 		if not original.visible or bool(original.get_meta("campus_door", false)):
 			continue
-		if original.mesh.get_surface_count() != 1:
+		var surface_count: int = original.mesh.get_surface_count()
+		if surface_count != 1 and not low_detail:
 			continue
-		var material: Material = original.get_active_material(0)
-		if material == null or not _batchable_opaque(material):
-			continue
-		var triangle_count: int = int(original.mesh.surface_get_array_index_len(0) / 3.0)
-		if triangle_count == 0 or triangle_count > 1200:
+		# Low merges every surface of a mesh (so the original can hide); Medium keeps 1-surface rule.
+		var entries: Array = []
+		var triangle_count: int = 0
+		for surface_index: int in range(surface_count):
+			var material: Material = original.get_active_material(surface_index)
+			if material == null or not _batchable_opaque(material):
+				entries.clear()
+				break
+			var surface_tris: int = int(original.mesh.surface_get_array_index_len(surface_index) / 3.0)
+			if surface_tris == 0:
+				entries.clear()
+				break
+			triangle_count += surface_tris
+			entries.append([surface_index, material])
+		if entries.is_empty() or triangle_count > (LOW_MERGE_MAX_TRIS if low_detail else 1200):
 			continue
 		var local_center: Vector3 = to_local(original.to_global(original.mesh.get_aabb().get_center()))
-		var key: String = str(material.get_instance_id()) + ":" + str(floori(local_center.x / 40.0)) + ":" + str(floori(local_center.z / 40.0)) + ":" + str(original.cast_shadow) + ":" + str(original.layers)
-		if not groups.has(key):
-			groups[key] = []
-		var group: Array = groups[key] as Array
-		group.append(original)
+		for entry: Array in entries:
+			var key: String = str((entry[1] as Material).get_instance_id()) + ":" + str(floori(local_center.x / 40.0)) + ":" + str(floori(local_center.z / 40.0)) + ":" + str(original.cast_shadow) + ":" + str(original.layers)
+			if not groups.has(key):
+				groups[key] = []
+			var group: Array = groups[key] as Array
+			group.append([original, entry[0], entry[1]])
 	for key: Variant in groups:
 		if cancelled: return
 		if _budget_due(): await _yield_budget()
 		var group: Array = groups[key] as Array
-		if group.size() < 5:
+		# Low: every group merges (all surfaces of each original are covered, so hiding is safe).
+		if group.size() < (1 if low_detail else 5):
 			continue
-		var first: MeshInstance3D = group[0] as MeshInstance3D
+		var first: MeshInstance3D = group[0][0] as MeshInstance3D
 		var surface: SurfaceTool = SurfaceTool.new()
 		surface.begin(Mesh.PRIMITIVE_TRIANGLES)
 		for item: Variant in group:
-			var original: MeshInstance3D = item as MeshInstance3D
-			surface.append_from(original.mesh, 0, global_transform.affine_inverse() * original.global_transform)
+			var original: MeshInstance3D = item[0] as MeshInstance3D
+			surface.append_from(original.mesh, int(item[1]), global_transform.affine_inverse() * original.global_transform)
 			if cancelled: return
 			if _budget_due(): await _yield_budget()
-		surface.set_material(first.get_active_material(0))
+		surface.set_material(group[0][2] as Material)
 		var merged_mesh: ArrayMesh = surface.commit()
 		if merged_mesh == null:
 			continue
@@ -595,7 +634,7 @@ func _merge_small_static_meshes() -> void:
 		merged.lod_bias = 0.30
 		_render_batches.add_child(merged)
 		for item: Variant in group:
-			var original: MeshInstance3D = item as MeshInstance3D
+			var original: MeshInstance3D = item[0] as MeshInstance3D
 			original.visible = false
 			original.set_meta("campus_render_batch", merged.get_path())
 		stats["static_surface_batches"] = int(stats["static_surface_batches"]) + 1

@@ -157,14 +157,10 @@ func _initialize_game_world() -> void:
 	
 	# If prepared_sections is empty, load runtime_campus chunks automatically
 	if campus.prepared_sections.is_empty():
-		var manifest_path := "res://assets/runtime_campus/manifest.json"
-		if FileAccess.file_exists(manifest_path):
-			var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(manifest_path))
-			if parsed is Dictionary and parsed.has("chunks"):
-				for chunk_path: String in parsed["chunks"]:
-					var scn = load(chunk_path) as PackedScene
-					if scn:
-						campus.prepared_sections.append(scn)
+		for chunk_path: String in preload("res://scripts/launcher/campus_quality.gd").chunk_paths(runtime_preferences):
+			var scn = load(chunk_path) as PackedScene
+			if scn:
+				campus.prepared_sections.append(scn)
 	
 	campus.build_progress.connect(func(label: String, stage: String, done: Variant, total: Variant):
 		initialization_progress.emit(label, stage, done, total)

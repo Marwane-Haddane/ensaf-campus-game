@@ -1,0 +1,620 @@
+{
+ "objects_mesh": 6011,
+ "unique_meshes": 4391,
+ "tris_per_object_sum": 7016040,
+ "materials_used": 137,
+ "materials_with_textures": 0,
+ "images": 2,
+ "objects_nonunit_scale": 1329,
+ "objects_negative_scale": 0,
+ "modifiers": {
+  "BEVEL": 859,
+  "WEIGHTED_NORMAL": 858
+ },
+ "collections_by_tris": [
+  [
+   "E9 - Sunken tiered auditorium and sculpted chairs",
+   4613688
+  ],
+  [
+   "E9 - Rounded continuous stone corners",
+   1639652
+  ],
+  [
+   "R3 - Main roof solar array",
+   176628
+  ],
+  [
+   "B - Open-air courtyards and galleries",
+   81722
+  ],
+  [
+   "R2 - Detached main block",
+   81616
+  ],
+  [
+   "B - Standard classroom study",
+   67104
+  ],
+  [
+   "E6 - Stone side elevations and openwork screens",
+   59880
+  ],
+  [
+   "D7 - Entrance stairs, ramp and gardens",
+   51518
+  ],
+  [
+   "R3 - Glazed roof solar array",
+   46248
+  ],
+  [
+   "R2 - Extended street boundary",
+   37206
+  ],
+  [
+   "E6 - Side gardens",
+   32200
+  ],
+  [
+   "R3 - Garden trees and shrubs",
+   25840
+  ],
+  [
+   "Campus - Courtyard gardens and circulation",
+   17622
+  ],
+  [
+   "D7 - Slate pier and cantilevered portico",
+   15428
+  ],
+  [
+   "E8 - Curved stage and presentation wall",
+   13036
+  ],
+  [
+   "E8 - Flat auditorium and detailed seating",
+   11760
+  ],
+  [
+   "D7 - Tall hall, stepped seating and galleries",
+   8596
+  ],
+  [
+   "D7 - Curtain walls and architectural exterior",
+   7360
+  ],
+  [
+   "E6 - Reception immediately inside entrance",
+   6036
+  ],
+  [
+   "E5 - Photo entrance and stone detailing",
+   5068
+  ],
+  [
+   "R2 - Detached glazed block",
+   3600
+  ],
+  [
+   "03 Approximate frontage and landscape",
+   3572
+  ],
+  [
+   "E - Reception room study",
+   2576
+  ],
+  [
+   "D9 - Lower portico balcony balustrade",
+   2408
+  ],
+  [
+   "B - Stairs and elevator study",
+   1836
+  ],
+  [
+   "D9 - Glazed access doors at both portico levels",
+   1776
+  ],
+  [
+   "R3 - Marked garden plots",
+   680
+  ],
+  [
+   "R3 - Main roof and three lightwells",
+   532
+  ],
+  [
+   "E9 - Direct reception auditorium wall",
+   512
+  ],
+  [
+   "R3 - Glazed roof and central lightwell",
+   140
+  ],
+  [
+   "R3 - Garden paths and access road",
+   108
+  ],
+  [
+   "C and F - MAP-ONLY provisional massing",
+   48
+  ],
+  [
+   "E - Auditorium and entrance",
+   44
+  ]
+ ],
+ "top_objects": [
+  {
+   "tris": 1639652,
+   "obj": "E9 unified smooth stone roof and rounded frame",
+   "mesh": "E9 rounded stone entrance wing -1.001",
+   "coll": "E9 - Rounded continuous stone corners",
+   "users": 1
+  },
+  {
+   "tris": 27464,
+   "obj": "School sign second",
+   "mesh": "School sign second",
+   "coll": "R2 - Detached main block",
+   "users": 1
+  },
+  {
+   "tris": 26224,
+   "obj": "School sign affiliation",
+   "mesh": "School sign affiliation",
+   "coll": "R2 - Detached main block",
+   "users": 1
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 198",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 197",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 196",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 195",
+   "mesh": "E9 sculpted chair master.002",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 18
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 194",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 193",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 192",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 191",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 190",
+   "mesh": "E9 sculpted chair master",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 18
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 189",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 188",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 187",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 186",
+   "mesh": "E9 sculpted chair master",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 18
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 185",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 184",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 183",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 182",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 11 seat 181",
+   "mesh": "E9 sculpted chair master.002",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 18
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 180",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 179",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 178",
+   "mesh": "E9 sculpted chair master.002",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 18
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 177",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 176",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 175",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 174",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 173",
+   "mesh": "E9 sculpted chair master.002",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 18
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 172",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 171",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 170",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 169",
+   "mesh": "E9 sculpted chair master",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 18
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 168",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 167",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 166",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 165",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 164",
+   "mesh": "E9 sculpted chair master",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 18
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 10 seat 163",
+   "mesh": "E9 sculpted chair master.001",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  },
+  {
+   "tris": 23276,
+   "obj": "E9 auditorium row 09 seat 162",
+   "mesh": "E9 sculpted chair master.003",
+   "coll": "E9 - Sunken tiered auditorium and sculpted chairs",
+   "users": 81
+  }
+ ],
+ "top_meshes_by_instanced_cost": [
+  [
+   1885356,
+   "E9 sculpted chair master.003",
+   81
+  ],
+  [
+   1885356,
+   "E9 sculpted chair master.001",
+   81
+  ],
+  [
+   1639652,
+   "E9 rounded stone entrance wing -1.001",
+   1
+  ],
+  [
+   418968,
+   "E9 sculpted chair master.002",
+   18
+  ],
+  [
+   418968,
+   "E9 sculpted chair master",
+   18
+  ],
+  [
+   222876,
+   "R3 shared PV module - framed cells and rack",
+   453
+  ],
+  [
+   51600,
+   "B two-seat linked desk asset mesh",
+   15
+  ],
+  [
+   27464,
+   "School sign second",
+   1
+  ],
+  [
+   26224,
+   "School sign affiliation",
+   1
+  ],
+  [
+   17196,
+   "E6 west individually coursed stone cladding",
+   1
+  ],
+  [
+   17196,
+   "E6 east individually coursed stone cladding",
+   1
+  ],
+  [
+   15312,
+   "B rear hall terrazzo mesh",
+   1
+  ],
+  [
+   14112,
+   "D7 wrapped individual slate blocks",
+   1
+  ],
+  [
+   12920,
+   "R3 garden tree variant 1",
+   17
+  ],
+  [
+   12160,
+   "R3 garden tree variant 0",
+   16
+  ],
+  [
+   11400,
+   "R3 garden tree variant 2",
+   15
+  ],
+  [
+   9984,
+   "E8 modular white acoustic ceiling tiles",
+   1
+  ],
+  [
+   9368,
+   "School sign large",
+   1
+  ],
+  [
+   8500,
+   "D7 fine lawn grass geometry",
+   1
+  ],
+  [
+   8330,
+   "R4 shared fan palm",
+   7
+  ],
+  [
+   7260,
+   "D7 lower switchback ramp irregular white web rail.001",
+   1
+  ],
+  [
+   7260,
+   "D7 lower switchback ramp irregular white web rail",
+   1
+  ],
+  [
+   7200,
+   "B entry hall terrazzo mesh",
+   1
+  ],
+  [
+   6500,
+   "E6 west individual lawn blades",
+   1
+  ],
+  [
+   6500,
+   "E6 east individual lawn blades",
+   1
+  ]
+ ],
+ "named_ok_SM_prefix": 0,
+ "collections": [
+  "00 Scene",
+  "01 Reference-informed facade",
+  "02 Glazing and metalwork",
+  "03 Approximate frontage and landscape",
+  "04 Signs and details",
+  "05 Lighting and cameras",
+  "B - Open-air courtyards and galleries",
+  "B - Stairs and elevator study",
+  "B - Standard classroom study",
+  "C and F - MAP-ONLY provisional massing",
+  "Campus - Courtyard gardens and circulation",
+  "D7 - Curtain walls and architectural exterior",
+  "D7 - Entrance stairs, ramp and gardens",
+  "D7 - Reference-matched glazed building",
+  "D7 - Review cameras and lighting",
+  "D7 - Slate pier and cantilevered portico",
+  "D7 - Tall hall, stepped seating and galleries",
+  "D9 - Glazed access doors at both portico levels",
+  "D9 - Lower portico balcony balustrade",
+  "E - Auditorium and entrance",
+  "E - Reception room study",
+  "E5 - Photo entrance and stone detailing",
+  "E5 - Review cameras",
+  "E6 - Reception immediately inside entrance",
+  "E6 - Review cameras and lights",
+  "E6 - Side gardens",
+  "E6 - Stone side elevations and openwork screens",
+  "E8 - Curved stage and presentation wall",
+  "E8 - Door passage and smooth facade junctions",
+  "E8 - Flat auditorium and detailed seating",
+  "E8 - Review cameras and lighting",
+  "E9 - Direct reception auditorium wall",
+  "E9 - Rounded continuous stone corners",
+  "E9 - Sharp review views and lighting",
+  "E9 - Sunken tiered auditorium and sculpted chairs",
+  "R2 - Approximate roof recesses",
+  "R2 - Detached glazed block",
+  "R2 - Detached main block",
+  "R2 - Extended street boundary",
+  "R3 - Garden paths and access road",
+  "R3 - Garden trees and shrubs",
+  "R3 - Glazed roof and central lightwell",
+  "R3 - Glazed roof solar array",
+  "R3 - Main roof and three lightwells",
+  "R3 - Main roof solar array",
+  "R3 - Marked garden plots",
+  "R4 - ENSA campus design",
+  "R4 - Review cameras and lighting"
+ ],
+ "bounds": [
+  [
+   -121.0,
+   -44.99999237060547,
+   -0.8999999761581421
+  ],
+  [
+   118.15999603271484,
+   173.0,
+   12.720000267028809
+  ]
+ ]
+}
