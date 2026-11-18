@@ -7,6 +7,7 @@ signal launcher_settings_requested
 signal launcher_restart_requested
 signal mission_progress_updated(step_id: String, text: String)
 
+const AfterHoursMood = preload("res://scripts/antigravity/zombie/after_hours_mood.gd")
 const ModelPlacement = preload("res://scripts/antigravity/zombie/model_placement.gd")
 const CampusRuntime = preload("res://scripts/campus_runtime.gd")
 const CampusOcclusion = preload("res://scripts/campus_occlusion.gd")
@@ -98,19 +99,27 @@ func _setup_environment() -> void:
 	# Dusk sky & environment
 	var env := Environment.new()
 	var sky_mat := ProceduralSkyMaterial.new()
-	sky_mat.sky_top_color = Color(0.12, 0.16, 0.28) # Deep twilight blue
-	sky_mat.sky_horizon_color = Color(0.40, 0.43, 0.51)
-	sky_mat.ground_bottom_color = Color(0.06, 0.08, 0.12)
-	sky_mat.ground_horizon_color = Color(0.38, 0.26, 0.20)
-	sky_mat.sun_angle_max = 24.0
+	# Deep dusk (roadmap #8): sun just above the horizon, smoky orange band, dark zenith.
+	sky_mat.sky_top_color = Color(0.05, 0.07, 0.15)
+	sky_mat.sky_horizon_color = Color(0.62, 0.36, 0.24)
+	sky_mat.sky_curve = 0.09
+	sky_mat.ground_bottom_color = Color(0.04, 0.04, 0.06)
+	sky_mat.ground_horizon_color = Color(0.45, 0.27, 0.19)
+	sky_mat.sun_angle_max = 18.0
 	var sky := Sky.new()
 	sky.sky_material = sky_mat
 	env.background_mode = Environment.BG_SKY
 	env.sky = sky
 	
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	env.ambient_light_color = Color(0.42, 0.46, 0.58) # Balanced cool sky ambient for readable interiors
-	env.ambient_light_energy = 0.75
+	env.ambient_light_color = Color(0.34, 0.40, 0.60) # Cool dusk ambient; still readable indoors
+	env.ambient_light_energy = 0.62
+	# Smoky haze that thickens toward the horizon.
+	env.fog_enabled = true
+	env.fog_light_color = Color(0.27, 0.27, 0.34)
+	env.fog_light_energy = 0.8
+	env.fog_density = 0.011
+	env.fog_sky_affect = 0.35
 	env.tonemap_mode = Environment.TONE_MAPPER_ACES
 	env.tonemap_exposure = 0.95
 	
@@ -121,9 +130,9 @@ func _setup_environment() -> void:
 	# Low angle warm directional dusk sun with anti-acne shadow parameters
 	var sun := DirectionalLight3D.new()
 	sun.name = "DuskSun"
-	sun.light_color = Color(1.0, 0.82, 0.65)
-	sun.light_energy = 1.0
-	sun.rotation_degrees = Vector3(-24.0, 48.0, 0.0)
+	sun.light_color = Color(1.0, 0.64, 0.44)
+	sun.light_energy = 0.7
+	sun.rotation_degrees = Vector3(-11.0, 48.0, 0.0)
 	sun.shadow_enabled = true
 	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
 	sun.directional_shadow_max_distance = 55.0
@@ -196,6 +205,9 @@ func _initialize_game_world() -> void:
 	initialization_progress.emit("Placing barricades and supplies", "props", null, null)
 	await get_tree().physics_frame
 	_spawn_route_props()
+	var mood_preset: String = preload("res://scripts/launcher/campus_quality.gd").requested_preset(runtime_preferences)
+	var mood: Dictionary = AfterHoursMood.install(self, mood_preset, bool(runtime_preferences.get("reduced_motion", false)))
+	print("AFTER_HOURS_MOOD ", JSON.stringify(mood), " preset=", mood_preset)
 	
 	# 5. Spawn Player
 	initialization_progress.emit("Deploying player controller", "player", null, null)

@@ -52,6 +52,7 @@ func _setup_collision_and_mesh() -> void:
 	mat.albedo_color = Color(0.18, 0.28, 0.22) if loot_type == "shotgun" else Color(0.25, 0.25, 0.28) # Military Olive or Slate
 	mat.metallic = 0.65
 	mat.roughness = 0.45
+	_apply_crate_texture(mat, 1.0)
 	base.material_override = mat
 	add_child(base)
 	
@@ -69,6 +70,7 @@ func _setup_collision_and_mesh() -> void:
 	lid_mat.albedo_color = Color(0.24, 0.36, 0.28) if loot_type == "shotgun" else Color(0.32, 0.32, 0.35)
 	lid_mat.metallic = 0.7
 	lid_mat.roughness = 0.4
+	_apply_crate_texture(lid_mat, 1.12)
 	lid_mesh.material_override = lid_mat
 	_lid_hinge.add_child(lid_mesh)
 	
@@ -84,6 +86,19 @@ func _setup_collision_and_mesh() -> void:
 	st_mat.roughness = 0.3
 	stripe.material_override = st_mat
 	lid_mesh.add_child(stripe)
+
+## After Hours kit (roadmap #8): painted military steel for the weapons case,
+## weathered planks for supply crates, instead of flat dark metal boxes.
+func _apply_crate_texture(material: StandardMaterial3D, brightness: float) -> void:
+	var path := "res://assets/antigravity/zombie/after_hours/crate_military_albedo.png" if loot_type == "shotgun" else "res://assets/antigravity/zombie/after_hours/crate_wood_albedo.png"
+	if not ResourceLoader.exists(path):
+		return
+	material.albedo_texture = load(path)
+	material.albedo_color = Color(brightness, brightness, brightness)
+	material.uv1_triplanar = true
+	material.uv1_scale = Vector3.ONE * 1.6
+	material.metallic = 0.25 if loot_type == "shotgun" else 0.0
+	material.roughness = 0.7 if loot_type == "shotgun" else 0.85
 
 func _sync_open_state() -> void:
 	if _inventory == null or not is_instance_valid(_inventory): return
