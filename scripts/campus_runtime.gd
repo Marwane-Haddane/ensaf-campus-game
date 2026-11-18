@@ -17,6 +17,7 @@ const GlazedSideFacade = preload("res://scripts/glazed_side_facade.gd")
 const CampusDoors = preload("res://scripts/campus_doors.gd")
 const D7RearFacade = preload("res://scripts/d7_rear_facade.gd")
 const AuditoriumRearFacade = preload("res://scripts/auditorium_rear_facade.gd")
+const VegetationHigh = preload("res://scripts/vegetation_high.gd")
 
 var campus_scene: Node3D
 var mesh_nodes: Array[MeshInstance3D] = []
@@ -204,6 +205,8 @@ func build() -> void:
 	stats["quality"] = CampusQuality.requested_preset()
 	if low_detail:
 		_disable_small_shadow_casters()
+	if stats["quality"] == "high":
+		stats["high_vegetation"] = VegetationHigh.install(self, mesh_nodes)
 	build_progress.emit("Preparing repeated render batches","batches",null,null)
 	await _batch_repeated_meshes()
 	if cancelled:

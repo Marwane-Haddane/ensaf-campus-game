@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "templates": {
+    "SM_VEG_ShadeTree_A": {
+      "height": 4.6,
+      "width": 3.6,
+      "kind": "tree",
+      "triangles": 652
+    },
+    "SM_VEG_ShadeTree_B": {
+      "height": 4.9,
+      "width": 3.1,
+      "kind": "tree",
+      "triangles": 612
+    },
+    "SM_VEG_Shrub": {
+      "height": 1.0,
+      "width": 1.5,
+      "kind": "shrub",
+      "triangles": 120
+    },
+    "SM_VEG_FanPalm": {
+      "height": 6.55,
+      "trunk_height": 5.2,
+      "width": 4.05,
+      "kind": "palm",
+      "triangles": 1160
+    },
+    "SM_VEG_SmallPalm": {
+      "height": 3.1100000000000003,
+      "trunk_height": 2.0,
+      "width": 2.63,
+      "kind": "palm",
+      "triangles": 840
+    }
+  },
+  "textures": {
+    "foliage": [
+      "leaf_atlas_albedo.png",
+      "leaf_atlas_normal.png"
+    ],
+    "bark": [
+      "bark_albedo.png",
+      "bark_normal.png"
+    ],
+    "palm": [
+      "palm_trunk_albedo.png",
+      "palm_trunk_normal.png"
+    ]
+  }
+}
