@@ -78,6 +78,11 @@ func material_for(original: Material, _source_name: String = "") -> Material:
 		material.metallic_specular = 0.65
 		material.roughness = 0.10 if "clear" in lowered else 0.16
 		material.cull_mode = BaseMaterial3D.CULL_DISABLED
+		if high_detail:
+			# High: premultiplied blending keeps the sky reflection at full
+			# strength while the body stays clear, so glazing reads as glass.
+			material.blend_mode = BaseMaterial3D.BLEND_MODE_PREMULT_ALPHA
+			material.metallic_specular = 0.85
 	elif family == "simple":
 		# PV arrays, diffusers, projection screens, paint and signs stay cheap.
 		material.roughness = maxf(0.4, source.roughness)

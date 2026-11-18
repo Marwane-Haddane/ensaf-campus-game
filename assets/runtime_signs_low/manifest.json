@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "px_per_m": 640,
+  "signs": {
+    "School sign large": {
+      "image": "sign_large.png",
+      "width_m": 2.7103997039794923,
+      "height_m": 0.29300554275512697,
+      "godot_center": [
+        -13.9931001663208,
+        4.002300024032593,
+        0.2135000079870224
+      ]
+    },
+    "School sign second": {
+      "image": "sign_second.png",
+      "width_m": 3.3054552841186524,
+      "height_m": 0.3071702289581299,
+      "godot_center": [
+        -13.994057178497314,
+        3.563487410545349,
+        0.2135000079870224
+      ]
+    },
+    "School sign affiliation": {
+      "image": "sign_affiliation.png",
+      "width_m": 2.6404896545410157,
+      "height_m": 0.1740053462982178,
+      "godot_center": [
+        -14.000974655151367,
+        2.9853299856185913,
+        0.2135000079870224
+      ]
+    }
+  }
+}
