@@ -70,6 +70,8 @@ var _bindings_vbox: VBoxContainer
 var _lang_option: OptionButton
 var _subtitles_check: CheckBox
 var _reduced_motion_check: CheckBox
+var _difficulty_option: OptionButton
+const DIFFICULTIES := ["easy", "medium", "hard"]
 
 func get_page_id() -> String:
 	return "settings"
@@ -516,6 +518,22 @@ func _build_accessibility_tab() -> Control:
 	)
 	mot_row.add_child(_reduced_motion_check)
 
+	# After Hours difficulty
+	var diff_row := _create_row(vbox, "After Hours Difficulty")
+	_difficulty_option = OptionButton.new()
+	_difficulty_option.focus_mode = Control.FOCUS_ALL
+	_difficulty_option.add_item("Easy (Weaker infected, more supplies)")
+	_difficulty_option.add_item("Medium (Recommended)")
+	_difficulty_option.add_item("Hard (Tougher, faster hordes, scarce ammo)")
+	_difficulty_option.selected = 1
+	_difficulty_option.tooltip_text = "Scales infected health, damage, speed and senses, wave sizes,
+extra spawns and ammo/medkit drops in the After Hours survival mode.
+Applies to enemies spawned after the change (retry or restart for a full reset)."
+	_difficulty_option.item_selected.connect(func(idx):
+		_emit_edit("zombie_difficulty", DIFFICULTIES[clampi(idx, 0, DIFFICULTIES.size() - 1)])
+	)
+	diff_row.add_child(_difficulty_option)
+
 	return scroll
 
 func _create_graphics_row(parent: Control, label_text: String) -> HBoxContainer:
@@ -769,6 +787,7 @@ func update_from_model(model: Dictionary) -> void:
 		_subtitles_check.tooltip_text = "There is no spoken dialogue in this version."
 
 		_reduced_motion_check.set_pressed_no_signal(bool(draft.get("reduced_motion", false)))
+		_set_choice(_difficulty_option, DIFFICULTIES.find(str(draft.get("zombie_difficulty", "medium"))))
 
 		# Synchronize Key Bindings
 		var bindings_map: Dictionary = draft.get("bindings", {})

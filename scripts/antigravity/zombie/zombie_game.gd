@@ -27,6 +27,9 @@ const LootChest = preload("res://scripts/antigravity/zombie/loot_chest.gd")
 const DrivablePickup = preload("res://scripts/antigravity/zombie/drivable_pickup.gd")
 const RoadLoop = preload("res://scripts/antigravity/zombie/road_loop.gd")
 const RoadEncounters = preload("res://scripts/antigravity/zombie/road_encounters.gd")
+const Difficulty = preload("res://scripts/antigravity/zombie/zombie_difficulty.gd")
+const LevelDirector = preload("res://scripts/antigravity/zombie/level_director.gd")
+const ZombieAudio = preload("res://scripts/antigravity/zombie/zombie_audio.gd")
 
 const PICKUP_START := Vector3(-28.0, 0.16, -61.0)
 const DRIVE_BOUNDS := Rect2(-114.0, -166.0, 204.0, 203.0)
@@ -72,6 +75,9 @@ var _road_encounters: RoadEncounters
 var _pickup_exit_requested := false
 
 var config_episode: Dictionary = {}
+var difficulty_id: String = Difficulty.DEFAULT
+var level_director: LevelDirector
+var _drops: Array[Node] = []
 
 func _ready() -> void:
 	name = "ZombieGame"
@@ -215,6 +221,12 @@ func _initialize_game_world() -> void:
 	
 	# 6. Spawn Pickups & Interactables
 	initialization_progress.emit("Spawning mission objectives and encounters", "actors", null, null)
+	difficulty_id = Difficulty.requested(runtime_preferences)
+	level_director = LevelDirector.new()
+	level_director.name = "LevelDirector"
+	add_child(level_director)
+	level_director.setup(self, config_episode, difficulty_id)
+	_apply_difficulty_loadout()
 	_spawn_pickups()
 	_spawn_interactive_stations()
 	_spawn_enemies()
@@ -421,8 +433,18 @@ func _spawn_pickup(data: Dictionary) -> void:
 	pickup.collected.connect(_on_pickup_collected)
 
 func _on_pickup_collected(id: String, type: String, amount: int) -> void:
+	ZombieAudio.play_ui(self, {"ammo": "pickup_ammo", "medkit": "medkit"}.get(type, "pickup"), -8.0)
+	if id.begins_with("drop_"):
+		# Enemy drops are transient loot, not authored progress.
+		hud.show_banner_message("+%d %s" % [amount, "Medkit" if type == "medkit" else "Ammo"], 1.6)
+		return
 	if id in collected_pickups:
 		return
+	if id == "item_power_fuse" and not "item_intro_pistol" in collected_pickups:
+		# Never leave the player unarmed once the fuse wakes the encounters.
+		var pistol = spawned_pickups.get("item_intro_pistol")
+		if is_instance_valid(pistol) and not pistol.is_collected:
+			pistol.interact(player)
 	collected_pickups.append(id)
 	if id != PickupItem.SUPPLY_CACHE_ID:
 		spawned_pickups.erase(id)
@@ -576,36 +598,81 @@ func _spawn_interactive_stations() -> void:
 	add_child(chest_scrap)
 
 func _spawn_enemies() -> void:
-	var spawns: Array = config_episode.get("enemy_spawns", [])
-	for e_data in spawns:
+	for e_data: Dictionary in config_episode.get("enemy_spawns", []):
 		var e_id: String = e_data.get("id", "")
-		if e_id in defeated_enemies:
+		if e_id in defeated_enemies or not Difficulty.allows_spawn(e_data, difficulty_id):
 			continue
-		
-		var enemy := EnemyController.new()
-		enemy.enemy_id = e_id
-		enemy.enemy_type = e_data.get("type", "walker")
-		enemy.is_boss = bool(e_data.get("is_boss", false))
-		enemy.patrol_points = e_data.get("patrol_points", [])
-		var pos: Array = e_data.get("position", [0, 0, 0])
-		enemy.position = _ground_point(Vector3(float(pos[0]), float(pos[1]), float(pos[2])))
-		add_child(enemy)
-		_prepare_encounter(enemy)
-		active_enemies.append(enemy)
-		
-		if enemy.is_boss:
-			brute_boss = enemy
-		
-		enemy.enemy_died.connect(func(dead_id: String, boss: bool):
-			if not dead_id in defeated_enemies:
-				defeated_enemies.append(dead_id)
-			mission_state.call("record_kill", 0.0, dead_id)
-			inventory.award_enemy_reward(dead_id,boss)
-			if boss:
-				mission_state.call("on_event", "boss_killed")
-				hud.call("show_banner_message", "Chubby Brute Defeated! Escape route cleared!", 4.0)
-				_create_checkpoint("cp_boss", "Brute Eliminated")
-		)
+		_spawn_authored_enemy(e_data)
+
+func _spawn_authored_enemy(e_data: Dictionary) -> Node3D:
+	var enemy := EnemyController.new()
+	enemy.enemy_id = e_data.get("id", "")
+	enemy.enemy_type = e_data.get("type", "walker")
+	enemy.is_boss = bool(e_data.get("is_boss", false))
+	enemy.patrol_points = e_data.get("patrol_points", [])
+	enemy.difficulty = Difficulty.settings(difficulty_id)
+	enemy.set_meta("level", int(e_data.get("level", 1)))
+	var pos: Array = e_data.get("position", [0, 0, 0])
+	enemy.position = _ground_point(Vector3(float(pos[0]), float(pos[1]), float(pos[2])))
+	add_child(enemy)
+	_prepare_encounter(enemy)
+	register_enemy(enemy)
+	if enemy.is_boss:
+		brute_boss = enemy
+	return enemy
+
+## Tracks an enemy for freezing/level counts and routes its death.
+func register_enemy(enemy: Node3D) -> void:
+	active_enemies.append(enemy)
+	enemy.enemy_died.connect(func(dead_id: String, boss: bool): _on_enemy_died(enemy, dead_id, boss))
+
+func _on_enemy_died(enemy: Node3D, dead_id: String, boss: bool) -> void:
+	if not enemy.has_meta("wave") and not dead_id in defeated_enemies:
+		defeated_enemies.append(dead_id)
+	mission_state.call("record_kill", 0.0, dead_id)
+	inventory.award_enemy_reward(dead_id, boss)
+	if is_instance_valid(enemy) and not boss:
+		_roll_drop(enemy, dead_id)
+	if boss:
+		mission_state.call("on_event", "boss_killed")
+		hud.call("show_banner_message", "Chubby Brute Defeated! Escape route cleared!", 4.0)
+		_create_checkpoint("cp_boss", "Brute Eliminated")
+
+func _roll_drop(enemy: Node3D, dead_id: String) -> void:
+	var tuning := Difficulty.settings(difficulty_id)
+	var roll := randf()
+	var type := ""
+	if roll < float(tuning.medkit_drop_chance): type = "medkit"
+	elif roll < float(tuning.medkit_drop_chance) + float(tuning.ammo_drop_chance): type = "ammo"
+	if type.is_empty(): return
+	var pickup := PickupItem.new()
+	pickup.item_id = "drop_" + dead_id
+	pickup.item_type = type
+	var weapon_id: String = str(player.weapon_controller.current_weapon_id)
+	if weapon_id == "bat": weapon_id = "pistol"
+	pickup.weapon_id = weapon_id if type == "ammo" else ""
+	pickup.item_name = {"pistol": "Pistol Rounds", "scorpion": "Scorpion Rounds", "shotgun": "12-Gauge Shells"}.get(weapon_id, "Ammo") if type == "ammo" else "Medkit"
+	pickup.amount = {"pistol": 6, "scorpion": 10, "shotgun": 3}.get(weapon_id, 6) if type == "ammo" else 1
+	pickup.position = _ground_point(enemy.global_position + Vector3.UP * 0.5, 0.13)
+	add_child(pickup)
+	pickup.collected.connect(_on_pickup_collected)
+	_drops.append(pickup)
+
+func _clear_drops() -> void:
+	for drop: Node in _drops:
+		if is_instance_valid(drop): drop.queue_free()
+	_drops.clear()
+
+## Difficulty adjusts the starting kit of a fresh run (checkpoints keep theirs).
+func _apply_difficulty_loadout() -> void:
+	var tuning := Difficulty.settings(difficulty_id)
+	if int(tuning.bonus_medkits) > 0:
+		inventory.add_item("medkit", int(tuning.bonus_medkits))
+	var wc = player.weapon_controller if player else null
+	if wc and int(tuning.bonus_reserve) != 0:
+		wc.reserve_ammo = maxi(0, wc.reserve_ammo + int(tuning.bonus_reserve))
+		wc._sync_pool()
+		wc.ammo_changed.emit(wc.mag_ammo, wc.reserve_ammo)
 
 func _wire_player_events() -> void:
 	if player == null or hud == null:
@@ -670,7 +737,7 @@ func _wire_hud_events() -> void:
 	)
 	
 	hud.medkit_use_requested.connect(func():
-		inventory.call("use_medkit", player)
+		if inventory.call("use_medkit", player): ZombieAudio.play_ui(self, "medkit", -6.0)
 		hud.call("toggle_inventory", false)
 		_resume()
 	)
@@ -759,6 +826,8 @@ func _process(delta: float) -> void:
 	if not ready_to_play or is_session_frozen or not has_entered_gameplay: return
 	if not get_tree().paused: mission_state.tick_playtime(delta)
 	_update_opening()
+	if level_director and not get_tree().paused and not player.is_dead:
+		level_director.update(delta)
 	var weapon = player.weapon_controller
 	if _pickup.driving:
 		hud.update_driving_speed(_pickup.speed_kph())
@@ -815,6 +884,8 @@ func _retry_checkpoint() -> void:
 		_restart_mission()
 
 func _resync_world_state() -> void:
+	if level_director: level_director.reset()
+	_clear_drops()
 	extraction_point.mission = mission_state
 	extraction_point.reset_presentation()
 	for data: Dictionary in config_episode.get("pickups", []):
@@ -833,50 +904,16 @@ func _resync_world_state() -> void:
 	_power_station.inventory = inventory
 	_power_station.sync_state()
 
-	# 3. Resync enemies:
-	var spawns: Array = config_episode.get("enemy_spawns", [])
-	for e_data in spawns:
-		var e_id: String = str(e_data.get("id", ""))
-		var should_be_dead := (e_id in defeated_enemies)
-		var existing_enemy = null
-		for e in active_enemies:
-			if is_instance_valid(e) and str(e.get("enemy_id")) == e_id:
-				existing_enemy = e
-				break
-		
-		if should_be_dead:
-			if existing_enemy and is_instance_valid(existing_enemy):
-				active_enemies.erase(existing_enemy)
-				existing_enemy.queue_free()
-		else:
-			if existing_enemy == null or not is_instance_valid(existing_enemy) or bool(existing_enemy.call("is_dead")):
-				if existing_enemy and is_instance_valid(existing_enemy):
-					active_enemies.erase(existing_enemy)
-					existing_enemy.queue_free()
-				
-				var enemy := EnemyController.new()
-				enemy.enemy_id = e_id
-				enemy.enemy_type = e_data.get("type", "walker")
-				enemy.is_boss = bool(e_data.get("is_boss", false))
-				enemy.patrol_points = e_data.get("patrol_points", [])
-				var pos: Array = e_data.get("position", [0, 0, 0])
-				enemy.position = _ground_point(Vector3(float(pos[0]), float(pos[1]), float(pos[2])))
-				add_child(enemy)
-				_prepare_encounter(enemy)
-				active_enemies.append(enemy)
-				if enemy.is_boss:
-					brute_boss = enemy
-				
-				enemy.enemy_died.connect(func(dead_id: String, boss: bool):
-					if not dead_id in defeated_enemies:
-						defeated_enemies.append(dead_id)
-					mission_state.call("record_kill", 0.0, dead_id)
-					inventory.award_enemy_reward(dead_id,boss)
-					if boss:
-						mission_state.call("on_event", "boss_killed")
-						hud.call("show_banner_message", "Chubby Brute Defeated! Escape route cleared!", 4.0)
-						_create_checkpoint("cp_boss", "Brute Eliminated")
-				)
+	# 3. Resync enemies: every surviving authored enemy restarts at its post,
+	# so a retry replays the encounter instead of resuming mid-fight.
+	for existing in active_enemies.duplicate():
+		if is_instance_valid(existing) and not existing.has_meta("wave"):
+			active_enemies.erase(existing)
+			existing.queue_free()
+	for index: int in range(active_enemies.size()-1, -1, -1):
+		if not is_instance_valid(active_enemies[index]): active_enemies.remove_at(index)
+	brute_boss = null
+	_spawn_enemies()
 	
 	# 4. Resync survivor NPC:
 	for c in get_children():
@@ -949,6 +986,8 @@ func _reset_mode_state() -> void:
 				wc.call("_apply_weapon_config", "pistol")
 			wc.show()
 	
+	_set_difficulty(Difficulty.requested(runtime_preferences))
+	_apply_difficulty_loadout()
 	# Resynchronize world entities
 	_resync_world_state()
 	
@@ -1016,8 +1055,15 @@ func _refresh_hud() -> void:
 	if mission_state:
 		hud.call("update_objective", mission_state.get_current_objective_text())
 
+func _set_difficulty(id: String) -> void:
+	difficulty_id = Difficulty.normalize(id)
+	if level_director: level_director.difficulty_id = difficulty_id
+
 func apply_runtime_preferences(preferences: Dictionary) -> void:
 	runtime_preferences = preferences
+	# A changed difficulty applies to every enemy spawned from now on
+	# (waves, checkpoint retries, restarts).
+	if preferences.has("zombie_difficulty"): _set_difficulty(str(preferences.zombie_difficulty))
 	var sens: float = clampf(float(preferences.get("mouse_sensitivity", 1.0)), 0.5, 3.0)
 	if player:
 		player.mouse_sensitivity = 0.002 * sens
@@ -1065,7 +1111,9 @@ func _resume() -> void:
 
 # Opening progression also derives from mission steps for existing checkpoints.
 func has_intro_weapon() -> bool:
-	return "item_intro_pistol" in collected_pickups or mission_state.current_step_index > 0
+	# Step 0 can now complete on any first pickup; older saves past the fuse
+	# (step 2+) always own the pistol, which the fuse pickup also grants.
+	return "item_intro_pistol" in collected_pickups or mission_state.current_step_index >= 2
 
 func _prepare_encounter(enemy: Node3D) -> void:
 	enemy.hide()
@@ -1080,22 +1128,23 @@ func _update_opening() -> void:
 	var show_weapon: bool = armed and not player.is_dead and not in_pickup and not in_extraction
 	player.weapon_controller.visible = show_weapon
 	hud.set_armed(show_weapon)
+	var level: int = level_director.level_for_step(mission_state.current_step_index) if level_director else 1
 	for enemy in active_enemies:
-		if not is_instance_valid(enemy) or enemy.is_dead():
+		if not is_instance_valid(enemy) or enemy.is_dead() or enemy.has_meta("wave"):
 			continue
-		if mission_state.current_step_index < 2:
-			_prepare_encounter(enemy)
+		# Each level wakes its own infected; later levels stay dormant until the
+		# objectives reach them (and nothing hunts an unarmed player).
+		if not armed or int(enemy.get_meta("level", 1)) > level:
+			if not enemy.get_meta("encounter_waiting", false): _prepare_encounter(enemy)
 			continue
 		if not enemy.get_meta("encounter_waiting", false):
 			continue
-		var required_step := 4 if enemy.is_boss else 2
-		if mission_state.current_step_index < required_step:
-			continue
 		var distance: float = player.global_position.distance_to(enemy.global_position)
-		if distance < 7.0 or distance > 35.0:
+		if distance < 4.0:
 			continue
-		# Encounters enter outside the camera view, so turning a corner reveals them naturally.
-		if player.camera.is_position_in_frustum(enemy.global_position + Vector3.UP):
+		# Encounters enter outside the camera view (or beyond the fog), so turning
+		# a corner reveals them naturally instead of popping in on screen.
+		if distance < 26.0 and player.camera.is_position_in_frustum(enemy.global_position + Vector3.UP):
 			continue
 		enemy.set_meta("encounter_waiting", false)
 		enemy.collision_layer = 4

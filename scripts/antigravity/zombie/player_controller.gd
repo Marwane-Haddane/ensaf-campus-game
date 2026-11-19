@@ -12,8 +12,12 @@ const JUMP_VELOCITY: float = 4.5
 const GRAVITY: float = 12.0
 const STAMINA_DRAIN_RATE: float = 25.0
 const STAMINA_RECOVERY_RATE: float = 20.0
-const GROUND_ACCELERATION: float = 18.0
-const GROUND_BRAKING: float = 24.0
+# Weighty but responsive: ~0.35 s to walk speed, ~0.25 s to stop.
+const GROUND_ACCELERATION: float = 12.0
+const GROUND_BRAKING: float = 16.0
+const STRAFE_FACTOR: float = 0.86
+const BACKPEDAL_FACTOR: float = 0.7
+const ZombieAudio = preload("res://scripts/antigravity/zombie/zombie_audio.gd")
 const AIR_ACCELERATION: float = 5.0
 const STEP_HEIGHT: float = 0.30
 const COYOTE_TIME: float = 0.10
@@ -55,6 +59,8 @@ var _travel_speed := 0.0
 var _landing_dip := 0.0
 var _gait_weight := 0.0
 var _door_system: Node
+var _feet: AudioStreamPlayer
+var _noise_due := 0.0
 
 func _ready() -> void:
 	add_to_group("player")
@@ -62,6 +68,10 @@ func _ready() -> void:
 	_setup_camera()
 	_setup_interaction_ray()
 	_setup_weapon()
+	_feet = AudioStreamPlayer.new()
+	_feet.name = "Footsteps"
+	_feet.bus = ZombieAudio.sfx_bus()
+	add_child(_feet)
 	var campus: Variant = get_parent().get("campus")
 	if is_instance_valid(campus): _door_system = campus.get("door_system")
 	health_changed.emit(health, max_health)
@@ -238,6 +248,10 @@ func _physics_process(delta: float) -> void:
 
 	var target_speed := SPRINT_SPEED if is_sprinting else WALK_SPEED
 	if aiming: target_speed *= 0.72
+	# Strafing and backpedalling are slower than moving forward.
+	if not move_vec.is_zero_approx():
+		var along := move_vec.normalized()
+		target_speed *= lerpf(STRAFE_FACTOR, 1.0, maxf(0.0, -along.y)) if along.y <= 0.0 else lerpf(STRAFE_FACTOR, BACKPEDAL_FACTOR, along.y)
 	var direction := global_transform.basis * Vector3(move_vec.x, 0, move_vec.y)
 	var target_velocity := Vector2(direction.x, direction.z) * target_speed
 	var horizontal := Vector2(velocity.x, velocity.z)
@@ -254,6 +268,7 @@ func _physics_process(delta: float) -> void:
 	_travel_speed = Vector2(travelled.x, travelled.z).length() / maxf(delta, 0.001)
 	if not grounded and is_on_floor() and fall_speed < -2.0:
 		_landing_dip = minf(0.055, absf(fall_speed) * 0.007)
+		_play_foot("land", -8.0)
 	_update_camera_motion(delta, move_vec)
 
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
@@ -301,7 +316,11 @@ func _update_camera_motion(delta: float, movement: Vector2) -> void:
 	_gait_weight = lerpf(_gait_weight, strength, blend)
 	# Phase follows distance covered, so pushing a wall cannot cause walking sway.
 	if moving:
+		var previous_phase := _head_bob_timer
 		_head_bob_timer = fmod(_head_bob_timer + _travel_speed * delta * TAU / (2.7 if is_sprinting else 2.1), TAU)
+		# One footfall per bob dip (twice per cycle): sound and camera agree.
+		if int(previous_phase / PI) != int(_head_bob_timer / PI) or _head_bob_timer < previous_phase:
+			_on_footfall()
 	_landing_dip = move_toward(_landing_dip, 0.0, delta * 0.19)
 	var steady := 0.2 if aiming else 1.0
 	var side := sin(_head_bob_timer)
@@ -324,6 +343,22 @@ func _update_camera_motion(delta: float, movement: Vector2) -> void:
 		if weapon_controller != null and bool(weapon_controller.get("is_aiming")): target_fov = 67.0
 		elif is_sprinting: target_fov = 78.0
 	camera.fov = lerpf(camera.fov,target_fov,1.0-exp(-8.0*delta))
+
+func _play_foot(kind: String, volume_db: float) -> void:
+	if _feet == null or not _feet.is_inside_tree(): return
+	_feet.stream = ZombieAudio.stream(kind)
+	_feet.volume_db = volume_db
+	_feet.pitch_scale = randf_range(0.93, 1.07)
+	_feet.play()
+
+func _on_footfall() -> void:
+	_play_foot("step_run" if is_sprinting else "step", -9.0 if is_sprinting else -15.0)
+	# Sprinting is loud: idle and searching infected nearby hear it.
+	_noise_due -= 0.3
+	if is_sprinting and _noise_due <= 0.0 and is_inside_tree():
+		_noise_due = 0.9
+		for actor: Node in get_tree().get_nodes_in_group("enemies"):
+			if actor.has_method("hear_noise"): actor.call("hear_noise", global_position, 9.0)
 
 func _clear_interaction() -> void:
 	if current_interactable != null or not current_interactable_text.is_empty():
@@ -389,6 +424,7 @@ func take_damage(amount: float) -> void:
 	health = maxf(0.0, health - amount)
 	health_changed.emit(health, max_health)
 	
+	ZombieAudio.play_ui(self, "player_hurt", -6.0, 0.08)
 	# Camera shake on hit
 	if camera and not reduced_motion:
 		_damage_roll = deg_to_rad(randf_range(-1.2, 1.2))

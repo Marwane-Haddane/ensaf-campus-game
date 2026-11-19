@@ -61,6 +61,19 @@ var _visual_step_offset := 0.0
 var _model_base_y := 0.0
 var _gait_running := false
 static var _config_cache: Dictionary = {}
+const ZombieAudio = preload("res://scripts/antigravity/zombie/zombie_audio.gd")
+## Difficulty multipliers (zombie_difficulty.gd). Set before add_child.
+var difficulty: Dictionary = {}
+## Wave/boss reinforcements always know where the player is.
+var relentless := false
+var memory_seconds := 2.5
+var _voice: AudioStreamPlayer3D
+var _feet: AudioStreamPlayer3D
+var _groan_due := 0.0
+var _stride_phase := 0.0
+var _flinch := 0.0
+var _flinch_side := 0.0
+var _alerted_once := false
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -68,6 +81,10 @@ func _ready() -> void:
 	_setup_collision()
 	_setup_model()
 	_setup_navigation()
+	var height := float(_config.get("capsule_height",1.75))
+	_voice = ZombieAudio.make_voice(self,"Voice",height*0.85,36.0 if is_boss else 28.0)
+	_feet = ZombieAudio.make_voice(self,"Feet",0.1,18.0)
+	_groan_due = 2.0+float(absi(enemy_id.hash())%50)*0.1
 	floor_snap_length = 0.35
 	floor_stop_on_slope = true
 	last_pos = global_position
@@ -97,6 +114,24 @@ func _load_config() -> void:
 	_animations = _config.get("animations",{})
 	_acceleration = float(_config.get("acceleration",7.5))
 	_turn_speed = deg_to_rad(float(_config.get("turn_speed_degrees",240.0)))
+	memory_seconds = float(_config.get("memory_seconds",2.5))
+	_apply_difficulty()
+
+func _apply_difficulty() -> void:
+	if difficulty.is_empty(): return
+	max_health *= float(difficulty.get("enemy_health",1.0))
+	health = max_health
+	attack_damage *= float(difficulty.get("enemy_damage",1.0))
+	var speed := float(difficulty.get("enemy_speed",1.0))
+	walk_speed *= speed
+	run_speed *= speed
+	_acceleration *= speed
+	var cooldown_scale := float(difficulty.get("attack_cooldown",1.0))
+	attack_cooldown *= cooldown_scale
+	attack_contact_time = clampf(attack_contact_time*lerpf(1.0,cooldown_scale,0.5),0.2,attack_cooldown-0.15)
+	detection_radius *= float(difficulty.get("enemy_detection",1.0))
+	lose_target_radius *= float(difficulty.get("enemy_detection",1.0))
+	memory_seconds *= float(difficulty.get("enemy_memory",1.0))
 
 func _setup_collision() -> void:
 	var col := CollisionShape3D.new()
@@ -156,7 +191,12 @@ func _physics_process(delta: float) -> void:
 		_can_see_target = _check_perception()
 		if _can_see_target:
 			last_known_position = target_player.global_position
-			if state in [State.IDLE,State.PATROL,State.INVESTIGATE]: _enter_state(State.CHASE)
+			if state in [State.IDLE,State.PATROL,State.INVESTIGATE]: _become_aggressive(true)
+	if relentless and _valid_target():
+		# Reinforcements are drawn by the noise of the fight: they track the
+		# player's real position, so they never stand around after spawning.
+		_can_see_target = true
+		last_known_position = target_player.global_position
 	_lost_sight_time = 0.0 if _can_see_target else _lost_sight_time+delta
 	# Stagger and death cancel a swing. Delayed timers cannot deal stale damage.
 	if state==State.ATTACK and attack_contact_timer>0.0:
@@ -177,7 +217,54 @@ func _physics_process(delta: float) -> void:
 	var displacement := global_position - before_move
 	_update_locomotion(Vector2(displacement.x, displacement.z).length() / maxf(delta, 0.001), delta)
 	_visual_step_offset = move_toward(_visual_step_offset,0.0,delta*2.0)
-	if model_instance: model_instance.position.y = _model_base_y+_visual_step_offset
+	if model_instance:
+		model_instance.position.y = _model_base_y+_visual_step_offset
+		# Procedural flinch layers over any clip, so even poise-resisted body
+		# shots read as hits without restarting the animation.
+		_flinch = move_toward(_flinch,0.0,delta*2.4)
+		if not (enemy_type=="brute" and state==State.ATTACK):
+			model_instance.rotation = _model_rest_rotation+Vector3(-_flinch*0.32,0.0,_flinch*_flinch_side*0.18)
+	_update_voice(delta)
+
+func _update_voice(delta: float) -> void:
+	_groan_due -= delta
+	if _groan_due>0.0: return
+	var hunting := state in [State.CHASE,State.ATTACK]
+	_groan_due = randf_range(2.2,4.5) if hunting else randf_range(5.0,10.0)
+	if _voice and not _voice.playing:
+		ZombieAudio.play_voice(_voice,"groan",-6.0 if hunting else -10.0,_voice_pitch())
+
+func _voice_pitch() -> float:
+	match enemy_type:
+		"brute": return 0.62
+		"crawler": return 1.25
+		"screamer": return 1.4
+		"winged_lion": return 0.7
+		"warrior": return 0.9
+	return 1.0
+
+## Spotting the player turns an idle enemy hostile and calls nearby infected.
+func _become_aggressive(broadcast: bool) -> void:
+	_enter_state(State.CHASE)
+	if not _alerted_once:
+		_alerted_once = true
+		ZombieAudio.play_voice(_voice,"brute_roar" if enemy_type=="brute" else "alert",-1.0,_voice_pitch())
+		_groan_due = randf_range(2.5,4.0)
+	if not broadcast or not _valid_target() or not is_inside_tree(): return
+	var radius := float(_config.get("alert_radius",22.0 if enemy_type=="screamer" else 9.0))
+	for other: Node in get_tree().get_nodes_in_group("enemies"):
+		if other==self or not other.has_method("alert_from"): continue
+		if (other as Node3D).global_position.distance_squared_to(global_position)<=radius*radius:
+			other.call("alert_from",target_player,last_known_position)
+
+## Called by a nearby infected that spotted the player. Does not re-broadcast.
+func alert_from(player_node: CharacterBody3D,point: Vector3) -> void:
+	if state not in [State.IDLE,State.PATROL,State.INVESTIGATE]: return
+	if process_mode==Node.PROCESS_MODE_DISABLED or not visible or not is_physics_processing(): return
+	target_player = player_node
+	last_known_position = point
+	_lost_sight_time = 0.0
+	_become_aggressive(false)
 
 func _process_idle(delta: float) -> void:
 	_slow_down(delta)
@@ -200,11 +287,11 @@ func _process_patrol(delta: float) -> void:
 	else: _steer_towards(goal,walk_speed,delta)
 
 func _process_chase(delta: float) -> void:
-	if not _valid_target() or _planar_distance(target_player.global_position)>lose_target_radius:
+	if not _valid_target() or (not relentless and _planar_distance(target_player.global_position)>lose_target_radius):
 		target_player = null
 		_enter_state(State.INVESTIGATE)
 		return
-	if not _can_see_target and _lost_sight_time>float(_config.get("memory_seconds",2.5)):
+	if not _can_see_target and _lost_sight_time>memory_seconds:
 		_enter_state(State.INVESTIGATE)
 		return
 	if _can_see_target and _target_in_reach(attack_range):
@@ -301,6 +388,7 @@ func _start_attack_swing() -> void:
 		_play_anim("Punch",true)
 		if anim_player and anim_player.has_animation(anim_player.current_animation):
 			anim_player.speed_scale = clampf(anim_player.get_animation(anim_player.current_animation).length/attack_cooldown,0.25,2.0)
+	ZombieAudio.play_voice(_voice,"brute_roar" if enemy_type=="brute" else "attack",-2.0,_voice_pitch()*(1.15 if enemy_type=="brute" else 1.0))
 	attack_started.emit(enemy_id,attack_contact_time)
 
 func _try_apply_attack_damage() -> void:
@@ -326,11 +414,20 @@ func _steer_towards(goal: Vector3,speed: float,delta: float) -> void:
 			_nav_target = goal
 			_path_due = float(_config.get("path_interval",0.38))
 		next = nav_agent.get_next_path_position()
-		if nav_agent.is_navigation_finished() and _planar_distance(goal)>1.0:
-			if _has_line_of_sight(goal+Vector3.UP): next = goal
-			else:
-				_slow_down(delta)
-				return
+		# The baked route navmesh floats ~0.45 m above the current campus floor,
+		# so the agent never "reaches" the waypoint above its own head and used
+		# to return it forever (zero steering: enemies froze in place). Consume
+		# waypoints by planar distance instead.
+		var path := nav_agent.get_current_navigation_path()
+		var index := nav_agent.get_current_navigation_path_index()
+		while index < path.size() and _planar_distance(path[index]) < 0.5:
+			index += 1
+		if index < path.size(): next = path[index]
+		elif not path.is_empty(): next = goal
+		# The route navmesh does not cover every room or the after-hours props.
+		# When the path ends short of the goal, steer straight at it and let
+		# slide/step/sidestep recovery handle walls instead of freezing.
+		if nav_agent.is_navigation_finished() and _planar_distance(goal)>1.0: next = goal
 	var direction := next-global_position
 	direction.y = 0.0
 	if direction.length_squared()<0.01:
@@ -455,6 +552,10 @@ func take_damage(amount: float,is_headshot: bool = false,_hit_pos: Vector3 = Vec
 	if health<=0.0:
 		_die()
 		return
+	_flinch = minf(1.0,_flinch+(0.6 if is_headshot else 0.4)*(0.6 if is_boss else 1.0))
+	_flinch_side = signf(randf()-0.5)
+	if _voice and (not _voice.playing or _voice.get_playback_position()>0.25):
+		ZombieAudio.play_voice(_voice,"hurt",-3.0,_voice_pitch())
 	if not _valid_target():
 		_lookup_due = 0.0
 		_check_perception()
@@ -473,7 +574,7 @@ func take_damage(amount: float,is_headshot: bool = false,_hit_pos: Vector3 = Vec
 			knockback = knockback.normalized()*0.8
 			velocity.x += knockback.x
 			velocity.z += knockback.z
-	elif state in [State.IDLE,State.PATROL,State.INVESTIGATE]: _enter_state(State.CHASE)
+	elif state in [State.IDLE,State.PATROL,State.INVESTIGATE]: _become_aggressive(true)
 
 func _die() -> void:
 	if state==State.DEAD: return
@@ -483,6 +584,7 @@ func _die() -> void:
 	collision_layer = 0
 	collision_mask = 1
 	velocity = Vector3.ZERO
+	ZombieAudio.play_voice(_voice,"brute_roar" if is_boss else "death",0.0,_voice_pitch()*(0.8 if is_boss else 1.0))
 	enemy_died.emit(enemy_id,is_boss)
 
 func is_dead() -> bool:
@@ -511,6 +613,12 @@ func _update_locomotion(actual_speed: float, delta: float) -> void:
 	var authored_speed := float(_config.get("run_animation_speed" if running else "walk_animation_speed", run_speed if running else walk_speed))
 	var cadence := clampf(actual_speed / maxf(authored_speed, 0.1), 0.15, 1.5)
 	anim_player.speed_scale = lerpf(anim_player.speed_scale, cadence, 1.0 - exp(-12.0 * delta))
+	var heavy := enemy_type in ["brute","winged_lion"]
+	var stride := float(_config.get("stride_length", 0.55 if enemy_type=="crawler" else (1.0 if heavy else 0.78)))
+	_stride_phase += actual_speed * delta / stride
+	if _stride_phase >= 1.0:
+		_stride_phase = fmod(_stride_phase, 1.0)
+		ZombieAudio.play_voice(_feet, "brute_step" if heavy else "enemy_step", -6.0 if heavy else -13.0, 1.0)
 
 func _play_anim(name: String,restart: bool = false) -> void:
 	if anim_player==null: return
@@ -520,4 +628,6 @@ func _play_anim(name: String,restart: bool = false) -> void:
 	if not anim_player.has_animation(clip): return
 	if restart or anim_player.current_animation!=clip:
 		anim_player.speed_scale = 1.0
-		anim_player.play(clip,0.15)
+		# Long cross-fades for gait changes, short ones for committed actions.
+		var blend: float = {"Idle":0.3,"Walk":0.28,"Run":0.22,"Punch":0.1,"HitReact":0.08,"Death":0.2}.get(name,0.2)
+		anim_player.play(clip,blend)

@@ -17,7 +17,7 @@ var message := ""
 static func defaults() -> Dictionary:
 	return {"resolution":"1280x720","fullscreen":false,"graphics_preset":"medium","frame_cap":60,"vsync":true,
 	"master_volume":80.0,"music_volume":50.0,"sfx_volume":85.0,"mouse_sensitivity":1.0,
-	"language":"en","subtitles":false,"reduced_motion":false,"ui_scale":1.0,"bindings":KEYS.duplicate(true)}
+	"language":"en","subtitles":false,"reduced_motion":false,"ui_scale":1.0,"zombie_difficulty":"medium","bindings":KEYS.duplicate(true)}
 
 func initialize(apply_live: bool = true) -> void:
 	saved = defaults()
@@ -39,6 +39,7 @@ func validate(data: Dictionary) -> Array[String]:
 	if not str(data.get("resolution","")) in RESOLUTIONS: problems.append("Choose a supported resolution.")
 	if not str(data.get("graphics_preset","")) in ["low","medium","high"]: problems.append("Choose a supported graphics preset.")
 	if not data.get("frame_cap",-1) in [0,30,60]: problems.append("Choose 30, 60 or unlimited FPS.")
+	if not str(data.get("zombie_difficulty","medium")) in ["easy","medium","hard"]: problems.append("Choose Easy, Medium or Hard difficulty.")
 	for key: String in ["fullscreen","vsync","subtitles","reduced_motion"]:
 		if not data.get(key) is bool: problems.append("Invalid preference: "+key)
 	for key: String in ["master_volume","music_volume","sfx_volume","mouse_sensitivity","ui_scale"]:

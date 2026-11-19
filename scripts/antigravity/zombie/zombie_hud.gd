@@ -87,6 +87,8 @@ var _ammo_warning: Label
 var _weapon_tile: VBoxContainer
 var _medkit_button: Button
 var _upgrade_rows: Dictionary = {}
+var level_label: Label
+const ZombieAudio = preload("res://scripts/antigravity/zombie/zombie_audio.gd")
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -96,6 +98,22 @@ func _ready() -> void:
 	_apply_survival_theme()
 	get_viewport().size_changed.connect(_layout_menus)
 	_layout_menus.call_deferred()
+	for button: Node in find_children("*", "BaseButton", true, false): _wire_button_sound(button)
+	get_tree().node_added.connect(_on_node_added)
+
+func _on_node_added(node: Node) -> void:
+	if node is BaseButton and is_ancestor_of(node): _wire_button_sound(node)
+
+func _wire_button_sound(button: BaseButton) -> void:
+	if button.has_meta("ui_sound"): return
+	button.set_meta("ui_sound", true)
+	button.pressed.connect(func(): ZombieAudio.play_ui(self, "ui_click", -12.0))
+	button.mouse_entered.connect(_hover_sound.bind(button))
+	button.focus_entered.connect(_hover_sound.bind(button))
+
+func _hover_sound(button: BaseButton) -> void:
+	if is_instance_valid(button) and not button.disabled and button.is_visible_in_tree():
+		ZombieAudio.play_ui(self, "ui_hover", -20.0)
 
 func _process(delta: float) -> void:
 	if get_tree().paused:
@@ -388,6 +406,10 @@ func _build_objective(root: Control) -> void:
 	progression_strip.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	progression_label = _hud_label("", 17)
 	progression_strip.add_child(progression_label)
+	var level_strip := _combat_plate(_objective_box, 22, 2, true)
+	level_strip.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	level_label = _hud_label("", 16, CITRON)
+	level_strip.add_child(level_label)
 	_objective_box.resized.connect(_position_combat_hud)
 
 func _layout_objective() -> void:
@@ -1150,6 +1172,16 @@ func _create_btn(text: String, callback: Callable) -> Button:
 
 func show_banner_message(msg: String, duration: float = 3.0) -> void:
 	_show_notice(msg, "", duration)
+
+## Level start / clear announcement (title + one-line detail).
+func show_level_banner(title: String, detail: String) -> void:
+	_show_notice(title, detail, 4.5)
+	_notice_squad_icon.visible = false
+
+## "LVL 2/5  CROSSING CAMPUS  ·  3 HOSTILES  ·  HARD" under the objective.
+func update_level_status(text: String) -> void:
+	if level_label and level_label.text != text:
+		level_label.text = text
 
 func show_squad_joined(member_name: String) -> void:
 	_show_notice("%s JOINED YOUR SQUAD" % member_name.to_upper(), "Watch each other's back.", 3.5)

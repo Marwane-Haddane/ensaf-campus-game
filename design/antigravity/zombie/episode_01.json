@@ -292,7 +292,8 @@
           1.25,
           -98.0
         ]
-      ]
+      ],
+      "level": 1
     },
     {
       "id": "walker_plaza_2",
@@ -313,7 +314,8 @@
           1.25,
           -98
         ]
-      ]
+      ],
+      "level": 1
     },
     {
       "id": "walker_reception_1",
@@ -334,7 +336,8 @@
           1.92,
           -105.0
         ]
-      ]
+      ],
+      "level": 1
     },
     {
       "id": "walker_hallway_1",
@@ -355,7 +358,8 @@
           2.5,
           -103.0
         ]
-      ]
+      ],
+      "level": 2
     },
     {
       "id": "walker_glazed_1",
@@ -376,7 +380,8 @@
           2.8,
           -101.0
         ]
-      ]
+      ],
+      "level": 2
     },
     {
       "id": "walker_security_1",
@@ -397,7 +402,8 @@
           2.8,
           -109.0
         ]
-      ]
+      ],
+      "level": 3
     },
     {
       "id": "walker_auditorium_1",
@@ -418,7 +424,8 @@
           1.92,
           -108.0
         ]
-      ]
+      ],
+      "level": 4
     },
     {
       "id": "crawler_garden_1",
@@ -439,7 +446,8 @@
           1.25,
           -98.3
         ]
-      ]
+      ],
+      "level": 2
     },
     {
       "id": "crawler_glazed_1",
@@ -460,7 +468,8 @@
           2.8,
           -109.0
         ]
-      ]
+      ],
+      "level": 2
     },
     {
       "id": "screamer_auditorium_1",
@@ -481,7 +490,8 @@
           1.92,
           -101.5
         ]
-      ]
+      ],
+      "level": 4
     },
     {
       "id": "stalker_colonnade_1",
@@ -502,7 +512,8 @@
           2.4,
           -101.0
         ]
-      ]
+      ],
+      "level": 2
     },
     {
       "id": "warrior_reception",
@@ -523,7 +534,9 @@
           1.25,
           -101
         ]
-      ]
+      ],
+      "level": 1,
+      "min_difficulty": "medium"
     },
     {
       "id": "winged_lion_glazed",
@@ -544,7 +557,9 @@
           1.25,
           -96.5
         ]
-      ]
+      ],
+      "level": 2,
+      "min_difficulty": "medium"
     },
     {
       "id": "brute_boss",
@@ -565,6 +580,122 @@
           -22.0,
           1.25,
           -75.0
+        ]
+      ],
+      "level": 5
+    },
+    {
+      "id": "walker_plaza_3_extra",
+      "type": "walker",
+      "level": 1,
+      "min_difficulty": "medium",
+      "position": [
+        -26.5,
+        1.25,
+        -97.5
+      ],
+      "patrol_points": [
+        [
+          -26.5,
+          1.25,
+          -97.5
+        ],
+        [
+          -30.0,
+          1.25,
+          -96.0
+        ]
+      ]
+    },
+    {
+      "id": "crawler_plaza_extra",
+      "type": "crawler",
+      "level": 1,
+      "min_difficulty": "hard",
+      "position": [
+        -33.0,
+        1.25,
+        -93.0
+      ],
+      "patrol_points": [
+        [
+          -33.0,
+          1.25,
+          -93.0
+        ],
+        [
+          -30.0,
+          1.25,
+          -94.5
+        ]
+      ]
+    },
+    {
+      "id": "stalker_glazed_extra",
+      "type": "stalker",
+      "level": 2,
+      "min_difficulty": "hard",
+      "position": [
+        -9.0,
+        2.8,
+        -104.0
+      ],
+      "patrol_points": [
+        [
+          -9.0,
+          2.8,
+          -104.0
+        ],
+        [
+          -6.5,
+          2.8,
+          -102.5
+        ]
+      ]
+    },
+    {
+      "id": "crawler_security_extra",
+      "type": "crawler",
+      "level": 3,
+      "min_difficulty": "medium",
+      "position": [
+        -2.5,
+        2.8,
+        -108.0
+      ],
+      "patrol_points": [
+        [
+          -2.5,
+          2.8,
+          -108.0
+        ],
+        [
+          0.0,
+          2.8,
+          -110.0
+        ]
+      ]
+    },
+    {
+      "id": "walker_auditorium_extra",
+      "type": "walker",
+      "level": 4,
+      "min_difficulty": "hard",
+      "position": [
+        -40.0,
+        1.92,
+        -104.0
+      ],
+      "patrol_points": [
+        [
+          -40.0,
+          1.92,
+          -104.0
+        ],
+        [
+          -38.0,
+          1.92,
+          -106.0
         ]
       ]
     }
@@ -727,5 +858,211 @@
       2.8,
       -111.0
     ]
-  }
+  },
+  "levels": [
+    {
+      "id": "level_plaza",
+      "title": "Reception Plaza",
+      "location": "Campus plaza and Reception",
+      "steps": [
+        0,
+        1
+      ],
+      "summary": "Arm yourself, clear the plaza infected and recover the breaker fuse."
+    },
+    {
+      "id": "level_crossing",
+      "title": "Crossing Campus",
+      "location": "Colonnade and glazed entrance",
+      "steps": [
+        2
+      ],
+      "summary": "Cross the exposed courtyard past crawlers, a stalker and the winged lion to reach the relay."
+    },
+    {
+      "id": "level_substation",
+      "title": "Security Substation",
+      "location": "Security wing",
+      "steps": [
+        3
+      ],
+      "summary": "Infected pour out of the glazed wing behind you. Hold Security and install the parts."
+    },
+    {
+      "id": "level_auditorium",
+      "title": "Nobody Left Behind",
+      "location": "Auditorium",
+      "steps": [
+        4
+      ],
+      "summary": "The power surge wakes the courtyard. Fight through the horde to reach Shaun."
+    },
+    {
+      "id": "level_gate",
+      "title": "Hold the Gate",
+      "location": "Gate approach and extraction truck",
+      "steps": [
+        5,
+        6
+      ],
+      "summary": "Kill the brute and its pack, then survive the rush to the truck."
+    }
+  ],
+  "waves": [
+    {
+      "id": "substation_breach",
+      "level": 3,
+      "step": 3,
+      "trigger": "step",
+      "count": 3,
+      "types": [
+        "walker",
+        "crawler",
+        "walker"
+      ],
+      "delay": 4.0,
+      "interval": 1.4,
+      "banner": "Glass breaking behind you. Infected in the glazed wing!",
+      "points": [
+        [
+          -4.5,
+          2.8,
+          -105.0
+        ],
+        [
+          -6.0,
+          2.8,
+          -107.0
+        ],
+        [
+          -7.0,
+          2.8,
+          -101.0
+        ],
+        [
+          -12.0,
+          2.5,
+          -103.0
+        ]
+      ]
+    },
+    {
+      "id": "power_surge",
+      "level": 4,
+      "step": 4,
+      "trigger": "step",
+      "count": 4,
+      "types": [
+        "walker",
+        "crawler",
+        "walker",
+        "stalker"
+      ],
+      "delay": 2.5,
+      "interval": 1.1,
+      "banner": "The power surge woke the courtyard. Horde incoming!",
+      "points": [
+        [
+          -13.3,
+          1.25,
+          -97.0
+        ],
+        [
+          -12.0,
+          1.25,
+          -94.0
+        ],
+        [
+          -18.0,
+          2.0,
+          -103.0
+        ],
+        [
+          -16.0,
+          2.1,
+          -99.0
+        ],
+        [
+          -24.0,
+          1.25,
+          -95.0
+        ]
+      ]
+    },
+    {
+      "id": "brute_pack",
+      "level": 5,
+      "step": 5,
+      "trigger": "boss_health",
+      "threshold": 0.5,
+      "count_key": "boss_adds",
+      "types": [
+        "walker",
+        "crawler"
+      ],
+      "delay": 0.4,
+      "interval": 0.9,
+      "banner": "The brute roars. Its pack answers!",
+      "points": [
+        [
+          -24.0,
+          1.25,
+          -95.0
+        ],
+        [
+          -32.0,
+          1.25,
+          -97.0
+        ],
+        [
+          -29.4,
+          1.25,
+          -99.2
+        ],
+        [
+          -15.0,
+          1.25,
+          -84.0
+        ]
+      ]
+    },
+    {
+      "id": "extraction_rush",
+      "level": 5,
+      "step": 6,
+      "trigger": "step",
+      "count": 3,
+      "types": [
+        "walker",
+        "crawler",
+        "stalker"
+      ],
+      "delay": 3.0,
+      "interval": 1.0,
+      "banner": "They followed the noise. Run for the truck!",
+      "points": [
+        [
+          -24.0,
+          1.25,
+          -95.0
+        ],
+        [
+          -32.0,
+          1.25,
+          -97.0
+        ],
+        [
+          -13.3,
+          1.25,
+          -97.0
+        ],
+        [
+          -15.0,
+          1.25,
+          -84.0
+        ]
+      ]
+    }
+  ],
+  "difficulty_note": "Easy / Medium / Hard (preference zombie_difficulty) scale enemy health, damage, speed, senses, wave sizes, extra spawns (min_difficulty) and enemy ammo/medkit drops. See scripts/antigravity/zombie/zombie_difficulty.gd."
 }

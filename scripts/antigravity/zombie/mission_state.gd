@@ -119,7 +119,7 @@ func on_event(event_name: String, data: Dictionary = {}) -> void:
 			if item_id.is_empty() or item_id in collected_quest_items: return
 			collected_quest_items.append(item_id)
 			
-			if current_step_index == 0 and item_id == "item_intro_pistol":
+			if current_step_index == 0:
 				_advance_step() # Any pickup completes exploration step
 			
 			_evaluate_quest_progress()
