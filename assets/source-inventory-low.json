@@ -9946,38 +9946,6 @@
       ]
     },
     {
-      "name": "Circular perforated vertical facade",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 1268,
-      "polygons": 655,
-      "modifiers": [
-        "BEVEL"
-      ],
-      "blender_min": [
-        -5.975,
-        -0.6,
-        0.225
-      ],
-      "blender_max": [
-        -3.525,
-        -0.12,
-        10.375
-      ],
-      "godot_min": [
-        -5.975,
-        0.225,
-        0.12
-      ],
-      "godot_max": [
-        -3.525,
-        10.375,
-        0.6
-      ]
-    },
-    {
       "name": "Entrance dark recess",
       "type": "MESH",
       "collections": [
@@ -21519,456 +21487,6 @@
         3.081,
         9.13,
         -0.06
-      ]
-    },
-    {
-      "name": "Circle opening grille",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.4432,
-        -0.109,
-        9.081
-      ],
-      "blender_max": [
-        -4.9168,
-        -0.091,
-        9.099
-      ],
-      "godot_min": [
-        -5.4432,
-        9.081,
-        0.091
-      ],
-      "godot_max": [
-        -4.9168,
-        9.099,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.001",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.49385,
-        -0.109,
-        9.186
-      ],
-      "blender_max": [
-        -4.86615,
-        -0.091,
-        9.204
-      ],
-      "godot_min": [
-        -5.49385,
-        9.186,
-        0.091
-      ],
-      "godot_max": [
-        -4.86615,
-        9.204,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.002",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.509,
-        -0.109,
-        9.291
-      ],
-      "blender_max": [
-        -4.851,
-        -0.091,
-        9.309
-      ],
-      "godot_min": [
-        -5.509,
-        9.291,
-        0.091
-      ],
-      "godot_max": [
-        -4.851,
-        9.309,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.003",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.49385,
-        -0.109,
-        9.396
-      ],
-      "blender_max": [
-        -4.86615,
-        -0.091,
-        9.414
-      ],
-      "godot_min": [
-        -5.49385,
-        9.396,
-        0.091
-      ],
-      "godot_max": [
-        -4.86615,
-        9.414,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.004",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.4432,
-        -0.109,
-        9.501
-      ],
-      "blender_max": [
-        -4.9168,
-        -0.091,
-        9.519
-      ],
-      "godot_min": [
-        -5.4432,
-        9.501,
-        0.091
-      ],
-      "godot_max": [
-        -4.9168,
-        9.519,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.005",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -4.56584,
-        -0.109,
-        6.789
-      ],
-      "blender_max": [
-        -3.93416,
-        -0.091,
-        6.807
-      ],
-      "godot_min": [
-        -4.56584,
-        6.789,
-        0.091
-      ],
-      "godot_max": [
-        -3.93416,
-        6.807,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.006",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -4.62662,
-        -0.109,
-        6.915
-      ],
-      "blender_max": [
-        -3.87338,
-        -0.091,
-        6.933
-      ],
-      "godot_min": [
-        -4.62662,
-        6.915,
-        0.091
-      ],
-      "godot_max": [
-        -3.87338,
-        6.933,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.007",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -4.6448,
-        -0.109,
-        7.041
-      ],
-      "blender_max": [
-        -3.8552,
-        -0.091,
-        7.059
-      ],
-      "godot_min": [
-        -4.6448,
-        7.041,
-        0.091
-      ],
-      "godot_max": [
-        -3.8552,
-        7.059,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.008",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -4.62662,
-        -0.109,
-        7.167
-      ],
-      "blender_max": [
-        -3.87338,
-        -0.091,
-        7.185
-      ],
-      "godot_min": [
-        -4.62662,
-        7.167,
-        0.091
-      ],
-      "godot_max": [
-        -3.87338,
-        7.185,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.009",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -4.56584,
-        -0.109,
-        7.293
-      ],
-      "blender_max": [
-        -3.93416,
-        -0.091,
-        7.311
-      ],
-      "godot_min": [
-        -4.56584,
-        7.293,
-        0.091
-      ],
-      "godot_max": [
-        -3.93416,
-        7.311,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.010",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.56808,
-        -0.109,
-        4.017
-      ],
-      "blender_max": [
-        -5.13192,
-        -0.091,
-        4.035
-      ],
-      "godot_min": [
-        -5.56808,
-        4.017,
-        0.091
-      ],
-      "godot_max": [
-        -5.13192,
-        4.035,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.011",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.61004,
-        -0.109,
-        4.104
-      ],
-      "blender_max": [
-        -5.08996,
-        -0.091,
-        4.122
-      ],
-      "godot_min": [
-        -5.61004,
-        4.104,
-        0.091
-      ],
-      "godot_max": [
-        -5.08996,
-        4.122,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.012",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.6226,
-        -0.109,
-        4.191
-      ],
-      "blender_max": [
-        -5.0774,
-        -0.091,
-        4.209
-      ],
-      "godot_min": [
-        -5.6226,
-        4.191,
-        0.091
-      ],
-      "godot_max": [
-        -5.0774,
-        4.209,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.013",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.61004,
-        -0.109,
-        4.278
-      ],
-      "blender_max": [
-        -5.08996,
-        -0.091,
-        4.296
-      ],
-      "godot_min": [
-        -5.61004,
-        4.278,
-        0.091
-      ],
-      "godot_max": [
-        -5.08996,
-        4.296,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.014",
-      "type": "MESH",
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.56808,
-        -0.109,
-        4.365
-      ],
-      "blender_max": [
-        -5.13192,
-        -0.091,
-        4.383
-      ],
-      "godot_min": [
-        -5.56808,
-        4.365,
-        0.091
-      ],
-      "godot_max": [
-        -5.13192,
-        4.383,
-        0.109
       ]
     },
     {
@@ -126897,456 +126415,6 @@
       ]
     },
     {
-      "name": "B blue entrance facade stripe",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -11.0,
-        -0.2175,
-        6.56
-      ],
-      "blender_max": [
-        -6.0,
-        -0.1625,
-        6.72
-      ],
-      "godot_min": [
-        -11.0,
-        6.56,
-        0.1625
-      ],
-      "godot_max": [
-        -6.0,
-        6.72,
-        0.2175
-      ]
-    },
-    {
-      "name": "B blue entrance facade stripe.001",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -3.5,
-        -0.2175,
-        6.56
-      ],
-      "blender_max": [
-        4.0,
-        -0.1625,
-        6.72
-      ],
-      "godot_min": [
-        -3.5,
-        6.56,
-        0.1625
-      ],
-      "godot_max": [
-        4.0,
-        6.72,
-        0.2175
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -5.516,
-        -0.095,
-        8.964
-      ],
-      "blender_max": [
-        -4.844,
-        -0.095,
-        9.636
-      ],
-      "godot_min": [
-        -5.516,
-        8.964,
-        0.095
-      ],
-      "godot_max": [
-        -4.844,
-        9.636,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.001",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -4.4332,
-        -0.095,
-        9.3168
-      ],
-      "blender_max": [
-        -4.1068,
-        -0.095,
-        9.6432
-      ],
-      "godot_min": [
-        -4.4332,
-        9.3168,
-        0.095
-      ],
-      "godot_max": [
-        -4.1068,
-        9.6432,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.002",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -5.5736,
-        -0.095,
-        8.4964
-      ],
-      "blender_max": [
-        -5.2664,
-        -0.095,
-        8.8036
-      ],
-      "godot_min": [
-        -5.5736,
-        8.4964,
-        0.095
-      ],
-      "godot_max": [
-        -5.2664,
-        8.8036,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.003",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -4.8548,
-        -0.095,
-        8.3552
-      ],
-      "blender_max": [
-        -4.6052,
-        -0.095,
-        8.6048
-      ],
-      "godot_min": [
-        -4.8548,
-        8.3552,
-        0.095
-      ],
-      "godot_max": [
-        -4.6052,
-        8.6048,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.004",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -5.4644,
-        -0.095,
-        7.2656
-      ],
-      "blender_max": [
-        -5.1956,
-        -0.095,
-        7.5344
-      ],
-      "godot_min": [
-        -5.4644,
-        7.2656,
-        0.095
-      ],
-      "godot_max": [
-        -5.1956,
-        7.5344,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.005",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -4.6532,
-        -0.095,
-        6.6468
-      ],
-      "blender_max": [
-        -3.8468,
-        -0.095,
-        7.4532
-      ],
-      "godot_min": [
-        -4.6532,
-        6.6468,
-        0.095
-      ],
-      "godot_max": [
-        -3.8468,
-        7.4532,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.006",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -5.2548,
-        -0.095,
-        5.5252
-      ],
-      "blender_max": [
-        -5.0052,
-        -0.095,
-        5.7748
-      ],
-      "godot_min": [
-        -5.2548,
-        5.5252,
-        0.095
-      ],
-      "godot_max": [
-        -5.0052,
-        5.7748,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.007",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -4.642,
-        -0.095,
-        4.908
-      ],
-      "blender_max": [
-        -4.258,
-        -0.095,
-        5.292
-      ],
-      "godot_min": [
-        -4.642,
-        4.908,
-        0.095
-      ],
-      "godot_max": [
-        -4.258,
-        5.292,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.008",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -5.6284,
-        -0.095,
-        3.9216
-      ],
-      "blender_max": [
-        -5.0716,
-        -0.095,
-        4.4784
-      ],
-      "godot_min": [
-        -5.6284,
-        3.9216,
-        0.095
-      ],
-      "godot_max": [
-        -5.0716,
-        4.4784,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.009",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -4.4748,
-        -0.095,
-        3.4552
-      ],
-      "blender_max": [
-        -4.2252,
-        -0.095,
-        3.7048
-      ],
-      "godot_min": [
-        -4.4748,
-        3.4552,
-        0.095
-      ],
-      "godot_max": [
-        -4.2252,
-        3.7048,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.010",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -5.1436,
-        -0.095,
-        2.6064
-      ],
-      "blender_max": [
-        -4.8364,
-        -0.095,
-        2.9136
-      ],
-      "godot_min": [
-        -5.1436,
-        2.6064,
-        0.095
-      ],
-      "godot_max": [
-        -4.8364,
-        2.9136,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.011",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -4.2648,
-        -0.095,
-        2.1252
-      ],
-      "blender_max": [
-        -4.0152,
-        -0.095,
-        2.3748
-      ],
-      "godot_min": [
-        -4.2648,
-        2.1252,
-        0.095
-      ],
-      "godot_max": [
-        -4.0152,
-        2.3748,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.012",
-      "type": "MESH",
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "vertices": 40,
-      "polygons": 1,
-      "modifiers": [],
-      "blender_min": [
-        -5.3544,
-        -0.095,
-        1.4356
-      ],
-      "blender_max": [
-        -5.0856,
-        -0.095,
-        1.7044
-      ],
-      "godot_min": [
-        -5.3544,
-        1.4356,
-        0.095
-      ],
-      "godot_max": [
-        -5.0856,
-        1.7044,
-        0.095
-      ]
-    },
-    {
       "name": "B standard classroom tiled floor",
       "type": "MESH",
       "collections": [
@@ -162264,156 +161332,6 @@
       ]
     },
     {
-      "name": "Campus rectangular lawn.002",
-      "type": "MESH",
-      "collections": [
-        "Campus - Courtyard gardens and circulation"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.0,
-        68.5,
-        0.22
-      ],
-      "blender_max": [
-        3.0,
-        77.5,
-        0.34
-      ],
-      "godot_min": [
-        -5.0,
-        0.22,
-        -77.5
-      ],
-      "godot_max": [
-        3.0,
-        0.34,
-        -68.5
-      ]
-    },
-    {
-      "name": "Campus lawn border.008",
-      "type": "MESH",
-      "collections": [
-        "Campus - Courtyard gardens and circulation"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.07,
-        68.4,
-        0.15
-      ],
-      "blender_max": [
-        -4.93,
-        77.6,
-        0.37
-      ],
-      "godot_min": [
-        -5.07,
-        0.15,
-        -77.6
-      ],
-      "godot_max": [
-        -4.93,
-        0.37,
-        -68.4
-      ]
-    },
-    {
-      "name": "Campus lawn border.009",
-      "type": "MESH",
-      "collections": [
-        "Campus - Courtyard gardens and circulation"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.05,
-        68.43,
-        0.15
-      ],
-      "blender_max": [
-        3.05,
-        68.57,
-        0.37
-      ],
-      "godot_min": [
-        -5.05,
-        0.15,
-        -68.57
-      ],
-      "godot_max": [
-        3.05,
-        0.37,
-        -68.43
-      ]
-    },
-    {
-      "name": "Campus lawn border.010",
-      "type": "MESH",
-      "collections": [
-        "Campus - Courtyard gardens and circulation"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        2.93,
-        68.4,
-        0.15
-      ],
-      "blender_max": [
-        3.07,
-        77.6,
-        0.37
-      ],
-      "godot_min": [
-        2.93,
-        0.15,
-        -77.6
-      ],
-      "godot_max": [
-        3.07,
-        0.37,
-        -68.4
-      ]
-    },
-    {
-      "name": "Campus lawn border.011",
-      "type": "MESH",
-      "collections": [
-        "Campus - Courtyard gardens and circulation"
-      ],
-      "vertices": 8,
-      "polygons": 6,
-      "modifiers": [],
-      "blender_min": [
-        -5.05,
-        77.43,
-        0.15
-      ],
-      "blender_max": [
-        3.05,
-        77.57,
-        0.37
-      ],
-      "godot_min": [
-        -5.05,
-        0.15,
-        -77.57
-      ],
-      "godot_max": [
-        3.05,
-        0.37,
-        -77.43
-      ]
-    },
-    {
       "name": "Campus rectangular lawn.003",
       "type": "MESH",
       "collections": [
@@ -163191,36 +162109,6 @@
         -52.62379,
         3.24,
         -94.58896
-      ]
-    },
-    {
-      "name": "Courtyard planting.002",
-      "type": "MESH",
-      "collections": [
-        "Campus - Courtyard gardens and circulation"
-      ],
-      "vertices": 410,
-      "polygons": 634,
-      "modifiers": [],
-      "blender_min": [
-        -3.60272,
-        73.48106,
-        0.29897
-      ],
-      "blender_max": [
-        -0.42007,
-        76.69623,
-        3.24
-      ],
-      "godot_min": [
-        -3.60272,
-        0.29897,
-        -76.69623
-      ],
-      "godot_max": [
-        -0.42007,
-        3.24,
-        -73.48106
       ]
     },
     {
@@ -181525,6 +180413,996 @@
         6.1874,
         -106.033
       ]
+    },
+    {
+      "name": "B10 navy circle tower facade wall",
+      "type": "MESH",
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -5.975,
+        -0.6,
+        0.225
+      ],
+      "blender_max": [
+        -3.525,
+        -0.12,
+        10.375
+      ],
+      "godot_min": [
+        -5.975,
+        0.225,
+        0.12
+      ],
+      "godot_max": [
+        -3.525,
+        10.375,
+        0.6
+      ]
+    },
+    {
+      "name": "B10 white tower disc accents",
+      "type": "MESH",
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "vertices": 640,
+      "polygons": 336,
+      "modifiers": [],
+      "blender_min": [
+        -5.65,
+        -0.625,
+        0.83
+      ],
+      "blender_max": [
+        -3.85,
+        -0.6,
+        10.15
+      ],
+      "godot_min": [
+        -5.65,
+        0.83,
+        0.6
+      ],
+      "godot_max": [
+        -3.85,
+        10.15,
+        0.625
+      ]
+    },
+    {
+      "name": "B10 grilled porthole rings",
+      "type": "MESH",
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "vertices": 552,
+      "polygons": 414,
+      "modifiers": [],
+      "blender_min": [
+        -5.41,
+        -0.65,
+        3.84
+      ],
+      "blender_max": [
+        -4.05,
+        -0.6,
+        9.47
+      ],
+      "godot_min": [
+        -5.41,
+        3.84,
+        0.6
+      ],
+      "godot_max": [
+        -4.05,
+        9.47,
+        0.65
+      ]
+    },
+    {
+      "name": "B10 porthole dark recess",
+      "type": "MESH",
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "vertices": 192,
+      "polygons": 99,
+      "modifiers": [],
+      "blender_min": [
+        -5.35,
+        -0.602,
+        3.9
+      ],
+      "blender_max": [
+        -4.11,
+        -0.598,
+        9.41
+      ],
+      "godot_min": [
+        -5.35,
+        3.9,
+        0.598
+      ],
+      "godot_max": [
+        -4.11,
+        9.41,
+        0.602
+      ]
+    },
+    {
+      "name": "B10 royal blue facade stripe centre",
+      "type": "MESH",
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -10.5,
+        -0.225,
+        6.48
+      ],
+      "blender_max": [
+        -5.975,
+        -0.16,
+        6.8
+      ],
+      "godot_min": [
+        -10.5,
+        6.48,
+        0.16
+      ],
+      "godot_max": [
+        -5.975,
+        6.8,
+        0.225
+      ]
+    },
+    {
+      "name": "B10 royal blue facade stripe right",
+      "type": "MESH",
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -3.525,
+        -0.225,
+        6.48
+      ],
+      "blender_max": [
+        4.0,
+        -0.16,
+        6.8
+      ],
+      "godot_min": [
+        -3.525,
+        6.48,
+        0.16
+      ],
+      "godot_max": [
+        4.0,
+        6.8,
+        0.225
+      ]
+    },
+    {
+      "name": "B10 royal blue parapet stripe right",
+      "type": "MESH",
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -3.525,
+        -0.225,
+        9.38
+      ],
+      "blender_max": [
+        4.0,
+        -0.16,
+        9.62
+      ],
+      "godot_min": [
+        -3.525,
+        9.38,
+        0.16
+      ],
+      "godot_max": [
+        4.0,
+        9.62,
+        0.225
+      ]
+    },
+    {
+      "name": "B10 cladding panel joint grid",
+      "type": "MESH",
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "vertices": 1944,
+      "polygons": 1458,
+      "modifiers": [],
+      "blender_min": [
+        -10.53,
+        -0.164,
+        0.489
+      ],
+      "blender_max": [
+        4.0,
+        -0.158,
+        9.86
+      ],
+      "godot_min": [
+        -10.53,
+        0.489,
+        0.158
+      ],
+      "godot_max": [
+        4.0,
+        9.86,
+        0.164
+      ]
+    },
+    {
+      "name": "B10 university sign blue panel",
+      "type": "MESH",
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -15.95,
+        -0.2,
+        2.86
+      ],
+      "blender_max": [
+        -12.05,
+        -0.166,
+        4.32
+      ],
+      "godot_min": [
+        -15.95,
+        2.86,
+        0.166
+      ],
+      "godot_max": [
+        -12.05,
+        4.32,
+        0.2
+      ]
+    },
+    {
+      "name": "B10 navy portico canopy roof",
+      "type": "MESH",
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -3.525,
+        -3.4,
+        3.0
+      ],
+      "blender_max": [
+        2.6,
+        -0.16,
+        3.32
+      ],
+      "godot_min": [
+        -3.525,
+        3.0,
+        0.16
+      ],
+      "godot_max": [
+        2.6,
+        3.32,
+        3.4
+      ]
+    },
+    {
+      "name": "B10 navy portico canopy fascia",
+      "type": "MESH",
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -3.525,
+        -3.46,
+        2.78
+      ],
+      "blender_max": [
+        2.6,
+        -3.34,
+        3.32
+      ],
+      "godot_min": [
+        -3.525,
+        2.78,
+        3.34
+      ],
+      "godot_max": [
+        2.6,
+        3.32,
+        3.46
+      ]
+    },
+    {
+      "name": "B10 navy portico canopy column",
+      "type": "MESH",
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        2.28,
+        -3.4,
+        0.52
+      ],
+      "blender_max": [
+        2.56,
+        -3.12,
+        3.0
+      ],
+      "godot_min": [
+        2.28,
+        0.52,
+        3.12
+      ],
+      "godot_max": [
+        2.56,
+        3.0,
+        3.4
+      ]
+    },
+    {
+      "name": "D10 interlocking paver approach path",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -6.0,
+        64.5,
+        0.15
+      ],
+      "blender_max": [
+        -2.0,
+        97.2,
+        0.285
+      ],
+      "godot_min": [
+        -6.0,
+        0.15,
+        -97.2
+      ],
+      "godot_max": [
+        -2.0,
+        0.285,
+        -64.5
+      ]
+    },
+    {
+      "name": "D10 path edge curb",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 16,
+      "polygons": 12,
+      "modifiers": [],
+      "blender_min": [
+        -6.12,
+        64.5,
+        0.15
+      ],
+      "blender_max": [
+        -1.88,
+        93.0,
+        0.33
+      ],
+      "godot_min": [
+        -6.12,
+        0.15,
+        -93.0
+      ],
+      "godot_max": [
+        -1.88,
+        0.33,
+        -64.5
+      ]
+    },
+    {
+      "name": "D10 west lawn",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -21.0,
+        66.0,
+        0.16
+      ],
+      "blender_max": [
+        -6.12,
+        93.0,
+        0.32
+      ],
+      "godot_min": [
+        -21.0,
+        0.16,
+        -93.0
+      ],
+      "godot_max": [
+        -6.12,
+        0.32,
+        -66.0
+      ]
+    },
+    {
+      "name": "D10 west lawn border",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 24,
+      "polygons": 18,
+      "modifiers": [],
+      "blender_min": [
+        -21.12,
+        65.88,
+        0.15
+      ],
+      "blender_max": [
+        -6.12,
+        93.12,
+        0.34
+      ],
+      "godot_min": [
+        -21.12,
+        0.15,
+        -93.12
+      ],
+      "godot_max": [
+        -6.12,
+        0.34,
+        -65.88
+      ]
+    },
+    {
+      "name": "D10 east lawn",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -1.88,
+        66.0,
+        0.16
+      ],
+      "blender_max": [
+        8.0,
+        93.0,
+        0.32
+      ],
+      "godot_min": [
+        -1.88,
+        0.16,
+        -93.0
+      ],
+      "godot_max": [
+        8.0,
+        0.32,
+        -66.0
+      ]
+    },
+    {
+      "name": "D10 east lawn border",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 24,
+      "polygons": 18,
+      "modifiers": [],
+      "blender_min": [
+        -2.0,
+        65.88,
+        0.15
+      ],
+      "blender_max": [
+        8.12,
+        93.12,
+        0.34
+      ],
+      "godot_min": [
+        -2.0,
+        0.15,
+        -93.12
+      ],
+      "godot_max": [
+        8.12,
+        0.34,
+        -65.88
+      ]
+    },
+    {
+      "name": "D10 cast concrete garden slab",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -15.6,
+        74.4,
+        0.16
+      ],
+      "blender_max": [
+        -11.6,
+        78.2,
+        0.42
+      ],
+      "godot_min": [
+        -15.6,
+        0.16,
+        -78.2
+      ],
+      "godot_max": [
+        -11.6,
+        0.42,
+        -74.4
+      ]
+    },
+    {
+      "name": "D10 zellige basin rim 1",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 32,
+      "polygons": 24,
+      "modifiers": [],
+      "blender_min": [
+        -18.4,
+        79.0,
+        0.16
+      ],
+      "blender_max": [
+        -13.0,
+        80.1,
+        0.4
+      ],
+      "godot_min": [
+        -18.4,
+        0.16,
+        -80.1
+      ],
+      "godot_max": [
+        -13.0,
+        0.4,
+        -79.0
+      ]
+    },
+    {
+      "name": "D10 basin gravel bed soil 1",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -18.24,
+        79.16,
+        0.16
+      ],
+      "blender_max": [
+        -13.16,
+        79.94,
+        0.3
+      ],
+      "godot_min": [
+        -18.24,
+        0.16,
+        -79.94
+      ],
+      "godot_max": [
+        -13.16,
+        0.3,
+        -79.16
+      ]
+    },
+    {
+      "name": "D10 zellige basin rim 2",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 32,
+      "polygons": 24,
+      "modifiers": [],
+      "blender_min": [
+        -14.2,
+        72.5,
+        0.16
+      ],
+      "blender_max": [
+        -8.8,
+        73.6,
+        0.4
+      ],
+      "godot_min": [
+        -14.2,
+        0.16,
+        -73.6
+      ],
+      "godot_max": [
+        -8.8,
+        0.4,
+        -72.5
+      ]
+    },
+    {
+      "name": "D10 basin gravel bed soil 2",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "blender_min": [
+        -14.04,
+        72.66,
+        0.16
+      ],
+      "blender_max": [
+        -8.96,
+        73.44,
+        0.3
+      ],
+      "godot_min": [
+        -14.04,
+        0.16,
+        -73.44
+      ],
+      "godot_max": [
+        -8.96,
+        0.3,
+        -72.66
+      ]
+    },
+    {
+      "name": "D10 bollard lamp posts",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 320,
+      "polygons": 192,
+      "modifiers": [],
+      "blender_min": [
+        -6.49755,
+        66.45,
+        0.33
+      ],
+      "blender_max": [
+        -1.50245,
+        94.55,
+        1.18
+      ],
+      "godot_min": [
+        -6.49755,
+        0.33,
+        -94.55
+      ],
+      "godot_max": [
+        -1.50245,
+        1.18,
+        -66.45
+      ]
+    },
+    {
+      "name": "D10 bollard lamp globes",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 1376,
+      "polygons": 1536,
+      "modifiers": [],
+      "blender_min": [
+        -6.56,
+        66.39,
+        1.17
+      ],
+      "blender_max": [
+        -1.44,
+        94.61,
+        1.39
+      ],
+      "godot_min": [
+        -6.56,
+        1.17,
+        -94.61
+      ],
+      "godot_max": [
+        -1.44,
+        1.39,
+        -66.39
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 01",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 1990,
+      "polygons": 580,
+      "modifiers": [],
+      "blender_min": [
+        -9.51793,
+        65.23259,
+        0.3
+      ],
+      "blender_max": [
+        -4.7814,
+        69.8164,
+        8.4199
+      ],
+      "godot_min": [
+        -9.51793,
+        0.3,
+        -69.8164
+      ],
+      "godot_max": [
+        -4.7814,
+        8.4199,
+        -65.23259
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 02",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 1990,
+      "polygons": 580,
+      "modifiers": [],
+      "blender_min": [
+        -10.61065,
+        67.55574,
+        0.3
+      ],
+      "blender_max": [
+        -3.95749,
+        74.27142,
+        7.25984
+      ],
+      "godot_min": [
+        -10.61065,
+        0.3,
+        -74.27142
+      ],
+      "godot_max": [
+        -3.95749,
+        7.25984,
+        -67.55574
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 03",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 1990,
+      "polygons": 580,
+      "modifiers": [],
+      "blender_min": [
+        -10.02936,
+        71.59882,
+        0.3
+      ],
+      "blender_max": [
+        -4.31755,
+        77.41534,
+        8.4199
+      ],
+      "godot_min": [
+        -10.02936,
+        0.3,
+        -77.41534
+      ],
+      "godot_max": [
+        -4.31755,
+        8.4199,
+        -71.59882
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 04",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 1990,
+      "polygons": 580,
+      "modifiers": [],
+      "blender_min": [
+        -10.23282,
+        74.80971,
+        0.3
+      ],
+      "blender_max": [
+        -3.97494,
+        80.8849,
+        7.25984
+      ],
+      "godot_min": [
+        -10.23282,
+        0.3,
+        -80.8849
+      ],
+      "godot_max": [
+        -3.97494,
+        7.25984,
+        -74.80971
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 05",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 1990,
+      "polygons": 580,
+      "modifiers": [],
+      "blender_min": [
+        -10.3862,
+        78.28077,
+        0.3
+      ],
+      "blender_max": [
+        -3.94033,
+        84.67804,
+        8.4199
+      ],
+      "godot_min": [
+        -10.3862,
+        0.3,
+        -84.67804
+      ],
+      "godot_max": [
+        -3.94033,
+        8.4199,
+        -78.28077
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 06",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 1990,
+      "polygons": 580,
+      "modifiers": [],
+      "blender_min": [
+        -9.50377,
+        82.34462,
+        0.3
+      ],
+      "blender_max": [
+        -4.47724,
+        87.65987,
+        7.25984
+      ],
+      "godot_min": [
+        -9.50377,
+        0.3,
+        -87.65987
+      ],
+      "godot_max": [
+        -4.47724,
+        7.25984,
+        -82.34462
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 07",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 1990,
+      "polygons": 580,
+      "modifiers": [],
+      "blender_min": [
+        -10.42741,
+        85.19367,
+        0.3
+      ],
+      "blender_max": [
+        -3.84031,
+        91.76947,
+        8.4199
+      ],
+      "godot_min": [
+        -10.42741,
+        0.3,
+        -91.76947
+      ],
+      "godot_max": [
+        -3.84031,
+        8.4199,
+        -85.19367
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 08",
+      "type": "MESH",
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "vertices": 1990,
+      "polygons": 580,
+      "modifiers": [],
+      "blender_min": [
+        -9.96904,
+        89.41868,
+        0.3
+      ],
+      "blender_max": [
+        -4.24735,
+        94.88919,
+        7.25984
+      ],
+      "godot_min": [
+        -9.96904,
+        0.3,
+        -94.88919
+      ],
+      "godot_max": [
+        -4.24735,
+        7.25984,
+        -89.41868
+      ]
     }
   ],
   "excluded": [
@@ -181562,6 +181440,161 @@
       "name": "Camera - glazing and panel detail",
       "type": "CAMERA",
       "reason": "non_geometry"
+    },
+    {
+      "name": "Circular perforated vertical facade",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.001",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.002",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.003",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.004",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.005",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.006",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.007",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.008",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.009",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.010",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.011",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.012",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.013",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.014",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B blue entrance facade stripe",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B blue entrance facade stripe.001",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.001",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.002",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.003",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.004",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.005",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.006",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.007",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.008",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.009",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.010",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.011",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.012",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
     },
     {
       "name": "E5 facade review soft daylight",
@@ -181974,6 +182007,36 @@
       "reason": "hidden_or_obsolete_study"
     },
     {
+      "name": "Campus rectangular lawn.002",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Campus lawn border.008",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Campus lawn border.009",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Campus lawn border.010",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Campus lawn border.011",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Courtyard planting.002",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
       "name": "B diffuse skylight 0",
       "type": "LIGHT",
       "reason": "non_geometry"
@@ -182105,6 +182168,26 @@
     },
     {
       "name": "D7 Camera 07 - photographic interior detail",
+      "type": "CAMERA",
+      "reason": "non_geometry"
+    },
+    {
+      "name": "D10 Camera 01 - palm path to glazed block",
+      "type": "CAMERA",
+      "reason": "non_geometry"
+    },
+    {
+      "name": "D10 Camera 02 - lawn basins and glazed corner",
+      "type": "CAMERA",
+      "reason": "non_geometry"
+    },
+    {
+      "name": "B10 Camera 01 - university entrance",
+      "type": "CAMERA",
+      "reason": "non_geometry"
+    },
+    {
+      "name": "B10 Camera 02 - circle tower oblique",
       "type": "CAMERA",
       "reason": "non_geometry"
     }

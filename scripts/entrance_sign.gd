@@ -53,8 +53,8 @@ static func install(runtime: Node3D, mesh_nodes: Array[MeshInstance3D], preset: 
 		material.albedo_texture = texture
 		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
 		material.alpha_scissor_threshold = 0.5
-		# Bake is lit by a bright sun; pull it toward the anodised blue-grey of the 3D letters.
-		material.albedo_color = Color(0.52, 0.57, 0.64)
+		# Revision 10: white letters on the blue university sign panel (photos 12-14).
+		material.albedo_color = Color(0.97, 0.97, 0.98)
 		material.roughness = 0.45
 		material.metallic = 0.3
 		material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC

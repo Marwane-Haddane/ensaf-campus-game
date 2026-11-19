@@ -1,12 +1,13 @@
 {
-  "source": "C:\\1Project\\Vr --- cyber\\ensaf-campus-v4-project\\ENSA-Fes-Campus-v4\\campus-design-v9\\ensaf-campus-v9-final.blend",
+  "source": "C:\\1Project\\Vr --- cyber\\ensaf-campus-v4-project\\ENSA-Fes-Campus-v4\\3D-modeling\\campus-design-v10\\ensaf-campus-v10.blend",
   "source_unchanged": true,
   "asset": "campus.glb",
-  "asset_bytes": 42560584,
+  "quality": "medium",
+  "asset_bytes": 42876364,
   "coordinate_convention": "Blender (x,y,z) -> Godot (x,z,-y); metres",
-  "geometry_objects": 5965,
-  "unique_meshes": 4388,
-  "instanced_triangles": 3275284,
+  "geometry_objects": 5961,
+  "unique_meshes": 4385,
+  "instanced_triangles": 3286544,
   "optimizations": [
     {
       "name": "E9 auditorium row 01 seat 001",
@@ -44,6 +45,8 @@
       "collapse_ratio": 0.1
     }
   ],
+  "chair_rebuild": [],
+  "roof_rebuild": [],
   "material_simplification": "Constant Principled PBR; glass via alpha blend; no procedural texture baking",
   "materials": [
     {
@@ -56,6 +59,78 @@
       "alpha": 1.0,
       "roughness": 0.2800000011920929,
       "metallic": 0.7200000286102295,
+      "glass": false
+    },
+    {
+      "name": "B cladding dark joint grout",
+      "color_linear": [
+        0.18782077729701996,
+        0.2158605009317398,
+        0.2541520893573761
+      ],
+      "alpha": 1.0,
+      "roughness": 0.800000011920929,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
+      "name": "B dark porthole recess",
+      "color_linear": [
+        0.011612244881689548,
+        0.014443843625485897,
+        0.021219009533524513
+      ],
+      "alpha": 1.0,
+      "roughness": 0.800000011920929,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
+      "name": "B royal blue facade stripe accent",
+      "color_linear": [
+        0.019382361322641373,
+        0.07618538290262222,
+        0.3915724754333496
+      ],
+      "alpha": 1.0,
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
+      "name": "B sign white lettering",
+      "color_linear": [
+        0.9215818643569946,
+        0.9301108717918396,
+        0.9473065137863159
+      ],
+      "alpha": 1.0,
+      "roughness": 0.3499999940395355,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
+      "name": "B university sign cobalt panel",
+      "color_linear": [
+        0.017641954123973846,
+        0.05126945674419403,
+        0.34191441535949707
+      ],
+      "alpha": 1.0,
+      "roughness": 0.3799999952316284,
+      "metallic": 0.10000000149011612,
+      "glass": false
+    },
+    {
+      "name": "B white painted tower disc accent",
+      "color_linear": [
+        0.838798999786377,
+        0.8549926280975342,
+        0.8713670969009399
+      ],
+      "alpha": 1.0,
+      "roughness": 0.5,
+      "metallic": 0.0,
       "glass": false
     },
     {
@@ -143,15 +218,135 @@
       "glass": false
     },
     {
+      "name": "D10 black bollard lamp metal",
+      "color_linear": [
+        0.012983032502233982,
+        0.014443843625485897,
+        0.01599629409611225
+      ],
+      "alpha": 1.0,
+      "roughness": 0.44999998807907104,
+      "metallic": 0.6000000238418579,
+      "glass": false
+    },
+    {
+      "name": "D10 cast concrete garden slab",
+      "color_linear": [
+        0.5520114302635193,
+        0.44520118832588196,
+        0.35153260827064514
+      ],
+      "alpha": 1.0,
+      "roughness": 0.8500000238418579,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
+      "name": "D10 dark gravel basin bed soil",
+      "color_linear": [
+        0.061246052384376526,
+        0.05448027700185776,
+        0.045186202973127365
+      ],
+      "alpha": 1.0,
+      "roughness": 0.949999988079071,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
+      "name": "D10 fan palm leaves",
+      "color_linear": [
+        0.05126945674419403,
+        0.16202937066555023,
+        0.03189603239297867
+      ],
+      "alpha": 1.0,
+      "roughness": 0.699999988079071,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
+      "name": "D10 interlocking paver path",
+      "color_linear": [
+        0.3915724754333496,
+        0.3049873113632202,
+        0.2622506618499756
+      ],
+      "alpha": 1.0,
+      "roughness": 0.8999999761581421,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
+      "name": "D10 irrigated green lawn",
+      "color_linear": [
+        0.10702310502529144,
+        0.27049779891967773,
+        0.03688944876194
+      ],
+      "alpha": 1.0,
+      "roughness": 0.949999988079071,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
+      "name": "D10 opal bollard light diffuser",
+      "color_linear": [
+        0.9130986332893372,
+        0.8962693810462952,
+        0.838798999786377
+      ],
+      "alpha": 1.0,
+      "roughness": 0.30000001192092896,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
+      "name": "D10 palm dry frond skirt leaves",
+      "color_linear": [
+        0.11697066575288773,
+        0.07618538290262222,
+        0.039546236395835876
+      ],
+      "alpha": 1.0,
+      "roughness": 0.949999988079071,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
+      "name": "D10 palm trunk bark",
+      "color_linear": [
+        0.16202937066555023,
+        0.1119324266910553,
+        0.07227185368537903
+      ],
+      "alpha": 1.0,
+      "roughness": 0.949999988079071,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
+      "name": "D10 zellige mosaic basin rim",
+      "color_linear": [
+        0.18782077729701996,
+        0.2541520893573761,
+        0.3049873113632202
+      ],
+      "alpha": 1.0,
+      "roughness": 0.3499999940395355,
+      "metallic": 0.0,
+      "glass": false
+    },
+    {
       "name": "D7 blue solar control glazing",
       "color_linear": [
-        0.2800000011920929,
-        0.46000000834465027,
-        0.550000011920929
+        0.01599629409611225,
+        0.0423114113509655,
+        0.05780543014407158
       ],
       "alpha": 0.38,
       "roughness": 0.08,
-      "metallic": 0.2199999988079071,
+      "metallic": 0.20000000298023224,
       "glass": true
     },
     {
@@ -181,9 +376,9 @@
     {
       "name": "D7 honed cream interior stone",
       "color_linear": [
-        0.5799999833106995,
-        0.5400000214576721,
-        0.4399999976158142
+        0.8069522380828857,
+        0.7304607629776001,
+        0.5520114302635193
       ],
       "alpha": 1.0,
       "roughness": 0.2199999988079071,
@@ -301,12 +496,12 @@
     {
       "name": "D7 sandstone approach paving",
       "color_linear": [
-        0.4699999988079071,
-        0.41999998688697815,
-        0.3199999928474426
+        0.4910208582878113,
+        0.44520118832588196,
+        0.3915724754333496
       ],
       "alpha": 1.0,
-      "roughness": 0.7699999809265137,
+      "roughness": 0.8799999952316284,
       "metallic": 0.0,
       "glass": false
     },
@@ -457,12 +652,12 @@
     {
       "name": "D7 warm ochre stepped seating",
       "color_linear": [
-        0.46000000834465027,
-        0.3400000035762787,
-        0.1599999964237213
+        0.5840784311294556,
+        0.366252601146698,
+        0.09305896610021591
       ],
       "alpha": 1.0,
-      "roughness": 0.550000011920929,
+      "roughness": 0.41999998688697815,
       "metallic": 0.0,
       "glass": false
     },
@@ -1369,24 +1564,24 @@
     {
       "name": "R4 B entrance grey cladding",
       "color_linear": [
-        0.4699999988079071,
-        0.5,
-        0.5099999904632568
+        0.5520114302635193,
+        0.6038273572921753,
+        0.672443151473999
       ],
       "alpha": 1.0,
-      "roughness": 0.550000011920929,
+      "roughness": 0.6200000047683716,
       "metallic": 0.05000000074505806,
       "glass": false
     },
     {
       "name": "R4 B latest blue circular facade panel",
       "color_linear": [
-        0.03500000014901161,
-        0.07000000029802322,
-        0.12999999523162842
+        0.02518685907125473,
+        0.0423114113509655,
+        0.09305896610021591
       ],
       "alpha": 1.0,
-      "roughness": 0.6499999761581421,
+      "roughness": 0.550000011920929,
       "metallic": 0.0,
       "glass": false
     },
@@ -1645,12 +1840,12 @@
     {
       "name": "Warm mineral plaster",
       "color_linear": [
-        0.6200000047683716,
-        0.5799999833106995,
-        0.47999998927116394
+        0.4125426113605499,
+        0.366252601146698,
+        0.31398871541023254
       ],
       "alpha": 1.0,
-      "roughness": 0.7599999904632568,
+      "roughness": 0.8600000143051147,
       "metallic": 0.0,
       "glass": false
     },
@@ -13184,41 +13379,6 @@
       ]
     },
     {
-      "name": "Circular perforated vertical facade",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 3836,
-      "triangles": 7720,
-      "mesh": "Cube.474",
-      "materials": [
-        "R4 B latest blue circular facade panel"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -5.975,
-        -0.6,
-        0.225
-      ],
-      "blender_max": [
-        -3.525,
-        -0.12,
-        10.375
-      ],
-      "godot_min": [
-        -5.975,
-        0.225,
-        0.12
-      ],
-      "godot_max": [
-        -3.525,
-        10.375,
-        0.6
-      ]
-    },
-    {
       "name": "Entrance dark recess",
       "role": "detail",
       "collision_candidate": false,
@@ -13260,7 +13420,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.475",
+      "mesh": "Cube.474",
       "materials": [
         "Off-white precast edges"
       ],
@@ -13295,7 +13455,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.476",
+      "mesh": "Cube.475",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -13330,7 +13490,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.477",
+      "mesh": "Cube.476",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -13365,7 +13525,7 @@
       "walkable": true,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.485",
+      "mesh": "Cube.477",
       "materials": [
         "Off-white precast edges"
       ],
@@ -13400,7 +13560,7 @@
       "walkable": true,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.486",
+      "mesh": "Cube.485",
       "materials": [
         "Off-white precast edges"
       ],
@@ -13435,7 +13595,7 @@
       "walkable": true,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.487",
+      "mesh": "Cube.486",
       "materials": [
         "Off-white precast edges"
       ],
@@ -13470,7 +13630,7 @@
       "walkable": true,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.488",
+      "mesh": "Cube.487",
       "materials": [
         "Off-white precast edges"
       ],
@@ -13505,7 +13665,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.496",
+      "mesh": "Cube.488",
       "materials": [
         "R4 clear interior window glass"
       ],
@@ -13540,7 +13700,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.497",
+      "mesh": "Cube.496",
       "materials": [
         "Anodized window frames"
       ],
@@ -13575,7 +13735,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.498",
+      "mesh": "Cube.497",
       "materials": [
         "Anodized window frames"
       ],
@@ -14170,7 +14330,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.499",
+      "mesh": "Cube.498",
       "materials": [
         "R4 clear interior window glass"
       ],
@@ -14205,7 +14365,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.507",
+      "mesh": "Cube.499",
       "materials": [
         "Anodized window frames"
       ],
@@ -14240,7 +14400,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.508",
+      "mesh": "Cube.507",
       "materials": [
         "Anodized window frames"
       ],
@@ -14835,7 +14995,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.509",
+      "mesh": "Cube.508",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -14870,7 +15030,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.510",
+      "mesh": "Cube.509",
       "materials": [
         "Anodized window frames"
       ],
@@ -14905,7 +15065,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.518",
+      "mesh": "Cube.510",
       "materials": [
         "Anodized window frames"
       ],
@@ -15500,7 +15660,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.519",
+      "mesh": "Cube.518",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -15535,7 +15695,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.520",
+      "mesh": "Cube.519",
       "materials": [
         "Anodized window frames"
       ],
@@ -15570,7 +15730,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.521",
+      "mesh": "Cube.520",
       "materials": [
         "Anodized window frames"
       ],
@@ -16165,7 +16325,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.529",
+      "mesh": "Cube.521",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -16200,7 +16360,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.530",
+      "mesh": "Cube.529",
       "materials": [
         "Anodized window frames"
       ],
@@ -16235,7 +16395,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.531",
+      "mesh": "Cube.530",
       "materials": [
         "Anodized window frames"
       ],
@@ -16830,7 +16990,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.532",
+      "mesh": "Cube.531",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -16865,7 +17025,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.540",
+      "mesh": "Cube.532",
       "materials": [
         "Anodized window frames"
       ],
@@ -16900,7 +17060,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.541",
+      "mesh": "Cube.540",
       "materials": [
         "Anodized window frames"
       ],
@@ -17495,7 +17655,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.542",
+      "mesh": "Cube.541",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -17530,7 +17690,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.543",
+      "mesh": "Cube.542",
       "materials": [
         "Anodized window frames"
       ],
@@ -17565,7 +17725,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.551",
+      "mesh": "Cube.543",
       "materials": [
         "Anodized window frames"
       ],
@@ -18160,7 +18320,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.552",
+      "mesh": "Cube.551",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -18195,7 +18355,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.553",
+      "mesh": "Cube.552",
       "materials": [
         "Anodized window frames"
       ],
@@ -18230,7 +18390,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.554",
+      "mesh": "Cube.553",
       "materials": [
         "Anodized window frames"
       ],
@@ -18370,7 +18530,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.562",
+      "mesh": "Cube.554",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -18405,7 +18565,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.903",
+      "mesh": "Cube.562",
       "materials": [
         "Anodized window frames"
       ],
@@ -18440,7 +18600,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.990",
+      "mesh": "Cube.903",
       "materials": [
         "Anodized window frames"
       ],
@@ -18580,7 +18740,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.991",
+      "mesh": "Cube.990",
       "materials": [
         "Blue reflective glazing 2"
       ],
@@ -18615,7 +18775,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.992",
+      "mesh": "Cube.991",
       "materials": [
         "Anodized window frames"
       ],
@@ -18650,7 +18810,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.993",
+      "mesh": "Cube.992",
       "materials": [
         "Anodized window frames"
       ],
@@ -18790,7 +18950,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.994",
+      "mesh": "Cube.993",
       "materials": [
         "Blue reflective glazing 2"
       ],
@@ -18825,7 +18985,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.995",
+      "mesh": "Cube.994",
       "materials": [
         "Anodized window frames"
       ],
@@ -18860,7 +19020,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.996",
+      "mesh": "Cube.995",
       "materials": [
         "Anodized window frames"
       ],
@@ -19000,7 +19160,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.997",
+      "mesh": "Cube.996",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -19035,7 +19195,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.998",
+      "mesh": "Cube.997",
       "materials": [
         "Anodized window frames"
       ],
@@ -19070,7 +19230,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.999",
+      "mesh": "Cube.998",
       "materials": [
         "Anodized window frames"
       ],
@@ -19210,7 +19370,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1000",
+      "mesh": "Cube.999",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -19245,7 +19405,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1001",
+      "mesh": "Cube.1000",
       "materials": [
         "Anodized window frames"
       ],
@@ -19280,7 +19440,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1002",
+      "mesh": "Cube.1001",
       "materials": [
         "Anodized window frames"
       ],
@@ -19420,7 +19580,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1003",
+      "mesh": "Cube.1002",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -19455,7 +19615,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1004",
+      "mesh": "Cube.1003",
       "materials": [
         "Anodized window frames"
       ],
@@ -19490,7 +19650,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1005",
+      "mesh": "Cube.1004",
       "materials": [
         "Anodized window frames"
       ],
@@ -19630,7 +19790,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1006",
+      "mesh": "Cube.1005",
       "materials": [
         "Blue reflective glazing 2"
       ],
@@ -19665,7 +19825,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1007",
+      "mesh": "Cube.1006",
       "materials": [
         "Anodized window frames"
       ],
@@ -19700,7 +19860,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1008",
+      "mesh": "Cube.1007",
       "materials": [
         "Anodized window frames"
       ],
@@ -19840,7 +20000,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1009",
+      "mesh": "Cube.1008",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -19875,7 +20035,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1010",
+      "mesh": "Cube.1009",
       "materials": [
         "Anodized window frames"
       ],
@@ -19910,7 +20070,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1011",
+      "mesh": "Cube.1010",
       "materials": [
         "Anodized window frames"
       ],
@@ -20050,7 +20210,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1012",
+      "mesh": "Cube.1011",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -20085,7 +20245,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1013",
+      "mesh": "Cube.1012",
       "materials": [
         "Anodized window frames"
       ],
@@ -20120,7 +20280,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1762",
+      "mesh": "Cube.1013",
       "materials": [
         "Anodized window frames"
       ],
@@ -20260,7 +20420,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1763",
+      "mesh": "Cube.1762",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -20295,7 +20455,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1764",
+      "mesh": "Cube.1763",
       "materials": [
         "Anodized window frames"
       ],
@@ -20330,7 +20490,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1765",
+      "mesh": "Cube.1764",
       "materials": [
         "Anodized window frames"
       ],
@@ -20470,7 +20630,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1766",
+      "mesh": "Cube.1765",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -20505,7 +20665,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1767",
+      "mesh": "Cube.1766",
       "materials": [
         "Anodized window frames"
       ],
@@ -20540,7 +20700,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1768",
+      "mesh": "Cube.1767",
       "materials": [
         "Anodized window frames"
       ],
@@ -20680,7 +20840,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1769",
+      "mesh": "Cube.1768",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -20715,7 +20875,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1770",
+      "mesh": "Cube.1769",
       "materials": [
         "Anodized window frames"
       ],
@@ -20750,7 +20910,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1771",
+      "mesh": "Cube.1770",
       "materials": [
         "Anodized window frames"
       ],
@@ -20890,7 +21050,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1772",
+      "mesh": "Cube.1771",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -20925,7 +21085,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1773",
+      "mesh": "Cube.1772",
       "materials": [
         "Anodized window frames"
       ],
@@ -20960,7 +21120,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1774",
+      "mesh": "Cube.1773",
       "materials": [
         "Anodized window frames"
       ],
@@ -21100,7 +21260,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1775",
+      "mesh": "Cube.1774",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -21135,7 +21295,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1776",
+      "mesh": "Cube.1775",
       "materials": [
         "Anodized window frames"
       ],
@@ -21170,7 +21330,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1777",
+      "mesh": "Cube.1776",
       "materials": [
         "Anodized window frames"
       ],
@@ -21310,7 +21470,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1778",
+      "mesh": "Cube.1777",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -21345,7 +21505,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1779",
+      "mesh": "Cube.1778",
       "materials": [
         "Anodized window frames"
       ],
@@ -21380,7 +21540,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1780",
+      "mesh": "Cube.1779",
       "materials": [
         "Anodized window frames"
       ],
@@ -21520,7 +21680,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1781",
+      "mesh": "Cube.1780",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -21555,7 +21715,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1782",
+      "mesh": "Cube.1781",
       "materials": [
         "Anodized window frames"
       ],
@@ -21590,7 +21750,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1783",
+      "mesh": "Cube.1782",
       "materials": [
         "Anodized window frames"
       ],
@@ -21730,7 +21890,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1784",
+      "mesh": "Cube.1783",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -21765,7 +21925,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1785",
+      "mesh": "Cube.1784",
       "materials": [
         "Anodized window frames"
       ],
@@ -21800,7 +21960,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1786",
+      "mesh": "Cube.1785",
       "materials": [
         "Anodized window frames"
       ],
@@ -21940,7 +22100,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1787",
+      "mesh": "Cube.1786",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -21975,7 +22135,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1788",
+      "mesh": "Cube.1787",
       "materials": [
         "Anodized window frames"
       ],
@@ -22010,7 +22170,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1789",
+      "mesh": "Cube.1788",
       "materials": [
         "Anodized window frames"
       ],
@@ -22605,7 +22765,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1790",
+      "mesh": "Cube.1789",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -22640,7 +22800,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1791",
+      "mesh": "Cube.1790",
       "materials": [
         "Anodized window frames"
       ],
@@ -22675,7 +22835,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1792",
+      "mesh": "Cube.1791",
       "materials": [
         "Anodized window frames"
       ],
@@ -23270,7 +23430,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1793",
+      "mesh": "Cube.1792",
       "materials": [
         "Blue reflective glazing 2"
       ],
@@ -23305,7 +23465,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1794",
+      "mesh": "Cube.1793",
       "materials": [
         "Anodized window frames"
       ],
@@ -23340,7 +23500,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1795",
+      "mesh": "Cube.1794",
       "materials": [
         "Anodized window frames"
       ],
@@ -23935,7 +24095,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1796",
+      "mesh": "Cube.1795",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -23970,7 +24130,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1797",
+      "mesh": "Cube.1796",
       "materials": [
         "Anodized window frames"
       ],
@@ -24005,7 +24165,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1798",
+      "mesh": "Cube.1797",
       "materials": [
         "Anodized window frames"
       ],
@@ -24600,7 +24760,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1799",
+      "mesh": "Cube.1798",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -24635,7 +24795,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1800",
+      "mesh": "Cube.1799",
       "materials": [
         "Anodized window frames"
       ],
@@ -24670,7 +24830,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1801",
+      "mesh": "Cube.1800",
       "materials": [
         "Anodized window frames"
       ],
@@ -24810,7 +24970,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1802",
+      "mesh": "Cube.1801",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -24845,7 +25005,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1803",
+      "mesh": "Cube.1802",
       "materials": [
         "Anodized window frames"
       ],
@@ -24880,7 +25040,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1804",
+      "mesh": "Cube.1803",
       "materials": [
         "Anodized window frames"
       ],
@@ -25020,7 +25180,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1805",
+      "mesh": "Cube.1804",
       "materials": [
         "Blue reflective glazing 2"
       ],
@@ -25055,7 +25215,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1806",
+      "mesh": "Cube.1805",
       "materials": [
         "Anodized window frames"
       ],
@@ -25090,7 +25250,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1807",
+      "mesh": "Cube.1806",
       "materials": [
         "Anodized window frames"
       ],
@@ -25230,7 +25390,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1808",
+      "mesh": "Cube.1807",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -25265,7 +25425,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1809",
+      "mesh": "Cube.1808",
       "materials": [
         "Anodized window frames"
       ],
@@ -25300,7 +25460,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1810",
+      "mesh": "Cube.1809",
       "materials": [
         "Anodized window frames"
       ],
@@ -25440,7 +25600,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1811",
+      "mesh": "Cube.1810",
       "materials": [
         "Blue reflective glazing 2"
       ],
@@ -25475,7 +25635,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1812",
+      "mesh": "Cube.1811",
       "materials": [
         "Anodized window frames"
       ],
@@ -25510,7 +25670,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1813",
+      "mesh": "Cube.1812",
       "materials": [
         "Anodized window frames"
       ],
@@ -25650,7 +25810,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1814",
+      "mesh": "Cube.1813",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -25685,7 +25845,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1815",
+      "mesh": "Cube.1814",
       "materials": [
         "Anodized window frames"
       ],
@@ -25720,7 +25880,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1816",
+      "mesh": "Cube.1815",
       "materials": [
         "Anodized window frames"
       ],
@@ -25860,7 +26020,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1817",
+      "mesh": "Cube.1816",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -25895,7 +26055,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1818",
+      "mesh": "Cube.1817",
       "materials": [
         "Anodized window frames"
       ],
@@ -25930,7 +26090,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1819",
+      "mesh": "Cube.1818",
       "materials": [
         "Anodized window frames"
       ],
@@ -26070,7 +26230,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1820",
+      "mesh": "Cube.1819",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -26105,7 +26265,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1821",
+      "mesh": "Cube.1820",
       "materials": [
         "Anodized window frames"
       ],
@@ -26140,7 +26300,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1822",
+      "mesh": "Cube.1821",
       "materials": [
         "Anodized window frames"
       ],
@@ -26271,531 +26431,6 @@
         3.081,
         9.13,
         -0.06
-      ]
-    },
-    {
-      "name": "Circle opening grille",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.563",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -5.4432,
-        -0.109,
-        9.081
-      ],
-      "blender_max": [
-        -4.9168,
-        -0.091,
-        9.099
-      ],
-      "godot_min": [
-        -5.4432,
-        9.081,
-        0.091
-      ],
-      "godot_max": [
-        -4.9168,
-        9.099,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.001",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.564",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -5.49385,
-        -0.109,
-        9.186
-      ],
-      "blender_max": [
-        -4.86615,
-        -0.091,
-        9.204
-      ],
-      "godot_min": [
-        -5.49385,
-        9.186,
-        0.091
-      ],
-      "godot_max": [
-        -4.86615,
-        9.204,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.002",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.565",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -5.509,
-        -0.109,
-        9.291
-      ],
-      "blender_max": [
-        -4.851,
-        -0.091,
-        9.309
-      ],
-      "godot_min": [
-        -5.509,
-        9.291,
-        0.091
-      ],
-      "godot_max": [
-        -4.851,
-        9.309,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.003",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.566",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -5.49385,
-        -0.109,
-        9.396
-      ],
-      "blender_max": [
-        -4.86615,
-        -0.091,
-        9.414
-      ],
-      "godot_min": [
-        -5.49385,
-        9.396,
-        0.091
-      ],
-      "godot_max": [
-        -4.86615,
-        9.414,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.004",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.567",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -5.4432,
-        -0.109,
-        9.501
-      ],
-      "blender_max": [
-        -4.9168,
-        -0.091,
-        9.519
-      ],
-      "godot_min": [
-        -5.4432,
-        9.501,
-        0.091
-      ],
-      "godot_max": [
-        -4.9168,
-        9.519,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.005",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.568",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -4.56584,
-        -0.109,
-        6.789
-      ],
-      "blender_max": [
-        -3.93416,
-        -0.091,
-        6.807
-      ],
-      "godot_min": [
-        -4.56584,
-        6.789,
-        0.091
-      ],
-      "godot_max": [
-        -3.93416,
-        6.807,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.006",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.569",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -4.62662,
-        -0.109,
-        6.915
-      ],
-      "blender_max": [
-        -3.87338,
-        -0.091,
-        6.933
-      ],
-      "godot_min": [
-        -4.62662,
-        6.915,
-        0.091
-      ],
-      "godot_max": [
-        -3.87338,
-        6.933,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.007",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.570",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -4.6448,
-        -0.109,
-        7.041
-      ],
-      "blender_max": [
-        -3.8552,
-        -0.091,
-        7.059
-      ],
-      "godot_min": [
-        -4.6448,
-        7.041,
-        0.091
-      ],
-      "godot_max": [
-        -3.8552,
-        7.059,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.008",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.571",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -4.62662,
-        -0.109,
-        7.167
-      ],
-      "blender_max": [
-        -3.87338,
-        -0.091,
-        7.185
-      ],
-      "godot_min": [
-        -4.62662,
-        7.167,
-        0.091
-      ],
-      "godot_max": [
-        -3.87338,
-        7.185,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.009",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.572",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -4.56584,
-        -0.109,
-        7.293
-      ],
-      "blender_max": [
-        -3.93416,
-        -0.091,
-        7.311
-      ],
-      "godot_min": [
-        -4.56584,
-        7.293,
-        0.091
-      ],
-      "godot_max": [
-        -3.93416,
-        7.311,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.010",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.573",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -5.56808,
-        -0.109,
-        4.017
-      ],
-      "blender_max": [
-        -5.13192,
-        -0.091,
-        4.035
-      ],
-      "godot_min": [
-        -5.56808,
-        4.017,
-        0.091
-      ],
-      "godot_max": [
-        -5.13192,
-        4.035,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.011",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.574",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -5.61004,
-        -0.109,
-        4.104
-      ],
-      "blender_max": [
-        -5.08996,
-        -0.091,
-        4.122
-      ],
-      "godot_min": [
-        -5.61004,
-        4.104,
-        0.091
-      ],
-      "godot_max": [
-        -5.08996,
-        4.122,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.012",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.575",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -5.6226,
-        -0.109,
-        4.191
-      ],
-      "blender_max": [
-        -5.0774,
-        -0.091,
-        4.209
-      ],
-      "godot_min": [
-        -5.6226,
-        4.191,
-        0.091
-      ],
-      "godot_max": [
-        -5.0774,
-        4.209,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.013",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.576",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -5.61004,
-        -0.109,
-        4.278
-      ],
-      "blender_max": [
-        -5.08996,
-        -0.091,
-        4.296
-      ],
-      "godot_min": [
-        -5.61004,
-        4.278,
-        0.091
-      ],
-      "godot_max": [
-        -5.08996,
-        4.296,
-        0.109
-      ]
-    },
-    {
-      "name": "Circle opening grille.014",
-      "role": "detail",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "Cube.577",
-      "materials": [
-        "Anodized window frames"
-      ],
-      "collections": [
-        "R2 - Detached main block"
-      ],
-      "blender_min": [
-        -5.56808,
-        -0.109,
-        4.365
-      ],
-      "blender_max": [
-        -5.13192,
-        -0.091,
-        4.383
-      ],
-      "godot_min": [
-        -5.56808,
-        4.365,
-        0.091
-      ],
-      "godot_max": [
-        -5.13192,
-        4.383,
-        0.109
       ]
     },
     {
@@ -27857,7 +27492,7 @@
       "triangles": 9368,
       "mesh": "School sign large",
       "materials": [
-        "Anodized window frames"
+        "B sign white lettering"
       ],
       "collections": [
         "R2 - Detached main block"
@@ -27892,7 +27527,7 @@
       "triangles": 27464,
       "mesh": "School sign second",
       "materials": [
-        "Anodized window frames"
+        "B sign white lettering"
       ],
       "collections": [
         "R2 - Detached main block"
@@ -27927,7 +27562,7 @@
       "triangles": 26224,
       "mesh": "School sign affiliation",
       "materials": [
-        "Anodized window frames"
+        "B sign white lettering"
       ],
       "collections": [
         "R2 - Detached main block"
@@ -28030,7 +27665,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1823",
+      "mesh": "Cube.1822",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -28450,7 +28085,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1824",
+      "mesh": "Cube.1823",
       "materials": [
         "Off-white precast edges"
       ],
@@ -29290,7 +28925,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1825",
+      "mesh": "Cube.1824",
       "materials": [
         "Off-white precast edges"
       ],
@@ -30130,7 +29765,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1826",
+      "mesh": "Cube.1825",
       "materials": [
         "Off-white precast edges"
       ],
@@ -30970,7 +30605,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1827",
+      "mesh": "Cube.1826",
       "materials": [
         "Off-white precast edges"
       ],
@@ -31810,7 +31445,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1828",
+      "mesh": "Cube.1827",
       "materials": [
         "Off-white precast edges"
       ],
@@ -32650,7 +32285,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1829",
+      "mesh": "Cube.1828",
       "materials": [
         "Off-white precast edges"
       ],
@@ -33490,7 +33125,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1830",
+      "mesh": "Cube.1829",
       "materials": [
         "Off-white precast edges"
       ],
@@ -34330,7 +33965,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1831",
+      "mesh": "Cube.1830",
       "materials": [
         "Off-white precast edges"
       ],
@@ -35170,7 +34805,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1832",
+      "mesh": "Cube.1831",
       "materials": [
         "Off-white precast edges"
       ],
@@ -36010,7 +35645,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1833",
+      "mesh": "Cube.1832",
       "materials": [
         "Off-white precast edges"
       ],
@@ -36850,7 +36485,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1834",
+      "mesh": "Cube.1833",
       "materials": [
         "Off-white precast edges"
       ],
@@ -37690,7 +37325,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1835",
+      "mesh": "Cube.1834",
       "materials": [
         "Off-white precast edges"
       ],
@@ -38530,7 +38165,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1836",
+      "mesh": "Cube.1835",
       "materials": [
         "Off-white precast edges"
       ],
@@ -39370,7 +39005,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1837",
+      "mesh": "Cube.1836",
       "materials": [
         "Off-white precast edges"
       ],
@@ -40210,7 +39845,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1838",
+      "mesh": "Cube.1837",
       "materials": [
         "Off-white precast edges"
       ],
@@ -40595,7 +40230,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1839",
+      "mesh": "Cube.1838",
       "materials": [
         "Off-white precast edges"
       ],
@@ -40980,7 +40615,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1840",
+      "mesh": "Cube.1839",
       "materials": [
         "Off-white precast edges"
       ],
@@ -41365,7 +41000,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1841",
+      "mesh": "Cube.1840",
       "materials": [
         "Off-white precast edges"
       ],
@@ -41750,7 +41385,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1842",
+      "mesh": "Cube.1841",
       "materials": [
         "Off-white precast edges"
       ],
@@ -42135,7 +41770,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1843",
+      "mesh": "Cube.1842",
       "materials": [
         "Off-white precast edges"
       ],
@@ -42520,7 +42155,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1844",
+      "mesh": "Cube.1843",
       "materials": [
         "Off-white precast edges"
       ],
@@ -42905,7 +42540,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1845",
+      "mesh": "Cube.1844",
       "materials": [
         "Off-white precast edges"
       ],
@@ -43290,7 +42925,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1846",
+      "mesh": "Cube.1845",
       "materials": [
         "Off-white precast edges"
       ],
@@ -43675,7 +43310,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1847",
+      "mesh": "Cube.1846",
       "materials": [
         "Off-white precast edges"
       ],
@@ -44060,7 +43695,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1848",
+      "mesh": "Cube.1847",
       "materials": [
         "Off-white precast edges"
       ],
@@ -44445,7 +44080,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1849",
+      "mesh": "Cube.1848",
       "materials": [
         "Off-white precast edges"
       ],
@@ -44830,7 +44465,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1850",
+      "mesh": "Cube.1849",
       "materials": [
         "Off-white precast edges"
       ],
@@ -45215,7 +44850,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1851",
+      "mesh": "Cube.1850",
       "materials": [
         "Off-white precast edges"
       ],
@@ -45600,7 +45235,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1852",
+      "mesh": "Cube.1851",
       "materials": [
         "Off-white precast edges"
       ],
@@ -45985,7 +45620,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1853",
+      "mesh": "Cube.1852",
       "materials": [
         "Off-white precast edges"
       ],
@@ -46370,7 +46005,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1854",
+      "mesh": "Cube.1853",
       "materials": [
         "Off-white precast edges"
       ],
@@ -46755,7 +46390,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1855",
+      "mesh": "Cube.1854",
       "materials": [
         "Off-white precast edges"
       ],
@@ -47140,7 +46775,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1856",
+      "mesh": "Cube.1855",
       "materials": [
         "Off-white precast edges"
       ],
@@ -47525,7 +47160,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1857",
+      "mesh": "Cube.1856",
       "materials": [
         "Off-white precast edges"
       ],
@@ -47910,7 +47545,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1858",
+      "mesh": "Cube.1857",
       "materials": [
         "Off-white precast edges"
       ],
@@ -48295,7 +47930,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1859",
+      "mesh": "Cube.1858",
       "materials": [
         "Off-white precast edges"
       ],
@@ -48680,7 +48315,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1860",
+      "mesh": "Cube.1859",
       "materials": [
         "Off-white precast edges"
       ],
@@ -49065,7 +48700,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1861",
+      "mesh": "Cube.1860",
       "materials": [
         "Off-white precast edges"
       ],
@@ -49450,7 +49085,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1862",
+      "mesh": "Cube.1861",
       "materials": [
         "Off-white precast edges"
       ],
@@ -49835,7 +49470,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1863",
+      "mesh": "Cube.1862",
       "materials": [
         "Off-white precast edges"
       ],
@@ -50220,7 +49855,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1864",
+      "mesh": "Cube.1863",
       "materials": [
         "Off-white precast edges"
       ],
@@ -50605,7 +50240,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1865",
+      "mesh": "Cube.1864",
       "materials": [
         "Off-white precast edges"
       ],
@@ -50642,7 +50277,7 @@
       "triangles": 76,
       "mesh": "R3 unit cube Off-white precast edges.001",
       "materials": [
-        "Off-white precast edges"
+        "Warm mineral plaster"
       ],
       "collections": [
         "R3 - Main roof and three lightwells"
@@ -50677,7 +50312,7 @@
       "triangles": 76,
       "mesh": "R3 unit cube Off-white precast edges.002",
       "materials": [
-        "Off-white precast edges"
+        "Warm mineral plaster"
       ],
       "collections": [
         "R3 - Main roof and three lightwells"
@@ -50712,7 +50347,7 @@
       "triangles": 100,
       "mesh": "R3 unit cube Off-white precast edges.006",
       "materials": [
-        "Off-white precast edges"
+        "Warm mineral plaster"
       ],
       "collections": [
         "R3 - Main roof and three lightwells"
@@ -50747,7 +50382,7 @@
       "triangles": 100,
       "mesh": "R3 unit cube Off-white precast edges.005",
       "materials": [
-        "Off-white precast edges"
+        "Warm mineral plaster"
       ],
       "collections": [
         "R3 - Main roof and three lightwells"
@@ -66899,7 +66534,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1866",
+      "mesh": "Cube.1865",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -66934,7 +66569,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1867",
+      "mesh": "Cube.1866",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -66969,7 +66604,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1868",
+      "mesh": "Cube.1867",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67004,7 +66639,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1869",
+      "mesh": "Cube.1868",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67039,7 +66674,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1870",
+      "mesh": "Cube.1869",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67074,7 +66709,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1871",
+      "mesh": "Cube.1870",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67109,7 +66744,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1872",
+      "mesh": "Cube.1871",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67144,7 +66779,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1873",
+      "mesh": "Cube.1872",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67179,7 +66814,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1874",
+      "mesh": "Cube.1873",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67214,7 +66849,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1875",
+      "mesh": "Cube.1874",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67249,7 +66884,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1876",
+      "mesh": "Cube.1875",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67284,7 +66919,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1877",
+      "mesh": "Cube.1876",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67319,7 +66954,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1878",
+      "mesh": "Cube.1877",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67354,7 +66989,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1879",
+      "mesh": "Cube.1878",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67389,7 +67024,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1880",
+      "mesh": "Cube.1879",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67424,7 +67059,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1881",
+      "mesh": "Cube.1880",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67459,7 +67094,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1882",
+      "mesh": "Cube.1881",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67494,7 +67129,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1883",
+      "mesh": "Cube.1882",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67529,7 +67164,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1884",
+      "mesh": "Cube.1883",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67564,7 +67199,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1885",
+      "mesh": "Cube.1884",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67599,7 +67234,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1886",
+      "mesh": "Cube.1885",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67634,7 +67269,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1887",
+      "mesh": "Cube.1886",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67669,7 +67304,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1888",
+      "mesh": "Cube.1887",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67704,7 +67339,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1889",
+      "mesh": "Cube.1888",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67739,7 +67374,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1890",
+      "mesh": "Cube.1889",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67774,7 +67409,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1891",
+      "mesh": "Cube.1890",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67809,7 +67444,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1892",
+      "mesh": "Cube.1891",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67844,7 +67479,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1893",
+      "mesh": "Cube.1892",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67879,7 +67514,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1894",
+      "mesh": "Cube.1893",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67914,7 +67549,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1895",
+      "mesh": "Cube.1894",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67949,7 +67584,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1896",
+      "mesh": "Cube.1895",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -67984,7 +67619,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1897",
+      "mesh": "Cube.1896",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68019,7 +67654,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1898",
+      "mesh": "Cube.1897",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68054,7 +67689,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1899",
+      "mesh": "Cube.1898",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68089,7 +67724,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1900",
+      "mesh": "Cube.1899",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68124,7 +67759,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1901",
+      "mesh": "Cube.1900",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68159,7 +67794,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1902",
+      "mesh": "Cube.1901",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68194,7 +67829,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1903",
+      "mesh": "Cube.1902",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68229,7 +67864,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1904",
+      "mesh": "Cube.1903",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68264,7 +67899,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1905",
+      "mesh": "Cube.1904",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68299,7 +67934,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1906",
+      "mesh": "Cube.1905",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68334,7 +67969,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1907",
+      "mesh": "Cube.1906",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68369,7 +68004,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1908",
+      "mesh": "Cube.1907",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68404,7 +68039,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1909",
+      "mesh": "Cube.1908",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68439,7 +68074,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1910",
+      "mesh": "Cube.1909",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68474,7 +68109,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1911",
+      "mesh": "Cube.1910",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68509,7 +68144,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1912",
+      "mesh": "Cube.1911",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68544,7 +68179,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1913",
+      "mesh": "Cube.1912",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68579,7 +68214,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1914",
+      "mesh": "Cube.1913",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68614,7 +68249,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1915",
+      "mesh": "Cube.1914",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68649,7 +68284,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1916",
+      "mesh": "Cube.1915",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68684,7 +68319,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1917",
+      "mesh": "Cube.1916",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68719,7 +68354,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1918",
+      "mesh": "Cube.1917",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68754,7 +68389,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1919",
+      "mesh": "Cube.1918",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68789,7 +68424,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1920",
+      "mesh": "Cube.1919",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68824,7 +68459,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1921",
+      "mesh": "Cube.1920",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68859,7 +68494,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1922",
+      "mesh": "Cube.1921",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68894,7 +68529,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1923",
+      "mesh": "Cube.1922",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68929,7 +68564,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1924",
+      "mesh": "Cube.1923",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68964,7 +68599,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1925",
+      "mesh": "Cube.1924",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -68999,7 +68634,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1926",
+      "mesh": "Cube.1925",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -69034,7 +68669,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1927",
+      "mesh": "Cube.1926",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -69069,7 +68704,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1928",
+      "mesh": "Cube.1927",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -69104,7 +68739,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1929",
+      "mesh": "Cube.1928",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -69139,7 +68774,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1930",
+      "mesh": "Cube.1929",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -69174,7 +68809,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1931",
+      "mesh": "Cube.1930",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -69209,7 +68844,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1932",
+      "mesh": "Cube.1931",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -69244,7 +68879,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1933",
+      "mesh": "Cube.1932",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -69279,7 +68914,7 @@
       "walkable": true,
       "vertices": 112,
       "triangles": 224,
-      "mesh": "Cube.1934",
+      "mesh": "Cube.1933",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -71624,7 +71259,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1935",
+      "mesh": "Cube.1934",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -71659,7 +71294,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1936",
+      "mesh": "Cube.1935",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -71694,7 +71329,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1937",
+      "mesh": "Cube.1936",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -71729,7 +71364,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1938",
+      "mesh": "Cube.1937",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -71764,7 +71399,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1939",
+      "mesh": "Cube.1938",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -71799,7 +71434,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1940",
+      "mesh": "Cube.1939",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -71834,7 +71469,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1941",
+      "mesh": "Cube.1940",
       "materials": [
         "Blue reflective glazing 2"
       ],
@@ -71869,7 +71504,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1942",
+      "mesh": "Cube.1941",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -71904,7 +71539,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1943",
+      "mesh": "Cube.1942",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -71939,7 +71574,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1944",
+      "mesh": "Cube.1943",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -71974,7 +71609,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1945",
+      "mesh": "Cube.1944",
       "materials": [
         "Blue reflective glazing 2"
       ],
@@ -72009,7 +71644,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1946",
+      "mesh": "Cube.1945",
       "materials": [
         "Blue reflective glazing 2"
       ],
@@ -72044,7 +71679,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1947",
+      "mesh": "Cube.1946",
       "materials": [
         "Blue reflective glazing 2"
       ],
@@ -72079,7 +71714,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1948",
+      "mesh": "Cube.1947",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -72114,7 +71749,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1949",
+      "mesh": "Cube.1948",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -72149,7 +71784,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1950",
+      "mesh": "Cube.1949",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -72184,7 +71819,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1951",
+      "mesh": "Cube.1950",
       "materials": [
         "Blue reflective glazing 2"
       ],
@@ -72219,7 +71854,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1952",
+      "mesh": "Cube.1951",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -72254,7 +71889,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1953",
+      "mesh": "Cube.1952",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -72289,7 +71924,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1954",
+      "mesh": "Cube.1953",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -72324,7 +71959,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1955",
+      "mesh": "Cube.1954",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -72359,7 +71994,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1956",
+      "mesh": "Cube.1955",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -72394,7 +72029,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1957",
+      "mesh": "Cube.1956",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -72429,7 +72064,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1958",
+      "mesh": "Cube.1957",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -72464,7 +72099,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1959",
+      "mesh": "Cube.1958",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -72499,7 +72134,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1960",
+      "mesh": "Cube.1959",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -72534,7 +72169,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1961",
+      "mesh": "Cube.1960",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -72569,7 +72204,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1962",
+      "mesh": "Cube.1961",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -72604,7 +72239,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1963",
+      "mesh": "Cube.1962",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -72639,7 +72274,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1964",
+      "mesh": "Cube.1963",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -72674,7 +72309,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1965",
+      "mesh": "Cube.1964",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -72709,7 +72344,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1966",
+      "mesh": "Cube.1965",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -72744,7 +72379,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1967",
+      "mesh": "Cube.1966",
       "materials": [
         "Blue reflective glazing 5"
       ],
@@ -72779,7 +72414,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1968",
+      "mesh": "Cube.1967",
       "materials": [
         "Blue reflective glazing 3"
       ],
@@ -72814,7 +72449,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1969",
+      "mesh": "Cube.1968",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -72849,7 +72484,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1970",
+      "mesh": "Cube.1969",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -72884,7 +72519,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1971",
+      "mesh": "Cube.1970",
       "materials": [
         "Blue reflective glazing 2"
       ],
@@ -72919,7 +72554,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1972",
+      "mesh": "Cube.1971",
       "materials": [
         "Blue reflective glazing 4"
       ],
@@ -72954,7 +72589,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1973",
+      "mesh": "Cube.1972",
       "materials": [
         "Blue reflective glazing 1"
       ],
@@ -73374,7 +73009,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1974",
+      "mesh": "Cube.1973",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73409,7 +73044,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1975",
+      "mesh": "Cube.1974",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73444,7 +73079,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1976",
+      "mesh": "Cube.1975",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73479,7 +73114,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1977",
+      "mesh": "Cube.1976",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73514,7 +73149,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1978",
+      "mesh": "Cube.1977",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73549,7 +73184,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1979",
+      "mesh": "Cube.1978",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73584,7 +73219,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1980",
+      "mesh": "Cube.1979",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73619,7 +73254,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1981",
+      "mesh": "Cube.1980",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73654,7 +73289,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1982",
+      "mesh": "Cube.1981",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73689,7 +73324,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1983",
+      "mesh": "Cube.1982",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73724,7 +73359,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1984",
+      "mesh": "Cube.1983",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73759,7 +73394,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1985",
+      "mesh": "Cube.1984",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73794,7 +73429,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1986",
+      "mesh": "Cube.1985",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73829,7 +73464,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1987",
+      "mesh": "Cube.1986",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73864,7 +73499,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1988",
+      "mesh": "Cube.1987",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73899,7 +73534,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1989",
+      "mesh": "Cube.1988",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73934,7 +73569,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1990",
+      "mesh": "Cube.1989",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -73969,7 +73604,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1991",
+      "mesh": "Cube.1990",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -74004,7 +73639,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1992",
+      "mesh": "Cube.1991",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -74039,7 +73674,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1993",
+      "mesh": "Cube.1992",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -74074,7 +73709,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1994",
+      "mesh": "Cube.1993",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -74109,7 +73744,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1995",
+      "mesh": "Cube.1994",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -74144,7 +73779,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1996",
+      "mesh": "Cube.1995",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -74179,7 +73814,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1997",
+      "mesh": "Cube.1996",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -74214,7 +73849,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1998",
+      "mesh": "Cube.1997",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -74249,7 +73884,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.1999",
+      "mesh": "Cube.1998",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -74284,7 +73919,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2000",
+      "mesh": "Cube.1999",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -74319,7 +73954,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2001",
+      "mesh": "Cube.2000",
       "materials": [
         "Warm gray facade panels"
       ],
@@ -75789,7 +75424,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2002",
+      "mesh": "Cube.2001",
       "materials": [
         "Anodized window frames"
       ],
@@ -75824,7 +75459,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2003",
+      "mesh": "Cube.2002",
       "materials": [
         "Anodized window frames"
       ],
@@ -75859,7 +75494,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2004",
+      "mesh": "Cube.2003",
       "materials": [
         "Anodized window frames"
       ],
@@ -75894,7 +75529,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2005",
+      "mesh": "Cube.2004",
       "materials": [
         "Anodized window frames"
       ],
@@ -75929,7 +75564,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2006",
+      "mesh": "Cube.2005",
       "materials": [
         "Anodized window frames"
       ],
@@ -75964,7 +75599,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2007",
+      "mesh": "Cube.2006",
       "materials": [
         "Anodized window frames"
       ],
@@ -75999,7 +75634,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2008",
+      "mesh": "Cube.2007",
       "materials": [
         "Anodized window frames"
       ],
@@ -76034,7 +75669,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2009",
+      "mesh": "Cube.2008",
       "materials": [
         "Anodized window frames"
       ],
@@ -76069,7 +75704,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2010",
+      "mesh": "Cube.2009",
       "materials": [
         "Anodized window frames"
       ],
@@ -76104,7 +75739,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2011",
+      "mesh": "Cube.2010",
       "materials": [
         "Anodized window frames"
       ],
@@ -76209,7 +75844,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2012",
+      "mesh": "Cube.2011",
       "materials": [
         "Off-white precast edges"
       ],
@@ -76244,7 +75879,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2013",
+      "mesh": "Cube.2012",
       "materials": [
         "Off-white precast edges"
       ],
@@ -76279,7 +75914,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2014",
+      "mesh": "Cube.2013",
       "materials": [
         "Off-white precast edges"
       ],
@@ -76314,7 +75949,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2015",
+      "mesh": "Cube.2014",
       "materials": [
         "Off-white precast edges"
       ],
@@ -76349,7 +75984,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2016",
+      "mesh": "Cube.2015",
       "materials": [
         "Off-white precast edges"
       ],
@@ -80588,7 +80223,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2017",
+      "mesh": "Cube.2016",
       "materials": [
         "Off-white precast edges"
       ],
@@ -80623,7 +80258,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2018",
+      "mesh": "Cube.2017",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -80658,7 +80293,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2019",
+      "mesh": "Cube.2018",
       "materials": [
         "Off-white precast edges"
       ],
@@ -80693,7 +80328,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2020",
+      "mesh": "Cube.2019",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -80728,7 +80363,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2021",
+      "mesh": "Cube.2020",
       "materials": [
         "Off-white precast edges"
       ],
@@ -80763,7 +80398,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2022",
+      "mesh": "Cube.2021",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -80798,7 +80433,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2023",
+      "mesh": "Cube.2022",
       "materials": [
         "Off-white precast edges"
       ],
@@ -80833,7 +80468,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2024",
+      "mesh": "Cube.2023",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -80868,7 +80503,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2025",
+      "mesh": "Cube.2024",
       "materials": [
         "Off-white precast edges"
       ],
@@ -80903,7 +80538,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2026",
+      "mesh": "Cube.2025",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -80938,7 +80573,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2027",
+      "mesh": "Cube.2026",
       "materials": [
         "Off-white precast edges"
       ],
@@ -80973,7 +80608,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2028",
+      "mesh": "Cube.2027",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81008,7 +80643,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2029",
+      "mesh": "Cube.2028",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81043,7 +80678,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2030",
+      "mesh": "Cube.2029",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81078,7 +80713,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2031",
+      "mesh": "Cube.2030",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81113,7 +80748,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2032",
+      "mesh": "Cube.2031",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81148,7 +80783,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2033",
+      "mesh": "Cube.2032",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81183,7 +80818,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2034",
+      "mesh": "Cube.2033",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81218,7 +80853,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2035",
+      "mesh": "Cube.2034",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81253,7 +80888,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2036",
+      "mesh": "Cube.2035",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81288,7 +80923,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2037",
+      "mesh": "Cube.2036",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81323,7 +80958,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2038",
+      "mesh": "Cube.2037",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81358,7 +80993,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2039",
+      "mesh": "Cube.2038",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81393,7 +81028,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2040",
+      "mesh": "Cube.2039",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81428,7 +81063,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2041",
+      "mesh": "Cube.2040",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81463,7 +81098,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2042",
+      "mesh": "Cube.2041",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81498,7 +81133,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2043",
+      "mesh": "Cube.2042",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81533,7 +81168,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2044",
+      "mesh": "Cube.2043",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81568,7 +81203,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2045",
+      "mesh": "Cube.2044",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81603,7 +81238,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2046",
+      "mesh": "Cube.2045",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81638,7 +81273,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2047",
+      "mesh": "Cube.2046",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81673,7 +81308,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2048",
+      "mesh": "Cube.2047",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81708,7 +81343,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2049",
+      "mesh": "Cube.2048",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81743,7 +81378,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2050",
+      "mesh": "Cube.2049",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81778,7 +81413,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2051",
+      "mesh": "Cube.2050",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81813,7 +81448,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2052",
+      "mesh": "Cube.2051",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81848,7 +81483,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2053",
+      "mesh": "Cube.2052",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81883,7 +81518,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2054",
+      "mesh": "Cube.2053",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81918,7 +81553,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2055",
+      "mesh": "Cube.2054",
       "materials": [
         "Off-white precast edges"
       ],
@@ -81953,7 +81588,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2056",
+      "mesh": "Cube.2055",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -81988,7 +81623,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2057",
+      "mesh": "Cube.2056",
       "materials": [
         "Off-white precast edges"
       ],
@@ -82023,7 +81658,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2058",
+      "mesh": "Cube.2057",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -82058,7 +81693,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2059",
+      "mesh": "Cube.2058",
       "materials": [
         "Off-white precast edges"
       ],
@@ -82093,7 +81728,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2060",
+      "mesh": "Cube.2059",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -82128,7 +81763,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2061",
+      "mesh": "Cube.2060",
       "materials": [
         "Off-white precast edges"
       ],
@@ -82163,7 +81798,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2062",
+      "mesh": "Cube.2061",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -82198,7 +81833,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2063",
+      "mesh": "Cube.2062",
       "materials": [
         "Off-white precast edges"
       ],
@@ -82233,7 +81868,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2064",
+      "mesh": "Cube.2063",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -82268,7 +81903,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2065",
+      "mesh": "Cube.2064",
       "materials": [
         "Off-white precast edges"
       ],
@@ -82303,7 +81938,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2066",
+      "mesh": "Cube.2065",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -82338,7 +81973,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2067",
+      "mesh": "Cube.2066",
       "materials": [
         "Off-white precast edges"
       ],
@@ -82373,7 +82008,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2068",
+      "mesh": "Cube.2067",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -82408,7 +82043,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2069",
+      "mesh": "Cube.2068",
       "materials": [
         "Off-white precast edges"
       ],
@@ -82443,7 +82078,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2070",
+      "mesh": "Cube.2069",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -82478,7 +82113,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2071",
+      "mesh": "Cube.2070",
       "materials": [
         "Off-white precast edges"
       ],
@@ -82513,7 +82148,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2072",
+      "mesh": "Cube.2071",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -82548,7 +82183,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2073",
+      "mesh": "Cube.2072",
       "materials": [
         "Off-white precast edges"
       ],
@@ -82583,7 +82218,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2074",
+      "mesh": "Cube.2073",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -82618,7 +82253,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2075",
+      "mesh": "Cube.2074",
       "materials": [
         "Off-white precast edges"
       ],
@@ -82653,7 +82288,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2076",
+      "mesh": "Cube.2075",
       "materials": [
         "Warm mineral plaster"
       ],
@@ -82688,7 +82323,7 @@
       "walkable": false,
       "vertices": 56,
       "triangles": 108,
-      "mesh": "Cube.2077",
+      "mesh": "Cube.2076",
       "materials": [
         "Off-white precast edges"
       ],
@@ -151229,531 +150864,6 @@
       ]
     },
     {
-      "name": "B blue entrance facade stripe",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "shared cube R4 B latest blue circular facade panel",
-      "materials": [
-        "R4 B latest blue circular facade panel"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -11.0,
-        -0.2175,
-        6.56
-      ],
-      "blender_max": [
-        -6.0,
-        -0.1625,
-        6.72
-      ],
-      "godot_min": [
-        -11.0,
-        6.56,
-        0.1625
-      ],
-      "godot_max": [
-        -6.0,
-        6.72,
-        0.2175
-      ]
-    },
-    {
-      "name": "B blue entrance facade stripe.001",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "shared cube R4 B latest blue circular facade panel",
-      "materials": [
-        "R4 B latest blue circular facade panel"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -3.5,
-        -0.2175,
-        6.56
-      ],
-      "blender_max": [
-        4.0,
-        -0.1625,
-        6.72
-      ],
-      "godot_min": [
-        -3.5,
-        6.56,
-        0.1625
-      ],
-      "godot_max": [
-        4.0,
-        6.72,
-        0.2175
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -5.516,
-        -0.095,
-        8.964
-      ],
-      "blender_max": [
-        -4.844,
-        -0.095,
-        9.636
-      ],
-      "godot_min": [
-        -5.516,
-        8.964,
-        0.095
-      ],
-      "godot_max": [
-        -4.844,
-        9.636,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.001",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh.001",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -4.4332,
-        -0.095,
-        9.3168
-      ],
-      "blender_max": [
-        -4.1068,
-        -0.095,
-        9.6432
-      ],
-      "godot_min": [
-        -4.4332,
-        9.3168,
-        0.095
-      ],
-      "godot_max": [
-        -4.1068,
-        9.6432,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.002",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh.002",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -5.5736,
-        -0.095,
-        8.4964
-      ],
-      "blender_max": [
-        -5.2664,
-        -0.095,
-        8.8036
-      ],
-      "godot_min": [
-        -5.5736,
-        8.4964,
-        0.095
-      ],
-      "godot_max": [
-        -5.2664,
-        8.8036,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.003",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh.003",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -4.8548,
-        -0.095,
-        8.3552
-      ],
-      "blender_max": [
-        -4.6052,
-        -0.095,
-        8.6048
-      ],
-      "godot_min": [
-        -4.8548,
-        8.3552,
-        0.095
-      ],
-      "godot_max": [
-        -4.6052,
-        8.6048,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.004",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh.004",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -5.4644,
-        -0.095,
-        7.2656
-      ],
-      "blender_max": [
-        -5.1956,
-        -0.095,
-        7.5344
-      ],
-      "godot_min": [
-        -5.4644,
-        7.2656,
-        0.095
-      ],
-      "godot_max": [
-        -5.1956,
-        7.5344,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.005",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh.005",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -4.6532,
-        -0.095,
-        6.6468
-      ],
-      "blender_max": [
-        -3.8468,
-        -0.095,
-        7.4532
-      ],
-      "godot_min": [
-        -4.6532,
-        6.6468,
-        0.095
-      ],
-      "godot_max": [
-        -3.8468,
-        7.4532,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.006",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh.006",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -5.2548,
-        -0.095,
-        5.5252
-      ],
-      "blender_max": [
-        -5.0052,
-        -0.095,
-        5.7748
-      ],
-      "godot_min": [
-        -5.2548,
-        5.5252,
-        0.095
-      ],
-      "godot_max": [
-        -5.0052,
-        5.7748,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.007",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh.007",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -4.642,
-        -0.095,
-        4.908
-      ],
-      "blender_max": [
-        -4.258,
-        -0.095,
-        5.292
-      ],
-      "godot_min": [
-        -4.642,
-        4.908,
-        0.095
-      ],
-      "godot_max": [
-        -4.258,
-        5.292,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.008",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh.008",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -5.6284,
-        -0.095,
-        3.9216
-      ],
-      "blender_max": [
-        -5.0716,
-        -0.095,
-        4.4784
-      ],
-      "godot_min": [
-        -5.6284,
-        3.9216,
-        0.095
-      ],
-      "godot_max": [
-        -5.0716,
-        4.4784,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.009",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh.009",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -4.4748,
-        -0.095,
-        3.4552
-      ],
-      "blender_max": [
-        -4.2252,
-        -0.095,
-        3.7048
-      ],
-      "godot_min": [
-        -4.4748,
-        3.4552,
-        0.095
-      ],
-      "godot_max": [
-        -4.2252,
-        3.7048,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.010",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh.010",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -5.1436,
-        -0.095,
-        2.6064
-      ],
-      "blender_max": [
-        -4.8364,
-        -0.095,
-        2.9136
-      ],
-      "godot_min": [
-        -5.1436,
-        2.6064,
-        0.095
-      ],
-      "godot_max": [
-        -4.8364,
-        2.9136,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.011",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh.011",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -4.2648,
-        -0.095,
-        2.1252
-      ],
-      "blender_max": [
-        -4.0152,
-        -0.095,
-        2.3748
-      ],
-      "godot_min": [
-        -4.2648,
-        2.1252,
-        0.095
-      ],
-      "godot_max": [
-        -4.0152,
-        2.3748,
-        0.095
-      ]
-    },
-    {
-      "name": "B pale circular inset behind facade.012",
-      "role": "architecture",
-      "collision_candidate": true,
-      "walkable": false,
-      "vertices": 40,
-      "triangles": 38,
-      "mesh": "B pale circular inset behind facade mesh.012",
-      "materials": [
-        "R4 white powder-coated frames"
-      ],
-      "collections": [
-        "B - Open-air courtyards and galleries"
-      ],
-      "blender_min": [
-        -5.3544,
-        -0.095,
-        1.4356
-      ],
-      "blender_max": [
-        -5.0856,
-        -0.095,
-        1.7044
-      ],
-      "godot_min": [
-        -5.3544,
-        1.4356,
-        0.095
-      ],
-      "godot_max": [
-        -5.0856,
-        1.7044,
-        0.095
-      ]
-    },
-    {
       "name": "B standard classroom tiled floor",
       "role": "walkable",
       "collision_candidate": true,
@@ -192570,181 +191680,6 @@
       ]
     },
     {
-      "name": "Campus rectangular lawn.002",
-      "role": "landscape",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "shared cube R3 - Mixed green and dry lawn",
-      "materials": [
-        "R3 - Mixed green and dry lawn"
-      ],
-      "collections": [
-        "Campus - Courtyard gardens and circulation"
-      ],
-      "blender_min": [
-        -5.0,
-        68.5,
-        0.22
-      ],
-      "blender_max": [
-        3.0,
-        77.5,
-        0.34
-      ],
-      "godot_min": [
-        -5.0,
-        0.22,
-        -77.5
-      ],
-      "godot_max": [
-        3.0,
-        0.34,
-        -68.5
-      ]
-    },
-    {
-      "name": "Campus lawn border.008",
-      "role": "landscape",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "shared cube Off-white precast edges",
-      "materials": [
-        "Off-white precast edges"
-      ],
-      "collections": [
-        "Campus - Courtyard gardens and circulation"
-      ],
-      "blender_min": [
-        -5.07,
-        68.4,
-        0.15
-      ],
-      "blender_max": [
-        -4.93,
-        77.6,
-        0.37
-      ],
-      "godot_min": [
-        -5.07,
-        0.15,
-        -77.6
-      ],
-      "godot_max": [
-        -4.93,
-        0.37,
-        -68.4
-      ]
-    },
-    {
-      "name": "Campus lawn border.009",
-      "role": "landscape",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "shared cube Off-white precast edges",
-      "materials": [
-        "Off-white precast edges"
-      ],
-      "collections": [
-        "Campus - Courtyard gardens and circulation"
-      ],
-      "blender_min": [
-        -5.05,
-        68.43,
-        0.15
-      ],
-      "blender_max": [
-        3.05,
-        68.57,
-        0.37
-      ],
-      "godot_min": [
-        -5.05,
-        0.15,
-        -68.57
-      ],
-      "godot_max": [
-        3.05,
-        0.37,
-        -68.43
-      ]
-    },
-    {
-      "name": "Campus lawn border.010",
-      "role": "landscape",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "shared cube Off-white precast edges",
-      "materials": [
-        "Off-white precast edges"
-      ],
-      "collections": [
-        "Campus - Courtyard gardens and circulation"
-      ],
-      "blender_min": [
-        2.93,
-        68.4,
-        0.15
-      ],
-      "blender_max": [
-        3.07,
-        77.6,
-        0.37
-      ],
-      "godot_min": [
-        2.93,
-        0.15,
-        -77.6
-      ],
-      "godot_max": [
-        3.07,
-        0.37,
-        -68.4
-      ]
-    },
-    {
-      "name": "Campus lawn border.011",
-      "role": "landscape",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 8,
-      "triangles": 12,
-      "mesh": "shared cube Off-white precast edges",
-      "materials": [
-        "Off-white precast edges"
-      ],
-      "collections": [
-        "Campus - Courtyard gardens and circulation"
-      ],
-      "blender_min": [
-        -5.05,
-        77.43,
-        0.15
-      ],
-      "blender_max": [
-        3.05,
-        77.57,
-        0.37
-      ],
-      "godot_min": [
-        -5.05,
-        0.15,
-        -77.57
-      ],
-      "godot_max": [
-        3.05,
-        0.37,
-        -77.43
-      ]
-    },
-    {
       "name": "Campus rectangular lawn.003",
       "role": "landscape",
       "collision_candidate": false,
@@ -193700,45 +192635,6 @@
         -52.62379,
         3.24,
         -94.58896
-      ]
-    },
-    {
-      "name": "Courtyard planting.002",
-      "role": "landscape",
-      "collision_candidate": false,
-      "walkable": false,
-      "vertices": 410,
-      "triangles": 760,
-      "mesh": "R3 garden tree variant 0",
-      "materials": [
-        "R3 - Tree bark",
-        "R3 - Leaf shade 0",
-        "R3 - Leaf shade 1",
-        "R3 - Leaf shade 2",
-        "R3 - Leaf shade 3"
-      ],
-      "collections": [
-        "Campus - Courtyard gardens and circulation"
-      ],
-      "blender_min": [
-        -3.60272,
-        73.48106,
-        0.29897
-      ],
-      "blender_max": [
-        -0.42007,
-        76.69623,
-        3.24
-      ],
-      "godot_min": [
-        -3.60272,
-        0.29897,
-        -76.69623
-      ],
-      "godot_max": [
-        -0.42007,
-        3.24,
-        -73.48106
       ]
     },
     {
@@ -214580,6 +213476,1177 @@
         6.1874,
         -106.033
       ]
+    },
+    {
+      "name": "B10 navy circle tower facade wall",
+      "role": "architecture",
+      "collision_candidate": true,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "B10 navy circle tower facade wall",
+      "materials": [
+        "R4 B latest blue circular facade panel"
+      ],
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "blender_min": [
+        -5.975,
+        -0.6,
+        0.225
+      ],
+      "blender_max": [
+        -3.525,
+        -0.12,
+        10.375
+      ],
+      "godot_min": [
+        -5.975,
+        0.225,
+        0.12
+      ],
+      "godot_max": [
+        -3.525,
+        10.375,
+        0.6
+      ]
+    },
+    {
+      "name": "B10 white tower disc accents",
+      "role": "detail",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 640,
+      "triangles": 928,
+      "mesh": "B10 white tower disc accents",
+      "materials": [
+        "B white painted tower disc accent"
+      ],
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "blender_min": [
+        -5.65,
+        -0.625,
+        0.83
+      ],
+      "blender_max": [
+        -3.85,
+        -0.6,
+        10.15
+      ],
+      "godot_min": [
+        -5.65,
+        0.83,
+        0.6
+      ],
+      "godot_max": [
+        -3.85,
+        10.15,
+        0.625
+      ]
+    },
+    {
+      "name": "B10 grilled porthole rings",
+      "role": "detail",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 552,
+      "triangles": 828,
+      "mesh": "B10 grilled porthole rings",
+      "materials": [
+        "B white painted tower disc accent"
+      ],
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "blender_min": [
+        -5.41,
+        -0.65,
+        3.84
+      ],
+      "blender_max": [
+        -4.05,
+        -0.6,
+        9.47
+      ],
+      "godot_min": [
+        -5.41,
+        3.84,
+        0.6
+      ],
+      "godot_max": [
+        -4.05,
+        9.47,
+        0.65
+      ]
+    },
+    {
+      "name": "B10 porthole dark recess",
+      "role": "detail",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 192,
+      "triangles": 282,
+      "mesh": "B10 porthole dark recess",
+      "materials": [
+        "B dark porthole recess"
+      ],
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "blender_min": [
+        -5.35,
+        -0.602,
+        3.9
+      ],
+      "blender_max": [
+        -4.11,
+        -0.598,
+        9.41
+      ],
+      "godot_min": [
+        -5.35,
+        3.9,
+        0.598
+      ],
+      "godot_max": [
+        -4.11,
+        9.41,
+        0.602
+      ]
+    },
+    {
+      "name": "B10 royal blue facade stripe centre",
+      "role": "architecture",
+      "collision_candidate": true,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "B10 royal blue facade stripe centre",
+      "materials": [
+        "B royal blue facade stripe accent"
+      ],
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "blender_min": [
+        -10.5,
+        -0.225,
+        6.48
+      ],
+      "blender_max": [
+        -5.975,
+        -0.16,
+        6.8
+      ],
+      "godot_min": [
+        -10.5,
+        6.48,
+        0.16
+      ],
+      "godot_max": [
+        -5.975,
+        6.8,
+        0.225
+      ]
+    },
+    {
+      "name": "B10 royal blue facade stripe right",
+      "role": "architecture",
+      "collision_candidate": true,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "B10 royal blue facade stripe right",
+      "materials": [
+        "B royal blue facade stripe accent"
+      ],
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "blender_min": [
+        -3.525,
+        -0.225,
+        6.48
+      ],
+      "blender_max": [
+        4.0,
+        -0.16,
+        6.8
+      ],
+      "godot_min": [
+        -3.525,
+        6.48,
+        0.16
+      ],
+      "godot_max": [
+        4.0,
+        6.8,
+        0.225
+      ]
+    },
+    {
+      "name": "B10 royal blue parapet stripe right",
+      "role": "architecture",
+      "collision_candidate": true,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "B10 royal blue parapet stripe right",
+      "materials": [
+        "B royal blue facade stripe accent"
+      ],
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "blender_min": [
+        -3.525,
+        -0.225,
+        9.38
+      ],
+      "blender_max": [
+        4.0,
+        -0.16,
+        9.62
+      ],
+      "godot_min": [
+        -3.525,
+        9.38,
+        0.16
+      ],
+      "godot_max": [
+        4.0,
+        9.62,
+        0.225
+      ]
+    },
+    {
+      "name": "B10 cladding panel joint grid",
+      "role": "detail",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 1944,
+      "triangles": 2916,
+      "mesh": "B10 cladding panel joint grid",
+      "materials": [
+        "B cladding dark joint grout"
+      ],
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "blender_min": [
+        -10.53,
+        -0.164,
+        0.489
+      ],
+      "blender_max": [
+        4.0,
+        -0.158,
+        9.86
+      ],
+      "godot_min": [
+        -10.53,
+        0.489,
+        0.158
+      ],
+      "godot_max": [
+        4.0,
+        9.86,
+        0.164
+      ]
+    },
+    {
+      "name": "B10 university sign blue panel",
+      "role": "detail",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "B10 university sign blue panel",
+      "materials": [
+        "B university sign cobalt panel"
+      ],
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "blender_min": [
+        -15.95,
+        -0.2,
+        2.86
+      ],
+      "blender_max": [
+        -12.05,
+        -0.166,
+        4.32
+      ],
+      "godot_min": [
+        -15.95,
+        2.86,
+        0.166
+      ],
+      "godot_max": [
+        -12.05,
+        4.32,
+        0.2
+      ]
+    },
+    {
+      "name": "B10 navy portico canopy roof",
+      "role": "architecture",
+      "collision_candidate": true,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "B10 navy portico canopy roof",
+      "materials": [
+        "R4 B latest blue circular facade panel"
+      ],
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "blender_min": [
+        -3.525,
+        -3.4,
+        3.0
+      ],
+      "blender_max": [
+        2.6,
+        -0.16,
+        3.32
+      ],
+      "godot_min": [
+        -3.525,
+        3.0,
+        0.16
+      ],
+      "godot_max": [
+        2.6,
+        3.32,
+        3.4
+      ]
+    },
+    {
+      "name": "B10 navy portico canopy fascia",
+      "role": "detail",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "B10 navy portico canopy fascia",
+      "materials": [
+        "R4 B latest blue circular facade panel"
+      ],
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "blender_min": [
+        -3.525,
+        -3.46,
+        2.78
+      ],
+      "blender_max": [
+        2.6,
+        -3.34,
+        3.32
+      ],
+      "godot_min": [
+        -3.525,
+        2.78,
+        3.34
+      ],
+      "godot_max": [
+        2.6,
+        3.32,
+        3.46
+      ]
+    },
+    {
+      "name": "B10 navy portico canopy column",
+      "role": "architecture",
+      "collision_candidate": true,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "B10 navy portico canopy column",
+      "materials": [
+        "R4 B latest blue circular facade panel"
+      ],
+      "collections": [
+        "B10 - Photo-matched university entrance facade"
+      ],
+      "blender_min": [
+        2.28,
+        -3.4,
+        0.52
+      ],
+      "blender_max": [
+        2.56,
+        -3.12,
+        3.0
+      ],
+      "godot_min": [
+        2.28,
+        0.52,
+        3.12
+      ],
+      "godot_max": [
+        2.56,
+        3.0,
+        3.4
+      ]
+    },
+    {
+      "name": "D10 interlocking paver approach path",
+      "role": "walkable",
+      "collision_candidate": true,
+      "walkable": true,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "D10 interlocking paver approach path",
+      "materials": [
+        "D10 interlocking paver path"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -6.0,
+        64.5,
+        0.15
+      ],
+      "blender_max": [
+        -2.0,
+        97.2,
+        0.285
+      ],
+      "godot_min": [
+        -6.0,
+        0.15,
+        -97.2
+      ],
+      "godot_max": [
+        -2.0,
+        0.285,
+        -64.5
+      ]
+    },
+    {
+      "name": "D10 path edge curb",
+      "role": "walkable",
+      "collision_candidate": true,
+      "walkable": true,
+      "vertices": 16,
+      "triangles": 24,
+      "mesh": "D10 path edge curb",
+      "materials": [
+        "Off-white precast edges"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -6.12,
+        64.5,
+        0.15
+      ],
+      "blender_max": [
+        -1.88,
+        93.0,
+        0.33
+      ],
+      "godot_min": [
+        -6.12,
+        0.15,
+        -93.0
+      ],
+      "godot_max": [
+        -1.88,
+        0.33,
+        -64.5
+      ]
+    },
+    {
+      "name": "D10 west lawn",
+      "role": "landscape",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "D10 west lawn",
+      "materials": [
+        "D10 irrigated green lawn"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -21.0,
+        66.0,
+        0.16
+      ],
+      "blender_max": [
+        -6.12,
+        93.0,
+        0.32
+      ],
+      "godot_min": [
+        -21.0,
+        0.16,
+        -93.0
+      ],
+      "godot_max": [
+        -6.12,
+        0.32,
+        -66.0
+      ]
+    },
+    {
+      "name": "D10 west lawn border",
+      "role": "landscape",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 24,
+      "triangles": 36,
+      "mesh": "D10 west lawn border",
+      "materials": [
+        "Off-white precast edges"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -21.12,
+        65.88,
+        0.15
+      ],
+      "blender_max": [
+        -6.12,
+        93.12,
+        0.34
+      ],
+      "godot_min": [
+        -21.12,
+        0.15,
+        -93.12
+      ],
+      "godot_max": [
+        -6.12,
+        0.34,
+        -65.88
+      ]
+    },
+    {
+      "name": "D10 east lawn",
+      "role": "landscape",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "D10 east lawn",
+      "materials": [
+        "D10 irrigated green lawn"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -1.88,
+        66.0,
+        0.16
+      ],
+      "blender_max": [
+        8.0,
+        93.0,
+        0.32
+      ],
+      "godot_min": [
+        -1.88,
+        0.16,
+        -93.0
+      ],
+      "godot_max": [
+        8.0,
+        0.32,
+        -66.0
+      ]
+    },
+    {
+      "name": "D10 east lawn border",
+      "role": "landscape",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 24,
+      "triangles": 36,
+      "mesh": "D10 east lawn border",
+      "materials": [
+        "Off-white precast edges"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -2.0,
+        65.88,
+        0.15
+      ],
+      "blender_max": [
+        8.12,
+        93.12,
+        0.34
+      ],
+      "godot_min": [
+        -2.0,
+        0.15,
+        -93.12
+      ],
+      "godot_max": [
+        8.12,
+        0.34,
+        -65.88
+      ]
+    },
+    {
+      "name": "D10 cast concrete garden slab",
+      "role": "architecture",
+      "collision_candidate": true,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "D10 cast concrete garden slab",
+      "materials": [
+        "D10 cast concrete garden slab"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -15.6,
+        74.4,
+        0.16
+      ],
+      "blender_max": [
+        -11.6,
+        78.2,
+        0.42
+      ],
+      "godot_min": [
+        -15.6,
+        0.16,
+        -78.2
+      ],
+      "godot_max": [
+        -11.6,
+        0.42,
+        -74.4
+      ]
+    },
+    {
+      "name": "D10 zellige basin rim 1",
+      "role": "detail",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 32,
+      "triangles": 48,
+      "mesh": "D10 zellige basin rim 1",
+      "materials": [
+        "D10 zellige mosaic basin rim"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -18.4,
+        79.0,
+        0.16
+      ],
+      "blender_max": [
+        -13.0,
+        80.1,
+        0.4
+      ],
+      "godot_min": [
+        -18.4,
+        0.16,
+        -80.1
+      ],
+      "godot_max": [
+        -13.0,
+        0.4,
+        -79.0
+      ]
+    },
+    {
+      "name": "D10 basin gravel bed soil 1",
+      "role": "detail",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "D10 basin gravel bed soil 1",
+      "materials": [
+        "D10 dark gravel basin bed soil"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -18.24,
+        79.16,
+        0.16
+      ],
+      "blender_max": [
+        -13.16,
+        79.94,
+        0.3
+      ],
+      "godot_min": [
+        -18.24,
+        0.16,
+        -79.94
+      ],
+      "godot_max": [
+        -13.16,
+        0.3,
+        -79.16
+      ]
+    },
+    {
+      "name": "D10 zellige basin rim 2",
+      "role": "detail",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 32,
+      "triangles": 48,
+      "mesh": "D10 zellige basin rim 2",
+      "materials": [
+        "D10 zellige mosaic basin rim"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -14.2,
+        72.5,
+        0.16
+      ],
+      "blender_max": [
+        -8.8,
+        73.6,
+        0.4
+      ],
+      "godot_min": [
+        -14.2,
+        0.16,
+        -73.6
+      ],
+      "godot_max": [
+        -8.8,
+        0.4,
+        -72.5
+      ]
+    },
+    {
+      "name": "D10 basin gravel bed soil 2",
+      "role": "detail",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 8,
+      "triangles": 12,
+      "mesh": "D10 basin gravel bed soil 2",
+      "materials": [
+        "D10 dark gravel basin bed soil"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -14.04,
+        72.66,
+        0.16
+      ],
+      "blender_max": [
+        -8.96,
+        73.44,
+        0.3
+      ],
+      "godot_min": [
+        -14.04,
+        0.16,
+        -73.44
+      ],
+      "godot_max": [
+        -8.96,
+        0.3,
+        -72.66
+      ]
+    },
+    {
+      "name": "D10 bollard lamp posts",
+      "role": "detail",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 320,
+      "triangles": 576,
+      "mesh": "D10 bollard lamp posts",
+      "materials": [
+        "D10 black bollard lamp metal"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -6.49755,
+        66.45,
+        0.33
+      ],
+      "blender_max": [
+        -1.50245,
+        94.55,
+        1.18
+      ],
+      "godot_min": [
+        -6.49755,
+        0.33,
+        -94.55
+      ],
+      "godot_max": [
+        -1.50245,
+        1.18,
+        -66.45
+      ]
+    },
+    {
+      "name": "D10 bollard lamp globes",
+      "role": "detail",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 1376,
+      "triangles": 2688,
+      "mesh": "D10 bollard lamp globes",
+      "materials": [
+        "D10 opal bollard light diffuser"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -6.56,
+        66.39,
+        1.17
+      ],
+      "blender_max": [
+        -1.44,
+        94.61,
+        1.39
+      ],
+      "godot_min": [
+        -6.56,
+        1.17,
+        -94.61
+      ],
+      "godot_max": [
+        -1.44,
+        1.39,
+        -66.39
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 01",
+      "role": "landscape",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 1990,
+      "triangles": 1490,
+      "mesh": "Campus fan palm D10 row 01",
+      "materials": [
+        "D10 palm trunk bark",
+        "D10 palm dry frond skirt leaves",
+        "D10 fan palm leaves"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -9.51793,
+        65.23259,
+        0.3
+      ],
+      "blender_max": [
+        -4.7814,
+        69.8164,
+        8.4199
+      ],
+      "godot_min": [
+        -9.51793,
+        0.3,
+        -69.8164
+      ],
+      "godot_max": [
+        -4.7814,
+        8.4199,
+        -65.23259
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 02",
+      "role": "landscape",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 1990,
+      "triangles": 1490,
+      "mesh": "Campus fan palm D10 row 02",
+      "materials": [
+        "D10 palm trunk bark",
+        "D10 palm dry frond skirt leaves",
+        "D10 fan palm leaves"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -10.61065,
+        67.55574,
+        0.3
+      ],
+      "blender_max": [
+        -3.95749,
+        74.27142,
+        7.25984
+      ],
+      "godot_min": [
+        -10.61065,
+        0.3,
+        -74.27142
+      ],
+      "godot_max": [
+        -3.95749,
+        7.25984,
+        -67.55574
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 03",
+      "role": "landscape",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 1990,
+      "triangles": 1490,
+      "mesh": "Campus fan palm D10 row 01",
+      "materials": [
+        "D10 palm trunk bark",
+        "D10 palm dry frond skirt leaves",
+        "D10 fan palm leaves"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -10.02936,
+        71.59882,
+        0.3
+      ],
+      "blender_max": [
+        -4.31755,
+        77.41534,
+        8.4199
+      ],
+      "godot_min": [
+        -10.02936,
+        0.3,
+        -77.41534
+      ],
+      "godot_max": [
+        -4.31755,
+        8.4199,
+        -71.59882
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 04",
+      "role": "landscape",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 1990,
+      "triangles": 1490,
+      "mesh": "Campus fan palm D10 row 02",
+      "materials": [
+        "D10 palm trunk bark",
+        "D10 palm dry frond skirt leaves",
+        "D10 fan palm leaves"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -10.23282,
+        74.80971,
+        0.3
+      ],
+      "blender_max": [
+        -3.97494,
+        80.8849,
+        7.25984
+      ],
+      "godot_min": [
+        -10.23282,
+        0.3,
+        -80.8849
+      ],
+      "godot_max": [
+        -3.97494,
+        7.25984,
+        -74.80971
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 05",
+      "role": "landscape",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 1990,
+      "triangles": 1490,
+      "mesh": "Campus fan palm D10 row 01",
+      "materials": [
+        "D10 palm trunk bark",
+        "D10 palm dry frond skirt leaves",
+        "D10 fan palm leaves"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -10.3862,
+        78.28077,
+        0.3
+      ],
+      "blender_max": [
+        -3.94033,
+        84.67804,
+        8.4199
+      ],
+      "godot_min": [
+        -10.3862,
+        0.3,
+        -84.67804
+      ],
+      "godot_max": [
+        -3.94033,
+        8.4199,
+        -78.28077
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 06",
+      "role": "landscape",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 1990,
+      "triangles": 1490,
+      "mesh": "Campus fan palm D10 row 02",
+      "materials": [
+        "D10 palm trunk bark",
+        "D10 palm dry frond skirt leaves",
+        "D10 fan palm leaves"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -9.50377,
+        82.34462,
+        0.3
+      ],
+      "blender_max": [
+        -4.47724,
+        87.65987,
+        7.25984
+      ],
+      "godot_min": [
+        -9.50377,
+        0.3,
+        -87.65987
+      ],
+      "godot_max": [
+        -4.47724,
+        7.25984,
+        -82.34462
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 07",
+      "role": "landscape",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 1990,
+      "triangles": 1490,
+      "mesh": "Campus fan palm D10 row 01",
+      "materials": [
+        "D10 palm trunk bark",
+        "D10 palm dry frond skirt leaves",
+        "D10 fan palm leaves"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -10.42741,
+        85.19367,
+        0.3
+      ],
+      "blender_max": [
+        -3.84031,
+        91.76947,
+        8.4199
+      ],
+      "godot_min": [
+        -10.42741,
+        0.3,
+        -91.76947
+      ],
+      "godot_max": [
+        -3.84031,
+        8.4199,
+        -85.19367
+      ]
+    },
+    {
+      "name": "Campus fan palm D10 row 08",
+      "role": "landscape",
+      "collision_candidate": false,
+      "walkable": false,
+      "vertices": 1990,
+      "triangles": 1490,
+      "mesh": "Campus fan palm D10 row 02",
+      "materials": [
+        "D10 palm trunk bark",
+        "D10 palm dry frond skirt leaves",
+        "D10 fan palm leaves"
+      ],
+      "collections": [
+        "D10 - Photo-matched garden approach"
+      ],
+      "blender_min": [
+        -9.96904,
+        89.41868,
+        0.3
+      ],
+      "blender_max": [
+        -4.24735,
+        94.88919,
+        7.25984
+      ],
+      "godot_min": [
+        -9.96904,
+        0.3,
+        -94.88919
+      ],
+      "godot_max": [
+        -4.24735,
+        7.25984,
+        -89.41868
+      ]
     }
   ],
   "excluded": [
@@ -214617,6 +214684,161 @@
       "name": "Camera - glazing and panel detail",
       "type": "CAMERA",
       "reason": "non_geometry"
+    },
+    {
+      "name": "Circular perforated vertical facade",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.001",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.002",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.003",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.004",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.005",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.006",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.007",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.008",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.009",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.010",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.011",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.012",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.013",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Circle opening grille.014",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B blue entrance facade stripe",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B blue entrance facade stripe.001",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.001",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.002",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.003",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.004",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.005",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.006",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.007",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.008",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.009",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.010",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.011",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "B pale circular inset behind facade.012",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
     },
     {
       "name": "E5 facade review soft daylight",
@@ -215029,6 +215251,36 @@
       "reason": "hidden_or_obsolete_study"
     },
     {
+      "name": "Campus rectangular lawn.002",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Campus lawn border.008",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Campus lawn border.009",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Campus lawn border.010",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Campus lawn border.011",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
+      "name": "Courtyard planting.002",
+      "type": "MESH",
+      "reason": "hidden_or_obsolete_study"
+    },
+    {
       "name": "B diffuse skylight 0",
       "type": "LIGHT",
       "reason": "non_geometry"
@@ -215162,7 +215414,27 @@
       "name": "D7 Camera 07 - photographic interior detail",
       "type": "CAMERA",
       "reason": "non_geometry"
+    },
+    {
+      "name": "D10 Camera 01 - palm path to glazed block",
+      "type": "CAMERA",
+      "reason": "non_geometry"
+    },
+    {
+      "name": "D10 Camera 02 - lawn basins and glazed corner",
+      "type": "CAMERA",
+      "reason": "non_geometry"
+    },
+    {
+      "name": "B10 Camera 01 - university entrance",
+      "type": "CAMERA",
+      "reason": "non_geometry"
+    },
+    {
+      "name": "B10 Camera 02 - circle tower oblique",
+      "type": "CAMERA",
+      "reason": "non_geometry"
     }
   ],
-  "export_seconds": 66.16
+  "export_seconds": 118.36
 }

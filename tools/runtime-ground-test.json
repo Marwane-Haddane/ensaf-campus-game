@@ -28,14 +28,19 @@
       "installed": true
     },
     "batched_instances": 993,
-    "build_seconds": 4.447,
+    "build_seconds": 16.336,
     "chair_boxes": 198,
-    "collision_bodies": 2150,
-    "collision_cache_hits": 122,
+    "collision_bodies": 2143,
+    "collision_cache_hits": 121,
     "entrance_repair": {
       "floor_y": 0.52,
       "installed": true,
       "step_count": 3
+    },
+    "entrance_sign": {
+      "decals": 0,
+      "hidden_triangles": 0,
+      "moved": 0
     },
     "furniture_bodies": 232,
     "interactive_doors": {
@@ -97,58 +102,62 @@
     "materials": {
       "families": {
         "asphalt": 1,
-        "bark": 8,
+        "bark": 9,
         "carpet": 1,
         "fabric": 8,
         "floor_stone": 3,
-        "foliage": 14,
+        "foliage": 16,
         "glass": 9,
-        "grout": 3,
-        "lawn": 4,
+        "grout": 4,
+        "lawn": 5,
         "limestone": 10,
         "metal": 7,
-        "metal_painted": 9,
-        "mineral": 14,
-        "paving": 2,
-        "simple": 23,
+        "metal_painted": 10,
+        "mineral": 15,
+        "paving": 3,
+        "simple": 30,
         "slate": 6,
-        "soil": 2,
+        "soil": 3,
         "terrazzo": 1,
         "wood_horizontal": 2,
         "wood_transverse": 1,
         "wood_vertical": 4
       },
       "generation_msec": 0,
-      "materials": 132,
+      "high_detail": false,
+      "materials": 148,
       "normal_texture_sets": 3,
       "preserved_mapped": 694,
       "roughness_texture_sets": 0,
       "texture_bytes": 2555904,
       "texture_sets": 15
     },
-    "merged_static_instances": 4395,
-    "mesh_nodes": 6249,
+    "merged_static_instances": 4371,
+    "mesh_nodes": 6245,
     "multimesh_batches": 19,
+    "outdoor_furniture": 14,
     "passable_door_meshes": 109,
+    "quality": "medium",
     "ready": true,
     "stage_timings": {
-      "instantiate_ms": 55.447,
-      "largest_mesh_ms": 572.424,
-      "largest_mesh_name": "E9 unified smooth stone roof and rounded frame",
+      "instantiate_ms": 111.032,
+      "largest_mesh_ms": 1722.485,
+      "largest_mesh_name": "E6 east individually coursed stone cladding",
       "largest_mesh_parts_ms": {
-        "canopy": 0.011,
-        "collision": 572.378,
-        "materials": 0.061,
+        "canopy": 0.132,
+        "collision": 1721.814,
+        "materials": 0.546,
         "precomputed_shape": false
       }
     },
-    "static_surface_batches": 106,
+    "static_surface_batches": 102,
+    "supplied_furniture": 28,
     "teaching_interior": {
       "installed": 694,
       "retired": 410
     },
     "transparent_meshes_without_shadows": 318,
-    "unique_collision_shapes": 1834
+    "unique_collision_shapes": 1828
   },
   "seat_blocked": true
 }

@@ -22,7 +22,8 @@ from campus_chairs import optimize_chairs  # noqa: E402  (art_audit roadmap item
 from campus_roof import optimize_roof  # noqa: E402  (art_audit roadmap item 2)
 
 ROOT = Path(__file__).resolve().parents[2]
-SOURCE = ROOT / '3D-modeling' / 'campus-design-v9' / 'ensaf-campus-v9-final.blend'
+# Revision 10 = v9-final + tools/reference_match_v10.py (B/D photo match, Nov 2026).
+SOURCE = ROOT / '3D-modeling' / 'campus-design-v10' / 'ensaf-campus-v10.blend'
 OUT = ROOT / 'campus-game' / 'assets'
 OUT.mkdir(parents=True, exist_ok=True)
 _args = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []

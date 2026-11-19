@@ -675,15 +675,21 @@ func _tune_material_by_rule(source: BaseMaterial3D) -> StandardMaterial3D:
 	if not is_glazing_frame and (source.resource_name in GLASS_MATERIALS or family == "glass" or "glass" in label or "glazing" in label):
 		polished = source.duplicate() as StandardMaterial3D
 		polished.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		polished.roughness = 0.08
+		polished.metallic = 0.05
+		polished.metallic_specular = 0.70
 		if "clear" in label or "entrance" in label:
 			polished.albedo_color.a = 0.10
+		elif "solar control" in label:
+			# Building D curtain wall reads as dark blue-green tinted glass in the
+			# reference photos, not see-through: keep it mostly opaque and glossy.
+			polished.albedo_color.a = 0.62
+			polished.metallic = 0.25
+			polished.metallic_specular = 0.85
 		elif "solar" in label or "reflective" in label:
 			polished.albedo_color.a = 0.12
 		else:
 			polished.albedo_color.a = 0.11
-		polished.roughness = 0.08
-		polished.metallic = 0.05
-		polished.metallic_specular = 0.70
 		polished.cull_mode = BaseMaterial3D.CULL_DISABLED
 		was_tuned = true
 		

@@ -1,5 +1,14 @@
 {
-  "captures": [],
+  "captures": [
+    "res://tools/entrance-fixed-reception-closed.png",
+    "res://tools/entrance-fixed-reception-open.png",
+    "res://tools/entrance-fixed-atrium-front-closed.png",
+    "res://tools/entrance-fixed-atrium-front-open.png",
+    "res://tools/entrance-fixed-atrium-side-closed.png",
+    "res://tools/entrance-fixed-atrium-side-open.png",
+    "res://tools/entrance-fixed-side-landing.png",
+    "res://tools/entrance-fixed-atrium-inside.png"
+  ],
   "checks": 84,
   "failures": [],
   "ground": [
