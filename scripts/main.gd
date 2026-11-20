@@ -13,6 +13,7 @@ const InteractionTarget = preload("res://scripts/interaction_target.gd")
 const PauseMenu = preload("res://scripts/pause_menu.gd")
 const CampusOcclusion = preload("res://scripts/campus_occlusion.gd")
 const AuditoriumCinema = preload("res://scripts/auditorium_cinema.gd")
+const PlazaFountain = preload("res://scripts/plaza_fountain.gd")
 const SPAWNS: Dictionary = {
 	"Campus plaza": Vector3(-27, 1.25, -85),
 	"Reception / response desk": Vector3(-36.2, 1.91, -104.1),
@@ -108,6 +109,7 @@ func _ready() -> void:
 	cinema = AuditoriumCinema.new()
 	add_child(cinema)
 	cinema.install(self)
+	PlazaFountain.install(self)
 	print("APPROVED_PROPS_READY ", imported_props.size(), " stations=", stations.size())
 	initialization_progress.emit("Applying campus visual finishes","polish",null,null)
 	await get_tree().process_frame

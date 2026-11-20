@@ -5,6 +5,7 @@ extends Node3D
 ## Cheap by design: the screen viewport renders only while cinema mode is on.
 
 const InteractionTarget = preload("res://scripts/interaction_target.gd")
+const WebRuntime = preload("res://scripts/web_runtime.gd")
 
 const SCREEN_CENTER := Vector3(-37.0, 3.125, -124.33)
 const SCREEN_SIZE := Vector2(5.30, 3.15)
@@ -591,35 +592,15 @@ func _open_web(youtube: bool) -> void:
 # ---------- embedded browser (gdcef) ----------
 
 func web_supported() -> bool:
-	return ClassDB.class_exists("GDCef") and _web_error.is_empty()
+	return WebRuntime.supported() and _web_error.is_empty()
 
 func _ensure_cef() -> bool:
 	if is_instance_valid(_cef): return true
 	if not web_supported(): return false
-	_cef = ClassDB.instantiate("GDCef")
-	_cef.name = "CinemaCEF"
-	add_child(_cef)
-	# Chromium profile lives in user:// (always writable, also in exported builds),
-	# never inside cef_artifacts next to the game files.
-	var cache := OS.get_user_data_dir().path_join("cinema_browser")
-	DirAccess.make_dir_recursive_absolute(cache)
-	var ok: bool = _cef.initialize({
-		"artifacts": "res://cef_artifacts/",
-		"root_cache_path": cache,
-		"cache_path": cache.path_join("profile"),
-		"log_file": cache.path_join("debug.log"),
-		"persist_session_cookies": false,
-		"incognito": true,
-		"locale": "en-US",
-		"enable_media_stream": false,
-		"user_gesture_required": false,
-		"remote_debugging_port": 0,
-		"log_severity": "error"})
-	if not ok:
-		_web_error = str(_cef.get_error())
-		push_warning("Cinema browser unavailable: " + _web_error)
-		_cef.queue_free()
-		_cef = null
+	# Shared with the workstation browser: CEF initialises once per process.
+	_cef = WebRuntime.cef(game)
+	if _cef == null:
+		_web_error = WebRuntime.last_error
 		return false
 	return true
 

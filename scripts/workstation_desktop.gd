@@ -4,6 +4,8 @@ signal exit_requested
 signal report_requested
 signal journal_requested
 const DesktopWindow = preload("res://scripts/desktop_window.gd")
+const WebRuntime = preload("res://scripts/web_runtime.gd")
+const BROWSER_HOME := "https://www.google.com"
 const HOME := "/home/analyst"
 const WHITE := Color("e4e9ef")
 const MUTED := Color("9caab8")
@@ -46,6 +48,12 @@ var _files_guard: bool = false
 var _mono: SystemFont
 var _terminal_scroll: ScrollContainer
 var _app_menu: PopupMenu
+var _web_window: Panel
+var _web_view: TextureRect
+var _web_browser: Object
+var _web_url: LineEdit
+var _web_status: Label
+var _web_mouse_down: bool = false
 
 func configure(owner_ui: Node, backend: RefCounted) -> void:
 	training = owner_ui
@@ -152,6 +160,21 @@ func _build_icons() -> void:
 		label.size.x = 88
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		if names[i] == "Help": _label(button,"●",Vector2(64,47),12,BLUE)
+	var web := _button("",func(): open_browser())
+	web.position = Vector2(22,50+names.size()*85)
+	web.size = Vector2(88,79)
+	web.tooltip_text = "Open the web browser"
+	canvas.add_child(web)
+	var web_icon := TextureRect.new()
+	web_icon.texture = load("res://assets/ui/icons/network.svg")
+	web_icon.position = Vector2(25,4)
+	web_icon.size = Vector2(39,39)
+	web_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	web_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	web.add_child(web_icon)
+	var web_label := _label(web,"Browser",Vector2(0,49),13)
+	web_label.size.x = 88
+	web_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 func _build_bars() -> void:
 	var top := _panel(canvas,Rect2(0,0,1280,36),Color("1b2530"))
@@ -160,7 +183,7 @@ func _build_bars() -> void:
 	apps.size = Vector2(145,35)
 	top.add_child(apps)
 	_app_menu = PopupMenu.new()
-	for text: String in ["Terminal","Home folder","Help","Evidence","Reports","Return to campus","Operation Blackout"]: _app_menu.add_item(text)
+	for text: String in ["Terminal","Home folder","Help","Evidence","Reports","Return to campus","Operation Blackout","Web Browser"]: _app_menu.add_item(text)
 	_app_menu.id_pressed.connect(func(id: int):
 		match id:
 			0: focus_terminal()
@@ -172,6 +195,7 @@ func _build_bars() -> void:
 			6:
 				focus_terminal()
 				submit_command("lab status" if shell.cyber.active else "mission start blackout")
+			7: open_browser()
 	)
 	apps.add_child(_app_menu)
 	var terminal := _button("",focus_terminal,"terminal")
@@ -184,6 +208,11 @@ func _build_bars() -> void:
 	folder.size = Vector2(40,35)
 	folder.tooltip_text = "File manager"
 	top.add_child(folder)
+	var browser := _button("",func(): open_browser(),"network")
+	browser.position = Vector2(248,0)
+	browser.size = Vector2(40,35)
+	browser.tooltip_text = "Web browser"
+	top.add_child(browser)
 	for index: int in range(4):
 		var button := _button(str(index+1),_switch_workspace.bind(index+1))
 		button.position = Vector2(996+index*31,2)
@@ -474,6 +503,16 @@ func submit_command(line: String) -> void:
 				_apps.erase(key)
 	command_input.clear()
 	if command.is_empty(): return
+	var words := command.split(" ",false)
+	if words[0] in ["firefox","firefox-esr","chromium","browser","xdg-open","sensible-browser"]:
+		history.append(command)
+		history_index = history.size()
+		terminal_text += "\n[color=#26e3c3]analyst@campus-lab[/color]:[color=#55aaf0]"+_escape(shell.display_path())+"[/color]$ "+_escape(command)+"\nOpening the web browser…\n"
+		output.text = terminal_text
+		_refresh_prompt()
+		call_deferred("_scroll_end")
+		open_browser(" ".join(words.slice(1)) if words.size()>1 else BROWSER_HOME)
+		return
 	history.append(command)
 	history_index = history.size()
 	history_draft = ""
@@ -718,3 +757,153 @@ func _open_python_editor(path: String) -> void:
 	))
 	row.add_child(feedback)
 	editor.grab_focus()
+
+
+# ---------- web browser (shared embedded Chromium, see web_runtime.gd) ----------
+
+func open_browser(url: String = BROWSER_HOME) -> void:
+	if not is_instance_valid(_web_window): _build_browser()
+	_web_window.show()
+	_web_window.raise_window()
+	_load_web.call_deferred(url)
+
+func _build_browser() -> void:
+	_web_window = DesktopWindow.new()
+	windows.add_child(_web_window)
+	_web_window.configure("Web Browser",Rect2(150,50,980,615))
+	_apps["Web Browser"] = _web_window
+	_web_window.closed.connect(_close_web)
+	var layout := VBoxContainer.new()
+	layout.add_theme_constant_override("separation",4)
+	_web_window.content.add_child(layout)
+	var bar := HBoxContainer.new()
+	layout.add_child(bar)
+	for spec: Array in [["back",_web_back],["forward",_web_forward],["refresh",_web_reload],["home",func(): _load_web(BROWSER_HOME)]]:
+		var nav := _button("",spec[1],spec[0])
+		nav.custom_minimum_size = Vector2(36,32)
+		nav.tooltip_text = str(spec[0]).capitalize()
+		bar.add_child(nav)
+	_web_url = LineEdit.new()
+	_web_url.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_web_url.placeholder_text = "Search Google or type a URL"
+	_web_url.select_all_on_focus = true
+	_web_url.add_theme_stylebox_override("normal",_style(Color("0d141b"),8,Color("3b4a58")))
+	_web_url.add_theme_stylebox_override("focus",_style(Color("0d141b"),8,BLUE))
+	_web_url.text_submitted.connect(_submit_url)
+	bar.add_child(_web_url)
+	var go := _button("Go",func(): _submit_url(_web_url.text))
+	go.custom_minimum_size = Vector2(46,32)
+	bar.add_child(go)
+	_web_view = TextureRect.new()
+	_web_view.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_web_view.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_web_view.stretch_mode = TextureRect.STRETCH_SCALE
+	_web_view.mouse_filter = Control.MOUSE_FILTER_STOP
+	_web_view.focus_mode = Control.FOCUS_ALL
+	_web_view.gui_input.connect(_web_input)
+	_web_view.resized.connect(_web_resized)
+	layout.add_child(_web_view)
+	_web_status = _label(_web_view,"",Vector2(24,24),15,MUTED)
+	_web_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_web_status.size = Vector2(880,200)
+	var task := _button("Browser",func(): _web_window.show();_web_window.raise_window(),"network")
+	task.position = Vector2(488+_app_tasks.size()*154,0)
+	task.size = Vector2(150,36)
+	task.add_theme_font_size_override("font_size",11)
+	_bottom_bar.add_child(task)
+	_app_tasks["Web Browser"] = task
+	_simulation_label.hide()
+
+func _web_back() -> void:
+	if _web_browser != null and _web_browser.has_previous_page(): _web_browser.previous_page()
+
+func _web_forward() -> void:
+	if _web_browser != null and _web_browser.has_next_page(): _web_browser.next_page()
+
+func _web_reload() -> void:
+	if _web_browser != null: _web_browser.reload()
+
+func _web_host() -> Node:
+	return training.get_parent() if is_instance_valid(training) and training.get_parent() != null else self
+
+func _submit_url(text: String) -> void:
+	if _web_browser == null and not WebRuntime.supported():
+		# No embedded Chromium in this build: hand the page to the system browser.
+		OS.shell_open(WebRuntime.normalise_url(text))
+		return
+	_load_web(text)
+
+func _load_web(text: String) -> void:
+	if not is_instance_valid(_web_window): return
+	var url := WebRuntime.normalise_url(text)
+	_web_url.text = url
+	if _web_browser != null:
+		_web_browser.load_url(url)
+		return
+	var cef: Node = WebRuntime.cef(_web_host())
+	if cef == null:
+		_web_status.text = "The embedded browser is not available on this build.\n" + WebRuntime.last_error + "\n\nPress Enter in the address bar to open the page in your normal browser instead."
+		return
+	_web_status.text = "Loading…"
+	_web_browser = cef.create_browser(url,_web_view,{"javascript":true,"webgl":true,"frame_rate":30,"user_gesture_required":false,"allow_downloads":false})
+	if _web_browser == null:
+		_web_status.text = "Browser could not start: " + str(cef.get_error())
+		return
+	_web_browser.on_page_loaded.connect(_on_web_loaded)
+	_web_browser.on_page_failed_loading.connect(func(_code: Variant,message: Variant,_view: Variant): _web_status.text = "Page failed to load: " + str(message))
+	_web_resized()
+
+func _on_web_loaded(_view: Variant) -> void:
+	_web_status.text = ""
+	if _web_browser != null and not _web_url.has_focus(): _web_url.text = str(_web_browser.get_url())
+
+func _web_scale() -> Vector2:
+	return canvas.scale if is_instance_valid(canvas) else Vector2.ONE
+
+func _web_resized() -> void:
+	if _web_browser == null or not is_instance_valid(_web_view): return
+	var pixels := (_web_view.size * _web_scale()).max(Vector2(64,64))
+	_web_browser.resize(pixels.floor())
+
+func _web_input(event: InputEvent) -> void:
+	if _web_browser == null: return
+	if event is InputEventMouse:
+		var px: Vector2 = event.position * _web_scale()
+		_web_browser.set_mouse_moved(int(px.x),int(px.y))
+	if event is InputEventMouseMotion:
+		if _web_mouse_down: _web_browser.set_mouse_left_down()
+	elif event is InputEventMouseButton:
+		match event.button_index:
+			MOUSE_BUTTON_WHEEL_UP:
+				if event.pressed: _web_browser.set_mouse_wheel_vertical(2)
+			MOUSE_BUTTON_WHEEL_DOWN:
+				if event.pressed: _web_browser.set_mouse_wheel_vertical(-2)
+			MOUSE_BUTTON_LEFT:
+				_web_mouse_down = event.pressed
+				if event.pressed:
+					_web_view.grab_focus()
+					_web_window.raise_window()
+					_web_browser.set_mouse_left_down()
+				else: _web_browser.set_mouse_left_up()
+			MOUSE_BUTTON_RIGHT:
+				if event.pressed: _web_browser.set_mouse_right_down()
+				else: _web_browser.set_mouse_right_up()
+	elif event is InputEventKey:
+		if event.is_command_or_control_pressed() and event.pressed:
+			match event.keycode:
+				KEY_C: _web_browser.copy()
+				KEY_V: _web_browser.paste()
+				KEY_Z: _web_browser.undo()
+				KEY_L:
+					_web_url.grab_focus()
+					accept_event()
+					return
+		_web_browser.set_key_pressed(event.unicode if event.unicode != 0 else event.keycode,event.pressed,event.shift_pressed,event.alt_pressed,event.is_command_or_control_pressed())
+	accept_event()
+
+func _close_web() -> void:
+	if _web_browser != null:
+		_web_browser.close()
+		_web_browser = null
+	if is_instance_valid(_web_view): _web_view.texture = null
+	_web_mouse_down = false
