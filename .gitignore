@@ -19,3 +19,6 @@
 # Local build output and scratch
 /output/
 /tmp/
+
+# gdcef (Chromium) browser runtime: ~400 MB, download from github.com/Lecrapouille/gdcef v0.17.0-godot4
+cef_artifacts/

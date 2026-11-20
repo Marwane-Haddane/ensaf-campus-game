@@ -12,6 +12,7 @@ const FocusOverlay = preload("res://scripts/interaction_focus.gd")
 const InteractionTarget = preload("res://scripts/interaction_target.gd")
 const PauseMenu = preload("res://scripts/pause_menu.gd")
 const CampusOcclusion = preload("res://scripts/campus_occlusion.gd")
+const AuditoriumCinema = preload("res://scripts/auditorium_cinema.gd")
 const SPAWNS: Dictionary = {
 	"Campus plaza": Vector3(-27, 1.25, -85),
 	"Reception / response desk": Vector3(-36.2, 1.91, -104.1),
@@ -55,6 +56,7 @@ var initialization_finished := false
 var initialization_error := ""
 var initialization_cancelled := false
 var mouse_sensitivity := 1.0
+var cinema: Node3D
 
 func _ready() -> void:
 	initialization_progress.emit("Configuring the game session","game_services",null,null)
@@ -103,6 +105,9 @@ func _ready() -> void:
 	await _add_response_stations()
 	for prop: Node3D in imported_props:
 		_set_prop_light_layers(prop)
+	cinema = AuditoriumCinema.new()
+	add_child(cinema)
+	cinema.install(self)
 	print("APPROVED_PROPS_READY ", imported_props.size(), " stations=", stations.size())
 	initialization_progress.emit("Applying campus visual finishes","polish",null,null)
 	await get_tree().process_frame
@@ -285,6 +290,7 @@ func _build_player() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not ready_to_play: return
+	if is_instance_valid(cinema) and cinema.is_seated(): return
 	var axis := Vector2.ZERO
 	if testing:
 		axis = test_axis
@@ -312,6 +318,10 @@ func _process(_delta: float) -> void:
 	var door_target: Dictionary = campus.door_system.get_target(camera,player,2.0)
 	if not door_target.is_empty() and (_closest.is_empty() or camera.global_position.distance_to(door_target.screen) < camera.global_position.distance_to(_closest.screen)):
 		_closest = door_target
+	if is_instance_valid(cinema):
+		var cinema_target: Dictionary = cinema.find_target(camera,player)
+		if not cinema_target.is_empty() and (_closest.is_empty() or camera.global_position.distance_to(cinema_target.screen) < camera.global_position.distance_to(_closest.screen)):
+			_closest = cinema_target
 	for station: Dictionary in stations:
 		var label: Label3D = station["label"]
 		label.visible = false
@@ -387,6 +397,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and moving and not _closest.is_empty():
 		if _closest.get("kind", "pc") == "door":
 			_closest.node.toggle(player)
+		elif _closest.get("kind", "pc") in ["remote", "seat"]:
+			cinema.interact(_closest)
 		elif _closest.get("kind", "pc") == "server":
 			_show_server_info(_closest)
 		else:

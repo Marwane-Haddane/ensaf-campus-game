@@ -54,7 +54,7 @@ func update_target(camera: Camera3D, station: Dictionary, distance: float, visib
 	_distance_m = maxf(distance, 0.0)
 	_target_world = station.get("screen", Vector3.ZERO)
 	var server := str(station.get("kind", "pc")) == "server"
-	var door := str(station.get("kind", "pc")) == "door"
+	var door := station.has("prompt")
 	_title.text = str(station.get("prompt","Press E to open")) if door else ("Inspect server" if server else "Inspect workstation")
 	_subtitle.text = str(station.get("name","Glass entrance")) if door else ("Review role & status" if server else "Access console & timeline")
 	_tag_title.text = "CAMPUS SERVER" if server else "TRAINING CONSOLE"
@@ -153,7 +153,7 @@ func _fit_layout() -> void:
 	var bottom_space := 54.0 if viewport_size.y >= 430.0 else 18.0
 	_card.size = Vector2(card_width, 64)
 	_card.position = Vector2((viewport_size.x - _card.size.x) * 0.5, maxf(16.0, viewport_size.y - bottom_space - 64.0))
-	if _target.get("kind","") == "door":
+	if _target.has("prompt"):
 		_tag.hide()
 		_canvas.show_connector = false
 		_canvas.queue_redraw()
