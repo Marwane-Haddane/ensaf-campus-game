@@ -13,10 +13,14 @@ window/size/viewport_height=720
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
+window/energy_saving/keep_screen_on=true
 
 [rendering]
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+gl_compatibility/fallback_to_angle=true
+gl_compatibility/fallback_to_native=true
+gl_compatibility/force_angle_on_devices=[{"vendor": "Intel", "name": "*"}, {"vendor": "Microsoft", "name": "*"}, {"vendor": "ATI", "name": "*"}, {"vendor": "AMD", "name": "Radeon HD"}, {"vendor": "NVIDIA", "name": "GeForce 8"}, {"vendor": "NVIDIA", "name": "GeForce 9"}, {"vendor": "NVIDIA", "name": "GeForce GT 2"}, {"vendor": "NVIDIA", "name": "GeForce GTX 2"}]
 textures/default_filters/use_nearest_mipmap_filter=false
 anti_aliasing/quality/msaa_3d=1
 textures/default_filters/anisotropic_filtering_level=3

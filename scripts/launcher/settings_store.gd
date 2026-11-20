@@ -148,11 +148,23 @@ func tick() -> bool:
 func apply_runtime(data: Dictionary) -> void:
 	Engine.max_fps = int(data.frame_cap)
 	if DisplayServer.get_name() != "headless":
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if data.vsync else DisplayServer.VSYNC_DISABLED)
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if data.fullscreen else DisplayServer.WINDOW_MODE_WINDOWED)
+		# Only touch the swap chain / window when something actually changes:
+		# re-applying an identical mode recreates the surface and makes some
+		# GPUs and monitors (Intel iGPUs, projector/virtual displays) blink.
+		var vsync_mode := DisplayServer.VSYNC_ENABLED if data.vsync else DisplayServer.VSYNC_DISABLED
+		if DisplayServer.window_get_vsync_mode() != vsync_mode:
+			DisplayServer.window_set_vsync_mode(vsync_mode)
+		var current_mode := DisplayServer.window_get_mode()
+		var is_fullscreen := current_mode in [DisplayServer.WINDOW_MODE_FULLSCREEN, DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN]
+		if data.fullscreen and not is_fullscreen:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		elif not data.fullscreen and current_mode != DisplayServer.WINDOW_MODE_WINDOWED:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		if not data.fullscreen:
 			var parts: PackedStringArray = str(data.resolution).split("x")
-			DisplayServer.window_set_size(Vector2i(int(parts[0]),int(parts[1])))
+			var wanted := Vector2i(int(parts[0]),int(parts[1]))
+			if DisplayServer.window_get_size() != wanted:
+				DisplayServer.window_set_size(wanted)
 	var viewport := Engine.get_main_loop().root as Window
 	viewport.msaa_3d = {"low":Viewport.MSAA_DISABLED,"medium":Viewport.MSAA_2X,"high":Viewport.MSAA_4X}[data.graphics_preset]
 	_apply_audio(data)

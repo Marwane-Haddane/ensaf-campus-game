@@ -15,3 +15,7 @@
 /art_audit/backups/
 /art_audit/work/
 /art_audit/**/*.png
+
+# Local build output and scratch
+/output/
+/tmp/
