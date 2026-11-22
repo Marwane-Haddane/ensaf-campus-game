@@ -7,8 +7,25 @@ extends RefCounted
 const GROUP := "shared_gdcef"
 static var last_error := ""
 
+static var _extension_tried := false
+
 static func supported() -> bool:
-	return ClassDB.class_exists("GDCef") and last_error.is_empty()
+	return _ensure_extension() and last_error.is_empty()
+
+## Release zips: Godot's start-up load of res://cef_artifacts/gdcef.gdextension uses a
+## relative path, so Windows cannot find libcef.dll (libgdcef.dll's dependency) and
+## the class is missing. Loading the shipped cef_artifacts/gdcef_release.gdextension
+## by absolute path makes Windows search that folder, so it works on any PC.
+static func _ensure_extension() -> bool:
+	if ClassDB.class_exists("GDCef"): return true
+	if _extension_tried or not OS.has_feature("template"): return false
+	_extension_tried = true
+	var path := OS.get_executable_path().get_base_dir().path_join("cef_artifacts/gdcef_release.gdextension")
+	if not FileAccess.file_exists(path): return false
+	var status := GDExtensionManager.load_extension(path)
+	if status != GDExtensionManager.LOAD_STATUS_OK and status != GDExtensionManager.LOAD_STATUS_ALREADY_LOADED:
+		push_warning("Embedded browser library could not load (status %d)." % status)
+	return ClassDB.class_exists("GDCef")
 
 ## Returns the shared GDCef node (created under `host` on first use) or null.
 static func cef(host: Node) -> Node:

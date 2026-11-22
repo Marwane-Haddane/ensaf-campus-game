@@ -247,8 +247,8 @@ func _python(command: String) -> String:
 	request.store_string(JSON.stringify({"source":data.text})); request.close()
 	var output: Array = []
 	var args := PackedStringArray(["-I","-S",ProjectSettings.globalize_path(dir+"/worker.py"),ProjectSettings.globalize_path(dir+"/request.json")])
-	var code := OS.execute("python",args,output,true,false)
-	if code != 0: return "Python 3 could not run. Install Python 3 on PATH to use this exercise. Details: " + str(output).left(300)
+	var code := OS.execute(_python_executable(),args,output,true,false)
+	if code != 0: return "Python 3 could not run. Details: " + str(output).left(300)
 	var result: Variant = JSON.parse_string("\n".join(output))
 	if not result is Dictionary: return "Python runner returned invalid output."
 	if not result.get("ok",false): return "Python: " + str(result.get("error","Execution failed"))
@@ -256,6 +256,13 @@ func _python(command: String) -> String:
 	shell.files[destination] = generated_text
 	flags.generated = bool(result.get("permutations",false)) and generated_text.split("\n",false).size() > 1
 	return "Python finished: %d candidates written to %s.\n%s" % [generated_text.split("\n",false).size(),destination,"Permutation requirement satisfied." if flags.generated else "Use itertools.permutations and print more than one candidate."]
+## Release zips ship a private Python in python/ next to the game exe
+## (tools/build_python_runtime.py), so players need nothing installed.
+## Source/editor runs fall back to the Python on PATH.
+func _python_executable() -> String:
+	var bundled := OS.get_executable_path().get_base_dir().path_join("python/python.exe")
+	return bundled if FileAccess.file_exists(bundled) else "python"
+
 func snapshot() -> Dictionary:
 	var lab_files: Dictionary = {}
 	for path: String in shell.files:

@@ -142,6 +142,11 @@ func build() -> void:
 			mesh_node.visible = false
 			mesh_node.set_meta("replaced_by_approved_asset", true)
 			continue
+		if source_name.begins_with("C MAP ONLY") or source_name.begins_with("F MAP ONLY") or source_name in ["C map-only roof", "F map-only roof"]:
+			# Unverified grey placeholder volumes for buildings C and F: removed (no mesh, no collision).
+			mesh_node.visible = false
+			mesh_node.set_meta("campus_removed_placeholder", true)
+			continue
 		if source_name == "D7 short facade fine mullion.006":
 			# QA confirmed this is exactly coincident with mullion .005.
 			mesh_node.visible = false
