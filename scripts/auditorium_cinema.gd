@@ -59,6 +59,14 @@ var _web_error := ""
 var _controlling := false
 var _mouse_down := false
 var _mute_button: Button
+## Full-screen view of the big screen (F): the picture fills the monitor and the
+## mouse/keyboard drive the web page directly. Esc leaves it.
+var _fullscreen := false
+var _full_layer: CanvasLayer
+var _full_view: TextureRect
+var _full_hint: Label
+var _full_hint_timer := 0.0
+var _window_mode_before := DisplayServer.WINDOW_MODE_WINDOWED
 
 func install(owner_game: Node3D) -> void:
 	game = owner_game
@@ -338,7 +346,10 @@ func _build_ui() -> void:
 	_btn(nrow, "Back", _web_back)
 	_btn(nrow, "Reload", _web_reload)
 	_mute_button = _btn(nrow, "Mute", _toggle_mute)
-	_btn(col, "Use mouse on screen  [C]", _start_control)
+	var crow := HBoxContainer.new()
+	col.add_child(crow)
+	_btn(crow, "Use mouse on screen  [C]", _start_control)
+	_btn(crow, "Full screen  [F]", _enter_fullscreen)
 	var tip := Label.new()
 	tip.text = "Web plays on the big screen. C: click / scroll / type on it." if web_supported() else "Web opens in your system browser (Alt+Tab back)."
 	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -357,6 +368,34 @@ func _build_ui() -> void:
 	_file_dialog.title = "Pick a video for the cinema screen"
 	_file_dialog.file_selected.connect(_play_file)
 	_ui.add_child(_file_dialog)
+	_full_layer = CanvasLayer.new()
+	_full_layer.layer = 30
+	_full_layer.visible = false
+	add_child(_full_layer)
+	var black := ColorRect.new()
+	black.color = Color.BLACK
+	black.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_full_layer.add_child(black)
+	black.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_full_view = TextureRect.new()
+	_full_view.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_full_view.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_full_view.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_full_layer.add_child(_full_view)
+	_full_view.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_full_hint = Label.new()
+	_full_hint.text = "Full screen  ·  Esc: back to the auditorium"
+	_full_hint.add_theme_font_size_override("font_size", 18)
+	_full_hint.add_theme_color_override("font_color", Color("81f0d2"))
+	_full_hint.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
+	_full_hint.add_theme_constant_override("outline_size", 5)
+	_full_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_full_layer.add_child(_full_hint)
+	_full_hint.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	_full_hint.offset_left = -260
+	_full_hint.offset_right = 260
+	_full_hint.offset_top = 18
+	_full_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 func _section(text: String) -> Label:
 	var l := Label.new()
@@ -393,6 +432,9 @@ func panel_open() -> bool:
 	return is_instance_valid(_panel) and _panel.visible
 
 func _input(event: InputEvent) -> void:
+	if _fullscreen:
+		_fullscreen_input(event)
+		return
 	if not _controlling: return
 	get_viewport().set_input_as_handled()
 	if event is InputEventKey:
@@ -426,6 +468,15 @@ func _input(event: InputEvent) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not game.ready_to_play: return
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F11:
+		_toggle_window_fullscreen()
+		get_viewport().set_input_as_handled()
+		return
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F and not game.training.terminal_open and not (game._menu_visible() and not panel_open()):
+		if cinema_on and (seated or remote_held or AUDITORIUM.has_point(game.player.global_position)):
+			_enter_fullscreen()
+			get_viewport().set_input_as_handled()
+			return
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_C and _browser != null and remote_held and not game.training.terminal_open and not game._menu_visible():
 		_start_control()
 		get_viewport().set_input_as_handled()
@@ -449,6 +500,11 @@ func _process(delta: float) -> void:
 		if _hint_timer <= 0.0: _refresh_hint()
 	if cinema_on and _home.visible:
 		_clock.text = Time.get_time_string_from_system().substr(0, 5)
+	if _fullscreen:
+		_full_view.texture = _browser.get_texture() if _browser != null else _viewport.get_texture()
+		if _full_hint_timer > 0.0:
+			_full_hint_timer -= delta
+			_full_hint.modulate.a = clampf(_full_hint_timer, 0.0, 1.0)
 
 # ---------- remote / seats ----------
 
@@ -498,6 +554,7 @@ func _set_cinema(on: bool) -> void:
 	_screen.visible = on
 	_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS if on else SubViewport.UPDATE_DISABLED
 	if not on:
+		_exit_fullscreen()
 		_stop_video()
 		_close_browser()
 	else:
@@ -713,3 +770,87 @@ func _unshaded(color: Color, transparent: bool) -> StandardMaterial3D:
 	mat.albedo_color = color
 	if transparent: mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	return mat
+
+
+# ---------- full screen (F / F11) ----------
+
+func _toggle_window_fullscreen() -> void:
+	var mode := DisplayServer.window_get_mode()
+	var full := mode == DisplayServer.WINDOW_MODE_FULLSCREEN or mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED if full else DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+func _enter_fullscreen() -> void:
+	if _fullscreen: return
+	if not cinema_on:
+		_flash("Turn the cinema on with the remote first")
+		return
+	_stop_control()
+	_panel.visible = false
+	_fullscreen = true
+	_mouse_down = false
+	_window_mode_before = DisplayServer.window_get_mode()
+	if _window_mode_before != DisplayServer.WINDOW_MODE_FULLSCREEN and _window_mode_before != DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	if _browser == null: _viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	_full_view.texture = _browser.get_texture() if _browser != null else _viewport.get_texture()
+	_full_layer.visible = true
+	_full_hint_timer = 4.0
+	_full_hint.modulate.a = 1.0
+	game._set_capture(false)
+	game.focus_overlay.clear_target()
+	_hint.text = ""
+
+func _exit_fullscreen() -> void:
+	if not _fullscreen: return
+	_fullscreen = false
+	_mouse_down = false
+	_full_layer.visible = false
+	_full_view.texture = null
+	if _window_mode_before != DisplayServer.WINDOW_MODE_FULLSCREEN and _window_mode_before != DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+		DisplayServer.window_set_mode(_window_mode_before)
+	if not game._menu_visible(): game._set_capture(true)
+	_refresh_hint()
+
+## Window pixel -> browser pixel inside the letterboxed full-screen picture.
+func _full_pixel(mouse: Vector2) -> Variant:
+	var area := _full_view.get_global_rect()
+	var picture := Vector2(_viewport.size)
+	var scale := minf(area.size.x / picture.x, area.size.y / picture.y)
+	var shown := picture * scale
+	var origin := area.position + (area.size - shown) * 0.5
+	var local := (mouse - origin) / scale
+	if local.x < 0.0 or local.y < 0.0 or local.x > picture.x or local.y > picture.y: return null
+	return local
+
+func _fullscreen_input(event: InputEvent) -> void:
+	get_viewport().set_input_as_handled()
+	if event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_ESCAPE or event.physical_keycode == KEY_F11):
+		_exit_fullscreen()
+		return
+	if event is InputEventMouseMotion:
+		_full_hint_timer = maxf(_full_hint_timer, 1.5)
+	if _browser == null:
+		if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_SPACE and _video.visible: _toggle_pause()
+		return
+	if event is InputEventKey:
+		_browser.set_key_pressed(event.unicode if event.unicode != 0 else event.keycode, event.pressed, event.shift_pressed, event.alt_pressed, event.is_command_or_control_pressed())
+		return
+	if not event is InputEventMouse: return
+	var px: Variant = _full_pixel(event.position)
+	if px == null: return
+	_browser.set_mouse_moved(int(px.x), int(px.y))
+	if event is InputEventMouseMotion:
+		if _mouse_down: _browser.set_mouse_left_down()
+	elif event is InputEventMouseButton:
+		match event.button_index:
+			MOUSE_BUTTON_WHEEL_UP:
+				if event.pressed: _browser.set_mouse_wheel_vertical(2)
+			MOUSE_BUTTON_WHEEL_DOWN:
+				if event.pressed: _browser.set_mouse_wheel_vertical(-2)
+			MOUSE_BUTTON_LEFT:
+				_mouse_down = event.pressed
+				if event.pressed: _browser.set_mouse_left_down()
+				else: _browser.set_mouse_left_up()
+			MOUSE_BUTTON_RIGHT:
+				if event.pressed: _browser.set_mouse_right_down()
+				else: _browser.set_mouse_right_up()

@@ -39,7 +39,12 @@ static func cef(host: Node) -> Node:
 	host.add_child(node)
 	# Chromium profile lives in user:// (always writable, also in exported builds),
 	# never inside cef_artifacts next to the game files.
-	var cache := OS.get_user_data_dir().path_join("cinema_browser")
+	# One folder per running game: Chromium locks its profile, so a second open copy
+	# of the game would otherwise get no browser. The session is incognito anyway;
+	# folders of games that have closed are removed here.
+	var base := OS.get_user_data_dir().path_join("cinema_browser")
+	_remove_stale_caches(base)
+	var cache := base.path_join("session_%d" % OS.get_process_id())
 	DirAccess.make_dir_recursive_absolute(cache)
 	var ok: bool = node.initialize({
 		"artifacts": "res://cef_artifacts/",
@@ -60,6 +65,21 @@ static func cef(host: Node) -> Node:
 		node.queue_free()
 		return null
 	return node
+
+static func _remove_stale_caches(base: String) -> void:
+	var dir := DirAccess.open(base)
+	if dir == null: return
+	for name: String in dir.get_directories():
+		if name.begins_with("session_") and name != "session_%d" % OS.get_process_id():
+			_remove_tree(base.path_join(name))
+
+## Best effort: files a running game still holds stay until that game closes.
+static func _remove_tree(path: String) -> void:
+	var dir := DirAccess.open(path)
+	if dir == null: return
+	for name: String in dir.get_directories(): _remove_tree(path.path_join(name))
+	for name: String in dir.get_files(): DirAccess.remove_absolute(path.path_join(name))
+	DirAccess.remove_absolute(path)
 
 static func normalise_url(text: String) -> String:
 	text = text.strip_edges()
